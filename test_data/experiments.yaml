@@ -1,0 +1,81 @@
+enums:
+- name: assay_type
+  descr: A type of assay.
+  options:
+  - VITRO - in-vitro | Assays involving cells in plates
+  - VIVO - in-vivo | Assays involving animals
+  - CILICO - in-cilico | Fake experiments done with code
+
+folders:
+- name: plate_map
+  descr: Plate map files.
+  extensions: ["xlsx", "csv", "tsv"]
+
+table_modules:
+- name: experiments
+  descr: Tables related to experiments.
+  tables:
+
+  - name: assay
+    descr: A table with one record for each assay protocol.
+    preprocess_new: add_assay_name
+    fields:
+    - name: name
+      type: STRING
+      descr: Name of the assay
+    - name: type
+      type: enum:assay_type
+      descr: Type of assay
+
+  - name: experiment
+    descr: A table with one record for each experiment.
+    preprocess_new: add_experiment_name
+    fields:
+    - name: name
+      type: STRING
+      descr: Name of the experiment
+    - name: description
+      type: TEXT
+      descr: A long-form description of the experiment
+    - name: assay
+      type: ref:assay
+      descr: The assay used in the experiment
+    - name: plate_map_file
+      type: doc:plate_map
+      descr: The file that the plate map was loaded from
+
+page_modules:
+  - name: experiments
+    descr: Pages related to experiments.
+    pages:
+    - name: view_experiment
+      descr: Use this page to find experiments
+      type: RecordPage
+      config:
+        source_table: experiment
+        view_fields:
+        - name
+        reference_tables:
+        - table_page: find_experiment
+        buttons:
+        - display: Edit
+          target: edit_experiment
+
+    - name: edit_experiment
+      descr: Use this page to find experiments
+      type: RecordPage
+      config:
+        source_table: experiment
+        view_fields:
+        - name
+        edit_fields:
+        - field: name
+          lookup: foo
+        buttons:
+        - display: Save
+          target: back
+        - display: Cancel
+          target: back
+
+    - name: find_experiment
+      descr: Use this page to find experiments

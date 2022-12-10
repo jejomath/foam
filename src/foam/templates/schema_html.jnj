@@ -1,0 +1,5 @@
+{% for m in config.table_modules %}
+{% for t in m.tables %}
+{{ t.name }}<br>
+{% endfor %}
+{% endfor %}

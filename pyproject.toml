@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "foam"
+version = "0.0.1"
+authors = [
+  { name="Jesse Johnson", email="jejo.math@gmail.com" },
+]
+description = "A package for generating apps"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+requires = [
+  'pyyaml',
+  'Jinja2',
+]
+
+[project.scripts]
+foam = "foam.main:main"
+
+[project.urls]
+"Homepage" = "TBD"
+"Bug Tracker" = "TBD"

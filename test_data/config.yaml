@@ -1,0 +1,8 @@
+config_files:
+- experiments.yaml
+
+page_classes:
+- name: RecordPage
+  path: ./RecordPage.js
+- name: ListPage
+  path: ./ListPage.js
