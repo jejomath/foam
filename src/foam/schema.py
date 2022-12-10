@@ -2,9 +2,15 @@ from dataclasses import dataclass
 
 from .utils import add_display, config_error, jinja_template
 
-def write_schema_docs(config):
-    print(jinja_template('schema_html.jnj').render(config=config))
+def get_schema_docs(config):
+    return jinja_template('schema_html.jnj').render(config=config)
 
+def write_schema_docs(config):
+    if config.paths.docs_path:
+        with open(config.paths.docs_path / 'schema.html', 'w') as f:
+            f.write(get_schema_docs(config))
+    else:
+        print('No docs_path set in config.')
 
 field_types = {
     'STRING': '',

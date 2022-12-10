@@ -1,0 +1,5 @@
+{% for m in config.page_modules %}
+{% for p in m.pages %}
+<div>{{ p.name }}<br>
+{% endfor %}
+{% endfor %}

@@ -1,8 +1,13 @@
-config_files:
-- experiments.yaml
+paths:
+  docs_path: docs/
+  ui_path: TBD
+  schema_path: TBD
 
 page_classes:
 - name: RecordPage
   path: ./RecordPage.js
 - name: ListPage
   path: ./ListPage.js
+
+config_files:
+- experiments.yaml

@@ -1,14 +1,29 @@
 from os import path, chdir
 from pathlib import Path
 import yaml
+from pathlib import Path
 
-from ice.config import load_config, Config
-from ice.utils import get_errors, clear_errors
+from foam.config import load_config, Config
+from foam.utils import get_errors, clear_errors
 
 def test_load():
     script_path = Path(path.dirname(path.realpath(__file__)))
     chdir(script_path / '../test_data/')
     load_config()
+
+def paths_config():
+    return yaml.safe_load('''
+paths:
+  docs_path: docs/
+  ui_path: frontend/
+  schema_path: backend/
+    ''')
+
+def test_parse_paths():
+    result = Config(**paths_config())
+    assert result.paths.docs_path == Path('docs/')
+    assert result.paths.ui_path == Path('frontend/')
+    assert result.paths.schema_path == Path('backend/')
 
 def enums_config():
     return yaml.safe_load('''

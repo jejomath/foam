@@ -5,7 +5,7 @@ from .utils import add_display, config_error, jinja_template
 RESERVED_TARGETS = ['back']
 
 def write_pages_docs(config):
-    print(config.page_modules)
+    print(jinja_template('pages_html.jnj').render(config=config))
 
 
 @dataclass
