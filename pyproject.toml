@@ -19,6 +19,7 @@ classifiers = [
 requires = [
   'pyyaml',
   'Jinja2',
+  'graphviz',
 ]
 
 [project.scripts]

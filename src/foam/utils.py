@@ -1,12 +1,16 @@
 from os import path
 from pathlib import Path
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, BaseLoader
 
 
 def jinja_template(filename):
     script_path = Path(path.dirname(path.realpath(__file__)))
     environment = Environment(loader=FileSystemLoader(script_path / 'templates'))
     return environment.get_template(filename)
+
+
+def jinja_from_string(template):
+    return Environment(loader=BaseLoader).from_string(template)
 
 
 def add_display(obj):

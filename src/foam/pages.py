@@ -1,11 +1,21 @@
 from dataclasses import dataclass
+import pydot
 
-from .utils import add_display, config_error, jinja_template
+from .utils import add_display, config_error, jinja_template, jinja_from_string
 
 RESERVED_TARGETS = ['back']
 
+def get_pages_docs(config):
+    return jinja_template('pages_html.jnj').render(config=config)
+
 def write_pages_docs(config):
-    print(jinja_template('pages_html.jnj').render(config=config))
+    if config.paths.docs_path:
+        for m in config.page_modules:
+            m.svg_code = ModuleGraph(m).get_svg()
+        with open(config.paths.docs_path / 'pages.html', 'w') as f:
+            f.write(get_pages_docs(config))
+    else:
+        print('No docs_path set in config.')
 
 
 @dataclass
@@ -91,7 +101,7 @@ class Action:
     def add_refs(self, config, page):
         if self.target not in config.pages_dict.keys() and self.target not in RESERVED_TARGETS:
             config_error(f'Unexpected page "{self.target}" found in config for button on page "{page}".')
-        return [] if self.target in RESERVED_TARGETS else [self.target]
+        return [] if self.target in RESERVED_TARGETS else [NextPage(display=self.display, target=self.target)]
 
 
 @dataclass
@@ -175,12 +185,18 @@ class CustomPageConfig:
 
 
 @dataclass
+class NextPage:
+    display: str
+    target: str
+
+
+@dataclass
 class Page:
     name: str
     module: str
     display: str = ''
     descr: str = ''
-    next_pages: str = ''
+    next_pages: list[NextPage] = ''
     type: str = ''
     config: str = None
 
@@ -190,11 +206,12 @@ class Page:
             self.config = page_configs[self.type](**self.config)
         else:
             self.config = CustomPageConfig(config=self.config)
+        self.next_pages = [NextPage(**n) for n in self.next_pages] if self.next_pages else []
 
     def add_refs(self, config):
         if self.type and self.type not in config.class_dict.keys():
             config_error(f'Unexpected page type "{self.type}" found for page "{self.name}".')
-        self.next_pages = (self.next_pages or []) + self.config.add_refs(config, self.name)
+        self.next_pages = self.next_pages + self.config.add_refs(config, self.name)
 
 @dataclass
 class PageModule:
@@ -202,6 +219,7 @@ class PageModule:
     pages: list[Page]
     display: str = ''
     descr: str = ''
+    svg_code: str = ''
 
     def __post_init__(self):
         add_display(self)
@@ -216,3 +234,26 @@ def validate_page_refs(config):
     for m in config.page_modules:
         for p in m.pages:
             p.add_refs(config)
+
+
+module_template = '''<<table border="0" cellborder="1" cellspacing="0">
+<tr><td port="name_field" align="left">{{ page.display }}</td></tr>
+<tr><td></td></tr>
+{% for p in page.next_pages %}
+<tr><td port="{{ loop.index }}" align="left">{{ p.display }}</td></tr>
+{% endfor %}
+</table>>'''
+
+
+class ModuleGraph(object):
+
+    def __init__(self, module):
+        self._module = module
+
+    def get_svg(self):
+        g = pydot.Dot(rankdir='LR')
+        for p in self._module.pages:
+            g.add_node(pydot.Node(p.name, shape='none', label=jinja_from_string(module_template).render(page=p)))
+            for i, n in enumerate(p.next_pages):
+                g.add_edge(pydot.Edge(f'{p.name}:{i + 1}', f'{n.target}:name_field'))
+        return g.create_svg().decode("utf-8").split('-->\n', 2)[2]

@@ -1,4 +1,8 @@
 <style>
+body {
+  font-family: Helvetica, Arial, Sans-Serif;
+}
+
 .menu-outer {
     width: 175px;
     height: 100%;
@@ -9,6 +13,12 @@
 
 .menu-inner {
     padding: 10px;
+}
+
+.module-menu-div {}
+
+.table-menu-div {
+    padding-left: 10px;
 }
 
 .main-outer {
@@ -22,22 +32,87 @@
 .main-inner {
     padding: 10px;
 }
+
+.module-title-div {
+    font-size: 36px;
+    padding-top: 30px;
+}
+
+.module-graph-div {}
+
+.table-title-div {
+    font-size: 24px;
+    padding-top: 20px;
+}
+
+.table-table-div {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.description-div {
+    font-size: 16px;
+    padding: 2px;
+}
+
+table, th, td {
+    border-collapse: collapse;
+}
+
+th {
+    background-color: CornflowerBlue;
+    color: white;
+}
+
+td, th {
+    padding: 10px;
+    border-right: solid 1px DimGrey;
+    text-align: left;
+}
+
+td:last-of-type, th:last-of-type {
+	border-right:none;
+}
+
+tr:nth-of-type(odd) {
+    background-color: AliceBlue;
+}
 </style>
 
 <div class="menu-outer">
-<div class="menu-inner">
-{% for m in config.table_modules %}
-{% for t in m.tables %}
-<div>{{ t.name }}</div>
-{% endfor %}
-{% endfor %}
-</div></div>
+    <div class="menu-inner">
+        {% for m in config.table_modules %}
+        <div class="module-menu-div"><a href="#module-{{ m.name }}">{{m.display}}</a></div>
+            {% for t in m.tables %}
+            <div class="table-menu-div"><a href="#table-{{ t.name }}">{{ t.display }}</a></div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
 
 <div class="main-outer">
-<div class="main-inner">
-{% for m in config.table_modules %}
-{% for t in m.tables %}
-<div>{{ t.name }}</div>
-{% endfor %}
-{% endfor %}
-</div></div>
+    <div class="main-inner">
+        {% for m in config.table_modules %}
+        <div class="module-title-div" id="module-{{ m.name }}">Module: {{m.display}}</div>
+        <div class="description-div">{{ m.descr }}</div>
+        <div class="module-graph-div">{{ m.svg_code }}</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Description</th></tr>
+            {% for t in m.tables %}
+            <tr><td>{{ t.name }}</td><td>{{ t.descr }}</td></tr>
+            {% endfor %}
+            </table></div>
+
+            {% for t in m.tables %}
+            <div class="table-title-div" id="table-{{ t.name }}">Table: {{ t.display }}</div>
+            <div class="description-div">{{ t.descr }}</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            {% for f in t.fields %}
+            <tr><td>{{ f.name }}</td><td>{{ f.type }}</td><td>{{ f.descr }}</td></tr>
+            {% endfor %}
+            </table></div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>

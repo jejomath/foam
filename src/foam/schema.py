@@ -1,12 +1,17 @@
 from dataclasses import dataclass
+import graphviz
+import pydot
 
-from .utils import add_display, config_error, jinja_template
+from .utils import add_display, config_error, jinja_template, jinja_from_string
 
 def get_schema_docs(config):
     return jinja_template('schema_html.jnj').render(config=config)
 
 def write_schema_docs(config):
     if config.paths.docs_path:
+        for m in config.table_modules:
+            m.svg_code = ModuleGraph(m).get_svg()
+
         with open(config.paths.docs_path / 'schema.html', 'w') as f:
             f.write(get_schema_docs(config))
     else:
@@ -118,6 +123,7 @@ class TableModule:
     tables: list[Table]
     display: str = ''
     descr: str = ''
+    svg_code: str = ''
 
     def __post_init__(self):
         add_display(self)
@@ -149,3 +155,27 @@ def make_schema_refs(config):
                     config_error(f'Folder "{f.folder_class}" not found while processing field "{f.name}" in table "{f.table.name}".')
                 else:
                     f.folder_class = config.folders_dict[f.folder_class]
+
+
+module_template = '''<<table border="0" cellborder="1" cellspacing="0">
+<tr><td port="name_field" align="left">{{ table.display }}</td></tr>
+<tr><td></td></tr>
+{% for f in table.fields %}{% if f.ref_table %}
+<tr><td port="{{ f.name }}" align="left">{{f.name}}</td></tr>
+{% endif %}{% endfor %}
+</table>>'''
+
+
+class ModuleGraph(object):
+
+    def __init__(self, module):
+        self._module = module
+
+    def get_svg(self):
+        g = pydot.Dot(rankdir='LR')
+        for t in self._module.tables:
+            g.add_node(pydot.Node(t.name, shape='none', label=jinja_from_string(module_template).render(table=t)))
+            for f in t.fields:
+                if f.ref_table:
+                    g.add_edge(pydot.Edge(f'{t.name}:{f.name}', f'{f.ref_table.name}:name_field'))
+        return g.create_svg().decode("utf-8").split('-->\n', 2)[2]

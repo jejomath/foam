@@ -1,5 +1,115 @@
-{% for m in config.page_modules %}
-{% for p in m.pages %}
-<div>{{ p.name }}<br>
-{% endfor %}
-{% endfor %}
+<style>
+body {
+  font-family: Helvetica, Arial, Sans-Serif;
+}
+
+.menu-outer {
+    width: 175px;
+    height: 100%;
+    position: fixed;
+    height: 100%;
+    background: CornflowerBlue;
+}
+
+.menu-inner {
+    padding: 10px;
+}
+
+.module-menu-div {}
+
+.page-menu-div {
+    padding-left: 10px;
+}
+
+.main-outer {
+    width: calc(100% - 175px);
+    left: 175px;
+    height: calc(100% + 50px);
+    float: left;
+    position: relative;
+}
+
+.main-inner {
+    padding: 10px;
+}
+
+.module-title-div {
+    font-size: 36px;
+    padding-top: 30px;
+}
+
+.module-graph-div {}
+
+.page-title-div {
+    font-size: 24px;
+    padding-top: 20px;
+}
+
+.page-mock-div {
+    padding: 10px;
+    padding-left: 20px;
+    border: solid 1px black;
+}
+
+.description-div {
+    font-size: 16px;
+    padding: 2px;
+}
+
+table, th, td {
+    border-collapse: collapse;
+}
+
+th {
+    background-color: CornflowerBlue;
+    color: white;
+}
+
+td, th {
+    padding: 10px;
+    border-right: solid 1px DimGrey;
+    text-align: left;
+}
+
+td:last-of-type, th:last-of-type {
+	border-right:none;
+}
+
+tr:nth-of-type(odd) {
+    background-color: AliceBlue;
+}
+</style>
+
+<div class="menu-outer">
+    <div class="menu-inner">
+        {% for m in config.page_modules %}
+        <div class="module-menu-div"><a href="#module-{{ m.name }}">{{m.display}}</a></div>
+            {% for p in m.pages %}
+            <div class="page-menu-div"><a href="#page-{{ p.name }}">{{ p.display }}</a></div>
+            {% endfor %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="main-outer">
+    <div class="main-inner">
+        {% for m in config.page_modules %}
+        <div class="module-title-div" id="module-{{ m.name }}">Module: {{m.display}}</div>
+        <div class="description-div">{{ m.descr }}</div>
+        <div class="module-graph-div">{{ m.svg_code }}</div>
+            <div class="page-table-div"><table>
+            <tr><th>Name</th><th>Description</th></tr>
+            {% for p in m.pages %}
+            <tr><td>{{ p.name }}</td><td>{{ p.descr }}</td></tr>
+            {% endfor %}
+            </table></div>
+
+            {% for p in m.pages %}
+            <div class="page-title-div" id="page-{{ p.name }}">Page: {{ p.display }}</div>
+            <div class="description-div">{{ p.descr }}</div>
+            <div class="page-mock-div">Preview coming soon!</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</div>

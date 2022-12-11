@@ -1,0 +1,175 @@
+<style>
+body {
+  font-family: Helvetica, Arial, Sans-Serif;
+}
+
+.menu-outer {
+    width: 175px;
+    height: 100%;
+    position: fixed;
+    height: 100%;
+    background: CornflowerBlue;
+}
+
+.menu-inner {
+    padding: 10px;
+}
+
+.module-menu-div {}
+
+.page-menu-div {
+    padding-left: 10px;
+}
+
+.main-outer {
+    width: calc(100% - 175px);
+    left: 175px;
+    height: calc(100% + 50px);
+    float: left;
+    position: relative;
+}
+
+.main-inner {
+    padding: 10px;
+}
+
+.module-title-div {
+    font-size: 36px;
+    padding-top: 30px;
+}
+
+.module-graph-div {}
+
+.page-title-div {
+    font-size: 24px;
+    padding-top: 20px;
+}
+
+.page-mock-div {
+    padding: 10px;
+    padding-left: 20px;
+    border: solid 1px black;
+}
+
+.description-div {
+    font-size: 16px;
+    padding: 2px;
+}
+
+table, th, td {
+    border-collapse: collapse;
+}
+
+th {
+    background-color: CornflowerBlue;
+    color: white;
+}
+
+td, th {
+    padding: 10px;
+    border-right: solid 1px DimGrey;
+    text-align: left;
+}
+
+td:last-of-type, th:last-of-type {
+	border-right:none;
+}
+
+tr:nth-of-type(odd) {
+    background-color: AliceBlue;
+}
+</style>
+
+<div class="menu-outer">
+    <div class="menu-inner">
+        
+        <div class="module-menu-div"><a href="#module-experiments">Experiments</a></div>
+            
+            <div class="page-menu-div"><a href="#page-view_experiment">View Experiment</a></div>
+            
+            <div class="page-menu-div"><a href="#page-edit_experiment">Edit Experiment</a></div>
+            
+            <div class="page-menu-div"><a href="#page-find_experiment">Find Experiment</a></div>
+            
+        
+    </div>
+</div>
+
+<div class="main-outer">
+    <div class="main-inner">
+        
+        <div class="module-title-div" id="module-experiments">Module: Experiments</div>
+        <div class="description-div">Pages related to experiments.</div>
+        <div class="module-graph-div"><svg width="522pt" height="99pt"
+ viewBox="0.00 0.00 522.00 99.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 95)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-95 518,-95 518,4 -4,4"/>
+<!-- view_experiment -->
+<g id="node1" class="node">
+<title>view_experiment</title>
+<polygon fill="none" stroke="black" points="199,-38 199,-59 329,-59 329,-38 199,-38"/>
+<text text-anchor="start" x="202" y="-44.8" font-family="Times,serif" font-size="14.00">View Experiment</text>
+<polygon fill="none" stroke="black" points="199,-32 199,-38 329,-38 329,-32 199,-32"/>
+<polygon fill="none" stroke="black" points="199,-11 199,-32 329,-32 329,-11 199,-11"/>
+<text text-anchor="start" x="202" y="-17.8" font-family="Times,serif" font-size="14.00">Edit</text>
+</g>
+<!-- edit_experiment -->
+<g id="node2" class="node">
+<title>edit_experiment</title>
+<polygon fill="none" stroke="black" points="381.5,-10 381.5,-31 506.5,-31 506.5,-10 381.5,-10"/>
+<text text-anchor="start" x="384.5" y="-16.8" font-family="Times,serif" font-size="14.00">Edit Experiment</text>
+<polygon fill="none" stroke="black" points="381.5,-4 381.5,-10 506.5,-10 506.5,-4 381.5,-4"/>
+</g>
+<!-- view_experiment&#45;&gt;edit_experiment -->
+<g id="edge1" class="edge">
+<title>view_experiment:1&#45;&gt;edit_experiment:name_field</title>
+<path fill="none" stroke="black" d="M330,-21C348.59,-21 355.63,-21 370.25,-21"/>
+<polygon fill="black" stroke="black" points="370.5,-24.5 380.5,-21 370.5,-17.5 370.5,-24.5"/>
+</g>
+<!-- find_experiment -->
+<g id="node3" class="node">
+<title>find_experiment</title>
+<polygon fill="none" stroke="black" points="8.5,-66 8.5,-87 147.5,-87 147.5,-66 8.5,-66"/>
+<text text-anchor="start" x="11.5" y="-72.8" font-family="Times,serif" font-size="14.00">Find Experiment</text>
+<polygon fill="none" stroke="black" points="8.5,-60 8.5,-66 147.5,-66 147.5,-60 8.5,-60"/>
+<polygon fill="none" stroke="black" points="8.5,-39 8.5,-60 147.5,-60 147.5,-39 8.5,-39"/>
+<text text-anchor="start" x="11.5" y="-45.8" font-family="Times,serif" font-size="14.00">Select Experiment</text>
+</g>
+<!-- find_experiment&#45;&gt;view_experiment -->
+<g id="edge2" class="edge">
+<title>find_experiment:1&#45;&gt;view_experiment:name_field</title>
+<path fill="none" stroke="black" d="M148.5,-49C166.72,-49 173.62,-49 187.95,-49"/>
+<polygon fill="black" stroke="black" points="188,-52.5 198,-49 188,-45.5 188,-52.5"/>
+</g>
+</g>
+</svg>
+</div>
+            <div class="page-table-div"><table>
+            <tr><th>Name</th><th>Description</th></tr>
+            
+            <tr><td>view_experiment</td><td>Use this page to find experiments</td></tr>
+            
+            <tr><td>edit_experiment</td><td>Use this page to find experiments</td></tr>
+            
+            <tr><td>find_experiment</td><td>Use this page to find experiments</td></tr>
+            
+            </table></div>
+
+            
+            <div class="page-title-div" id="page-view_experiment">Page: View Experiment</div>
+            <div class="description-div">Use this page to find experiments</div>
+            <div class="page-mock-div">Preview coming soon!</div>
+            
+            <div class="page-title-div" id="page-edit_experiment">Page: Edit Experiment</div>
+            <div class="description-div">Use this page to find experiments</div>
+            <div class="page-mock-div">Preview coming soon!</div>
+            
+            <div class="page-title-div" id="page-find_experiment">Page: Find Experiment</div>
+            <div class="description-div">Use this page to find experiments</div>
+            <div class="page-mock-div">Preview coming soon!</div>
+            
+        </div>
+        
+    </div>
+</div>

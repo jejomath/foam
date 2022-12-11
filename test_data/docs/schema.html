@@ -1,4 +1,8 @@
 <style>
+body {
+  font-family: Helvetica, Arial, Sans-Serif;
+}
+
 .menu-outer {
     width: 175px;
     height: 100%;
@@ -9,6 +13,12 @@
 
 .menu-inner {
     padding: 10px;
+}
+
+.module-menu-div {}
+
+.table-menu-div {
+    padding-left: 10px;
 }
 
 .main-outer {
@@ -22,26 +32,137 @@
 .main-inner {
     padding: 10px;
 }
+
+.module-title-div {
+    font-size: 36px;
+    padding-top: 30px;
+}
+
+.module-graph-div {}
+
+.table-title-div {
+    font-size: 24px;
+    padding-top: 20px;
+}
+
+.table-table-div {
+    padding-top: 10px;
+    padding-left: 20px;
+}
+
+.description-div {
+    font-size: 16px;
+    padding: 2px;
+}
+
+table, th, td {
+    border-collapse: collapse;
+}
+
+th {
+    background-color: CornflowerBlue;
+    color: white;
+}
+
+td, th {
+    padding: 10px;
+    border-right: solid 1px DimGrey;
+    text-align: left;
+}
+
+td:last-of-type, th:last-of-type {
+	border-right:none;
+}
+
+tr:nth-of-type(odd) {
+    background-color: AliceBlue;
+}
 </style>
 
 <div class="menu-outer">
-<div class="menu-inner">
-
-
-<div>assay</div>
-
-<div>experiment</div>
-
-
-</div></div>
+    <div class="menu-inner">
+        
+        <div class="module-menu-div"><a href="#module-experiments">Experiments</a></div>
+            
+            <div class="table-menu-div"><a href="#table-assay">Assay</a></div>
+            
+            <div class="table-menu-div"><a href="#table-experiment">Experiment</a></div>
+            
+        
+    </div>
+</div>
 
 <div class="main-outer">
-<div class="main-inner">
+    <div class="main-inner">
+        
+        <div class="module-title-div" id="module-experiments">Module: Experiments</div>
+        <div class="description-div">Tables related to experiments.</div>
+        <div class="module-graph-div"><svg width="215pt" height="71pt"
+ viewBox="0.00 0.00 215.00 71.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 67)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-67 211,-67 211,4 -4,4"/>
+<!-- assay -->
+<g id="node1" class="node">
+<title>assay</title>
+<polygon fill="none" stroke="black" points="151,-10 151,-31 199,-31 199,-10 151,-10"/>
+<text text-anchor="start" x="154" y="-16.8" font-family="Times,serif" font-size="14.00">Assay</text>
+<polygon fill="none" stroke="black" points="151,-4 151,-10 199,-10 199,-4 151,-4"/>
+</g>
+<!-- experiment -->
+<g id="node2" class="node">
+<title>experiment</title>
+<polygon fill="none" stroke="black" points="8.5,-38 8.5,-59 99.5,-59 99.5,-38 8.5,-38"/>
+<text text-anchor="start" x="11.5" y="-44.8" font-family="Times,serif" font-size="14.00">Experiment</text>
+<polygon fill="none" stroke="black" points="8.5,-32 8.5,-38 99.5,-38 99.5,-32 8.5,-32"/>
+<polygon fill="none" stroke="black" points="8.5,-11 8.5,-32 99.5,-32 99.5,-11 8.5,-11"/>
+<text text-anchor="start" x="11.5" y="-17.8" font-family="Times,serif" font-size="14.00">assay</text>
+</g>
+<!-- experiment&#45;&gt;assay -->
+<g id="edge1" class="edge">
+<title>experiment:assay&#45;&gt;assay:name_field</title>
+<path fill="none" stroke="black" d="M100.5,-21C118.72,-21 125.62,-21 139.95,-21"/>
+<polygon fill="black" stroke="black" points="140,-24.5 150,-21 140,-17.5 140,-24.5"/>
+</g>
+</g>
+</svg>
+</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Description</th></tr>
+            
+            <tr><td>assay</td><td>A table with one record for each assay protocol.</td></tr>
+            
+            <tr><td>experiment</td><td>A table with one record for each experiment.</td></tr>
+            
+            </table></div>
 
-
-<div>assay</div>
-
-<div>experiment</div>
-
-
-</div></div>
+            
+            <div class="table-title-div" id="table-assay">Table: Assay</div>
+            <div class="description-div">A table with one record for each assay protocol.</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Name of the assay</td></tr>
+            
+            <tr><td>type</td><td>enum:assay_type</td><td>Type of assay</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-experiment">Table: Experiment</div>
+            <div class="description-div">A table with one record for each experiment.</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Name of the experiment</td></tr>
+            
+            <tr><td>description</td><td>TEXT</td><td>A long-form description of the experiment</td></tr>
+            
+            <tr><td>assay</td><td>ref:assay</td><td>The assay used in the experiment</td></tr>
+            
+            <tr><td>plate_map_file</td><td>doc:plate_map</td><td>The file that the plate map was loaded from</td></tr>
+            
+            </table></div>
+            
+        
+    </div>
+</div>

@@ -182,7 +182,7 @@ def test_catch_bad_folder_ref():
     assert len(get_errors()) == 1
     assert get_errors()[0].startswith('Folder')
 
-def test_catch_bad_folder_ref():
+def test_catch_bad_table_ref():
     config = tables_config()
     t0 = config['table_modules'][0]['tables'][0]
 

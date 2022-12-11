@@ -48,6 +48,7 @@ page_modules:
   - name: experiments
     descr: Pages related to experiments.
     pages:
+
     - name: view_experiment
       descr: Use this page to find experiments
       type: RecordPage
@@ -79,3 +80,6 @@ page_modules:
 
     - name: find_experiment
       descr: Use this page to find experiments
+      next_pages:
+      - display: Select Experiment
+        target: view_experiment
