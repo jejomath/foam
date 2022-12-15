@@ -1,0 +1,7 @@
+import { Button, EditField } from './Components.js'
+
+export const schema = {{ schema }}
+
+export const enums = {{ enums }}
+
+export const pages = {{ pages }}

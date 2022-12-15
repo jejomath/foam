@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "prop-types": "^15.8.1",
+    "react-datepicker": "^4.8.0",
+    "react-native": "^0.70.6"
+  }
+}

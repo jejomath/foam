@@ -1,0 +1,6 @@
+from django.contrib import admin
+
+from .models import {% for m in config.table_modules %}{% for t in m.tables %}{{ t.class_name }}{% if not loop.last %}, {% endif %}{% endfor %}{% endfor %}
+{% for m in config.table_modules %}{% for t in m.tables %}
+admin.site.register({{ t.class_name }})
+{%- endfor %}{% endfor %}

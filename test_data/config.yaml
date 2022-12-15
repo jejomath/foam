@@ -1,7 +1,7 @@
 paths:
   docs_path: docs/
-  ui_path: TBD
-  schema_path: TBD
+  ui_path: foam_ui/src/
+  schema_path: foam_backend/example/
 
 page_classes:
 - name: RecordPage

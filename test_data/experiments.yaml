@@ -37,12 +37,18 @@ table_modules:
     - name: description
       type: TEXT
       descr: A long-form description of the experiment
+    - name: start_date
+      type: DATE
+      descr: The day on which the experiment was started
     - name: assay
       type: ref:assay
       descr: The assay used in the experiment
     - name: plate_map_file
       type: doc:plate_map
       descr: The file that the plate map was loaded from
+    - name: type
+      type: enum:assay_type
+      descr: Type of assay
 
 page_modules:
   - name: experiments
@@ -69,9 +75,15 @@ page_modules:
         source_table: experiment
         view_fields:
         - name
+        - description
+        - start_date
+        - type
         edit_fields:
         - field: name
           lookup: foo
+        - description
+        - start_date
+        - type
         buttons:
         - display: Save
           target: back

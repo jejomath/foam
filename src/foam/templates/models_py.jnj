@@ -1,0 +1,10 @@
+from django.db import models
+
+{% for module in config.table_modules %}
+{%- for table in module.tables %}
+class {{ table.class_name }}(models.Model):
+    {%- for field in table.fields %}
+    {{ field.name }} = {{ field.model_def }}
+    {%- endfor %}
+{% endfor %}
+{% endfor %}

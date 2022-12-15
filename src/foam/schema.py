@@ -7,6 +7,43 @@ from .utils import add_display, config_error, jinja_template, jinja_from_string
 def get_schema_docs(config):
     return jinja_template('schema_html.jnj').render(config=config)
 
+
+def get_model_code(config):
+    return jinja_template('models_py.jnj').render(config=config)
+
+def get_admin_code(config):
+    return jinja_template('admin_py.jnj').render(config=config)
+
+def get_serializers_code(config):
+    return jinja_template('serializers_py.jnj').render(config=config)
+
+def get_views_code(config):
+    return jinja_template('views_py.jnj').render(config=config)
+
+def get_router_code(config):
+    return jinja_template('router_py.jnj').render(config=config)
+
+
+def write_schema_code(config):
+    if config.paths.docs_path:
+        with open(config.paths.schema_path / 'models.py', 'w') as f:
+            f.write(get_model_code(config))
+
+        with open(config.paths.schema_path / 'admin.py', 'w') as f:
+            f.write(get_admin_code(config))
+
+        with open(config.paths.schema_path / 'serializers.py', 'w') as f:
+            f.write(get_serializers_code(config))
+
+        with open(config.paths.schema_path / 'views.py', 'w') as f:
+            f.write(get_views_code(config))
+
+        with open(config.paths.schema_path / 'router.py', 'w') as f:
+            f.write(get_router_code(config))
+    else:
+        print('No docs_path set in config.')
+
+
 def write_schema_docs(config):
     if config.paths.docs_path:
         for m in config.table_modules:
@@ -17,14 +54,6 @@ def write_schema_docs(config):
     else:
         print('No docs_path set in config.')
 
-field_types = {
-    'STRING': '',
-    'TEXT': '',
-    'DATE': '',
-    'enum': '',
-    'ref': '',
-    'doc': '',
-}
 
 @dataclass
 class EnumOption:
@@ -63,6 +92,17 @@ class Folder:
         add_display(self)
 
 
+field_types = {
+    'STRING': 'models.CharField(max_length=200, null=True, blank=True)',
+    'TEXT': 'models.TextField(null=True, blank=True)',
+    'DATE': 'models.DateField(null=True, blank=True)',
+    'INTEGER': 'models.IntegerField(null=True, blank=True)',
+    'enum': '',
+    'ref': '',
+    'doc': '',
+}
+
+
 @dataclass
 class Field:
     name: str
@@ -78,6 +118,7 @@ class Field:
     ref_table: str = None
     enum_class: str = None
     folder_class: str = None
+    model_def: str = None
 
     def __post_init__(self):
         add_display(self)
@@ -86,16 +127,22 @@ class Field:
             [_, self.ref_table] = self.type.split(':', 1)
             if not self.backref:
                 self.backref = self.table.name
+            # self.model_def is set in make_schema_refs() below, after back_refs are defined.
         elif self.type.startswith('enum:'):
             self.short_type = 'enum'
             [_, self.enum_class] = self.type.split(':', 1)
+            self.model_def = 'models.CharField(max_length=200)'
+            # self.model_def is set in make_schema_refs() below, after enum refs are defined.
         elif self.type.startswith('doc:'):
             self.short_type = 'doc'
             [_, self.folder_class] = self.type.split(':', 1)
+            self.model_def = 'models.CharField(max_length=200, null=True, blank=True)'
         else:
             self.short_type = self.type
             if self.short_type not in field_types:
                 config_error(f'Unexpected type "{self.type}" found in field "{self.name}" of table "{self.table.name}".')
+            else:
+                self.model_def = field_types[self.short_type]
 
 
 @dataclass
@@ -104,6 +151,7 @@ class Table:
     fields: list[Field]
     module: str
     display: str = ''
+    class_name: str = ''
     descr: str = ''
     preprocess_new: str = ''
     preprocess_update: str = ''
@@ -113,6 +161,7 @@ class Table:
 
     def __post_init__(self):
         add_display(self)
+        self.class_name = ''.join(w.capitalize() for w in self.name.split('_')) if not self.class_name else self.class_name
         self.fields = [Field(**f, table=self) for f in self.fields]
         self.backref_fields = []
 
@@ -145,6 +194,7 @@ def make_schema_refs(config):
                 else:
                     f.ref_table = config.tables_dict[f.ref_table]
                     f.ref_table.backref_fields.append(f)
+                    f.model_def = f'models.ForeignKey(\'{f.ref_table.class_name}\', null=True, on_delete=models.SET_NULL)'
             if f.enum_class:
                 if f.enum_class not in config.enums_dict:
                     config_error(f'Enum "{f.enum_class}" not found while processing field "{f.name}" in table "{f.table.name}".')

@@ -122,6 +122,7 @@ def test_parse_tables():
     t = m.tables[0]
     assert t.name == 'assay'
     assert t.display == 'Assay'
+    assert t.class_name == 'Assay'
     assert t.module.name == 'experiments'
     assert t.descr == 'A table with one record for each assay protocol.'
     assert len(t.backref_fields) == 1
@@ -135,6 +136,7 @@ def test_parse_tables():
     assert f.type == 'enum:assay_type'
     assert f.short_type == 'enum'
     assert f.enum_class.name == 'assay_type'
+    # assert f.model_def.startswith(TBD!!!!!)
 
     t1 = m.tables[1]
     assert len(t1.fields) == 4
@@ -144,11 +146,13 @@ def test_parse_tables():
     assert f2.type == 'ref:assay'
     assert f2.short_type == 'ref'
     assert f2.ref_table.name == 'assay'
+    assert f2.model_def.startswith('models.ForeignKey')
 
     f3 = t1.fields[3]
     assert f3.type == 'doc:plate_map'
     assert f3.short_type == 'doc'
     assert f3.folder_class.name == 'plate_map'
+    # assert f3.model_def.startswith(TBD!!!!!)
 
 def test_catch_unexpected_type():
     config = tables_config()

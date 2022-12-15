@@ -1,9 +1,14 @@
 from dataclasses import dataclass
 import pydot
+from os import system
 
 from .utils import add_display, config_error, jinja_template, jinja_from_string
 
 RESERVED_TARGETS = ['back']
+
+# Add back-refs for next_pages
+# Add nodes from other modules in pages and schema docs
+
 
 def get_pages_docs(config):
     return jinja_template('pages_html.jnj').render(config=config)
@@ -16,6 +21,85 @@ def write_pages_docs(config):
             f.write(get_pages_docs(config))
     else:
         print('No docs_path set in config.')
+
+def get_pages_code(config):
+    tables = sum([m.tables for m in config.table_modules], [])
+
+    return jinja_template('config_js.jnj').render(
+        schema=get_js_dict({t.name: clean_table(t) for t in tables}),
+        enums=get_js_dict({e.name: clean_enum(e) for e in config.enums}),
+        pages=get_js_dict(
+            {p.name: p.js_config 
+             for p in sum([m.pages for m in config.page_modules], [])}
+        ),
+    )
+
+def write_pages_code(config):
+    if config.paths.docs_path:
+        tmp_path = config.paths.ui_path / 'config_tmp.js'
+        final_path = config.paths.ui_path / 'config.js' 
+        with open(tmp_path, 'w') as f:
+            f.write(get_pages_code(config))
+        system(f'js-beautify {tmp_path} > {final_path}')
+        system(f'rm {tmp_path}')
+    else:
+        print('No docs_path set in config.')
+
+
+def lower_camel(value):
+    tokens = value.split('_')
+    return tokens[0] + ''.join([w.capitalize() for w in tokens[1:]])
+
+def clean_table(table):
+    return {
+        'name': table.name,
+        'fields': {f.name: {
+            'name': f.name,
+            'fieldType': f.short_type,
+            'refTable': (f.ref_table.name if f.ref_table else ''),
+            'enumClass': (f.enum_class.name if f.enum_class else ''),
+        } for f in table.fields},
+    }
+
+def clean_enum(enum):
+    return {
+        'name': enum.name,
+        'options': [{
+            'name': o.name,
+            'display': o.display,
+            'descr': o.descr,
+        } for o in enum.options],
+    }
+
+
+def get_js_dict(data):
+    result = '{'
+    for k in data.keys():
+        if data[k] is None:
+            result += f'{k}: null, '
+        elif type(data[k]) == str:
+            if k.endswith('_fn'): # or k == 'type':
+                result += f'{k}: {data[k]}, '
+            else:
+                result += f'{k}: \'{data[k]}\', '
+        elif type(data[k]) == list:
+            result += f'{k}: {get_js_list(data[k])}, '
+        else:
+            result += f'{k}: {get_js_dict(data[k])}, '
+    return result + '}'
+
+def get_js_list(data):
+    result = '['
+    for v in data:
+        if v is None:
+            result += f'null, '
+        elif type(v) == str:
+            result += f'\'{v}\', '
+        elif type(v) == list:
+            result += f'{get_js_list(v)}, '
+        else:
+            result += f'{get_js_dict(v)}, '
+    return result + ']'
 
 
 @dataclass
@@ -42,6 +126,14 @@ class ViewField:
             config_error(f'Unexpected field {table_config.name}.{self.field} found in config for page "{page}".')
         return []
 
+    @property
+    def js_config(self):
+        return {
+            'field': self.field,
+            'display': self.display,
+            'target': self.target,
+        }
+
 
 @dataclass
 class EditField:
@@ -62,6 +154,14 @@ class EditField:
             config_error(f'Unexpected field {table_config.name}.{self.field} found in config for page "{page}".')
         return []
 
+    @property
+    def js_config(self):
+        return {
+            'field': self.field,
+            'display': self.display,
+            'lookup': self.lookup,
+        }
+
 
 @dataclass
 class Column:
@@ -72,6 +172,13 @@ class Column:
         if self.field not in [f.name for f in table_config.fields]:
             config_error(f'Unexpected field {table_config.name}.{self.field} found in config for page "{page}".')
         return []
+
+    @property
+    def js_config(self):
+        return {
+            'field': self.field,
+            'width': self.width,
+        }
 
 
 @dataclass
@@ -88,6 +195,12 @@ class ReferenceTable:
                 config_error(f'The table_page for a reference page must be a ListPage, but "{table_page.name}" is a {table_page.type} in "{page}".')
         return []
 
+    @property
+    def js_config(self):
+        return {
+            'tablePage': self.table_page,
+            'paramsFn': self.params_fn,
+        }
 
 @dataclass
 class Action:
@@ -102,6 +215,17 @@ class Action:
         if self.target not in config.pages_dict.keys() and self.target not in RESERVED_TARGETS:
             config_error(f'Unexpected page "{self.target}" found in config for button on page "{page}".')
         return [] if self.target in RESERVED_TARGETS else [NextPage(display=self.display, target=self.target)]
+
+    @property
+    def js_config(self):
+        return {
+            'display': self.display,
+            'pretargetFn': self.pretarget_fn,
+            'pretarget': self.pretarget,
+            'target': self.target,
+            'mode': self.mode,
+            'paramsFn': self.params_fn
+        }
 
 
 @dataclass
@@ -136,13 +260,25 @@ class RecordPageConfig:
                     next_pages += b.add_refs(config, page)
         return next_pages
 
+    @property
+    def js_config(self):
+        return {
+            'sourceTable': self.source_table,
+            'newRecord': self.new_record,
+            'newRecordFn': self.new_record_fn,
+            'viewFields': [f.js_config for f in self.view_fields],
+            'editFields': [f.js_config for f in self.edit_fields],
+            'referenceTables': [t.js_config for t in self.reference_tables],
+            'buttons': [b.js_config for b in self.buttons],
+        }
+
 @dataclass
 class ListPageConfig:
     source_table: str
     new_record: str = ''
     new_record_fn: str = ''
-    view_columns: list[ViewField] = None
-    edit_columns: list[EditField] = None
+    view_columns: list[Column] = None
+    edit_columns: list[Column] = None
     search_fields: list[ReferenceTable] = None
     row_action: Action = None
     buttons: list[Action] = None
@@ -170,6 +306,20 @@ class ListPageConfig:
                         config_error(f'Unexpected field {table_config.name}.{s} found in config for page "{page}".')
         return next_pages
 
+    @property
+    def js_config(self):
+        return {
+            'sourceTable': self.source_table,
+            'newRecord': self.new_record,
+            'newRecordFn': self.new_record_fn,
+            'rowAction': self.row_action,
+            'viewColumns': [c.js_config for c in self.view_columns],
+            'editColumns': [c.js_config for c in self.edit_columns],
+            'searchFields': [f.js_config for f in self.search_fields],
+            'buttons': [b.js_config for b in self.buttons],
+        }
+
+
 page_configs ={
     'RecordPage': RecordPageConfig,
     'ListPage': ListPageConfig,
@@ -182,6 +332,10 @@ class CustomPageConfig:
 
     def add_refs(self, config, page):
         return []
+
+    @property
+    def js_config(self):
+        return self.config
 
 
 @dataclass
@@ -212,6 +366,15 @@ class Page:
         if self.type and self.type not in config.class_dict.keys():
             config_error(f'Unexpected page type "{self.type}" found for page "{self.name}".')
         self.next_pages = self.next_pages + self.config.add_refs(config, self.name)
+
+    @property
+    def js_config(self):
+        return {
+            'name': self.name,
+            'display': self.display,
+            'config': self.config.js_config,
+        }
+
 
 @dataclass
 class PageModule:

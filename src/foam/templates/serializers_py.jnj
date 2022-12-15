@@ -1,0 +1,26 @@
+from rest_framework import serializers
+from .models import {% for m in config.table_modules %}{% for t in m.tables %}{{ t.class_name }}{% if not loop.last %}, {% endif %}{% endfor %}{% endfor %}
+
+{% for m in config.table_modules %}{% for t in m.tables %}
+class {{ t.class_name }}ShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = {{ t.class_name }}
+        fields = ('id', 'name')
+{% endfor %}{% endfor %}
+
+{% for m in config.table_modules %}{% for t in m.tables %}
+class {{ t.class_name }}Serializer(serializers.ModelSerializer):
+    {% for f in t.fields %}{% if f.ref_table %}
+    {{ f.name }} = {{ f.ref_table.class_name}}ShortSerializer(read_only=True)
+    {% endif %}{% endfor %}
+    class Meta:
+        model = {{ t.class_name }}
+        fields = ({% for f in t.fields %}'{{ f.name }}', {% endfor %})
+{% endfor %}{% endfor %}
+
+{% for m in config.table_modules %}{% for t in m.tables %}
+class {{ t.class_name }}WriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = {{ t.class_name }}
+        fields = ({% for f in t.fields %}'{{ f.name }}', {% endfor %})
+{% endfor %}{% endfor %}
