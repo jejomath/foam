@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import './App.css';
-import { Button, ButtonList, ViewField, EditField, FieldList } from './Components.js'
+import { Button, ButtonList, ViewField, EditField, FieldList, Table, SearchBar } from './Components.js'
 import {schema, enums, pages} from './config.js'
-import { RecordPage } from './RecordPage';
+import { RecordPage } from './RecordPage.js';
+import { TablePage } from './TablePage.js';
 
 const components = {
   button: {
@@ -89,19 +90,58 @@ const components = {
     },
     initData: {name: 'This', description: 'is a test', type: 'VITRO', star_date: '2022-01-05'},
   },
+  table: {
+    type: Table,
+    config: {
+      table: 'experiment',
+      columns: [
+        {field: 'name', width: 100},
+        {field: 'description', width: 200},
+        {field: 'type', width: 50},
+        {field: 'start_date', width: 150}
+      ],
+      rowAction: {
+        display: 'This is a test.',
+        target: 'myTarget',
+        pretargetFn: (data, params) => {console.log(data); console.log(params);},
+        paramsFn: (data, params) => ({id: data.id}),
+      }
+    },
+    initData: [
+      {id: 1, name: 'This', description: 'is a test', type: 'VITRO', start_date: '2022-01-05'},
+      {id: 2, name: 'This2', description: 'is a test', type: 'VITRO', start_date: '2022-01-05'},
+    ],
+},
   recordPage: {
     type: RecordPage,
     config: pages.edit_experiment.config,
     params: {id: 1},
-    initData: {experiment: {1: {name: 'This', description: 'is a test', type: 'VITRO', star_date: '2022-01-05'}}},
-  }
+    initData: {experiment: {1: {name: 'This', description: 'is a test', type: 'VITRO', start_date: '2022-01-05'}}},
+  },
+  tablePage: {
+    type: TablePage,
+    config: pages.find_experiment.config,
+    params: {id: 1},
+    initData: {experiment: [
+      {id: 1, name: 'This', description: 'is a test', type: 'VITRO', start_date: '2022-01-05'},
+      {id: 2, name: 'This 2', description: 'is a test', type: 'VITRO', start_date: '2022-01-05'},
+    ]},
+  },
+  searchBar: {
+    type: SearchBar,
+    config: {
+      table: 'experiment',
+      fields: ['name', 'description', 'type', 'start_date'],
+    },
+    initData: [{field: 'name', value: ''}, {field: 'name', value: ''}],
+  },
 }
 
 
 class TestHarness extends Component {
   constructor(props) {
     super(props);
-    const c = components.recordPage;
+    const c = components.tablePage;
     this.state = {
       component: c,
       lastTarget: null,
@@ -125,12 +165,20 @@ class TestHarness extends Component {
     })
   }
 
+  fullUpdate = (data) => {
+    this.setState({
+      lastUpdate: data,
+    })
+  }
+
   render() {
     const c = this.state.component;
     const context = {
       go: this.go,
       update: this.update,
+      fullUpdate: this.fullUpdate,
       getRecord: ((table, params) => {return c.initData[table][params.id]}),
+      getRecords: ((table) => {return c.initData[table]}),
       schema: schema,
       enums: enums,
       pages: pages,

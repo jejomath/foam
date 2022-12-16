@@ -9,12 +9,14 @@ export const schema = {
         fields: {
             name: {
                 name: 'name',
+                display: 'Name',
                 fieldType: 'STRING',
                 refTable: '',
                 enumClass: '',
             },
             type: {
                 name: 'type',
+                display: 'Type',
                 fieldType: 'enum',
                 refTable: '',
                 enumClass: 'assay_type',
@@ -26,36 +28,42 @@ export const schema = {
         fields: {
             name: {
                 name: 'name',
+                display: 'Name',
                 fieldType: 'STRING',
                 refTable: '',
                 enumClass: '',
             },
             description: {
                 name: 'description',
+                display: 'Description',
                 fieldType: 'TEXT',
                 refTable: '',
                 enumClass: '',
             },
             start_date: {
                 name: 'start_date',
+                display: 'Start Date',
                 fieldType: 'DATE',
                 refTable: '',
                 enumClass: '',
             },
             assay: {
                 name: 'assay',
+                display: 'Assay',
                 fieldType: 'ref',
                 refTable: 'assay',
                 enumClass: '',
             },
             plate_map_file: {
                 name: 'plate_map_file',
+                display: 'Plate Map File',
                 fieldType: 'doc',
                 refTable: '',
                 enumClass: '',
             },
             type: {
                 name: 'type',
+                display: 'Type',
                 fieldType: 'enum',
                 refTable: '',
                 enumClass: 'assay_type',
@@ -137,7 +145,7 @@ export const pages = {
             }, ],
             editFields: [{
                 field: 'name',
-                display: '',
+                display: 'Experiment Name',
                 lookup: 'foo',
             }, {
                 field: 'description',
@@ -173,6 +181,47 @@ export const pages = {
     find_experiment: {
         name: 'find_experiment',
         display: 'Find Experiment',
-        config: null,
+        config: {
+            sourceTable: 'experiment',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: {
+                    display: 'Select Experiment',
+                    target: 'view_experiment',
+                    params_fn: (data) => ({
+                        id: data.id
+                    }),
+                },
+                pretargetFn: '',
+                pretarget: '',
+                target: '',
+                mode: '',
+                paramsFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '100',
+            }, {
+                field: 'description',
+                width: '200',
+            }, {
+                field: 'start_date',
+                width: '50',
+            }, {
+                field: 'type',
+                width: '150',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'description', 'start_date', 'type', ],
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+            }, ],
+        },
     },
 }

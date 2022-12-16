@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
+import DataGrid from 'react-data-grid';
 
-import "react-datepicker/dist/react-datepicker.css";
+import 'react-datepicker/dist/react-datepicker.css';
+import 'react-data-grid/lib/styles.css';
 
 function followAction(config, params, data, context) {
-    // Need to handle named functions like 'Save' //
+    // Need to handle named functions like 'Save' ??? //
     var actionParams = {}
-    if (config.paramsFn) { actionParams = config.paramsFn(data, params, context); }
+    if (config.paramsFn) {
+        actionParams = config.paramsFn(data, params, context); }
     if (config.pretargetFn) { config.pretargetFn(data, params, null); }
     context.go(config.target, actionParams, config.mode);
 }
@@ -107,10 +110,14 @@ export class EditField extends Component {
 }
 
 export class FieldList extends Component {
+    getDisplay(field) {
+        if (field.display) { return field.display }
+        return this.props.context.schema[this.props.config.table].fields[field.field].display
+    }
     render() {
         return this.props.config.fields.map((field, index) => (
             <div key={index}>
-                {field.field}:
+                {this.getDisplay(field)}:
                 {React.createElement(
                     this.props.config.fieldType, {
                         config: {table: this.props.config.table, field: field.field},
@@ -121,5 +128,78 @@ export class FieldList extends Component {
                 }
             </div>
         ))
+    }
+}
+
+export class Table extends Component {
+    rowClick = (rowData) => {
+        followAction(this.props.config.rowAction, this.props.params, rowData, this.props.context)
+    }
+
+    render() {
+        return <DataGrid 
+            columns={this.props.config.viewColumns.map((col) => ({
+                name: col.field, 
+                key: col.field,
+                width: col.width,
+                resizable: true,
+            }))}
+            rows={this.props.data}
+            onRowClick={this.rowClick}
+        />
+    }
+}
+
+class SearchField extends Component {
+    changeField = (event) => {
+        this.props.context.update(this.props.config.index, event.target.value, '')
+    }
+
+    changeValue = (field, value) => {
+        this.props.context.update(this.props.config.index, this.props.data.field, value)
+    }
+
+    render() {
+        return (<div>
+            <select value={this.props.data.field} onChange={this.changeField}>
+                {this.props.config.fields.map((field, i) => (<option value={field} key={i}>{field}</option>))}
+            </select>
+            <EditField 
+                value={this.props.data.value}
+                config={{table: this.props.config.table, field: this.props.data.field}}
+                context={{...this.props.context, update: this.changeValue}}
+            />
+        </div>)
+    }
+}
+
+export class SearchBar extends Component {
+    componentDidMount() {
+        if (this.props.data.length == 0) { this.addParam() }
+    }
+
+    update = (index, field, value) => {
+        var data = this.props.data;
+        data[index] = {field: field, value: value};
+        this.props.context.fullUpdate(data);
+    }
+
+    addParam = () => {
+        const newField = this.props.config.fields[0]
+        var data = this.props.data;
+        data.push({'field': newField, 'value': ''})
+        this.props.context.fullUpdate(data);
+    }
+
+    render() {
+        return <div>
+            {this.props.data.map((data, index) => (<SearchField 
+                config={{...this.props.config, index: index}}
+                context={{...this.props.context, update: this.update}}
+                data={data}
+                key={index}/>))}
+            <div onClick={this.addParam}>Add Term</div>
+            <button onClick={this.props.context.updateTable}>Search</button>
+        </div>
     }
 }

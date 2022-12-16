@@ -55,6 +55,7 @@ def clean_table(table):
         'name': table.name,
         'fields': {f.name: {
             'name': f.name,
+            'display': f.display,
             'fieldType': f.short_type,
             'refTable': (f.ref_table.name if f.ref_table else ''),
             'enumClass': (f.enum_class.name if f.enum_class else ''),
@@ -77,7 +78,7 @@ def get_js_dict(data):
     for k in data.keys():
         if data[k] is None:
             result += f'{k}: null, '
-        elif type(data[k]) == str:
+        elif type(data[k]) == str or type(data[k]) == int:
             if k.endswith('_fn'): # or k == 'type':
                 result += f'{k}: {data[k]}, '
             else:
@@ -93,7 +94,7 @@ def get_js_list(data):
     for v in data:
         if v is None:
             result += f'null, '
-        elif type(v) == str:
+        elif type(v) == str or type(v) == int:
             result += f'\'{v}\', '
         elif type(v) == list:
             result += f'{get_js_list(v)}, '
@@ -287,6 +288,7 @@ class ListPageConfig:
         self.view_columns = [Column(**c) for c in self.view_columns] if self.view_columns else []
         self.edit_columns = [Column(**c) for c in self.edit_columns] if self.edit_columns else []
         self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
+        self.row_action = Action(self.row_action) if self.row_action else None
 
     def add_refs(self, config, page):
         next_pages = []
@@ -312,10 +314,10 @@ class ListPageConfig:
             'sourceTable': self.source_table,
             'newRecord': self.new_record,
             'newRecordFn': self.new_record_fn,
-            'rowAction': self.row_action,
+            'rowAction': self.row_action.js_config,
             'viewColumns': [c.js_config for c in self.view_columns],
             'editColumns': [c.js_config for c in self.edit_columns],
-            'searchFields': [f.js_config for f in self.search_fields],
+            'searchFields': self.search_fields,
             'buttons': [b.js_config for b in self.buttons],
         }
 

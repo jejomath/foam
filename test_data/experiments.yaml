@@ -80,6 +80,7 @@ page_modules:
         - type
         edit_fields:
         - field: name
+          display: Experiment Name
           lookup: foo
         - description
         - start_date
@@ -92,6 +93,27 @@ page_modules:
 
     - name: find_experiment
       descr: Use this page to find experiments
-      next_pages:
-      - display: Select Experiment
-        target: view_experiment
+      type: ListPage
+      config:
+        source_table: experiment
+        view_columns:
+        - field: name
+          width: 100
+        - field: description
+          width: 200
+        - field: start_date
+          width: 50
+        - field: type
+          width: 150
+        search_fields:
+        - name
+        - description
+        - start_date
+        - type
+        row_action:
+          display: Select Experiment
+          target: view_experiment
+          params_fn: "(data) => ({id: data.id})"
+        buttons:
+        - display: Done
+          target: back
