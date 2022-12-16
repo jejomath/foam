@@ -20,21 +20,27 @@ export class Button extends Component {
     }
 
     render() {
-        return (<button onClick={this.click}>{this.props.config.display}</button>)
+        return (<div className='button-div'>
+            <button onClick={this.click}>{this.props.config.display}</button>
+        </div>)
     }
 }
 
 
 export class ButtonList extends Component {
     render() {
-        return this.props.config.buttons.map((config, index) => (
-            <Button 
-                config={config}
-                params = {this.props.params}
-                data = {this.props.data}
-                context = {this.props.context}
-                key={index}
-            />))
+        return (
+            <div className='button-list-div'>
+                {this.props.config.buttons.map((config, index) => (
+                    <Button 
+                        config={config}
+                        params = {this.props.params}
+                        data = {this.props.data}
+                        context = {this.props.context}
+                        key={index}
+                    />))}
+            </div>
+        )
     }
 }
 
@@ -57,7 +63,9 @@ export class ViewField extends Component {
             return (this.props.data)
 
         } else if (fieldType === 'enum') {
-            return (this.props.data)
+            const e = this.props.context.enums[field.enumClass].options;
+            const d = Object.assign({}, ...e.map((o) => ({[o.name]: o.display})))[this.props.data]
+            return (d)
 
         } else if (fieldType === 'ref') {
             return <div>Not Implemented</div>
@@ -81,7 +89,7 @@ export class EditField extends Component {
     render() {
         const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field];
         const fieldType = field.fieldType;
-        if (fieldType === 'STRING') {
+        if (fieldType === 'STRING' || (fieldType === 'TEXT' && this.props.config.small)) {
             return (<input type='text' value={this.props.data} onChange={this.handlChange}/>)
 
         } else if (fieldType === 'TEXT') {
@@ -116,16 +124,18 @@ export class FieldList extends Component {
     }
     render() {
         return this.props.config.fields.map((field, index) => (
-            <div key={index}>
-                {this.getDisplay(field)}:
-                {React.createElement(
-                    this.props.config.fieldType, {
-                        config: {table: this.props.config.table, field: field.field},
-                        params:this.props.params,
-                        data: this.props.data[field.field],
-                        context: this.props.context,
-                    })
-                }
+            <div className='field-list-field-div' key={index}>
+                <div className='field-list-name-div'>{this.getDisplay(field)}:</div>
+                <div className='field-list-value-div'>
+                    {React.createElement(
+                        this.props.config.fieldType, {
+                            config: {table: this.props.config.table, field: field.field},
+                            params:this.props.params,
+                            data: this.props.data[field.field],
+                            context: this.props.context,
+                        })
+                    }
+                </div>
             </div>
         ))
     }
@@ -160,16 +170,23 @@ class SearchField extends Component {
     }
 
     render() {
-        return (<div>
-            <select value={this.props.data.field} onChange={this.changeField}>
-                {this.props.config.fields.map((field, i) => (<option value={field} key={i}>{field}</option>))}
-            </select>
-            <EditField 
-                value={this.props.data.value}
-                config={{table: this.props.config.table, field: this.props.data.field}}
-                context={{...this.props.context, update: this.changeValue}}
-            />
-        </div>)
+        return (
+            <div className='search-field-div'>
+                <div className='search-field-select-div'>
+                    <select value={this.props.data.field} onChange={this.changeField}>
+                        {this.props.config.fields.map((field, i) => (
+                            <option value={field} key={i}>{field}</option>))}
+                    </select>
+                </div>
+                <div className='search-field-edit-div'>
+                    <EditField 
+                        value={this.props.data.value}
+                        config={{table: this.props.config.table, field: this.props.data.field, small: true}}
+                        context={{...this.props.context, update: this.changeValue}}
+                    />
+                </div>
+            </div>
+        )
     }
 }
 
@@ -192,14 +209,18 @@ export class SearchBar extends Component {
     }
 
     render() {
-        return <div>
-            {this.props.data.map((data, index) => (<SearchField 
-                config={{...this.props.config, index: index}}
-                context={{...this.props.context, update: this.update}}
-                data={data}
-                key={index}/>))}
-            <div onClick={this.addParam}>Add Term</div>
-            <button onClick={this.props.context.updateTable}>Search</button>
+        return <div className='search-bar-div'>
+            <div className='search-bar-fields-div'>
+                {this.props.data.map((data, index) => (<SearchField 
+                    config={{...this.props.config, index: index}}
+                    context={{...this.props.context, update: this.update}}
+                    data={data}
+                    key={index}/>))}
+                <div onClick={this.addParam}>Add Term</div>
+            </div>
+            <div className='search-bar-button-div'>
+                <button onClick={this.props.context.updateTable}>Search</button>
+            </div>
         </div>
     }
 }

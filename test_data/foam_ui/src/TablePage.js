@@ -28,7 +28,8 @@ export class TablePage extends Component {
     render() {
         if (!this.state.data) { return <div />}
         return (
-            <div>
+            <div className='table-page-outer-div'>
+            <div className='table-page-inner-div'>
                 <SearchBar
                     config={{table: this.props.config.sourceTable, fields: this.props.config.searchFields}}
                     params = {this.props.params}
@@ -52,6 +53,7 @@ export class TablePage extends Component {
                 data = {this.state.data}
                 context = {this.props.context}
             />
+            </div>
             </div>
     )
     }

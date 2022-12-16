@@ -28,7 +28,8 @@ export class RecordPage extends Component {
     render() {
         if (!this.state.data) { return <div />}
         return (
-            <div>
+            <div className='record-page-outer-div'>
+            <div className='record-page-inner-div'>
                 <FieldList
                     config={{
                         table: this.props.config.sourceTable,
@@ -57,6 +58,7 @@ export class RecordPage extends Component {
                     data = {this.state.data}
                     context = {this.props.context}
                 />
+            </div>
             </div>
         )
     }

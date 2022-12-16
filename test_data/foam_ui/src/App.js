@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import './foam.css';
 import { Button, ButtonList, ViewField, EditField, FieldList, Table, SearchBar } from './Components.js'
 import {schema, enums, pages} from './config.js'
 import { RecordPage } from './RecordPage.js';
@@ -116,7 +117,7 @@ const components = {
     type: RecordPage,
     config: pages.edit_experiment.config,
     params: {id: 1},
-    initData: {experiment: {1: {name: 'This', description: 'is a test', type: 'VITRO', start_date: '2022-01-05'}}},
+    initData: {experiment: {1: {name: 'This', description: 'is a test', type: 'VITRO', start_date: ''}}},
   },
   tablePage: {
     type: TablePage,
