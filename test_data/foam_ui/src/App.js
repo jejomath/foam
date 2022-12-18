@@ -5,6 +5,7 @@ import { Button, ButtonList, ViewField, EditField, FieldList, Table, SearchBar }
 import {schema, enums, pages} from './config.js'
 import { RecordPage } from './RecordPage.js';
 import { TablePage } from './TablePage.js';
+import { getRecord, getRecords } from './comms.js';
 
 const components = {
   button: {
@@ -122,7 +123,7 @@ const components = {
   tablePage: {
     type: TablePage,
     config: pages.find_experiment.config,
-    params: {id: 1},
+    params: {},
     initData: {experiment: [
       {id: 1, name: 'This', description: 'is a test', type: 'VITRO', start_date: '2022-01-05'},
       {id: 2, name: 'This 2', description: 'is a test', type: 'VITRO', start_date: '2022-01-05'},
@@ -142,7 +143,7 @@ const components = {
 class TestHarness extends Component {
   constructor(props) {
     super(props);
-    const c = components.tablePage;
+    const c = components.recordPage;
     this.state = {
       component: c,
       lastTarget: null,
@@ -178,8 +179,8 @@ class TestHarness extends Component {
       go: this.go,
       update: this.update,
       fullUpdate: this.fullUpdate,
-      getRecord: ((table, params) => {return c.initData[table][params.id]}),
-      getRecords: ((table) => {return c.initData[table]}),
+      getRecord: getRecord,
+      getRecords: getRecords,
       schema: schema,
       enums: enums,
       pages: pages,

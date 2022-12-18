@@ -163,7 +163,9 @@ export const pages = {
             referenceTables: [],
             buttons: [{
                 display: 'Save',
-                pretargetFn: '',
+                pretargetFn: (config, data, context) => {
+                    context.save()
+                },
                 pretarget: '',
                 target: 'back',
                 mode: '',
@@ -189,9 +191,7 @@ export const pages = {
                 display: {
                     display: 'Select Experiment',
                     target: 'view_experiment',
-                    params_fn: (data) => ({
-                        id: data.id
-                    }),
+                    params_fn: '(data) => ({id: data.id})',
                 },
                 pretargetFn: '',
                 pretarget: '',

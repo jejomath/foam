@@ -10,11 +10,12 @@ export class RecordPage extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            data: this.props.context.getRecord(
-                this.props.config.sourceTable,
-                this.props.params),
-        })
+        this.props.context.getRecord(
+            this.props.config.sourceTable,
+            this.props.params).then((record) => {
+                this.setState({
+                    data: record,
+                })});
     }
 
     update = (field, value) => {
@@ -23,6 +24,10 @@ export class RecordPage extends Component {
         this.setState({
           data: data,
         })
+    }
+
+    save = () => {
+        console.log(this.state.data);
     }
 
     render() {
@@ -56,7 +61,7 @@ export class RecordPage extends Component {
                     }}
                     params = {this.props.params}
                     data = {this.state.data}
-                    context = {this.props.context}
+                    context = {{...this.props.context, save: this.save }}
                 />
             </div>
             </div>

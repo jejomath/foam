@@ -15,12 +15,12 @@ class {{ t.class_name }}Serializer(serializers.ModelSerializer):
     {% endif %}{% endfor %}
     class Meta:
         model = {{ t.class_name }}
-        fields = ({% for f in t.fields %}'{{ f.name }}', {% endfor %})
+        fields = ('id', {% for f in t.fields %}'{{ f.name }}', {% endfor %})
 {% endfor %}{% endfor %}
 
 {% for m in config.table_modules %}{% for t in m.tables %}
 class {{ t.class_name }}WriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = {{ t.class_name }}
-        fields = ({% for f in t.fields %}'{{ f.name }}', {% endfor %})
+        fields = ('id', {% for f in t.fields %}'{{ f.name }}', {% endfor %})
 {% endfor %}{% endfor %}

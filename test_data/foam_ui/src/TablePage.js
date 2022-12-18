@@ -11,10 +11,13 @@ export class TablePage extends Component {
     }
 
     componentDidMount() {
-        this.setState({
-            data: this.props.context.getRecords(
-                this.props.config.sourceTable)
-        })
+        this.props.context.getRecords(
+            this.props.config.sourceTable,
+            this.props.params).then((data) => {
+                this.setState({
+                    data: data
+                })
+            })
     }
 
     updateSearchParams = (params) => {

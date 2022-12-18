@@ -20,6 +20,7 @@ requires = [
   'pyyaml',
   'Jinja2',
   'graphviz',
+  'django-cors-headers',
 ]
 
 [project.scripts]

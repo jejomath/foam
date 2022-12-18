@@ -18,7 +18,7 @@ class AssaySerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Assay
-        fields = ('name', 'type', )
+        fields = ('id', 'name', 'type', )
 
 class ExperimentSerializer(serializers.ModelSerializer):
     
@@ -26,16 +26,16 @@ class ExperimentSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Experiment
-        fields = ('name', 'description', 'assay', 'plate_map_file', )
+        fields = ('id', 'name', 'description', 'start_date', 'assay', 'plate_map_file', 'type', )
 
 
 
 class AssayWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Assay
-        fields = ('name', 'type', )
+        fields = ('id', 'name', 'type', )
 
 class ExperimentWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = Experiment
-        fields = ('name', 'description', 'assay', 'plate_map_file', )
+        fields = ('id', 'name', 'description', 'start_date', 'assay', 'plate_map_file', 'type', )

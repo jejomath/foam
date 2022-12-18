@@ -88,6 +88,7 @@ page_modules:
         buttons:
         - display: Save
           target: back
+          pretarget_fn: "(config, data, context) => { context.save() }"
         - display: Cancel
           target: back
 

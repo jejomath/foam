@@ -131,7 +131,7 @@ class Field:
         elif self.type.startswith('enum:'):
             self.short_type = 'enum'
             [_, self.enum_class] = self.type.split(':', 1)
-            self.model_def = 'models.CharField(max_length=200)'
+            self.model_def = 'models.CharField(max_length=200, null=True, blank=True)'
             # self.model_def is set in make_schema_refs() below, after enum refs are defined.
         elif self.type.startswith('doc:'):
             self.short_type = 'doc'

@@ -3,7 +3,23 @@ A better ELN won't solve your problems, but your data platform should support a 
 The FOAM framework allows you to design, validate and prototype this solution.
 
 # Overview
-...
+
+## Run the backend
+
+From `foam/test_data/foam_backend` run:
+
+'''
+python3 -m manage runserver
+'''
+
+## Run the frontend
+
+From `foam/test_data/foam_ui` run:
+
+'''
+npm start
+'''
+
 
 # Setting up a Django Repo
 
@@ -13,6 +29,9 @@ Add the following three lines to `INSTALLED_APPS` in `settings.py`:
     'rest_framework',
     '<your app name>',
 ```
+
+Add `'corsheaders.middleware.CorsMiddleware',` to the `MIDDLEWARE` list.
+
 Where `<your app name>` is whatever you named the app where you're putting the FOAM code.
 
 Then update `urls.py` to look like this:
@@ -28,3 +47,14 @@ urlpatterns = [
     path('api/', include(router.router.urls)),
 ]
 ```
+
+# Node packages
+
+react-datepicker
+react-data-grid
+axios
+
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+  'http://localhost:3000',
+)

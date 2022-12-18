@@ -79,7 +79,7 @@ def get_js_dict(data):
         if data[k] is None:
             result += f'{k}: null, '
         elif type(data[k]) == str or type(data[k]) == int:
-            if k.endswith('_fn'): # or k == 'type':
+            if data[k] and k.endswith('Fn'): # or k == 'type':
                 result += f'{k}: {data[k]}, '
             else:
                 result += f'{k}: \'{data[k]}\', '

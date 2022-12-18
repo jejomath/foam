@@ -10,7 +10,7 @@ function followAction(config, params, data, context) {
     var actionParams = {}
     if (config.paramsFn) {
         actionParams = config.paramsFn(data, params, context); }
-    if (config.pretargetFn) { config.pretargetFn(data, params, null); }
+    if (config.pretargetFn) { config.pretargetFn(data, params, context); }
     context.go(config.target, actionParams, config.mode);
 }
 
@@ -103,7 +103,7 @@ export class EditField extends Component {
 
         } else if (fieldType === 'enum') {
             const options = this.props.context.enums[field.enumClass].options;
-            return (<select value={this.props.data} onChange={this.handlChange}>
+            return (<select value={this.props.data ? this.props.data : ''} onChange={this.handlChange}>
                 <option value=''></option>
                 {options.map((o, i) => (<option value={o.name} key={i}>{o.display}</option>))}
             </select>)
