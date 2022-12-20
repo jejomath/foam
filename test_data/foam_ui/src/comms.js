@@ -18,3 +18,12 @@ export function getRecords(table, params) {
         .then((result) => (result.data))
 }
 
+export function saveRecord(table, record) {
+    if (record.id) {
+        return axios.put(`http://localhost:8000/api/${table}/${record.id}/`, record)
+            .then((result) => (result.data))
+    } else {
+        return axios.post(`http://localhost:8000/api/${table}/`, record)
+        .then((result) => (result.data))
+    }
+}

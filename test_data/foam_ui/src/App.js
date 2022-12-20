@@ -5,7 +5,7 @@ import { Button, ButtonList, ViewField, EditField, FieldList, Table, SearchBar }
 import {schema, enums, pages} from './config.js'
 import { RecordPage } from './RecordPage.js';
 import { TablePage } from './TablePage.js';
-import { getRecord, getRecords } from './comms.js';
+import { getRecord, getRecords, saveRecord } from './comms.js';
 
 const components = {
   button: {
@@ -117,7 +117,7 @@ const components = {
   recordPage: {
     type: RecordPage,
     config: pages.edit_experiment.config,
-    params: {id: 1},
+    params: null, // {id: 3},
     initData: {experiment: {1: {name: 'This', description: 'is a test', type: 'VITRO', start_date: ''}}},
   },
   tablePage: {
@@ -181,6 +181,7 @@ class TestHarness extends Component {
       fullUpdate: this.fullUpdate,
       getRecord: getRecord,
       getRecords: getRecords,
+      saveRecord: saveRecord,
       schema: schema,
       enums: enums,
       pages: pages,

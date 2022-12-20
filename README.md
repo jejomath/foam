@@ -34,6 +34,15 @@ Add `'corsheaders.middleware.CorsMiddleware',` to the `MIDDLEWARE` list.
 
 Where `<your app name>` is whatever you named the app where you're putting the FOAM code.
 
+Add the following lines at the botton:
+
+```
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+  'http://localhost:3000',
+)
+```
+
 Then update `urls.py` to look like this:
 
 ```
@@ -53,8 +62,3 @@ urlpatterns = [
 react-datepicker
 react-data-grid
 axios
-
-CORS_ORIGIN_ALLOW_ALL = True
-CORS_ORIGIN_WHITELIST = (
-  'http://localhost:3000',
-)

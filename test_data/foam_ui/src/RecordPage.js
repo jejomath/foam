@@ -10,12 +10,22 @@ export class RecordPage extends Component {
     }
 
     componentDidMount() {
-        this.props.context.getRecord(
-            this.props.config.sourceTable,
-            this.props.params).then((record) => {
-                this.setState({
-                    data: record,
-                })});
+        var createRecord = null;
+        if (this.props.config.newEntry !== 'Always' && this.props.params) {
+            createRecord = this.props.context.getRecord(
+                this.props.config.sourceTable,
+                this.props.params);
+        } else { createRecord = Promise.resolve(null) }
+
+        createRecord.then((record) => {
+            var newRecord = null
+            if (!record) {
+                const fields = this.props.context.schema[this.props.config.sourceTable].fields;
+                newRecord = Object.assign({}, ...Object.keys(fields).map((f) => ({[f]: null}))) }
+            else { newRecord = record; }
+            this.setState({
+                data: newRecord,
+            })})
     }
 
     update = (field, value) => {
@@ -27,7 +37,12 @@ export class RecordPage extends Component {
     }
 
     save = () => {
-        console.log(this.state.data);
+        this.props.context.saveRecord(this.props.config.sourceTable, this.state.data).then((record) =>{
+            console.log(record);
+            this.setState({
+                data: record,
+            })
+        });
     }
 
     render() {

@@ -83,27 +83,34 @@ export class EditField extends Component {
     }
 
     handleDateChange = (date) => {
-        this.props.context.update(this.props.config.field, date)
+        date.setHours(0, 0, 0, 0);
+        const strDate = date.toISOString().substring(0, 10);
+        this.props.context.update(this.props.config.field, strDate)
     }
 
     render() {
         const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field];
         const fieldType = field.fieldType;
         if (fieldType === 'STRING' || (fieldType === 'TEXT' && this.props.config.small)) {
-            return (<input type='text' value={this.props.data} onChange={this.handlChange}/>)
+            return (<input type='text' value={this.props.data || ''} onChange={this.handlChange}/>)
 
         } else if (fieldType === 'TEXT') {
-            return (<textarea type='text' value={this.props.data} onChange={this.handlChange}/>)
+            return (<textarea type='text' value={this.props.data || ''} onChange={this.handlChange}/>)
 
         } else if (fieldType === 'DATE') {
-            return <DatePicker selected={this.props.data} onChange={this.handleDateChange} />
+            var date = Date.parse(this.props.data);
+            return <DatePicker 
+                selected={Date.parse(`${this.props.data}T23:59:59`)}
+                onChange={this.handleDateChange}
+                dateFormat="yyyy-MM-dd"
+            />
 
         } else if (fieldType === 'INTEGER') {
             return <div>Not Implemented</div>
 
         } else if (fieldType === 'enum') {
             const options = this.props.context.enums[field.enumClass].options;
-            return (<select value={this.props.data ? this.props.data : ''} onChange={this.handlChange}>
+            return (<select value={this.props.data || ''} onChange={this.handlChange}>
                 <option value=''></option>
                 {options.map((o, i) => (<option value={o.name} key={i}>{o.display}</option>))}
             </select>)
