@@ -5,7 +5,7 @@ import './App.css';
 import './foam.css';
 
 function App() {
-  return <AppRouter schema={schema} enums={enums} pages={pages} />
+    return <AppRouter schema={schema} enums={enums} pages={pages} />
 }
 
 export default App;

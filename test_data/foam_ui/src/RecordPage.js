@@ -39,7 +39,6 @@ export class RecordPage extends Component {
 
     save = () => {
         this.props.context.saveRecord(this.props.config.sourceTable, this.state.data).then((record) =>{
-            console.log(record);
             this.setState({
                 data: record,
             })

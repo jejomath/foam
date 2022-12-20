@@ -115,6 +115,7 @@ export const pages = {
                 links: [{
                     target: 'find_experiment',
                     display: 'Find Experiments',
+                    mode: 'modal',
                 }, {
                     target: 'new_experiment',
                     display: 'New Experiment',
