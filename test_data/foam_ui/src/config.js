@@ -1,7 +1,12 @@
 import {
-    Button,
-    EditField
-} from './Components.js'
+    RecordPage
+} from './RecordPage.js';
+import {
+    TablePage
+} from './TablePage.js';
+import {
+    LinksPage
+} from './LinksPage.js';
 
 export const schema = {
     assay: {
@@ -92,6 +97,32 @@ export const enums = {
 }
 
 export const pages = {
+    home: {
+        name: 'home',
+        display: 'Home',
+        config: {
+            boxes: [{
+                name: 'assays',
+                links: [{
+                    target: 'find_assay',
+                    display: 'Find Assays',
+                }, {
+                    target: 'new_assay',
+                    display: 'New Assay',
+                }, ],
+            }, {
+                name: 'experiments',
+                links: [{
+                    target: 'find_experiment',
+                    display: 'Find Experiments',
+                }, {
+                    target: 'new_experiment',
+                    display: 'New Experiment',
+                }, ],
+            }, ],
+        },
+        type: LinksPage,
+    },
     view_experiment: {
         name: 'view_experiment',
         display: 'View Experiment',
@@ -103,6 +134,18 @@ export const pages = {
                 field: 'name',
                 display: '',
                 target: '',
+            }, {
+                field: 'description',
+                display: '',
+                target: '',
+            }, {
+                field: 'start_date',
+                display: '',
+                target: '',
+            }, {
+                field: 'type',
+                display: '',
+                target: '',
             }, ],
             editFields: [],
             referenceTables: [{
@@ -110,14 +153,24 @@ export const pages = {
                 paramsFn: '',
             }, ],
             buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+            }, {
                 display: 'Edit',
                 pretargetFn: '',
                 pretarget: '',
                 target: 'edit_experiment',
                 mode: '',
-                paramsFn: '',
+                paramsFn: (params) => ({
+                    id: params.id
+                }),
             }, ],
         },
+        type: RecordPage,
     },
     edit_experiment: {
         name: 'edit_experiment',
@@ -163,7 +216,7 @@ export const pages = {
             referenceTables: [],
             buttons: [{
                 display: 'Save',
-                pretargetFn: (config, data, context) => {
+                pretargetFn: (params, data, context) => {
                     context.save()
                 },
                 pretarget: '',
@@ -179,6 +232,7 @@ export const pages = {
                 paramsFn: '',
             }, ],
         },
+        type: RecordPage,
     },
     find_experiment: {
         name: 'find_experiment',
@@ -188,16 +242,14 @@ export const pages = {
             newRecord: '',
             newRecordFn: '',
             rowAction: {
-                display: {
-                    display: 'Select Experiment',
-                    target: 'view_experiment',
-                    params_fn: '(data) => ({id: data.id})',
-                },
+                display: 'Select Experiment',
                 pretargetFn: '',
                 pretarget: '',
-                target: '',
+                target: 'view_experiment',
                 mode: '',
-                paramsFn: '',
+                paramsFn: (data) => ({
+                    id: data.id
+                }),
             },
             viewColumns: [{
                 field: 'name',
@@ -223,5 +275,6 @@ export const pages = {
                 paramsFn: '',
             }, ],
         },
+        type: TablePage,
     },
 }

@@ -6,7 +6,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-data-grid/lib/styles.css';
 
 function followAction(config, params, data, context) {
-    // Need to handle named functions like 'Save' ??? //
     var actionParams = {}
     if (config.paramsFn) {
         actionParams = config.paramsFn(data, params, context); }
@@ -26,6 +25,17 @@ export class Button extends Component {
     }
 }
 
+export class Link extends Component {
+    click = () => {
+        followAction(this.props.config, this.props.params, this.props.data, this.props.context)
+    }
+
+    render() {
+        return (<div className='link-div' onClick={this.click}>
+            {this.props.config.display}
+        </div>)
+    }
+}
 
 export class ButtonList extends Component {
     render() {

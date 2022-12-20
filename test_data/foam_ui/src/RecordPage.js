@@ -18,14 +18,15 @@ export class RecordPage extends Component {
         } else { createRecord = Promise.resolve(null) }
 
         createRecord.then((record) => {
-            var newRecord = null
-            if (!record) {
-                const fields = this.props.context.schema[this.props.config.sourceTable].fields;
-                newRecord = Object.assign({}, ...Object.keys(fields).map((f) => ({[f]: null}))) }
-            else { newRecord = record; }
-            this.setState({
-                data: newRecord,
-            })})
+        var newRecord = null
+        if (!record) {
+            const fields = this.props.context.schema[this.props.config.sourceTable].fields;
+            newRecord = Object.assign({}, ...Object.keys(fields).map((f) => ({[f]: null}))) }
+        else { newRecord = record; }
+        this.setState({
+            data: newRecord,
+        })
+        })
     }
 
     update = (field, value) => {

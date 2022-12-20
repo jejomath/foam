@@ -55,6 +55,24 @@ page_modules:
     descr: Pages related to experiments.
     pages:
 
+    - name: home
+      descr: Home Page for the whole site
+      type: LinksPage
+      config:
+        boxes:
+        - name: assays
+          links:
+          - target: find_assay
+            display: Find Assays
+          - target: new_assay
+            display: New Assay
+        - name: experiments
+          links:
+          - target: find_experiment
+            display: Find Experiments
+          - target: new_experiment
+            display: New Experiment
+
     - name: view_experiment
       descr: Use this page to find experiments
       type: RecordPage
@@ -62,11 +80,17 @@ page_modules:
         source_table: experiment
         view_fields:
         - name
+        - description
+        - start_date
+        - type
         reference_tables:
         - table_page: find_experiment
         buttons:
+        - display: Done
+          target: back
         - display: Edit
           target: edit_experiment
+          params_fn: "(params) => ({ id: params.id })"
 
     - name: edit_experiment
       descr: Use this page to find experiments
@@ -88,13 +112,13 @@ page_modules:
         buttons:
         - display: Save
           target: back
-          pretarget_fn: "(config, data, context) => { context.save() }"
+          pretarget_fn: "(params, data, context) => { context.save() }"
         - display: Cancel
           target: back
 
     - name: find_experiment
       descr: Use this page to find experiments
-      type: ListPage
+      type: TablePage
       config:
         source_table: experiment
         view_columns:

@@ -79,7 +79,7 @@ def get_js_dict(data):
         if data[k] is None:
             result += f'{k}: null, '
         elif type(data[k]) == str or type(data[k]) == int:
-            if data[k] and k.endswith('Fn'): # or k == 'type':
+            if data[k] and (k.endswith('Fn') or k == 'type'):
                 result += f'{k}: {data[k]}, '
             else:
                 result += f'{k}: \'{data[k]}\', '
@@ -192,8 +192,8 @@ class ReferenceTable:
             config_error(f'Unexpected page {self.table_page} found in config for page "{page}".')
         else:
             table_page = config.pages_dict[self.table_page]
-            if table_page.type and table_page.type != 'ListPage':
-                config_error(f'The table_page for a reference page must be a ListPage, but "{table_page.name}" is a {table_page.type} in "{page}".')
+            if table_page.type and table_page.type != 'TablePage':
+                config_error(f'The table_page for a reference page must be a TablePage, but "{table_page.name}" is a {table_page.type} in "{page}".')
         return []
 
     @property
@@ -274,7 +274,7 @@ class RecordPageConfig:
         }
 
 @dataclass
-class ListPageConfig:
+class TablePageConfig:
     source_table: str
     new_record: str = ''
     new_record_fn: str = ''
@@ -288,7 +288,7 @@ class ListPageConfig:
         self.view_columns = [Column(**c) for c in self.view_columns] if self.view_columns else []
         self.edit_columns = [Column(**c) for c in self.edit_columns] if self.edit_columns else []
         self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
-        self.row_action = Action(self.row_action) if self.row_action else None
+        self.row_action = Action(**self.row_action) if self.row_action else None
 
     def add_refs(self, config, page):
         next_pages = []
@@ -324,7 +324,7 @@ class ListPageConfig:
 
 page_configs ={
     'RecordPage': RecordPageConfig,
-    'ListPage': ListPageConfig,
+    'TablePage': TablePageConfig,
 }
 
 
@@ -365,9 +365,8 @@ class Page:
         self.next_pages = [NextPage(**n) for n in self.next_pages] if self.next_pages else []
 
     def add_refs(self, config):
-        if self.type and self.type not in config.class_dict.keys():
-            config_error(f'Unexpected page type "{self.type}" found for page "{self.name}".')
-        self.next_pages = self.next_pages + self.config.add_refs(config, self.name)
+        if self.type and self.type in config.class_dict.keys():
+            self.next_pages = self.next_pages + self.config.add_refs(config, self.name)
 
     @property
     def js_config(self):
@@ -375,6 +374,7 @@ class Page:
             'name': self.name,
             'display': self.display,
             'config': self.config.js_config,
+            'type': self.type,
         }
 
 

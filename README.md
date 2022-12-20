@@ -59,6 +59,8 @@ urlpatterns = [
 
 # Node packages
 
+axios
 react-datepicker
 react-data-grid
-axios
+react-router
+react-router-dom
