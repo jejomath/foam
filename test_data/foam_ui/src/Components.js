@@ -230,6 +230,16 @@ export class Table extends Component {
         followAction(rowAction, this.props.params, rowData, this.props.context)
     }
 
+    cleanRows() {
+        return this.props.data.map((row) => (
+            Object.assign(
+                {}, ...Object.keys(row).map((k) => (
+                    {[k]: (row[k] && row[k].id) ? row[k].name : row[k]}
+                ))
+            )
+        ))
+    }
+
     render() {
         return <DataGrid 
             columns={this.props.config.viewColumns.map((col) => ({
@@ -238,7 +248,7 @@ export class Table extends Component {
                 width: col.width,
                 resizable: true,
             }))}
-            rows={this.props.data}
+            rows={this.cleanRows()}
             onRowClick={this.rowClick}
         />
     }

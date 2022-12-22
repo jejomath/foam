@@ -96,83 +96,75 @@ export const pages = {
         display: 'Home',
         config: {
             boxes: [{
-                name: 'assays',
+                name: 'Experiments',
                 links: [{
+                    display: 'Assay',
+                    pretargetFn: '',
+                    pretarget: '',
                     target: 'find_assay',
-                    display: 'Find Assays',
+                    mode: '',
+                    paramsFn: '',
                 }, {
-                    target: 'new_assay',
-                    display: 'New Assay',
-                }, ],
-            }, {
-                name: 'experiments',
-                links: [{
+                    display: 'Experiment',
+                    pretargetFn: '',
+                    pretarget: '',
                     target: 'find_experiment',
-                    display: 'Find Experiments',
-                }, {
-                    target: 'edit_experiment',
-                    display: 'New Experiment',
-                    mode: 'modal',
+                    mode: '',
+                    paramsFn: '',
                 }, ],
             }, ],
         },
         type: LinksPage,
     },
-    view_experiment: {
-        name: 'view_experiment',
-        display: 'View Experiment',
+    find_assay: {
+        name: 'find_assay',
+        display: 'Find Assay',
         config: {
-            sourceTable: 'experiment',
+            sourceTable: 'assay',
             newRecord: '',
             newRecordFn: '',
-            viewFields: [{
+            rowAction: {
+                display: 'Select Assay',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_assay',
+                mode: '',
+                paramsFn: (data) => ({
+                    id: data.id
+                }),
+            },
+            viewColumns: [{
                 field: 'name',
-                display: '',
-                target: '',
-            }, {
-                field: 'description',
-                display: '',
-                target: '',
-            }, {
-                field: 'start_date',
-                display: '',
-                target: '',
+                width: '200',
             }, {
                 field: 'type',
-                display: '',
-                target: '',
-            }, {
-                field: 'assay',
-                display: '',
-                target: '',
+                width: '200',
             }, ],
-            editFields: [],
-            referenceTables: [],
+            editColumns: [],
+            searchFields: ['name', 'type', ],
             buttons: [{
+                display: 'New Assay',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_assay',
+                mode: '',
+                paramsFn: '',
+            }, {
                 display: 'Done',
                 pretargetFn: '',
                 pretarget: '',
                 target: 'back',
                 mode: '',
                 paramsFn: '',
-            }, {
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_experiment',
-                mode: '',
-                paramsFn: (params) => ({
-                    id: params.id
-                }),
             }, ],
         },
-        type: RecordPage,
+        type: TablePage,
     },
-    edit_experiment: {
-        name: 'edit_experiment',
-        display: 'Edit Experiment',
+    view_assay: {
+        name: 'view_assay',
+        display: 'View Assay',
         config: {
-            sourceTable: 'experiment',
+            sourceTable: 'assay',
             newRecord: '',
             newRecordFn: '',
             viewFields: [{
@@ -180,42 +172,54 @@ export const pages = {
                 display: '',
                 target: '',
             }, {
-                field: 'description',
-                display: '',
-                target: '',
-            }, {
-                field: 'start_date',
-                display: '',
-                target: '',
-            }, {
                 field: 'type',
-                display: '',
-                target: '',
-            }, {
-                field: 'assay',
                 display: '',
                 target: '',
             }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_experiment',
+                display: 'Experiment',
+                paramsFn: (data) => ({
+                    assay: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_assay',
+                mode: '',
+                paramsFn: (params) => ({
+                    id: params.id
+                }),
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_assay: {
+        name: 'edit_assay',
+        display: 'Edit Assay',
+        config: {
+            sourceTable: 'assay',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
             editFields: [{
                 field: 'name',
-                display: 'Experiment Name',
-                lookup: '',
-            }, {
-                field: 'description',
-                display: '',
-                lookup: '',
-            }, {
-                field: 'start_date',
                 display: '',
                 lookup: '',
             }, {
                 field: 'type',
                 display: '',
                 lookup: '',
-            }, {
-                field: 'assay',
-                display: '',
-                lookup: 'find_assay',
             }, ],
             referenceTables: [],
             buttons: [{
@@ -257,20 +261,33 @@ export const pages = {
             },
             viewColumns: [{
                 field: 'name',
-                width: '100',
+                width: '200',
             }, {
                 field: 'description',
                 width: '200',
             }, {
                 field: 'start_date',
-                width: '50',
+                width: '200',
+            }, {
+                field: 'assay',
+                width: '200',
+            }, {
+                field: 'plate_map_file',
+                width: '200',
             }, {
                 field: 'type',
-                width: '150',
+                width: '200',
             }, ],
             editColumns: [],
-            searchFields: ['name', 'description', 'start_date', 'type', ],
+            searchFields: ['name', 'description', 'start_date', 'assay', 'plate_map_file', 'type', ],
             buttons: [{
+                display: 'New Experiment',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_experiment',
+                mode: '',
+                paramsFn: '',
+            }, {
                 display: 'Done',
                 pretargetFn: '',
                 pretarget: '',
@@ -281,52 +298,31 @@ export const pages = {
         },
         type: TablePage,
     },
-    find_assay: {
-        name: 'find_assay',
-        display: 'Find Assay',
+    view_experiment: {
+        name: 'view_experiment',
+        display: 'View Experiment',
         config: {
-            sourceTable: 'assay',
-            newRecord: '',
-            newRecordFn: '',
-            rowAction: {
-                display: 'Select Experiment',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'view_assay',
-                mode: '',
-                paramsFn: (data) => ({
-                    id: data.id
-                }),
-            },
-            viewColumns: [{
-                field: 'name',
-                width: '100',
-            }, {
-                field: 'type',
-                width: '150',
-            }, ],
-            editColumns: [],
-            searchFields: ['name', 'type', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-            }, ],
-        },
-        type: TablePage,
-    },
-    view_assay: {
-        name: 'view_assay',
-        display: 'View Assay',
-        config: {
-            sourceTable: 'assay',
+            sourceTable: 'experiment',
             newRecord: '',
             newRecordFn: '',
             viewFields: [{
                 field: 'name',
+                display: '',
+                target: '',
+            }, {
+                field: 'description',
+                display: '',
+                target: '',
+            }, {
+                field: 'start_date',
+                display: '',
+                target: '',
+            }, {
+                field: 'assay',
+                display: '',
+                target: '',
+            }, {
+                field: 'plate_map_file',
                 display: '',
                 target: '',
             }, {
@@ -335,15 +331,72 @@ export const pages = {
                 target: '',
             }, ],
             editFields: [],
-            referenceTables: [{
-                tablePage: 'find_experiment',
-                display: 'Experiments',
-                paramsFn: (data) => ({
-                    assay: data.id
-                }),
-            }, ],
+            referenceTables: [],
             buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_experiment',
+                mode: '',
+                paramsFn: (params) => ({
+                    id: params.id
+                }),
+            }, {
                 display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_experiment: {
+        name: 'edit_experiment',
+        display: 'Edit Experiment',
+        config: {
+            sourceTable: 'experiment',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+            }, {
+                field: 'description',
+                display: '',
+                lookup: '',
+            }, {
+                field: 'start_date',
+                display: '',
+                lookup: '',
+            }, {
+                field: 'assay',
+                display: '',
+                lookup: 'find_assay',
+            }, {
+                field: 'plate_map_file',
+                display: '',
+                lookup: '',
+            }, {
+                field: 'type',
+                display: '',
+                lookup: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => {
+                    context.save()
+                },
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+            }, {
+                display: 'Cancel',
                 pretargetFn: '',
                 pretarget: '',
                 target: 'back',

@@ -1,7 +1,7 @@
 import argparse
 
 from .config import load_config
-from .schema import write_schema_docs, write_schema_code
+from .schema import write_schema_docs, write_schema_code, write_schema_pages
 from .pages import write_pages_docs, write_pages_code
 from .utils import get_errors
 
@@ -11,6 +11,7 @@ def not_implemented(name):
 commands = {
     'schema-docs': write_schema_docs,
     'schema-code': write_schema_code,
+    'schema-pages': write_schema_pages,
     'pages-docs': write_pages_docs,
     'pages-code': write_pages_code,
 }

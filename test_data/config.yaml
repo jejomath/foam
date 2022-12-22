@@ -11,3 +11,4 @@ page_classes:
 
 config_files:
 - experiments.yaml
+- gen_pages.yaml

@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-import graphviz
 import pydot
+import yaml
 
 from .utils import add_display, config_error, jinja_template, jinja_from_string
 
 def get_schema_docs(config):
     return jinja_template('schema_html.jnj').render(config=config)
-
 
 def get_model_code(config):
     return jinja_template('models_py.jnj').render(config=config)
@@ -23,6 +22,91 @@ def get_views_code(config):
 def get_router_code(config):
     return jinja_template('router_py.jnj').render(config=config)
 
+
+def write_schema_pages(config):
+    result = {
+        'page_modules': [{
+            'name': 'home',
+            'pages': [{
+                'name': 'home',
+                'descr': 'Landing Page',
+                'type': 'LinksPage',
+                'config': {
+                    'boxes': [{
+                        'name': m.display,
+                        'links': [{
+                            'target': f'find_{t.name}', 'display': t.display
+                        } for t in m.tables]
+                    } for m in config.table_modules]
+                }
+            }]
+
+        }] + [{
+            'name': t.name, 
+            'pages': [{
+                'name': f'find_{t.name}',
+                'descr': f'Search page for table {t.name}',
+                'type': 'TablePage',
+                'config': {
+                    'source_table': t.name,
+                    'view_columns': [{'field': f.name, 'width': 200} for f in t.fields],
+                    'search_fields': [f.name for f in t.fields],
+                    'row_action': {
+                        'display': f'Select {t.display}',
+                        'target': f'view_{t.name}',
+                        'params_fn': '(data) => ({id: data.id})' 
+                    },
+                    'buttons': [{
+                        'display': f'New {t.display}',
+                        'target': f'edit_{t.name}'
+                    }, {
+                        'display': 'Done',
+                        'target': 'back'
+                    }]
+                }
+            }, {
+                'name': f'view_{t.name}',
+                'descr': f'View a record from table {t.name}',
+                'type': 'RecordPage',
+                'config': {
+                    'source_table': t.name,
+                    'view_fields': [f.name for f in t.fields],
+                    'reference_tables': [{
+                        'table_page': f'find_{r.table.name}',
+                        'display': r.table.display,
+                        'params_fn': f'(data) => ({{{r.name}: data.id}})'
+                    } for r in t.backref_fields],
+                    'buttons': [{
+                        'display': 'Edit',
+                        'target': f'edit_{t.name}',
+                        'params_fn': '(params) => ({ id: params.id })'
+                    }, {
+                        'display': 'Done',
+                        'target': 'back'
+                    }]
+                },
+            }, {
+                'name': f'edit_{t.name}',
+                'descr': f'Edit a record from table {t.name}',
+                'type': 'RecordPage',
+                'config': {
+                    'source_table': t.name,
+                    'edit_fields': [
+                        {'field': f.name, 'lookup': f'find_{f.ref_table.name}'} if f.ref_table else f.name
+                        for f in t.fields],
+                    'buttons': [{
+                        'display': 'Save',
+                        'target': 'back',
+                        'pretarget_fn': '(params, data, context) => { context.save() }'
+                    }, {
+                        'display': 'Cancel',
+                        'target': 'back'
+                    }]
+                },
+            }]
+        } for t in sum([m.tables for m in config.table_modules], [])]
+    }
+    print(yaml.dump(result))
 
 def write_schema_code(config):
     if config.paths.docs_path:

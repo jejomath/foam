@@ -1,0 +1,145 @@
+page_modules:
+- name: home
+  pages:
+  - config:
+      boxes:
+      - links:
+        - display: Assay
+          target: find_assay
+        - display: Experiment
+          target: find_experiment
+        name: Experiments
+    descr: Landing Page
+    name: home
+    type: LinksPage
+- name: assay
+  pages:
+  - config:
+      buttons:
+      - display: New Assay
+        target: edit_assay
+      - display: Done
+        target: back
+      row_action:
+        display: Select Assay
+        params_fn: '(data) => ({id: data.id})'
+        target: view_assay
+      search_fields:
+      - name
+      - type
+      source_table: assay
+      view_columns:
+      - field: name
+        width: 200
+      - field: type
+        width: 200
+    descr: Search page for table assay
+    name: find_assay
+    type: TablePage
+  - config:
+      buttons:
+      - display: Edit
+        params_fn: '(params) => ({ id: params.id })'
+        target: edit_assay
+      - display: Done
+        target: back
+      reference_tables:
+      - display: Experiment
+        params_fn: '(data) => ({assay: data.id})'
+        table_page: find_experiment
+      source_table: assay
+      view_fields:
+      - name
+      - type
+    descr: View a record from table assay
+    name: view_assay
+    type: RecordPage
+  - config:
+      buttons:
+      - display: Save
+        pretarget_fn: (params, data, context) => { context.save() }
+        target: back
+      - display: Cancel
+        target: back
+      edit_fields:
+      - name
+      - type
+      source_table: assay
+    descr: Edit a record from table assay
+    name: edit_assay
+    type: RecordPage
+- name: experiment
+  pages:
+  - config:
+      buttons:
+      - display: New Experiment
+        target: edit_experiment
+      - display: Done
+        target: back
+      row_action:
+        display: Select Experiment
+        params_fn: '(data) => ({id: data.id})'
+        target: view_experiment
+      search_fields:
+      - name
+      - description
+      - start_date
+      - assay
+      - plate_map_file
+      - type
+      source_table: experiment
+      view_columns:
+      - field: name
+        width: 200
+      - field: description
+        width: 200
+      - field: start_date
+        width: 200
+      - field: assay
+        width: 200
+      - field: plate_map_file
+        width: 200
+      - field: type
+        width: 200
+    descr: Search page for table experiment
+    name: find_experiment
+    type: TablePage
+  - config:
+      buttons:
+      - display: Edit
+        params_fn: '(params) => ({ id: params.id })'
+        target: edit_experiment
+      - display: Done
+        target: back
+      reference_tables: []
+      source_table: experiment
+      view_fields:
+      - name
+      - description
+      - start_date
+      - assay
+      - plate_map_file
+      - type
+    descr: View a record from table experiment
+    name: view_experiment
+    type: RecordPage
+  - config:
+      buttons:
+      - display: Save
+        pretarget_fn: (params, data, context) => { context.save() }
+        target: back
+      - display: Cancel
+        target: back
+      edit_fields:
+      - name
+      - description
+      - start_date
+      - field: assay
+        lookup: find_assay
+      - plate_map_file
+      - type
+      source_table: experiment
+    descr: Edit a record from table experiment
+    name: edit_experiment
+    type: RecordPage
+

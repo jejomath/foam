@@ -289,6 +289,7 @@ class LinksBox:
             next_pages += l.add_refs(config, page)
         return next_pages
 
+    @property
     def js_config(self):
         return {
             'name': self.name,
@@ -309,6 +310,7 @@ class LinksPageConfig:
             next_pages += b.add_refs(config, page)
         return next_pages
 
+    @property
     def js_config(self):
         return {
             'boxes': [b.js_config for b in self.boxes],
