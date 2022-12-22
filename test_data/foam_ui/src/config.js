@@ -91,7 +91,7 @@ export const enums = {
 }
 
 export const pages = {
-    home: {
+    '/': {
         name: 'home',
         display: 'Home',
         config: {

@@ -29,7 +29,7 @@ def get_pages_code(config):
         schema=get_js_dict({t.name: clean_table(t) for t in tables}),
         enums=get_js_dict({e.name: clean_enum(e) for e in config.enums}),
         pages=get_js_dict(
-            {p.name: p.js_config 
+            {'\'/\'' if p.name == 'home' else p.name: p.js_config 
              for p in sum([m.pages for m in config.page_modules], [])}
         ),
     )
@@ -274,6 +274,46 @@ class RecordPageConfig:
             'referenceTables': [t.js_config for t in self.reference_tables],
             'buttons': [b.js_config for b in self.buttons],
         }
+
+@dataclass
+class LinksBox:
+    name: str
+    links: list[Action]
+
+    def __post_init__(self):
+        self.links = [Action(**l) for l in self.links] if self.links else []
+
+    def add_refs(self, config, page):
+        next_pages = []
+        for l in self.links:
+            next_pages += l.add_refs(config, page)
+        return next_pages
+
+    def js_config(self):
+        return {
+            'name': self.name,
+            'links': [l.js_config for l in self.links],
+        }
+
+
+@dataclass
+class LinksPageConfig:
+    boxes: list[LinksBox] = None
+
+    def __post_init__(self):
+        self.boxes = [LinksBox(**b) for b in self.boxes] if self.boxes else []
+
+    def add_refs(self, config, page):
+        next_pages = []
+        for b in self.boxes:
+            next_pages += b.add_refs(config, page)
+        return next_pages
+
+    def js_config(self):
+        return {
+            'boxes': [b.js_config for b in self.boxes],
+        }
+
 
 @dataclass
 class TablePageConfig:
