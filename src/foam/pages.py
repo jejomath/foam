@@ -348,6 +348,7 @@ class TablePageConfig:
                 for s in self.search_fields:
                     if s not in [f.name for f in table_config.fields]:
                         config_error(f'Unexpected field {table_config.name}.{s} found in config for page "{page}".')
+                next_pages += self.row_action.add_refs(config, page)
         return next_pages
 
     @property
@@ -364,9 +365,10 @@ class TablePageConfig:
         }
 
 
-page_configs ={
+page_configs = {
     'RecordPage': RecordPageConfig,
     'TablePage': TablePageConfig,
+    'LinksPage': LinksPageConfig,
 }
 
 
@@ -407,7 +409,7 @@ class Page:
         self.next_pages = [NextPage(**n) for n in self.next_pages] if self.next_pages else []
 
     def add_refs(self, config):
-        if self.type and self.type in config.class_dict.keys():
+        if self.type and self.type in page_configs.keys():
             self.next_pages = self.next_pages + self.config.add_refs(config, self.name)
 
     @property

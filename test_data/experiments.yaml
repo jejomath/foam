@@ -64,7 +64,7 @@ page_modules:
           links:
           - target: find_assay
             display: Find Assays
-          - target: new_assay
+          - target: view_assay
             display: New Assay
         - name: experiments
           links:
