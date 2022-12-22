@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
-import { Button, ButtonList, ViewField, EditField, FieldList } from './Components.js'
+import { ButtonList, ViewField, EditField, FieldList } from './Components.js'
+import TablePage from './TablePage.js';
 
-export class RecordPage extends Component {
+export default class RecordPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,7 +12,7 @@ export class RecordPage extends Component {
 
     componentDidMount() {
         var createRecord = null;
-        if (this.props.config.newEntry !== 'Always' && this.props.params) {
+        if (this.props.config.newEntry !== 'Always' && Object.keys(this.props.params).length > 0) {
             createRecord = this.props.context.getRecord(
                 this.props.config.sourceTable,
                 this.props.params);
@@ -56,9 +57,9 @@ export class RecordPage extends Component {
                         fields: this.props.config.viewFields,
                         fieldType: ViewField,
                     }}
-                    params = {this.props.params}
-                    data = {this.state.data}
-                    context = {this.props.context}
+                    params={this.props.params}
+                    data={this.state.data}
+                    context={this.props.context}
                 />
                 <FieldList
                     config={{
@@ -66,17 +67,28 @@ export class RecordPage extends Component {
                         fields: this.props.config.editFields,
                         fieldType: EditField,
                     }}
-                    params = {this.props.params}
-                    data = {this.state.data}
-                    context = {{...this.props.context, update: this.update}}
+                    params={this.props.params}
+                    data={this.state.data}
+                    context={{...this.props.context, update: this.update}}
                 />
+                {this.props.config.referenceTables.map((t, i) => (
+                    <div className='reference-table-div' key={i}>
+                        {t.display}
+                        <TablePage 
+                            config={this.props.context.pages[t.tablePage].config}
+                            context={this.props.context}
+                            params={t.paramsFn ? t.paramsFn(this.state.data) : {}}
+                            mode='reference'
+                        />
+                    </div>
+                ))}
                 <ButtonList
                     config={{
                         buttons: this.props.config.buttons,
                     }}
-                    params = {this.props.params}
-                    data = {this.state.data}
-                    context = {{...this.props.context, save: this.save }}
+                    params={this.props.params}
+                    data={this.state.data}
+                    context={{...this.props.context, save: this.save }}
                 />
             </div>
             </div>

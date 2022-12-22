@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { SearchBar, Table, ButtonList } from './Components.js'
 
-export class TablePage extends Component {
+export default class TablePage extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -11,13 +11,7 @@ export class TablePage extends Component {
     }
 
     componentDidMount() {
-        this.props.context.getRecords(
-            this.props.config.sourceTable,
-            this.props.params).then((data) => {
-                this.setState({
-                    data: data
-                })
-            })
+        this.updateTable();
     }
 
     updateSearchParams = (params) => {
@@ -25,16 +19,34 @@ export class TablePage extends Component {
     }
 
     updateTable = () => {
-        console.log(this.state.searchParams);
+        const params = Object.assign({}, ...this.state.searchParams.map((s) => ({[s.field]: s.value})))
+        this.props.context.getRecords(
+            this.props.config.sourceTable,
+            params).then((data) => {
+                this.setState({
+                    data: data
+                })
+            })
     }
 
     render() {
         if (!this.state.data) { return <div />}
+        if (this.props.mode == 'reference') {
+            return <Table
+                config={this.props.config}
+                params={this.props.params}
+                data={this.state.data}
+                context={this.props.context}
+            />
+        }
         return (
             <div className='table-page-outer-div'>
             <div className='table-page-inner-div'>
                 <SearchBar
-                    config={{table: this.props.config.sourceTable, fields: this.props.config.searchFields}}
+                    config={{
+                        table: this.props.config.sourceTable,
+                        fields: this.props.config.searchFields
+                    }}
                     params = {this.props.params}
                     data = {this.state.searchParams}
                     context = {{...this.props.context, 
@@ -44,18 +56,31 @@ export class TablePage extends Component {
                 />
                 <Table
                     config={this.props.config}
+                    params={this.props.params}
+                    data={this.state.data}
+                    context={this.props.context}
+                />
+                <ButtonList
+                    config={{
+                        buttons: this.props.config.buttons,
+                    }}
                     params = {this.props.params}
                     data = {this.state.data}
                     context = {this.props.context}
+                    hide={this.props.params.mode === 'select'}
                 />
                 <ButtonList
-                config={{
-                    buttons: this.props.config.buttons,
-                }}
-                params = {this.props.params}
-                data = {this.state.data}
-                context = {this.props.context}
-            />
+                    config={{
+                        buttons: [
+                            {display: 'Cancel', target: 'back'},
+                            {...this.props.params.rowAction, display: 'None'}
+                        ]
+                    }}
+                    params = {this.props.params}
+                    data = {null}
+                    context = {this.props.context}
+                    hide={this.props.params.mode !== 'select'}
+                />
             </div>
             </div>
     )

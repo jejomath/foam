@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from './Components.js'
 
-export class LinksPage extends Component {
+export default class LinksPage extends Component {
 
     render() {
         return <div className='links-page-outer-div'>

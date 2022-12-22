@@ -8,7 +8,11 @@ import 'react-data-grid/lib/styles.css';
 function followAction(config, params, data, context) {
     var actionParams = {}
     if (config.paramsFn) {
-        actionParams = config.paramsFn(data, params, context); }
+        actionParams = config.paramsFn(data, params, context); 
+    } else if (config.params) {
+        actionParams = config.params;
+    }
+
     if (config.pretargetFn) { config.pretargetFn(data, params, context); }
     context.go(config.target, actionParams, config.mode);
 }
@@ -39,6 +43,7 @@ export class Link extends Component {
 
 export class ButtonList extends Component {
     render() {
+        if (this.props.hide) { return <div />}
         return (
             <div className='button-list-div'>
                 {this.props.config.buttons.map((config, index) => (
@@ -58,7 +63,7 @@ export class ButtonList extends Component {
 export class ViewField extends Component {
 
     render() {
-        const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field];
+        const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field.field];
         const fieldType = field.fieldType;
         if (fieldType === 'STRING') {
             return (this.props.data)
@@ -78,7 +83,7 @@ export class ViewField extends Component {
             return (d)
 
         } else if (fieldType === 'ref') {
-            return <div>Not Implemented</div>
+            return (this.props.data ? this.props.data.name : '')
 
         } else if (fieldType === 'doc') {
             return <div>Not Implemented</div>
@@ -88,18 +93,49 @@ export class ViewField extends Component {
 
 
 export class EditField extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            options: null,
+            oDict: null,
+        }
+    }
+
+    componentDidMount() {
+        const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field.field];
+        const fieldType = field.fieldType;
+        if (fieldType === 'ref') {
+            this.props.context.getRecords(field.refTable).then((result) => {
+                this.setState({
+                    options: result,
+                    oDict: Object.assign({}, ...result.map((o) => ({[o.id]: o})))
+                })
+            });
+        }
+    }
+
     handlChange = (event) => {
-        this.props.context.update(this.props.config.field, event.target.value)
+        const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field.field];
+        const fieldType = field.fieldType;
+        if (fieldType === 'ref') {
+            if (event.target.value === '') {
+                this.props.context.update(this.props.config.field.field, null);
+            } else {
+                this.props.context.update(this.props.config.field.field, this.state.oDict[parseInt(event.target.value)])
+            }
+        } else {
+            this.props.context.update(this.props.config.field.field, event.target.value)
+        }
     }
 
     handleDateChange = (date) => {
         date.setHours(0, 0, 0, 0);
         const strDate = date.toISOString().substring(0, 10);
-        this.props.context.update(this.props.config.field, strDate)
+        this.props.context.update(this.props.config.field.field, strDate)
     }
 
     render() {
-        const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field];
+        const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field.field];
         const fieldType = field.fieldType;
         if (fieldType === 'STRING' || (fieldType === 'TEXT' && this.props.config.small)) {
             return (<input type='text' value={this.props.data || ''} onChange={this.handlChange}/>)
@@ -108,7 +144,6 @@ export class EditField extends Component {
             return (<textarea type='text' value={this.props.data || ''} onChange={this.handlChange}/>)
 
         } else if (fieldType === 'DATE') {
-            var date = Date.parse(this.props.data);
             return <DatePicker 
                 selected={Date.parse(`${this.props.data}T23:59:59`)}
                 onChange={this.handleDateChange}
@@ -125,8 +160,39 @@ export class EditField extends Component {
                 {options.map((o, i) => (<option value={o.name} key={i}>{o.display}</option>))}
             </select>)
 
+        } else if (fieldType === 'ref' && this.props.config.field.lookup !== '') {
+            return <div>
+                {this.props.data ? this.props.data.name : ''}
+                <Button 
+                    config={{
+                        display: 'Select',
+                        target: this.props.config.field.lookup, 
+                        mode: 'modal',
+                        params: {
+                            mode: 'select',
+                            rowAction: {
+                                target: 'back', 
+                                pretargetFn: (data) => {
+                                    this.props.context.update(
+                                        this.props.config.field.field,
+                                        data ? {id: data.id, name: data.name} : null
+                                    )
+                                }
+                            }
+                        }
+                    }}
+                    params={null}
+                    data={null}
+                    context={this.props.context}
+                />
+            </div>
+
         } else if (fieldType === 'ref') {
-            return <div>Not Implemented</div>
+            if (!this.state.options) { return <div />}
+            return (<select value={this.props.data ? this.props.data.id : ''} onChange={this.handlChange}>
+                <option value=''></option>
+                {this.state.options.map((o, i) => (<option value={o.id} key={i}>{o.name}</option>))}
+            </select>)
 
         } else if (fieldType === 'doc') {
             return <div>Not Implemented</div>
@@ -146,7 +212,7 @@ export class FieldList extends Component {
                 <div className='field-list-value-div'>
                     {React.createElement(
                         this.props.config.fieldType, {
-                            config: {table: this.props.config.table, field: field.field},
+                            config: {table: this.props.config.table, field: field},
                             params:this.props.params,
                             data: this.props.data[field.field],
                             context: this.props.context,
@@ -160,7 +226,8 @@ export class FieldList extends Component {
 
 export class Table extends Component {
     rowClick = (rowData) => {
-        followAction(this.props.config.rowAction, this.props.params, rowData, this.props.context)
+        const rowAction = this.props.params.rowAction || this.props.config.rowAction;
+        followAction(rowAction, this.props.params, rowData, this.props.context)
     }
 
     render() {
@@ -197,8 +264,8 @@ class SearchField extends Component {
                 </div>
                 <div className='search-field-edit-div'>
                     <EditField 
-                        value={this.props.data.value}
-                        config={{table: this.props.config.table, field: this.props.data.field, small: true}}
+                        data={this.props.data.value}
+                        config={{table: this.props.config.table, field: this.props.data, small: true}}
                         context={{...this.props.context, update: this.changeValue}}
                     />
                 </div>
@@ -209,7 +276,7 @@ class SearchField extends Component {
 
 export class SearchBar extends Component {
     componentDidMount() {
-        if (this.props.data.length == 0) { this.addParam() }
+        if (this.props.data.length === 0) { this.addParam() }
     }
 
     update = (index, field, value) => {
@@ -233,7 +300,7 @@ export class SearchBar extends Component {
                     context={{...this.props.context, update: this.update}}
                     data={data}
                     key={index}/>))}
-                <div onClick={this.addParam}>Add Term</div>
+                <div className='search-bar-add-term-div' onClick={this.addParam}>Add Term</div>
             </div>
             <div className='search-bar-button-div'>
                 <button onClick={this.props.context.updateTable}>Search</button>

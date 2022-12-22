@@ -55,8 +55,6 @@
     background-color: whitesmoke;
 }
 
-
-
 .field-list-field-div {
     padding: 5px;
     display: grid;
@@ -69,6 +67,10 @@
 }
 
 .field-list-value-div {
+}
+
+.reference-table-div {
+    padding: 5px;
 }
 
 .button-list-div {
@@ -93,6 +95,11 @@ button {
 `.search-bar-div {
     display: flex;
     padding-bottom: 15px;
+}
+
+.search-bar-add-term-div {
+    cursor: pointer;
+    padding: 5px;
 }
 
 .search-field-div {

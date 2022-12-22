@@ -70,9 +70,9 @@ page_modules:
           links:
           - target: find_experiment
             display: Find Experiments
-            mode: modal
-          - target: new_experiment
+          - target: edit_experiment
             display: New Experiment
+            mode: modal
 
     - name: view_experiment
       descr: Use this page to find experiments
@@ -84,8 +84,7 @@ page_modules:
         - description
         - start_date
         - type
-        reference_tables:
-        - table_page: find_experiment
+        - assay
         buttons:
         - display: Done
           target: back
@@ -103,13 +102,15 @@ page_modules:
         - description
         - start_date
         - type
+        - assay
         edit_fields:
         - field: name
           display: Experiment Name
-          lookup: foo
         - description
         - start_date
         - type
+        - field: assay
+          lookup: find_assay
         buttons:
         - display: Save
           target: back
@@ -140,6 +141,43 @@ page_modules:
           display: Select Experiment
           target: view_experiment
           params_fn: "(data) => ({id: data.id})"
+        buttons:
+        - display: Done
+          target: back
+
+    - name: find_assay
+      descr: Use this page to find assays
+      type: TablePage
+      config:
+        source_table: assay
+        view_columns:
+        - field: name
+          width: 100
+        - field: type
+          width: 150
+        search_fields:
+        - name
+        - type
+        row_action:
+          display: Select Experiment
+          target: view_assay
+          params_fn: "(data) => ({id: data.id})"
+        buttons:
+        - display: Done
+          target: back
+
+    - name: view_assay
+      descr: View the details of an assay
+      type: RecordPage
+      config:
+        source_table: assay
+        view_fields:
+        - name
+        - type
+        reference_tables:
+        - display: Experiments
+          table_page: find_experiment
+          params_fn: "(data) => ({assay: data.id})"
         buttons:
         - display: Done
           target: back

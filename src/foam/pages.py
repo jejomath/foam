@@ -185,6 +185,7 @@ class Column:
 @dataclass
 class ReferenceTable:
     table_page: str
+    display: str
     params_fn: str = ''
 
     def add_refs(self, config, page):
@@ -200,6 +201,7 @@ class ReferenceTable:
     def js_config(self):
         return {
             'tablePage': self.table_page,
+            'display': self.display,
             'paramsFn': self.params_fn,
         }
 

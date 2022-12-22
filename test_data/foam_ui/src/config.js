@@ -1,12 +1,6 @@
-import {
-    RecordPage
-} from './RecordPage.js';
-import {
-    TablePage
-} from './TablePage.js';
-import {
-    LinksPage
-} from './LinksPage.js';
+import RecordPage from './RecordPage.js';
+import TablePage from './TablePage.js';
+import LinksPage from './LinksPage.js';
 
 export const schema = {
     assay: {
@@ -115,10 +109,10 @@ export const pages = {
                 links: [{
                     target: 'find_experiment',
                     display: 'Find Experiments',
-                    mode: 'modal',
                 }, {
-                    target: 'new_experiment',
+                    target: 'edit_experiment',
                     display: 'New Experiment',
+                    mode: 'modal',
                 }, ],
             }, ],
         },
@@ -147,12 +141,13 @@ export const pages = {
                 field: 'type',
                 display: '',
                 target: '',
+            }, {
+                field: 'assay',
+                display: '',
+                target: '',
             }, ],
             editFields: [],
-            referenceTables: [{
-                tablePage: 'find_experiment',
-                paramsFn: '',
-            }, ],
+            referenceTables: [],
             buttons: [{
                 display: 'Done',
                 pretargetFn: '',
@@ -196,11 +191,15 @@ export const pages = {
                 field: 'type',
                 display: '',
                 target: '',
+            }, {
+                field: 'assay',
+                display: '',
+                target: '',
             }, ],
             editFields: [{
                 field: 'name',
                 display: 'Experiment Name',
-                lookup: 'foo',
+                lookup: '',
             }, {
                 field: 'description',
                 display: '',
@@ -213,6 +212,10 @@ export const pages = {
                 field: 'type',
                 display: '',
                 lookup: '',
+            }, {
+                field: 'assay',
+                display: '',
+                lookup: 'find_assay',
             }, ],
             referenceTables: [],
             buttons: [{
@@ -277,5 +280,77 @@ export const pages = {
             }, ],
         },
         type: TablePage,
+    },
+    find_assay: {
+        name: 'find_assay',
+        display: 'Find Assay',
+        config: {
+            sourceTable: 'assay',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Experiment',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_assay',
+                mode: '',
+                paramsFn: (data) => ({
+                    id: data.id
+                }),
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '100',
+            }, {
+                field: 'type',
+                width: '150',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'type', ],
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_assay: {
+        name: 'view_assay',
+        display: 'View Assay',
+        config: {
+            sourceTable: 'assay',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+            }, {
+                field: 'type',
+                display: '',
+                target: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_experiment',
+                display: 'Experiments',
+                paramsFn: (data) => ({
+                    assay: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+            }, ],
+        },
+        type: RecordPage,
     },
 }
