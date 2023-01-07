@@ -16,7 +16,7 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
-requires = [
+dependencies = [
   'pyyaml',
   'Jinja2',
   'graphviz',
