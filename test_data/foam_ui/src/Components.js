@@ -160,7 +160,7 @@ export class EditField extends Component {
                 {options.map((o, i) => (<option value={o.name} key={i}>{o.display}</option>))}
             </select>)
 
-        } else if (fieldType === 'ref' && this.props.config.field.lookup !== '') {
+        } else if (fieldType === 'ref' && this.props.config.field.lookup) {
             return <div>
                 {this.props.data ? this.props.data.name : ''}
                 <Button 
@@ -275,6 +275,9 @@ const fieldFilters = {
         {display: '=<', value: 'lte'},
         {display: '>=', value: 'gte'},
     ],
+    ref: [{display: '=', value: 'name'},],
+    enum: [{display: '=', value: ''},],
+    doc: [{display: '=', value: ''},],
 }
 
 class SearchField extends Component {
@@ -299,7 +302,6 @@ class SearchField extends Component {
         this.setState({
             filters: fieldFilters[fieldType]
         }, () => {
-            console.log(this.state.filters[0].value)
             this.props.context.update(
                 this.props.config.index, 
                 value,
@@ -348,6 +350,7 @@ class SearchField extends Component {
                         data={this.props.data.value}
                         config={{table: this.props.config.table, field: this.props.data, small: true}}
                         context={{...this.props.context, update: this.changeValue}}
+                        key={this.props.data.field}
                     />
                 </div>
             </div>

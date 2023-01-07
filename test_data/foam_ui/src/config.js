@@ -375,7 +375,7 @@ export const pages = {
             }, {
                 field: 'assay',
                 display: '',
-                lookup: 'find_assay',
+                lookup: '',
             }, {
                 field: 'plate_map_file',
                 display: '',

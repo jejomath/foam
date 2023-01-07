@@ -10,7 +10,7 @@ class {{ t.class_name}}View(viewsets.ModelViewSet):
     queryset = {{ t.class_name }}.objects.all()
     filterset_fields = {
     {%- for f in t.fields %}{% if f.filters %}
-        '{{ f.name }}': [{%for l in f.filters %}'{{l}}', {% endfor %}],
+        '{{ f.filter_name }}': [{%for l in f.filters %}'{{l}}', {% endfor %}],
     {%- endif %}{%- endfor %}
     }
 {% endfor %}{% endfor %}

@@ -10,6 +10,7 @@ class AssayView(viewsets.ModelViewSet):
     queryset = Assay.objects.all()
     filterset_fields = {
         'name': ['exact', 'contains', ],
+        'type': ['exact', ],
     }
 
 class ExperimentView(viewsets.ModelViewSet):
@@ -19,6 +20,9 @@ class ExperimentView(viewsets.ModelViewSet):
         'name': ['exact', 'contains', ],
         'description': ['exact', 'contains', ],
         'start_date': ['exact', 'gt', 'lt', 'gte', 'lte', ],
+        'assay__name': ['exact', ],
+        'plate_map_file': ['exact', ],
+        'type': ['exact', ],
     }
 
 

@@ -193,9 +193,9 @@ field_types = {
         'models.IntegerField(null=True, blank=True)',
         ['exact', 'gt', 'lt', 'gte', 'lte']
     ),
-    'enum': ('', ''),
-    'ref': ('', ''),
-    'doc': ('', ''),
+    'enum': ('', ['exact']),
+    'ref': ('', ['exact']),
+    'doc': ('', ['exact']),
 }
 
 
@@ -215,31 +215,36 @@ class Field:
     enum_class: str = None
     folder_class: str = None
     model_def: str = None
+    filter_name: str = None
     filters: list[str] = None
 
     def __post_init__(self):
         add_display(self)
+        self.filter_name = self.name
         if self.type.startswith('ref:'):
             self.short_type = 'ref'
             [_, self.ref_table] = self.type.split(':', 1)
             if not self.backref:
                 self.backref = self.table.name
+            self.filters = field_types[self.short_type][1]
+            self.filter_name = f'{self.name}__name'
             # self.model_def is set in make_schema_refs() below, after back_refs are defined.
         elif self.type.startswith('enum:'):
             self.short_type = 'enum'
             [_, self.enum_class] = self.type.split(':', 1)
             self.model_def = 'models.CharField(max_length=200, null=True, blank=True)'
+            self.filters = field_types[self.short_type][1]
             # self.model_def is set in make_schema_refs() below, after enum refs are defined.
         elif self.type.startswith('doc:'):
             self.short_type = 'doc'
             [_, self.folder_class] = self.type.split(':', 1)
             self.model_def = 'models.CharField(max_length=200, null=True, blank=True)'
+            self.filters = field_types[self.short_type][1]
         else:
             self.short_type = self.type
             if self.short_type not in field_types:
                 config_error(f'Unexpected type "{self.type}" found in field "{self.name}" of table "{self.table.name}".')
-            else:
-                (self.model_def, self.filters) = field_types[self.short_type]
+            (self.model_def, self.filters) = field_types[self.short_type]
 
 
 @dataclass
