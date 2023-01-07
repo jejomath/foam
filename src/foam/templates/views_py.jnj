@@ -8,6 +8,11 @@ from .models import {% for m in config.table_modules %}{% for t in m.tables %}{{
 class {{ t.class_name}}View(viewsets.ModelViewSet):
     serializer_class = {{ t.class_name }}Serializer
     queryset = {{ t.class_name }}.objects.all()
+    filterset_fields = {
+    {%- for f in t.fields %}{% if f.filters %}
+        '{{ f.name }}': [{%for l in f.filters %}'{{l}}', {% endfor %}],
+    {%- endif %}{%- endfor %}
+    }
 {% endfor %}{% endfor %}
 
 {% for m in config.table_modules %}{% for t in m.tables %}

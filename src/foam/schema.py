@@ -177,13 +177,25 @@ class Folder:
 
 
 field_types = {
-    'STRING': 'models.CharField(max_length=200, null=True, blank=True)',
-    'TEXT': 'models.TextField(null=True, blank=True)',
-    'DATE': 'models.DateField(null=True, blank=True)',
-    'INTEGER': 'models.IntegerField(null=True, blank=True)',
-    'enum': '',
-    'ref': '',
-    'doc': '',
+    'STRING': (
+        'models.CharField(max_length=200, null=True, blank=True)',
+        ['exact', 'contains']
+    ),
+    'TEXT': (
+        'models.TextField(null=True, blank=True)',
+        ['exact', 'contains']
+    ),
+    'DATE': (
+        'models.DateField(null=True, blank=True)',
+        ['exact', 'gt', 'lt', 'gte', 'lte']
+    ),
+    'INTEGER': (
+        'models.IntegerField(null=True, blank=True)',
+        ['exact', 'gt', 'lt', 'gte', 'lte']
+    ),
+    'enum': ('', ''),
+    'ref': ('', ''),
+    'doc': ('', ''),
 }
 
 
@@ -203,6 +215,7 @@ class Field:
     enum_class: str = None
     folder_class: str = None
     model_def: str = None
+    filters: list[str] = None
 
     def __post_init__(self):
         add_display(self)
@@ -226,7 +239,7 @@ class Field:
             if self.short_type not in field_types:
                 config_error(f'Unexpected type "{self.type}" found in field "{self.name}" of table "{self.table.name}".')
             else:
-                self.model_def = field_types[self.short_type]
+                (self.model_def, self.filters) = field_types[self.short_type]
 
 
 @dataclass

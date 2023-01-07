@@ -8,10 +8,18 @@ from .models import Assay, Experiment
 class AssayView(viewsets.ModelViewSet):
     serializer_class = AssaySerializer
     queryset = Assay.objects.all()
+    filterset_fields = {
+        'name': ['exact', 'contains', ],
+    }
 
 class ExperimentView(viewsets.ModelViewSet):
     serializer_class = ExperimentSerializer
     queryset = Experiment.objects.all()
+    filterset_fields = {
+        'name': ['exact', 'contains', ],
+        'description': ['exact', 'contains', ],
+        'start_date': ['exact', 'gt', 'lt', 'gte', 'lte', ],
+    }
 
 
 

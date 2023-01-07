@@ -161,7 +161,7 @@ for `start_date`, etc.
 
 The first two buttons in this example both return to the previous page, but the "Save" button first performs custom
 Javascript that saves the record. The third button sends the user to a new page to create a platemap for the experiment,
-on a page named `new_platemap` that would be defined elsewhere in the overall config. Again, note the custom Javascript
+on a page named `new_platemap` that would be defined elsewhere in the overall config. These links open the pages as new URLs, but there's also an option to open the new page in a modal on top of an unchanged original page. Again, note the custom Javascript
 that defines the search parameters that will go in the URL when navigating to the page.
 
 When the frontend is running, this page will be available at the endpoint that matches its `name`, as defined in the config.
@@ -199,6 +199,7 @@ Add the following three lines to `INSTALLED_APPS` in `settings.py`:
 ```
     'corsheaders',
     'rest_framework',
+    'django_filters',
     '<your app name>',
 ```
 
@@ -210,10 +211,14 @@ Add the following lines at the botton:
 
 ```
 CORS_ORIGIN_ALLOW_ALL = False
+
 CORS_ORIGIN_WHITELIST = (
   'http://localhost:3000',
 )
-```
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}```
 
 Then update `urls.py` to look like this:
 

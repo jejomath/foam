@@ -18,8 +18,16 @@ export default class TablePage extends Component {
         this.setState({searchParams: params})
     }
 
+    getSearchKey(param) {
+        if (param.filter === '') {
+            return param.field;
+        } else {
+            return `${param.field}__${param.filter}`
+        }
+    }
+
     updateTable = () => {
-        const params = Object.assign({}, ...this.state.searchParams.map((s) => ({[s.field]: s.value})))
+        const params = Object.assign({}, ...this.state.searchParams.map((s) => ({[this.getSearchKey(s)]: s.value})))
         this.props.context.getRecords(
             this.props.config.sourceTable,
             params).then((data) => {
@@ -31,7 +39,7 @@ export default class TablePage extends Component {
 
     render() {
         if (!this.state.data) { return <div />}
-        if (this.props.mode == 'reference') {
+        if (this.props.mode === 'reference') {
             return <Table
                 config={this.props.config}
                 params={this.props.params}
