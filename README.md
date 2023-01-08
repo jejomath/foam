@@ -252,9 +252,74 @@ This may take a minute or so, then it will open up a new browser tab with the la
 able to create, view and edit assays and experiments.
 
 
-## Update the configuration
+# Modify the example
+
+To get you started building your own system, we'll walk through some small changes to the frontend and backend.
+We'll start by adding an `end_date` field to the `experiment` table. After we make the change on the backend, we'll
+update the UI to incorporate this new field.
+
+## Update the Schema
+
+First, we'll add the field in the schema configuration, which is in the `table_modules` section of
+`test_data/experiments.yaml`. We'll add it between `start_date` and `assay` as like this:
+
+```yaml
+    ...
+    - name: start_date
+      type: DATE
+      descr: The day on which the experiment was started
+    - name: end_date
+      type: DATE
+      descr: The day on which the experiment was completed
+    - name: assay
+      type: ref:assay
+    ...
+```
+
+Then we need to run the command to update the server code, from the `test_data` directory:
+
+```bash
+foam schema-code
+```
+
+This updates the Django code, but the changes also require us to update the database. We can have Django do this
+by stopping the backend and running the following lines from the `test_data/foam_backend` directory:
+
+```bash
+python3 -m manage makemigrations
+python3 -m manage migrate
+```
+
+Then restart the server for the next step.
 
 
+## Updating the UI
+
+Because we won't want certain fields to appear in particular pages, we have to explicitly add them to the UI
+configuration. Let's start by adding `end_date` to the `find_experiment` page by adding it between `start_date`
+and `assay` in the file `test_data/gen_pages.yaml` as below:
+
+```yaml
+        - field: start_date
+          width: 50
+        - field: end_date
+          width: 50
+        - field: type
+          width: 150
+```
+
+Then you'll need to have foam re-generate the code by running the following command from the `test_data` directory:
+
+```bash
+foam pages-code
+```
+
+If the frontend server is already running, React will notice the changes and automatically reload the page. If not,
+you can start it as above. In either case, if you navigate to the `find_experiment` page by clicking on the Experiment
+link on the landing page, you should see the new `end_date` column in the table.
+
+You'll also need to add this new field in the `edit_experiment` and `view_experiment` configs, but we won't walk through
+the details here.
 
 
 # Creating your own Project
