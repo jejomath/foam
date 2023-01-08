@@ -176,24 +176,95 @@ The developer has the option of using the config object, as well as leveraging F
 accessing data from the backend, navigating to other pages or even embedding Foam components such as edit fields and tables.
 
 
-## Run the backend
+# Installing Foam
+
+## Clone the repo
+
+```bash
+git clone git@github.com:jejomath/foam.git
+```
+
+## Install the Python library
+
+```bash
+cd foam
+python3 -m pip install .
+```
+
+## Install the React library
+
+(Coming soon...)
+
+# Running the included example
+
+The Foam repo comes with a basic test config that you can use to try it out without having to invest in a custom config.
+Once you have the Python and library installed in your current environment, you need to install a couple of things in
+your local repo that are intentionally left out of git repo.
+
+install in the React library under
+`foam/test_data/foam_ui` using the instructions above. Then you just need to start the backend and frontend.
+
+## Create the Database and Run the backend
+
+By default, Django uses a SQLite database backed by a local file. Because this database includes credentials, it
+isn't included in the git repo. So you have to recreate it in your local copy.
 
 From `foam/test_data/foam_backend` run:
 
-'''
+```bash
+python3 -m manage migrate
+```
+
+You'll see a list of messages applying migrations, and you can also check that the `db.sqlite3` file is created
+in the `foam_backend` directory. This database is empty, but that's enough to run the server:
+
+```bash
 python3 -m manage runserver
-'''
+```
 
-## Run the frontend
+To verify that it's running, open a web browser and navigate to `http://localhost:8000/api/experiment/`. You should
+see a page telling you that the `experiment` table is empty.
 
-From `foam/test_data/foam_ui` run:
+You may also want to configure an admin user with the following command:
 
-'''
+```bash
+python manage.py createsuperuser
+```
+
+You can then get to the admin console (while the server is running) at `http://localhost:8000/admin/`. (See the Django
+documentation for more details about manging users and admins.)
+
+
+## Build and Run the Frontend
+
+To run the frontend, you need to install a number of React libraries that (for obvious reasons) we also left out of the
+git repo. You can do this by running the following command from `foam/test_data/foam_ui`:
+
+```bash
+npm install .
+```
+
+Once that completes and you have the backend running (in a different terminal window), you can start the frontend
+as follows:
+
+```bash
 npm start
-'''
+```
+
+This may take a minute or so, then it will open up a new browser tab with the landing page. From there, you should be
+able to create, view and edit assays and experiments.
 
 
-# Setting up a Django Repo
+## Update the configuration
+
+
+
+
+# Creating your own Project
+
+(The rest of this is scratch. Actual instructions coming soon...)
+
+## Setting up a Django Repo
 
 Add the following three lines to `INSTALLED_APPS` in `settings.py`:
 ```
