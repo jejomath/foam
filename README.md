@@ -261,7 +261,7 @@ update the UI to incorporate this new field.
 ## Update the Schema
 
 First, we'll add the field in the schema configuration, which is in the `table_modules` section of
-`test_data/experiments.yaml`. We'll add it between `start_date` and `assay` as like this:
+`test_data/experiments_schema.yaml`. We'll add it between `start_date` and `assay` as like this:
 
 ```yaml
     ...
@@ -297,15 +297,15 @@ Then restart the server for the next step.
 
 Because we won't want certain fields to appear in particular pages, we have to explicitly add them to the UI
 configuration. Let's start by adding `end_date` to the `find_experiment` page by adding it between `start_date`
-and `assay` in the file `test_data/gen_pages.yaml` as below:
+and `assay` in the file `test_data/experiments_pages.yaml` as below:
 
 ```yaml
-        - field: start_date
-          width: 50
-        - field: end_date
-          width: 50
-        - field: type
-          width: 150
+      - field: start_date
+        width: 200
+      - field: end_date
+        width: 50
+      - field: assay
+        width: 200
 ```
 
 Then you'll need to have foam re-generate the code by running the following command from the `test_data` directory:
@@ -321,6 +321,15 @@ link on the landing page, you should see the new `end_date` column in the table.
 You'll also need to add this new field in the `edit_experiment` and `view_experiment` configs, but we won't walk through
 the details here.
 
+
+## Generating Page Configs
+
+If you think it's a pain to have to update all these pages every time you make a schema change, I have some good news
+for you: When you run the `schema-code` command, Foam automatically generates basic page configs in a file called
+`gen_pages.yaml` for find, view and edit tables, as well as a landing page linking to all the find* pages. In fact, 
+the original `experiments_pages.yaml` file is just a copy of this.
+
+So instead of writing everything from scratch, you can copy and paste parts of configs or entire configs.
 
 # Creating your own Project
 

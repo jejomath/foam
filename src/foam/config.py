@@ -12,11 +12,13 @@ class Paths:
     docs_path: str = ''
     ui_path: str = ''
     schema_path: str = ''
+    gen_pages_path: str = ''
 
     def __post_init__(self):
         self.docs_path = Path(self.docs_path) if self.docs_path else None
         self.ui_path = Path(self.ui_path) if self.ui_path else None
         self.schema_path = Path(self.schema_path) if self.schema_path else None
+        self.gen_pages_path = Path(self.gen_pages_path) if self.gen_pages_path else None
 
 @dataclass
 class Config:

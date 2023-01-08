@@ -2,6 +2,7 @@ paths:
   docs_path: docs/
   ui_path: foam_ui/src/
   schema_path: foam_backend/example/
+  gen_pages_path: .
 
 page_classes:
 - name: RecordPage
@@ -10,5 +11,5 @@ page_classes:
   path: ./ListPage.js
 
 config_files:
-- experiments.yaml
-- gen_pages.yaml
+- experiments_schema.yaml
+- experiments_pages.yaml

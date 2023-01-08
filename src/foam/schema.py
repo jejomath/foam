@@ -23,7 +23,7 @@ def get_router_code(config):
     return jinja_template('router_py.jnj').render(config=config)
 
 
-def write_schema_pages(config):
+def get_gen_pages(config):
     result = {
         'page_modules': [{
             'name': 'home',
@@ -106,7 +106,8 @@ def write_schema_pages(config):
             }]
         } for t in sum([m.tables for m in config.table_modules], [])]
     }
-    print(yaml.dump(result))
+    return yaml.dump(result, sort_keys=False)
+
 
 def write_schema_code(config):
     if config.paths.docs_path:
@@ -127,6 +128,10 @@ def write_schema_code(config):
     else:
         print('No docs_path set in config.')
 
+    if config.paths.gen_pages_path:
+        print('...')
+        with open(config.paths.gen_pages_path / 'gen_pages.yaml', 'w') as f:
+            f.write(get_gen_pages(config))
 
 def write_schema_docs(config):
     if config.paths.docs_path:
