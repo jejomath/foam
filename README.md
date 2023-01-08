@@ -191,9 +191,6 @@ cd foam
 python3 -m pip install .
 ```
 
-## Install the React library
-
-(Coming soon...)
 
 # Running the included example
 
