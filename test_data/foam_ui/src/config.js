@@ -155,8 +155,8 @@ export const pages = {
                     display: 'Create New Experiment',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'edit_experiment',
-                    mode: '',
+                    target: 'new_experiment',
+                    mode: 'modal',
                     paramsFn: '',
                     visibleFn: '',
                 }, {
@@ -383,9 +383,7 @@ export const pages = {
             referenceTables: [],
             buttons: [{
                 display: 'Save',
-                pretargetFn: (params, data, context) => {
-                    context.save()
-                },
+                pretargetFn: (params, data, context) => (context.save()),
                 pretarget: '',
                 target: 'back',
                 mode: '',
@@ -446,8 +444,8 @@ export const pages = {
                 display: 'New Experiment',
                 pretargetFn: '',
                 pretarget: '',
-                target: 'edit_experiment',
-                mode: '',
+                target: 'new_experiment',
+                mode: 'modal',
                 paramsFn: '',
                 visibleFn: '',
             }, {
@@ -532,6 +530,48 @@ export const pages = {
         },
         type: RecordPage,
     },
+    new_experiment: {
+        name: 'new_experiment',
+        display: 'New Experiment',
+        config: {
+            sourceTable: 'experiment',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'assay',
+                display: '',
+                lookup: 'find_assay',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Done',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'edit_experiment',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
     edit_experiment: {
         name: 'edit_experiment',
         display: 'Edit Experiment',
@@ -574,9 +614,7 @@ export const pages = {
             referenceTables: [],
             buttons: [{
                 display: 'Save',
-                pretargetFn: (params, data, context) => {
-                    context.save()
-                },
+                pretargetFn: (params, data, context) => (context.save()),
                 pretarget: '',
                 target: 'back',
                 mode: '',
@@ -698,9 +736,7 @@ export const pages = {
             referenceTables: [],
             buttons: [{
                 display: 'Save',
-                pretargetFn: (params, data, context) => {
-                    context.save()
-                },
+                pretargetFn: (params, data, context) => (context.save()),
                 pretarget: '',
                 target: 'back',
                 mode: '',

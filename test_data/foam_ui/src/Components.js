@@ -6,15 +6,19 @@ import 'react-datepicker/dist/react-datepicker.css';
 import 'react-data-grid/lib/styles.css';
 
 function followAction(config, params, data, context) {
-    var actionParams = {}
-    if (config.paramsFn) {
-        actionParams = config.paramsFn(params, data, context); 
-    } else if (config.params) {
-        actionParams = config.params;
-    }
+    const promise = config.pretargetFn ? config.pretargetFn(params, data, context) : Promise.resolve(data)
 
-    if (config.pretargetFn) { config.pretargetFn(params, data, context); }
-    context.go(config.target, actionParams, config.mode);
+    promise.then((newData) => { 
+        var actionParams = {}
+        if (config.paramsFn) {
+            actionParams = config.paramsFn(params, newData, context);
+            console.log(actionParams)
+        } else if (config.params) {
+            actionParams = config.params;
+        }
+
+        context.go(config.target, actionParams, config.mode);
+    })
 }
 
 export class Button extends Component {
@@ -84,7 +88,7 @@ export class ViewField extends Component {
             return (d)
 
         } else if (fieldType === 'ref') {
-            return (this.props.data ? this.props.data.id : '')
+            return (this.props.data ? this.props.data.name : '')
 
         } else if (fieldType === 'doc') {
             return <div>Not Implemented</div>
@@ -178,6 +182,7 @@ export class EditField extends Component {
                                         this.props.config.field.field,
                                         data ? {id: data.id, name: data.name} : null
                                     )
+                                    return Promise.resolve()
                                 }
                             }
                         }
@@ -232,11 +237,23 @@ export class Table extends Component {
         followAction(rowAction, this.props.params, rowData, this.props.context)
     }
 
+    cleanField(row, k) {
+        const s = this.props.context.schema[this.props.config.sourceTable]
+        if (row[k] && row[k].id) {
+            return {[k]: row[k].name}
+        } else if (k!== 'id' && row[k] && s.fields[k].fieldType === 'enum') {
+            return {[k]: this.props.context.enums[s.fields[k].enumClass].options.filter(
+                (e) => (e.name === row[k]))[0].display }
+        } else {
+            return {[k]: row[k]}
+        }
+    }
+
     cleanRows() {
         return this.props.data.map((row) => (
             Object.assign(
                 {}, ...Object.keys(row).map((k) => (
-                    {[k]: (row[k] && row[k].id) ? row[k].name : row[k]}
+                    this.cleanField(row, k)
                 ))
             )
         ))

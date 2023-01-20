@@ -20,8 +20,9 @@ page_modules:
         links:
         - target: find_experiment
           display: Update Experiment Status
-        - target: edit_experiment
+        - target: new_experiment
           display: Create New Experiment
+          mode: modal
         - target: edit_assay
           display: Create New Assay
 
@@ -117,7 +118,7 @@ page_modules:
       buttons:
       - display: Save
         target: back
-        pretarget_fn: '{ context.save() }'
+        pretarget_fn: '( context.save() )'
       - display: Cancel
         target: back
 
@@ -156,7 +157,8 @@ page_modules:
         params_fn: '({id: data.id})'
       buttons:
       - display: New Experiment
-        target: edit_experiment
+        target: new_experiment
+        mode: modal
       - display: Done
         target: back
 
@@ -183,6 +185,23 @@ page_modules:
         target: back
         visible_fn: (data.type === 'VIVO')
 
+  - name: new_experiment
+    descr: Create a new record in table experiment
+    type: RecordPage
+    config:
+      source_table: experiment
+      edit_fields:
+      - name
+      - field: assay
+        lookup: find_assay
+      buttons:
+      - display: Done
+        pretarget_fn: '( context.save() )'
+        target: edit_experiment
+        params_fn: '( {id: data.id} )'
+      - display: Cancel
+        target: back
+
   - name: edit_experiment
     descr: Edit a record from table experiment
     type: RecordPage
@@ -199,7 +218,7 @@ page_modules:
       buttons:
       - display: Save
         target: back
-        pretarget_fn: '{ context.save() }'
+        pretarget_fn: '( context.save() )'
       - display: Cancel
         target: back
 
@@ -251,6 +270,6 @@ page_modules:
       buttons:
       - display: Save
         target: back
-        pretarget_fn: '{ context.save() }'
+        pretarget_fn: '( context.save() )'
       - display: Cancel
         target: back
