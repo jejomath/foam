@@ -1,9 +1,13 @@
 from django.db import models
 
 
+class CellLine(models.Model):
+    name = models.CharField(max_length=200, null=True, blank=True)
+
 class Assay(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)
     type = models.CharField(max_length=200, null=True, blank=True)
+    cell_line = models.ForeignKey('CellLine', null=True, on_delete=models.SET_NULL)
 
 class Experiment(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)

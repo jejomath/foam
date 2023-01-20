@@ -20,12 +20,13 @@ export default class TablePage extends Component {
 
     getSearchDict(param) {
         const key = (param.filter === '') ? param.field : `${param.field}__${param.filter}`;
-        const value = param.value.name ? param.value.name : param.value;
+        const value = param.value.id ? param.value.id : param.value;
         return {[key]: value}
     }
 
     updateTable = () => {
-        const params = Object.assign({}, ...this.state.searchParams.map((s) => (this.getSearchDict(s))))
+        const params = Object.assign({}, this.props.params,
+            Object.assign({}, ...this.state.searchParams.map((s) => (this.getSearchDict(s)))))
         this.props.context.getRecords(
             this.props.config.sourceTable,
             params).then((data) => {

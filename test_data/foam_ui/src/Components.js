@@ -8,12 +8,12 @@ import 'react-data-grid/lib/styles.css';
 function followAction(config, params, data, context) {
     var actionParams = {}
     if (config.paramsFn) {
-        actionParams = config.paramsFn(data, params, context); 
+        actionParams = config.paramsFn(params, data, context); 
     } else if (config.params) {
         actionParams = config.params;
     }
 
-    if (config.pretargetFn) { config.pretargetFn(data, params, context); }
+    if (config.pretargetFn) { config.pretargetFn(params, data, context); }
     context.go(config.target, actionParams, config.mode);
 }
 
@@ -47,13 +47,14 @@ export class ButtonList extends Component {
         return (
             <div className='button-list-div'>
                 {this.props.config.buttons.map((config, index) => (
+                    (!config.visibleFn || config.visibleFn(this.props.params, this.props.data)) ?
                     <Button 
                         config={config}
                         params = {this.props.params}
                         data = {this.props.data}
                         context = {this.props.context}
                         key={index}
-                    />))}
+                    /> : <div key={index} />))}
             </div>
         )
     }
@@ -83,7 +84,7 @@ export class ViewField extends Component {
             return (d)
 
         } else if (fieldType === 'ref') {
-            return (this.props.data ? this.props.data.name : '')
+            return (this.props.data ? this.props.data.id : '')
 
         } else if (fieldType === 'doc') {
             return <div>Not Implemented</div>
@@ -172,7 +173,7 @@ export class EditField extends Component {
                             mode: 'select',
                             rowAction: {
                                 target: 'back', 
-                                pretargetFn: (data) => {
+                                pretargetFn: (params, data) => {
                                     this.props.context.update(
                                         this.props.config.field.field,
                                         data ? {id: data.id, name: data.name} : null
@@ -207,19 +208,20 @@ export class FieldList extends Component {
     }
     render() {
         return this.props.config.fields.map((field, index) => (
+            (!field.visibleFn || field.visibleFn(this.props.params, this.props.data)) ?
             <div className='field-list-field-div' key={index}>
                 <div className='field-list-name-div'>{this.getDisplay(field)}:</div>
                 <div className='field-list-value-div'>
                     {React.createElement(
                         this.props.config.fieldType, {
                             config: {table: this.props.config.table, field: field},
-                            params:this.props.params,
+                            params: this.props.params,
                             data: this.props.data[field.field],
                             context: this.props.context,
                         })
                     }
                 </div>
-            </div>
+            </div> : <div key={index} />
         ))
     }
 }
@@ -275,7 +277,7 @@ const fieldFilters = {
         {display: '=<', value: 'lte'},
         {display: '>=', value: 'gte'},
     ],
-    ref: [{display: '=', value: 'name'},],
+    ref: [{display: '=', value: 'id'},],
     enum: [{display: '=', value: ''},],
     doc: [{display: '=', value: ''},],
 }

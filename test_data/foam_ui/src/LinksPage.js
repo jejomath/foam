@@ -8,7 +8,7 @@ export default class LinksPage extends Component {
             <div className='links-page-inner-div'>
             {this.props.config.boxes.map((config, i) => (
                 <div className='link-box-div' key={i}>
-                    {config.name}
+                    <div className='link-box-title-div'>{config.name}</div>
                     {config.links.map((config, j) => (
                         <Link config={config} key={j} context={this.props.context} />
                     ))}

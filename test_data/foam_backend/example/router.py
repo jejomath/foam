@@ -5,6 +5,8 @@ from example import views
 
 router = routers.DefaultRouter()
 
+router.register(r'cell_line', views.CellLineView)
+router.register(r'write_cell_line', views.CellLineWriteView)
 router.register(r'assay', views.AssayView)
 router.register(r'write_assay', views.AssayWriteView)
 router.register(r'experiment', views.ExperimentView)

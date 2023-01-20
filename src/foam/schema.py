@@ -54,7 +54,7 @@ def get_gen_pages(config):
                     'row_action': {
                         'display': f'Select {t.display}',
                         'target': f'view_{t.name}',
-                        'params_fn': '(data) => ({id: data.id})' 
+                        'params_fn': '({id: data.id})' 
                     },
                     'buttons': [{
                         'display': f'New {t.display}',
@@ -74,12 +74,12 @@ def get_gen_pages(config):
                     'reference_tables': [{
                         'table_page': f'find_{r.table.name}',
                         'display': r.table.display,
-                        'params_fn': f'(data) => ({{{r.name}: data.id}})'
+                        'params_fn': f'({{{r.name}__id: data.id}})'
                     } for r in t.backref_fields],
                     'buttons': [{
                         'display': 'Edit',
                         'target': f'edit_{t.name}',
-                        'params_fn': '(params) => ({ id: params.id })'
+                        'params_fn': '({ id: params.id })'
                     }, {
                         'display': 'Done',
                         'target': 'back'
@@ -97,7 +97,7 @@ def get_gen_pages(config):
                     'buttons': [{
                         'display': 'Save',
                         'target': 'back',
-                        'pretarget_fn': '(params, data, context) => { context.save() }'
+                        'pretarget_fn': '{ context.save() }'
                     }, {
                         'display': 'Cancel',
                         'target': 'back'
@@ -129,7 +129,6 @@ def write_schema_code(config):
         print('No docs_path set in config.')
 
     if config.paths.gen_pages_path:
-        print('...')
         with open(config.paths.gen_pages_path / 'gen_pages.yaml', 'w') as f:
             f.write(get_gen_pages(config))
 
@@ -232,7 +231,7 @@ class Field:
             if not self.backref:
                 self.backref = self.table.name
             self.filters = field_types[self.short_type][1]
-            self.filter_name = f'{self.name}__name'
+            self.filter_name = f'{self.name}__id'
             # self.model_def is set in make_schema_refs() below, after back_refs are defined.
         elif self.type.startswith('enum:'):
             self.short_type = 'enum'

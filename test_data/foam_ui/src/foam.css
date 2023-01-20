@@ -37,6 +37,7 @@
 }
 
 .links-page-outer-div {
+    display: inline-block;
     padding: 20px;
     background-color: white;
     text-align: center;
@@ -45,9 +46,15 @@
 .links-page-inner-div {
     display: flex;
     flex-wrap: wrap;
+    width: 1050px;
+}
+
+.link-box-title-div {
+    font-size: 22px;
 }
 
 .link-box-div {
+    width: 300px;
     display: inline-block;
     text-align: left;
     padding: 20px;

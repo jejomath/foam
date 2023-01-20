@@ -8,10 +8,63 @@ page_modules:
       boxes:
       - name: Experiments
         links:
+        - target: find_cell_line
+          display: Cell Line
         - target: find_assay
           display: Assay
         - target: find_experiment
           display: Experiment
+- name: cell_line
+  pages:
+  - name: find_cell_line
+    descr: Search page for table cell_line
+    type: TablePage
+    config:
+      source_table: cell_line
+      view_columns:
+      - field: name
+        width: 200
+      search_fields:
+      - name
+      row_action:
+        display: Select Cell Line
+        target: view_cell_line
+        params_fn: '(data) => ({id: data.id})'
+      buttons:
+      - display: New Cell Line
+        target: edit_cell_line
+      - display: Done
+        target: back
+  - name: view_cell_line
+    descr: View a record from table cell_line
+    type: RecordPage
+    config:
+      source_table: cell_line
+      view_fields:
+      - name
+      reference_tables:
+      - table_page: find_assay
+        display: Assay
+        params_fn: '(data) => ({cell_line__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_cell_line
+        params_fn: '(params) => ({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_cell_line
+    descr: Edit a record from table cell_line
+    type: RecordPage
+    config:
+      source_table: cell_line
+      edit_fields:
+      - name
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: (params, data, context) => { context.save() }
+      - display: Cancel
+        target: back
 - name: assay
   pages:
   - name: find_assay
@@ -24,9 +77,12 @@ page_modules:
         width: 200
       - field: type
         width: 200
+      - field: cell_line
+        width: 200
       search_fields:
       - name
       - type
+      - cell_line
       row_action:
         display: Select Assay
         target: view_assay
@@ -44,10 +100,11 @@ page_modules:
       view_fields:
       - name
       - type
+      - cell_line
       reference_tables:
       - table_page: find_experiment
         display: Experiment
-        params_fn: '(data) => ({assay: data.id})'
+        params_fn: '(data) => ({assay__id: data.id})'
       buttons:
       - display: Edit
         target: edit_assay
@@ -62,6 +119,8 @@ page_modules:
       edit_fields:
       - name
       - type
+      - field: cell_line
+        lookup: find_cell_line
       buttons:
       - display: Save
         target: back

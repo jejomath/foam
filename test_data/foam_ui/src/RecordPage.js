@@ -77,7 +77,7 @@ export default class RecordPage extends Component {
                         <TablePage 
                             config={this.props.context.pages[t.tablePage].config}
                             context={this.props.context}
-                            params={t.paramsFn ? t.paramsFn(this.state.data) : {}}
+                            params={t.paramsFn ? t.paramsFn(this.props.params, this.state.data) : {}}
                             mode='reference'
                         />
                     </div>

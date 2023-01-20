@@ -113,14 +113,16 @@ class ViewField:
     field: str
     display: str = ''
     target: str = ''
+    visible_fn: str = ''
 
     def __init__(self, field_config):
         if type(field_config) == str:
             self.field = field_config
         else:
-            self.field = field_config.field
+            self.field = field_config['field']
             self.display = field_config['display'] if 'display' in field_config.keys() else ''
             self.target = field_config['target'] if 'target' in field_config.keys() else ''
+            self.visible_fn = field_config['visible_fn'] if 'visible_fn' in field_config.keys() else ''
 
     def add_refs(self, table_config, page):
         if self.field not in [f.name for f in table_config.fields]:
@@ -133,6 +135,7 @@ class ViewField:
             'field': self.field,
             'display': self.display,
             'target': self.target,
+            'visibleFn': f'(params, data) => {self.visible_fn}' if self.visible_fn else '',
         }
 
 
@@ -141,6 +144,7 @@ class EditField:
     field: str
     display: str = ''
     lookup: str = ''
+    visible_fn: str = ''
 
     def __init__(self, field_config):
         if type(field_config) == str:
@@ -149,6 +153,7 @@ class EditField:
             self.field = field_config['field']
             self.display = field_config['display'] if 'display' in field_config.keys() else ''
             self.lookup = field_config['lookup'] if 'lookup' in field_config.keys() else ''
+            self.visible_fn = field_config['visible_fn'] if 'visible_fn' in field_config.keys() else ''
 
     def add_refs(self, table_config, page):
         if self.field not in [f.name for f in table_config.fields]:
@@ -161,6 +166,7 @@ class EditField:
             'field': self.field,
             'display': self.display,
             'lookup': self.lookup,
+            'visibleFn': f'(params, data) => {self.visible_fn}' if self.visible_fn else '',
         }
 
 
@@ -202,7 +208,7 @@ class ReferenceTable:
         return {
             'tablePage': self.table_page,
             'display': self.display,
-            'paramsFn': self.params_fn,
+            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
         }
 
 @dataclass
@@ -213,6 +219,7 @@ class Action:
     target: str = ''
     mode: str = ''
     params_fn: str = ''
+    visible_fn: str = ''
 
     def add_refs(self, config, page):
         if self.target not in config.pages_dict.keys() and self.target not in RESERVED_TARGETS:
@@ -223,11 +230,12 @@ class Action:
     def js_config(self):
         return {
             'display': self.display,
-            'pretargetFn': self.pretarget_fn,
+            'pretargetFn': f'(params, data, context) => {self.pretarget_fn}' if self.pretarget_fn else '',
             'pretarget': self.pretarget,
             'target': self.target,
             'mode': self.mode,
-            'paramsFn': self.params_fn
+            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
+            'visibleFn': f'(params, data) => {self.visible_fn}' if self.visible_fn else '',
         }
 
 
@@ -268,7 +276,7 @@ class RecordPageConfig:
         return {
             'sourceTable': self.source_table,
             'newRecord': self.new_record,
-            'newRecordFn': self.new_record_fn,
+            'newRecordFn': f'(params, data) => {self.new_record_fn}' if self.new_record_fn else '',
             'viewFields': [f.js_config for f in self.view_fields],
             'editFields': [f.js_config for f in self.edit_fields],
             'referenceTables': [t.js_config for t in self.reference_tables],
@@ -358,7 +366,7 @@ class TablePageConfig:
         return {
             'sourceTable': self.source_table,
             'newRecord': self.new_record,
-            'newRecordFn': self.new_record_fn,
+            'newRecordFn': f'(params, data) => {self.new_record_fn}' if self.new_record_fn else '',
             'rowAction': self.row_action.js_config,
             'viewColumns': [c.js_config for c in self.view_columns],
             'editColumns': [c.js_config for c in self.edit_columns],

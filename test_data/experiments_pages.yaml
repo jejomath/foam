@@ -1,19 +1,65 @@
 page_modules:
 - name: home
   pages:
+
   - name: home
     descr: Landing Page
     type: LinksPage
     config:
       boxes:
+      - name: Programs
+        links:
+        - target: home
+          display: Program Status Dashboard
+        - target: find_assay
+          display: Review Assays
+        - target: find_experiment
+          display: Review Experiments
+
       - name: Experiments
         links:
-        - target: find_assay
-          display: Assay
         - target: find_experiment
-          display: Experiment
+          display: Update Experiment Status
+        - target: edit_experiment
+          display: Create New Experiment
+        - target: edit_assay
+          display: Create New Assay
+
+      - name: Analysis
+        links:
+        - target: home
+          display: Review Analysis Results
+        - target: home
+          display: Review CRCs
+        - target: edit_assay
+          display: Create New Assay
+
+      - name: Compounds
+        links:
+        - target: home
+          display: Search Compounds
+        - target: home
+          display: Review Compounds Status
+
+      - name: Inventory
+        links:
+        - target: find_cell_line
+          display: Manage Cell Lines
+        - target: home
+          display: Manage Platemaps
+
+      - name: Project Management
+        links:
+        - target: home
+          display: Update Program
+        - target: home
+          display: Create New Program
+
+
+
 - name: assay
   pages:
+
   - name: find_assay
     descr: Search page for table assay
     type: TablePage
@@ -30,12 +76,13 @@ page_modules:
       row_action:
         display: Select Assay
         target: view_assay
-        params_fn: '(data) => ({id: data.id})'
+        params_fn: '({id: data.id})'
       buttons:
       - display: New Assay
         target: edit_assay
       - display: Done
         target: back
+
   - name: view_assay
     descr: View a record from table assay
     type: RecordPage
@@ -44,16 +91,19 @@ page_modules:
       view_fields:
       - name
       - type
+      - field: cell_line
+        visible_fn: (data.type === 'VITRO')
       reference_tables:
       - table_page: find_experiment
         display: Experiment
-        params_fn: '(data) => ({assay: data.id})'
+        params_fn: '({assay__id: data.id})'
       buttons:
       - display: Edit
         target: edit_assay
-        params_fn: '(params) => ({ id: params.id })'
+        params_fn: '({ id: params.id })'
       - display: Done
         target: back
+
   - name: edit_assay
     descr: Edit a record from table assay
     type: RecordPage
@@ -62,14 +112,19 @@ page_modules:
       edit_fields:
       - name
       - type
+      - field: cell_line
+        visible_fn: (data.type === 'VITRO')
       buttons:
       - display: Save
         target: back
-        pretarget_fn: (params, data, context) => { context.save() }
+        pretarget_fn: '{ context.save() }'
       - display: Cancel
         target: back
+
+
 - name: experiment
   pages:
+
   - name: find_experiment
     descr: Search page for table experiment
     type: TablePage
@@ -98,12 +153,13 @@ page_modules:
       row_action:
         display: Select Experiment
         target: view_experiment
-        params_fn: '(data) => ({id: data.id})'
+        params_fn: '({id: data.id})'
       buttons:
       - display: New Experiment
         target: edit_experiment
       - display: Done
         target: back
+
   - name: view_experiment
     descr: View a record from table experiment
     type: RecordPage
@@ -120,9 +176,13 @@ page_modules:
       buttons:
       - display: Edit
         target: edit_experiment
-        params_fn: '(params) => ({ id: params.id })'
+        params_fn: '({ id: params.id })'
       - display: Done
         target: back
+      - display: View Animal
+        target: back
+        visible_fn: (data.type === 'VIVO')
+
   - name: edit_experiment
     descr: Edit a record from table experiment
     type: RecordPage
@@ -139,6 +199,58 @@ page_modules:
       buttons:
       - display: Save
         target: back
-        pretarget_fn: (params, data, context) => { context.save() }
+        pretarget_fn: '{ context.save() }'
+      - display: Cancel
+        target: back
+
+- name: cell_line
+  pages:
+  - name: find_cell_line
+    descr: Search page for table cell_line
+    type: TablePage
+    config:
+      source_table: cell_line
+      view_columns:
+      - field: name
+        width: 200
+      search_fields:
+      - name
+      row_action:
+        display: Select Cell Line
+        target: view_cell_line
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Cell Line
+        target: edit_cell_line
+      - display: Done
+        target: back
+  - name: view_cell_line
+    descr: View a record from table cell_line
+    type: RecordPage
+    config:
+      source_table: cell_line
+      view_fields:
+      - name
+      reference_tables:
+      - table_page: find_assay
+        display: Assay
+        params_fn: '({cell_line: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_cell_line
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_cell_line
+    descr: Edit a record from table cell_line
+    type: RecordPage
+    config:
+      source_table: cell_line
+      edit_fields:
+      - name
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: '{ context.save() }'
       - display: Cancel
         target: back

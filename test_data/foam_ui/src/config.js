@@ -3,6 +3,18 @@ import TablePage from './TablePage.js';
 import LinksPage from './LinksPage.js';
 
 export const schema = {
+    cell_line: {
+        name: 'cell_line',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+        },
+    },
     assay: {
         name: 'assay',
         fields: {
@@ -19,6 +31,13 @@ export const schema = {
                 fieldType: 'enum',
                 refTable: '',
                 enumClass: 'assay_type',
+            },
+            cell_line: {
+                name: 'cell_line',
+                display: 'Cell Line',
+                fieldType: 'ref',
+                refTable: 'cell_line',
+                enumClass: '',
             },
         },
     },
@@ -96,21 +115,142 @@ export const pages = {
         display: 'Home',
         config: {
             boxes: [{
-                name: 'Experiments',
+                name: 'Programs',
                 links: [{
-                    display: 'Assay',
+                    display: 'Program Status Dashboard',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'home',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Review Assays',
                     pretargetFn: '',
                     pretarget: '',
                     target: 'find_assay',
                     mode: '',
                     paramsFn: '',
+                    visibleFn: '',
                 }, {
-                    display: 'Experiment',
+                    display: 'Review Experiments',
                     pretargetFn: '',
                     pretarget: '',
                     target: 'find_experiment',
                     mode: '',
                     paramsFn: '',
+                    visibleFn: '',
+                }, ],
+            }, {
+                name: 'Experiments',
+                links: [{
+                    display: 'Update Experiment Status',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_experiment',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Create New Experiment',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'edit_experiment',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Create New Assay',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'edit_assay',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, ],
+            }, {
+                name: 'Analysis',
+                links: [{
+                    display: 'Review Analysis Results',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'home',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Review CRCs',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'home',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Create New Assay',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'edit_assay',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, ],
+            }, {
+                name: 'Compounds',
+                links: [{
+                    display: 'Search Compounds',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'home',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Review Compounds Status',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'home',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, ],
+            }, {
+                name: 'Inventory',
+                links: [{
+                    display: 'Manage Cell Lines',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_cell_line',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Manage Platemaps',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'home',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, ],
+            }, {
+                name: 'Project Management',
+                links: [{
+                    display: 'Update Program',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'home',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Create New Program',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'home',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
                 }, ],
             }, ],
         },
@@ -129,9 +269,10 @@ export const pages = {
                 pretarget: '',
                 target: 'view_assay',
                 mode: '',
-                paramsFn: (data) => ({
+                paramsFn: (params, data) => ({
                     id: data.id
                 }),
+                visibleFn: '',
             },
             viewColumns: [{
                 field: 'name',
@@ -149,6 +290,7 @@ export const pages = {
                 target: 'edit_assay',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
             }, {
                 display: 'Done',
                 pretargetFn: '',
@@ -156,6 +298,7 @@ export const pages = {
                 target: 'back',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
             }, ],
         },
         type: TablePage,
@@ -171,17 +314,24 @@ export const pages = {
                 field: 'name',
                 display: '',
                 target: '',
+                visibleFn: '',
             }, {
                 field: 'type',
                 display: '',
                 target: '',
+                visibleFn: '',
+            }, {
+                field: 'cell_line',
+                display: '',
+                target: '',
+                visibleFn: (params, data) => (data.type === 'VITRO'),
             }, ],
             editFields: [],
             referenceTables: [{
                 tablePage: 'find_experiment',
                 display: 'Experiment',
-                paramsFn: (data) => ({
-                    assay: data.id
+                paramsFn: (params, data) => ({
+                    assay__id: data.id
                 }),
             }, ],
             buttons: [{
@@ -190,9 +340,10 @@ export const pages = {
                 pretarget: '',
                 target: 'edit_assay',
                 mode: '',
-                paramsFn: (params) => ({
+                paramsFn: (params, data) => ({
                     id: params.id
                 }),
+                visibleFn: '',
             }, {
                 display: 'Done',
                 pretargetFn: '',
@@ -200,6 +351,7 @@ export const pages = {
                 target: 'back',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
             }, ],
         },
         type: RecordPage,
@@ -216,10 +368,17 @@ export const pages = {
                 field: 'name',
                 display: '',
                 lookup: '',
+                visibleFn: '',
             }, {
                 field: 'type',
                 display: '',
                 lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'cell_line',
+                display: '',
+                lookup: '',
+                visibleFn: (params, data) => (data.type === 'VITRO'),
             }, ],
             referenceTables: [],
             buttons: [{
@@ -231,6 +390,7 @@ export const pages = {
                 target: 'back',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
             }, {
                 display: 'Cancel',
                 pretargetFn: '',
@@ -238,6 +398,7 @@ export const pages = {
                 target: 'back',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
             }, ],
         },
         type: RecordPage,
@@ -255,9 +416,10 @@ export const pages = {
                 pretarget: '',
                 target: 'view_experiment',
                 mode: '',
-                paramsFn: (data) => ({
+                paramsFn: (params, data) => ({
                     id: data.id
                 }),
+                visibleFn: '',
             },
             viewColumns: [{
                 field: 'name',
@@ -287,6 +449,7 @@ export const pages = {
                 target: 'edit_experiment',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
             }, {
                 display: 'Done',
                 pretargetFn: '',
@@ -294,6 +457,7 @@ export const pages = {
                 target: 'back',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
             }, ],
         },
         type: TablePage,
@@ -309,26 +473,32 @@ export const pages = {
                 field: 'name',
                 display: '',
                 target: '',
+                visibleFn: '',
             }, {
                 field: 'description',
                 display: '',
                 target: '',
+                visibleFn: '',
             }, {
                 field: 'start_date',
                 display: '',
                 target: '',
+                visibleFn: '',
             }, {
                 field: 'assay',
                 display: '',
                 target: '',
+                visibleFn: '',
             }, {
                 field: 'plate_map_file',
                 display: '',
                 target: '',
+                visibleFn: '',
             }, {
                 field: 'type',
                 display: '',
                 target: '',
+                visibleFn: '',
             }, ],
             editFields: [],
             referenceTables: [],
@@ -338,9 +508,10 @@ export const pages = {
                 pretarget: '',
                 target: 'edit_experiment',
                 mode: '',
-                paramsFn: (params) => ({
+                paramsFn: (params, data) => ({
                     id: params.id
                 }),
+                visibleFn: '',
             }, {
                 display: 'Done',
                 pretargetFn: '',
@@ -348,6 +519,15 @@ export const pages = {
                 target: 'back',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'View Animal',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: (params, data) => (data.type === 'VIVO'),
             }, ],
         },
         type: RecordPage,
@@ -364,26 +544,32 @@ export const pages = {
                 field: 'name',
                 display: '',
                 lookup: '',
+                visibleFn: '',
             }, {
                 field: 'description',
                 display: '',
                 lookup: '',
+                visibleFn: '',
             }, {
                 field: 'start_date',
                 display: '',
                 lookup: '',
+                visibleFn: '',
             }, {
                 field: 'assay',
                 display: '',
                 lookup: 'find_assay',
+                visibleFn: '',
             }, {
                 field: 'plate_map_file',
                 display: '',
                 lookup: '',
+                visibleFn: '',
             }, {
                 field: 'type',
                 display: '',
                 lookup: '',
+                visibleFn: '',
             }, ],
             referenceTables: [],
             buttons: [{
@@ -395,6 +581,7 @@ export const pages = {
                 target: 'back',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
             }, {
                 display: 'Cancel',
                 pretargetFn: '',
@@ -402,6 +589,131 @@ export const pages = {
                 target: 'back',
                 mode: '',
                 paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_cell_line: {
+        name: 'find_cell_line',
+        display: 'Find Cell Line',
+        config: {
+            sourceTable: 'cell_line',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Cell Line',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_cell_line',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', ],
+            buttons: [{
+                display: 'New Cell Line',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_cell_line',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_cell_line: {
+        name: 'view_cell_line',
+        display: 'View Cell Line',
+        config: {
+            sourceTable: 'cell_line',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_assay',
+                display: 'Assay',
+                paramsFn: (params, data) => ({
+                    cell_line: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_cell_line',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_cell_line: {
+        name: 'edit_cell_line',
+        display: 'Edit Cell Line',
+        config: {
+            sourceTable: 'cell_line',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => {
+                    context.save()
+                },
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
             }, ],
         },
         type: RecordPage,

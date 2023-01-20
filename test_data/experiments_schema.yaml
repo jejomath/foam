@@ -16,6 +16,13 @@ table_modules:
   descr: Tables related to experiments.
   tables:
 
+  - name: cell_line
+    descr: A table with one record for each cell line.
+    fields:
+    - name: name
+      type: STRING
+      descr: Name of the assay
+
   - name: assay
     descr: A table with one record for each assay protocol.
     preprocess_new: add_assay_name
@@ -26,6 +33,9 @@ table_modules:
     - name: type
       type: enum:assay_type
       descr: Type of assay
+    - name: cell_line
+      type: ref:cell_line
+      descr: Cell line used in an in-vitro assay
 
   - name: experiment
     descr: A table with one record for each experiment.
