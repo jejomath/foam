@@ -1,5 +1,7 @@
 from rest_framework import serializers
-from .models import {% for m in config.table_modules %}{% for t in m.tables %}{{ t.class_name }}{% if not loop.last %}, {% endif %}{% endfor %}{% endfor %}
+{% for m in config.table_modules %}
+from .models import {% for t in m.tables %}{{ t.class_name }}{% if not loop.last %}, {% endif %}{% endfor %}
+{% endfor %}
 
 {% for m in config.table_modules %}{% for t in m.tables %}
 class {{ t.class_name }}ShortSerializer(serializers.ModelSerializer):

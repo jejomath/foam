@@ -11,5 +11,10 @@ page_classes:
   path: ./ListPage.js
 
 config_files:
+- programs_schema.yaml
 - experiments_schema.yaml
-- experiments_pages.yaml
+- inventory_schema.yaml
+- bio_ref_schema.yaml
+
+
+- gen_pages.yaml

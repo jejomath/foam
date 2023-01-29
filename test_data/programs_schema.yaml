@@ -1,0 +1,103 @@
+enums:
+- name: program_status
+  descr: Program Status
+  options:
+  - PROPOSED - Proposed | Program has been proposed but not yet started
+  - ACTIVE - Active | Program is actively being pursued
+  - ON_HOLD - On Hold | Program is temporarily on hold
+  - COMPLETE - Completed | Program has been completed, canceled or otherwise terminated
+
+- name: program_stage
+  descr: Program Stage
+  options:
+  - DISCOVERY - Discovery | Early discovery to understand target disease and context
+  - TARGET_ID - Target Identification | Experiments to determine the progra`s primary target 
+  - ASSAY_DEV - Assay Development | Development of the program`s primary assay
+  - SCREENING - Screening | High-throughput screening of the primary assay
+  - HIT_TO_LEAD - Hit to Lead | Running secondary assays on hits from screening to determine lead compounds
+  - LEAD_OP - Lead Optimization | MedChem optimization of leads
+  - PRECLINICAL - Pre-clinical | Development of optimized lead into clinical candidate
+  - CLINICAL1 - Clinical Phase 1 | In phase 1 clinical trials
+  - CLINICAL2 - Clinical Phase 2 | In phase 2 clinical trials
+  - CLINICAL3 - Clinical Phase 3 | In phase 3 clinical trials
+
+- name: activity_status
+  descr: Activity Status
+  options:
+  - TODO - To Do | Activity hasn`t started yet
+  - ON_TRACK - On track | Activity is proceeding as planned
+  - AT_RISK - At risk | Activity is on track but faces serious risks
+  - DELAYED - Delayed | Activity is behind schedule
+  - COMPLETE - Completed | Activity has been completed
+  - CANCELED - Canceled | Activity has been canceled
+
+table_modules:
+- name: programs
+  descr: Tables related to drug programs and project management.
+  tables:
+
+  - name: person
+    descr: Each record represents a person in the organization
+    fields:
+    - name: name
+      type: STRING
+      descr: Person`s full name
+    - name: given_name
+      type: STRING
+      descr: Person`s given name (first name in western cultures)
+    - name: family_name
+      type: STRING
+      descr: Person`s family name (last name in western cultures)
+
+  - name: program
+    descr: Each record represents a drug program or other long-term project
+    fields:
+    - name: name
+      type: STRING
+      descr: Program`s name
+    - name: target
+      type: ref:protein
+      descr: Primary target
+    - name: indication
+      type: ref:indication
+      descr: Primary indication
+    - name: status
+      type: enum:program_status
+      descr: Current status of the program.
+    - name: started_date
+      type: DATE
+      descr: Date when the program was initiated
+    - name: stage
+      type: enum:program_stage
+      descr: Current stage of the program.
+    - name: bio_lead
+      type: ref:person
+      descr: Biology lead on the program
+      backref: program_bio_lead
+    - name: chem_lead
+      type: ref:person
+      descr: Chemistry lead on the program
+      backref: program_chem_lead
+    - name: program_manager
+      type: ref:person
+      descr: Program Manager
+      backref: program_manager
+
+  - name: program_milestone
+    descr: Each record represents a milestone in a program`s roadmap
+    fields:
+    - name: name
+      type: STRING
+      descr: Milestone name/description
+    - name: program
+      type: ref:program
+      descr: Program that this is for
+    - name: status
+      type: enum:activity_status
+      descr: Current status of the milestone
+    - name: target_date
+      type: DATE
+      descr: Date when the milestone is projected to be completed
+    - name: completed_date
+      type: DATE
+      descr: Date when the milestone was completed

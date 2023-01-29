@@ -1,4 +1,5 @@
 from django.db import models
+from .custom import *
 
 {% for module in config.table_modules %}
 {%- for table in module.tables %}
@@ -6,5 +7,10 @@ class {{ table.class_name }}(models.Model):
     {%- for field in table.fields %}
     {{ field.name }} = {{ field.model_def }}
     {%- endfor %}
-{% endfor %}
-{% endfor %}
+    {% if table.preprocess %}
+    def save(self, *args, **kwargs):
+        {{ table.preprocess }}(self, {{ table.class_name }})
+        super().save(*args, **kwargs)
+    {% endif %}
+{% endfor -%}
+{% endfor -%}

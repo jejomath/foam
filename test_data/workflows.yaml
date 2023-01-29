@@ -1,0 +1,42 @@
+workflows:
+- name: review_programs
+  display: Review Drug Programs
+  descr: User views a list of all active drug programs to understand their status, stage and what outcomes.
+  steps:
+  - name: initiate
+    descr: User clicks a "Review Drug Programs" button on the landing page.
+  - name: review_overview
+    descr: User reviews a table of all programs with name, disease, stage and status.
+  - name: select_program
+    descr: User selects a program to view more details.
+  - name: program_details
+    descr: User views a details page for a program, including lists of experiments, hits and leads. Other details are specific to the stage of the program.
+
+- name: register_experiment
+  display: Register New Experiment
+  descr: User defines a new experiment
+  steps:
+  - name: initiate
+    descr: User clicks on a "Register Experiment" link on the landing page or a button on an Experiment Search page.
+  - name: enter_details
+    descr: User enters basic metadata about a new experiment. Fields are determined by naming conventions.
+  - name: gen_name
+    descr: The system creates an experiment name based on the preliminary metadata
+  - name: add_details
+    descr: User is presented with an edit page, picking up from the update_experiment workflow.
+
+- name: define_experiment_plate_map
+  display: Define Experiment Plate Map
+  descr: User adds plate maps to a registered experiment
+  - name: initiate
+    descr: User clicks "Find Experiment" button on landing page.
+  - name: filter_results
+    descr: User reviews a table of experiments, filtering them by drug program, data, assay, etc.
+  - name: select_experiment
+    descr: User clicks the experiment of interest
+  - name: view_experiment
+    descr: User is taken to a detail page for the experiment
+  - name: initiate_plate_map
+    descr: User clicks "Add plate map" button
+  - name: edit_plate_map
+    descr: User is taken to a plate map editor page.

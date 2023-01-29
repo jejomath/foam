@@ -4,7 +4,7 @@ axios.defaults.headers['Content-Type'] = 'application/json'
 
 
 function cleanRecord(record) {
-    return Object.assign({}, ...Object.keys(record).map((k) => ({[k]: (record[k] && record[k].id) ? record[k].id : record[k]})))
+    return Object.assign({}, ...Object.keys(record).map((k) => ({[k]: (record[k] && typeof record[k] === 'object') ? record[k].id : record[k]})))
 }
 
 export function getRecord(table, params) {
@@ -19,7 +19,7 @@ export function getRecord(table, params) {
 
 export function getRecords(table, params) {
     return axios.get(`http://localhost:8000/api/${table}/`, {params: params})
-        .then((result) => (result.data))
+        .then((result) => (result.data.results))
 }
 
 export function saveRecord(table, record) {

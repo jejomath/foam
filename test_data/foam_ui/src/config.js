@@ -3,13 +3,135 @@ import TablePage from './TablePage.js';
 import LinksPage from './LinksPage.js';
 
 export const schema = {
-    cell_line: {
-        name: 'cell_line',
+    person: {
+        name: 'person',
         fields: {
             name: {
                 name: 'name',
                 display: 'Name',
                 fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            given_name: {
+                name: 'given_name',
+                display: 'Given Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            family_name: {
+                name: 'family_name',
+                display: 'Family Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+        },
+    },
+    program: {
+        name: 'program',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            target: {
+                name: 'target',
+                display: 'Target',
+                fieldType: 'ref',
+                refTable: 'protein',
+                enumClass: '',
+            },
+            indication: {
+                name: 'indication',
+                display: 'Indication',
+                fieldType: 'ref',
+                refTable: 'indication',
+                enumClass: '',
+            },
+            status: {
+                name: 'status',
+                display: 'Status',
+                fieldType: 'enum',
+                refTable: '',
+                enumClass: 'program_status',
+            },
+            started_date: {
+                name: 'started_date',
+                display: 'Started Date',
+                fieldType: 'DATE',
+                refTable: '',
+                enumClass: '',
+            },
+            stage: {
+                name: 'stage',
+                display: 'Stage',
+                fieldType: 'enum',
+                refTable: '',
+                enumClass: 'program_stage',
+            },
+            bio_lead: {
+                name: 'bio_lead',
+                display: 'Bio Lead',
+                fieldType: 'ref',
+                refTable: 'person',
+                enumClass: '',
+            },
+            chem_lead: {
+                name: 'chem_lead',
+                display: 'Chem Lead',
+                fieldType: 'ref',
+                refTable: 'person',
+                enumClass: '',
+            },
+            program_manager: {
+                name: 'program_manager',
+                display: 'Program Manager',
+                fieldType: 'ref',
+                refTable: 'person',
+                enumClass: '',
+            },
+        },
+    },
+    program_milestone: {
+        name: 'program_milestone',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            program: {
+                name: 'program',
+                display: 'Program',
+                fieldType: 'ref',
+                refTable: 'program',
+                enumClass: '',
+            },
+            status: {
+                name: 'status',
+                display: 'Status',
+                fieldType: 'enum',
+                refTable: '',
+                enumClass: 'activity_status',
+            },
+            target_date: {
+                name: 'target_date',
+                display: 'Target Date',
+                fieldType: 'DATE',
+                refTable: '',
+                enumClass: '',
+            },
+            completed_date: {
+                name: 'completed_date',
+                display: 'Completed Date',
+                fieldType: 'DATE',
                 refTable: '',
                 enumClass: '',
             },
@@ -32,11 +154,25 @@ export const schema = {
                 refTable: '',
                 enumClass: 'assay_type',
             },
+            descr: {
+                name: 'descr',
+                display: 'Descr',
+                fieldType: 'TEXT',
+                refTable: '',
+                enumClass: '',
+            },
             cell_line: {
                 name: 'cell_line',
                 display: 'Cell Line',
                 fieldType: 'ref',
                 refTable: 'cell_line',
+                enumClass: '',
+            },
+            for_program: {
+                name: 'for_program',
+                display: 'For Program',
+                fieldType: 'ref',
+                refTable: 'program',
                 enumClass: '',
             },
         },
@@ -58,9 +194,51 @@ export const schema = {
                 refTable: '',
                 enumClass: '',
             },
+            status: {
+                name: 'status',
+                display: 'Status',
+                fieldType: 'enum',
+                refTable: '',
+                enumClass: 'activity_status',
+            },
+            program: {
+                name: 'program',
+                display: 'Program',
+                fieldType: 'ref',
+                refTable: 'program',
+                enumClass: '',
+            },
+            bio_lead: {
+                name: 'bio_lead',
+                display: 'Bio Lead',
+                fieldType: 'ref',
+                refTable: 'person',
+                enumClass: '',
+            },
+            target_start_date: {
+                name: 'target_start_date',
+                display: 'Target Start Date',
+                fieldType: 'DATE',
+                refTable: '',
+                enumClass: '',
+            },
+            target_duration: {
+                name: 'target_duration',
+                display: 'Target Duration',
+                fieldType: 'INTEGER',
+                refTable: '',
+                enumClass: '',
+            },
             start_date: {
                 name: 'start_date',
                 display: 'Start Date',
+                fieldType: 'DATE',
+                refTable: '',
+                enumClass: '',
+            },
+            end_date: {
+                name: 'end_date',
+                display: 'End Date',
                 fieldType: 'DATE',
                 refTable: '',
                 enumClass: '',
@@ -72,13 +250,6 @@ export const schema = {
                 refTable: 'assay',
                 enumClass: '',
             },
-            plate_map_file: {
-                name: 'plate_map_file',
-                display: 'Plate Map File',
-                fieldType: 'doc',
-                refTable: '',
-                enumClass: '',
-            },
             type: {
                 name: 'type',
                 display: 'Type',
@@ -86,11 +257,356 @@ export const schema = {
                 refTable: '',
                 enumClass: 'assay_type',
             },
+            perturbations: {
+                name: 'perturbations',
+                display: 'Perturbations',
+                fieldType: 'ref',
+                refTable: 'perturbation',
+                enumClass: '',
+            },
+        },
+    },
+    perturbation: {
+        name: 'perturbation',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            compound: {
+                name: 'compound',
+                display: 'Compound',
+                fieldType: 'ref',
+                refTable: 'compound',
+                enumClass: '',
+            },
+            concentration_nm: {
+                name: 'concentration_nm',
+                display: 'Concentration Nm',
+                fieldType: 'INTEGER',
+                refTable: '',
+                enumClass: '',
+            },
+        },
+    },
+    cell_line: {
+        name: 'cell_line',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            species: {
+                name: 'species',
+                display: 'Species',
+                fieldType: 'ref',
+                refTable: 'species',
+                enumClass: '',
+            },
+            organ: {
+                name: 'organ',
+                display: 'Organ',
+                fieldType: 'ref',
+                refTable: 'organ',
+                enumClass: '',
+            },
+            tissue: {
+                name: 'tissue',
+                display: 'Tissue',
+                fieldType: 'ref',
+                refTable: 'tissue',
+                enumClass: '',
+            },
+            cell_type: {
+                name: 'cell_type',
+                display: 'Cell Type',
+                fieldType: 'ref',
+                refTable: 'cell_type',
+                enumClass: '',
+            },
+            donor_sex: {
+                name: 'donor_sex',
+                display: 'Donor Sex',
+                fieldType: 'enum',
+                refTable: '',
+                enumClass: 'sex',
+            },
+            donor_age: {
+                name: 'donor_age',
+                display: 'Donor Age',
+                fieldType: 'INTEGER',
+                refTable: '',
+                enumClass: '',
+            },
+            donor_ethnicity: {
+                name: 'donor_ethnicity',
+                display: 'Donor Ethnicity',
+                fieldType: 'enum',
+                refTable: '',
+                enumClass: 'ethnicity',
+            },
+            donor_health_status: {
+                name: 'donor_health_status',
+                display: 'Donor Health Status',
+                fieldType: 'enum',
+                refTable: '',
+                enumClass: 'health_status',
+            },
+            disease: {
+                name: 'disease',
+                display: 'Disease',
+                fieldType: 'ref',
+                refTable: 'indication',
+                enumClass: '',
+            },
+        },
+    },
+    indication: {
+        name: 'indication',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+        },
+    },
+    species: {
+        name: 'species',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+        },
+    },
+    organ: {
+        name: 'organ',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            species: {
+                name: 'species',
+                display: 'Species',
+                fieldType: 'ref',
+                refTable: 'species',
+                enumClass: '',
+            },
+        },
+    },
+    tissue: {
+        name: 'tissue',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            species: {
+                name: 'species',
+                display: 'Species',
+                fieldType: 'ref',
+                refTable: 'species',
+                enumClass: '',
+            },
+        },
+    },
+    cell_type: {
+        name: 'cell_type',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            species: {
+                name: 'species',
+                display: 'Species',
+                fieldType: 'ref',
+                refTable: 'species',
+                enumClass: '',
+            },
+        },
+    },
+    protein: {
+        name: 'protein',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            gene: {
+                name: 'gene',
+                display: 'Gene',
+                fieldType: 'ref',
+                refTable: 'gene',
+                enumClass: '',
+            },
+            species: {
+                name: 'species',
+                display: 'Species',
+                fieldType: 'ref',
+                refTable: 'species',
+                enumClass: '',
+            },
+        },
+    },
+    gene: {
+        name: 'gene',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            species: {
+                name: 'species',
+                display: 'Species',
+                fieldType: 'ref',
+                refTable: 'species',
+                enumClass: '',
+            },
+        },
+    },
+    compound: {
+        name: 'compound',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            smiles: {
+                name: 'smiles',
+                display: 'Smiles',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
         },
     },
 }
 
 export const enums = {
+    program_status: {
+        name: 'program_status',
+        options: [{
+            name: 'PROPOSED',
+            display: 'Proposed',
+            descr: 'Program has been proposed but not yet started',
+        }, {
+            name: 'ACTIVE',
+            display: 'Active',
+            descr: 'Program is actively being pursued',
+        }, {
+            name: 'ON_HOLD',
+            display: 'On Hold',
+            descr: 'Program is temporarily on hold',
+        }, {
+            name: 'COMPLETE',
+            display: 'Completed',
+            descr: 'Program has been completed, canceled or otherwise terminated',
+        }, ],
+    },
+    program_stage: {
+        name: 'program_stage',
+        options: [{
+            name: 'DISCOVERY',
+            display: 'Discovery',
+            descr: 'Early discovery to understand target disease and context',
+        }, {
+            name: 'TARGET_ID',
+            display: 'Target Identification',
+            descr: 'Experiments to determine the progra`s primary target',
+        }, {
+            name: 'ASSAY_DEV',
+            display: 'Assay Development',
+            descr: 'Development of the program`s primary assay',
+        }, {
+            name: 'SCREENING',
+            display: 'Screening',
+            descr: 'High-throughput screening of the primary assay',
+        }, {
+            name: 'HIT_TO_LEAD',
+            display: 'Hit to Lead',
+            descr: 'Running secondary assays on hits from screening to determine lead compounds',
+        }, {
+            name: 'LEAD_OP',
+            display: 'Lead Optimization',
+            descr: 'MedChem optimization of leads',
+        }, {
+            name: 'PRECLINICAL',
+            display: 'Pre-clinical',
+            descr: 'Development of optimized lead into clinical candidate',
+        }, {
+            name: 'CLINICAL1',
+            display: 'Clinical Phase 1',
+            descr: 'In phase 1 clinical trials',
+        }, {
+            name: 'CLINICAL2',
+            display: 'Clinical Phase 2',
+            descr: 'In phase 2 clinical trials',
+        }, {
+            name: 'CLINICAL3',
+            display: 'Clinical Phase 3',
+            descr: 'In phase 3 clinical trials',
+        }, ],
+    },
+    activity_status: {
+        name: 'activity_status',
+        options: [{
+            name: 'TODO',
+            display: 'To Do',
+            descr: 'Activity hasn`t started yet',
+        }, {
+            name: 'ON_TRACK',
+            display: 'On track',
+            descr: 'Activity is proceeding as planned',
+        }, {
+            name: 'AT_RISK',
+            display: 'At risk',
+            descr: 'Activity is on track but faces serious risks',
+        }, {
+            name: 'DELAYED',
+            display: 'Delayed',
+            descr: 'Activity is behind schedule',
+        }, {
+            name: 'COMPLETE',
+            display: 'Completed',
+            descr: 'Activity has been completed',
+        }, {
+            name: 'CANCELED',
+            display: 'Canceled',
+            descr: 'Activity has been canceled',
+        }, ],
+    },
     assay_type: {
         name: 'assay_type',
         options: [{
@@ -107,6 +623,30 @@ export const enums = {
             descr: 'Fake experiments done with code',
         }, ],
     },
+    ethnicity: {
+        name: 'ethnicity',
+        options: [],
+    },
+    health_status: {
+        name: 'health_status',
+        options: [],
+    },
+    sex: {
+        name: 'sex',
+        options: [{
+            name: 'MALE',
+            display: 'Male',
+            descr: '',
+        }, {
+            name: 'FEMALE',
+            display: 'Female',
+            descr: '',
+        }, {
+            name: 'OTHER',
+            display: 'Other',
+            descr: '',
+        }, ],
+    },
 }
 
 export const pages = {
@@ -117,26 +657,26 @@ export const pages = {
             boxes: [{
                 name: 'Programs',
                 links: [{
-                    display: 'Program Status Dashboard',
+                    display: 'Person',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'find_person',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
                 }, {
-                    display: 'Review Assays',
+                    display: 'Program',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'find_assay',
+                    target: 'find_program',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
                 }, {
-                    display: 'Review Experiments',
+                    display: 'Program Milestone',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'find_experiment',
+                    target: 'find_program_milestone',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -144,7 +684,15 @@ export const pages = {
             }, {
                 name: 'Experiments',
                 links: [{
-                    display: 'Update Experiment Status',
+                    display: 'Assay',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_assay',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Experiment',
                     pretargetFn: '',
                     pretarget: '',
                     target: 'find_experiment',
@@ -152,64 +700,10 @@ export const pages = {
                     paramsFn: '',
                     visibleFn: '',
                 }, {
-                    display: 'Create New Experiment',
+                    display: 'Perturbation',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'new_experiment',
-                    mode: 'modal',
-                    paramsFn: '',
-                    visibleFn: '',
-                }, {
-                    display: 'Create New Assay',
-                    pretargetFn: '',
-                    pretarget: '',
-                    target: 'edit_assay',
-                    mode: '',
-                    paramsFn: '',
-                    visibleFn: '',
-                }, ],
-            }, {
-                name: 'Analysis',
-                links: [{
-                    display: 'Review Analysis Results',
-                    pretargetFn: '',
-                    pretarget: '',
-                    target: 'home',
-                    mode: '',
-                    paramsFn: '',
-                    visibleFn: '',
-                }, {
-                    display: 'Review CRCs',
-                    pretargetFn: '',
-                    pretarget: '',
-                    target: 'home',
-                    mode: '',
-                    paramsFn: '',
-                    visibleFn: '',
-                }, {
-                    display: 'Create New Assay',
-                    pretargetFn: '',
-                    pretarget: '',
-                    target: 'edit_assay',
-                    mode: '',
-                    paramsFn: '',
-                    visibleFn: '',
-                }, ],
-            }, {
-                name: 'Compounds',
-                links: [{
-                    display: 'Search Compounds',
-                    pretargetFn: '',
-                    pretarget: '',
-                    target: 'home',
-                    mode: '',
-                    paramsFn: '',
-                    visibleFn: '',
-                }, {
-                    display: 'Review Compounds Status',
-                    pretargetFn: '',
-                    pretarget: '',
-                    target: 'home',
+                    target: 'find_perturbation',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -217,37 +711,77 @@ export const pages = {
             }, {
                 name: 'Inventory',
                 links: [{
-                    display: 'Manage Cell Lines',
+                    display: 'Cell Line',
                     pretargetFn: '',
                     pretarget: '',
                     target: 'find_cell_line',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
-                }, {
-                    display: 'Manage Platemaps',
-                    pretargetFn: '',
-                    pretarget: '',
-                    target: 'home',
-                    mode: '',
-                    paramsFn: '',
-                    visibleFn: '',
                 }, ],
             }, {
-                name: 'Project Management',
+                name: 'Biology Reference',
                 links: [{
-                    display: 'Update Program',
+                    display: 'Indication',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'find_indication',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
                 }, {
-                    display: 'Create New Program',
+                    display: 'Species',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'find_species',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Organ',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_organ',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Tissue',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_tissue',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Cell Type',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_cell_type',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Protein',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_protein',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Gene',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_gene',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Compound',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_compound',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -255,6 +789,578 @@ export const pages = {
             }, ],
         },
         type: LinksPage,
+    },
+    find_person: {
+        name: 'find_person',
+        display: 'Find Person',
+        config: {
+            sourceTable: 'person',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Person',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_person',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'given_name',
+                width: '200',
+            }, {
+                field: 'family_name',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'given_name', 'family_name', ],
+            buttons: [{
+                display: 'New Person',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_person',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_person: {
+        name: 'view_person',
+        display: 'View Person',
+        config: {
+            sourceTable: 'person',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'given_name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'family_name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_program',
+                display: 'Program',
+                paramsFn: (params, data) => ({
+                    bio_lead__id: data.id
+                }),
+            }, {
+                tablePage: 'find_program',
+                display: 'Program',
+                paramsFn: (params, data) => ({
+                    chem_lead__id: data.id
+                }),
+            }, {
+                tablePage: 'find_program',
+                display: 'Program',
+                paramsFn: (params, data) => ({
+                    program_manager__id: data.id
+                }),
+            }, {
+                tablePage: 'find_experiment',
+                display: 'Experiment',
+                paramsFn: (params, data) => ({
+                    bio_lead__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_person',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_person: {
+        name: 'edit_person',
+        display: 'Edit Person',
+        config: {
+            sourceTable: 'person',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'given_name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'family_name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_program: {
+        name: 'find_program',
+        display: 'Find Program',
+        config: {
+            sourceTable: 'program',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Program',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_program',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'target',
+                width: '200',
+            }, {
+                field: 'indication',
+                width: '200',
+            }, {
+                field: 'status',
+                width: '200',
+            }, {
+                field: 'started_date',
+                width: '200',
+            }, {
+                field: 'stage',
+                width: '200',
+            }, {
+                field: 'bio_lead',
+                width: '200',
+            }, {
+                field: 'chem_lead',
+                width: '200',
+            }, {
+                field: 'program_manager',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'target', 'indication', 'status', 'started_date', 'stage', 'bio_lead', 'chem_lead', 'program_manager', ],
+            buttons: [{
+                display: 'New Program',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_program',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_program: {
+        name: 'view_program',
+        display: 'View Program',
+        config: {
+            sourceTable: 'program',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'target',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'indication',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'status',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'started_date',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'stage',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'bio_lead',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'chem_lead',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'program_manager',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_program_milestone',
+                display: 'Program Milestone',
+                paramsFn: (params, data) => ({
+                    program__id: data.id
+                }),
+            }, {
+                tablePage: 'find_assay',
+                display: 'Assay',
+                paramsFn: (params, data) => ({
+                    for_program__id: data.id
+                }),
+            }, {
+                tablePage: 'find_experiment',
+                display: 'Experiment',
+                paramsFn: (params, data) => ({
+                    program__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_program',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_program: {
+        name: 'edit_program',
+        display: 'Edit Program',
+        config: {
+            sourceTable: 'program',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'target',
+                display: '',
+                lookup: 'find_protein',
+                visibleFn: '',
+            }, {
+                field: 'indication',
+                display: '',
+                lookup: 'find_indication',
+                visibleFn: '',
+            }, {
+                field: 'status',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'started_date',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'stage',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'bio_lead',
+                display: '',
+                lookup: 'find_person',
+                visibleFn: '',
+            }, {
+                field: 'chem_lead',
+                display: '',
+                lookup: 'find_person',
+                visibleFn: '',
+            }, {
+                field: 'program_manager',
+                display: '',
+                lookup: 'find_person',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_program_milestone: {
+        name: 'find_program_milestone',
+        display: 'Find Program Milestone',
+        config: {
+            sourceTable: 'program_milestone',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Program Milestone',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_program_milestone',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'program',
+                width: '200',
+            }, {
+                field: 'status',
+                width: '200',
+            }, {
+                field: 'target_date',
+                width: '200',
+            }, {
+                field: 'completed_date',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'program', 'status', 'target_date', 'completed_date', ],
+            buttons: [{
+                display: 'New Program Milestone',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_program_milestone',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_program_milestone: {
+        name: 'view_program_milestone',
+        display: 'View Program Milestone',
+        config: {
+            sourceTable: 'program_milestone',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'program',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'status',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'target_date',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'completed_date',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_program_milestone',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_program_milestone: {
+        name: 'edit_program_milestone',
+        display: 'Edit Program Milestone',
+        config: {
+            sourceTable: 'program_milestone',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'program',
+                display: '',
+                lookup: 'find_program',
+                visibleFn: '',
+            }, {
+                field: 'status',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'target_date',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'completed_date',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
     },
     find_assay: {
         name: 'find_assay',
@@ -280,9 +1386,18 @@ export const pages = {
             }, {
                 field: 'type',
                 width: '200',
+            }, {
+                field: 'descr',
+                width: '200',
+            }, {
+                field: 'cell_line',
+                width: '200',
+            }, {
+                field: 'for_program',
+                width: '200',
             }, ],
             editColumns: [],
-            searchFields: ['name', 'type', ],
+            searchFields: ['name', 'type', 'descr', 'cell_line', 'for_program', ],
             buttons: [{
                 display: 'New Assay',
                 pretargetFn: '',
@@ -321,10 +1436,20 @@ export const pages = {
                 target: '',
                 visibleFn: '',
             }, {
+                field: 'descr',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
                 field: 'cell_line',
                 display: '',
                 target: '',
-                visibleFn: (params, data) => (data.type === 'VITRO'),
+                visibleFn: '',
+            }, {
+                field: 'for_program',
+                display: '',
+                target: '',
+                visibleFn: '',
             }, ],
             editFields: [],
             referenceTables: [{
@@ -375,10 +1500,20 @@ export const pages = {
                 lookup: '',
                 visibleFn: '',
             }, {
-                field: 'cell_line',
+                field: 'descr',
                 display: '',
                 lookup: '',
-                visibleFn: (params, data) => (data.type === 'VITRO'),
+                visibleFn: '',
+            }, {
+                field: 'cell_line',
+                display: '',
+                lookup: 'find_cell_line',
+                visibleFn: '',
+            }, {
+                field: 'for_program',
+                display: '',
+                lookup: 'find_program',
+                visibleFn: '',
             }, ],
             referenceTables: [],
             buttons: [{
@@ -426,26 +1561,44 @@ export const pages = {
                 field: 'description',
                 width: '200',
             }, {
+                field: 'status',
+                width: '200',
+            }, {
+                field: 'program',
+                width: '200',
+            }, {
+                field: 'bio_lead',
+                width: '200',
+            }, {
+                field: 'target_start_date',
+                width: '200',
+            }, {
+                field: 'target_duration',
+                width: '200',
+            }, {
                 field: 'start_date',
+                width: '200',
+            }, {
+                field: 'end_date',
                 width: '200',
             }, {
                 field: 'assay',
                 width: '200',
             }, {
-                field: 'plate_map_file',
+                field: 'type',
                 width: '200',
             }, {
-                field: 'type',
+                field: 'perturbations',
                 width: '200',
             }, ],
             editColumns: [],
-            searchFields: ['name', 'description', 'start_date', 'assay', 'plate_map_file', 'type', ],
+            searchFields: ['name', 'description', 'status', 'program', 'bio_lead', 'target_start_date', 'target_duration', 'start_date', 'end_date', 'assay', 'type', 'perturbations', ],
             buttons: [{
                 display: 'New Experiment',
                 pretargetFn: '',
                 pretarget: '',
-                target: 'new_experiment',
-                mode: 'modal',
+                target: 'edit_experiment',
+                mode: '',
                 paramsFn: '',
                 visibleFn: '',
             }, {
@@ -478,7 +1631,37 @@ export const pages = {
                 target: '',
                 visibleFn: '',
             }, {
+                field: 'status',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'program',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'bio_lead',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'target_start_date',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'target_duration',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
                 field: 'start_date',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'end_date',
                 display: '',
                 target: '',
                 visibleFn: '',
@@ -488,12 +1671,12 @@ export const pages = {
                 target: '',
                 visibleFn: '',
             }, {
-                field: 'plate_map_file',
+                field: 'type',
                 display: '',
                 target: '',
                 visibleFn: '',
             }, {
-                field: 'type',
+                field: 'perturbations',
                 display: '',
                 target: '',
                 visibleFn: '',
@@ -512,56 +1695,6 @@ export const pages = {
                 visibleFn: '',
             }, {
                 display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'View Animal',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: (params, data) => (data.type === 'VIVO'),
-            }, ],
-        },
-        type: RecordPage,
-    },
-    new_experiment: {
-        name: 'new_experiment',
-        display: 'New Experiment',
-        config: {
-            sourceTable: 'experiment',
-            newRecord: '',
-            newRecordFn: '',
-            viewFields: [],
-            editFields: [{
-                field: 'name',
-                display: '',
-                lookup: '',
-                visibleFn: '',
-            }, {
-                field: 'assay',
-                display: '',
-                lookup: 'find_assay',
-                visibleFn: '',
-            }, ],
-            referenceTables: [],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'edit_experiment',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: data.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
                 pretargetFn: '',
                 pretarget: '',
                 target: 'back',
@@ -591,7 +1724,37 @@ export const pages = {
                 lookup: '',
                 visibleFn: '',
             }, {
+                field: 'status',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'program',
+                display: '',
+                lookup: 'find_program',
+                visibleFn: '',
+            }, {
+                field: 'bio_lead',
+                display: '',
+                lookup: 'find_person',
+                visibleFn: '',
+            }, {
+                field: 'target_start_date',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'target_duration',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
                 field: 'start_date',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'end_date',
                 display: '',
                 lookup: '',
                 visibleFn: '',
@@ -601,12 +1764,160 @@ export const pages = {
                 lookup: 'find_assay',
                 visibleFn: '',
             }, {
-                field: 'plate_map_file',
+                field: 'type',
                 display: '',
                 lookup: '',
                 visibleFn: '',
             }, {
-                field: 'type',
+                field: 'perturbations',
+                display: '',
+                lookup: 'find_perturbation',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_perturbation: {
+        name: 'find_perturbation',
+        display: 'Find Perturbation',
+        config: {
+            sourceTable: 'perturbation',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Perturbation',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_perturbation',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'compound',
+                width: '200',
+            }, {
+                field: 'concentration_nm',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'compound', 'concentration_nm', ],
+            buttons: [{
+                display: 'New Perturbation',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_perturbation',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_perturbation: {
+        name: 'view_perturbation',
+        display: 'View Perturbation',
+        config: {
+            sourceTable: 'perturbation',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'compound',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'concentration_nm',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_experiment',
+                display: 'Experiment',
+                paramsFn: (params, data) => ({
+                    perturbations__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_perturbation',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_perturbation: {
+        name: 'edit_perturbation',
+        display: 'Edit Perturbation',
+        config: {
+            sourceTable: 'perturbation',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'compound',
+                display: '',
+                lookup: 'find_compound',
+                visibleFn: '',
+            }, {
+                field: 'concentration_nm',
                 display: '',
                 lookup: '',
                 visibleFn: '',
@@ -653,9 +1964,36 @@ export const pages = {
             viewColumns: [{
                 field: 'name',
                 width: '200',
+            }, {
+                field: 'species',
+                width: '200',
+            }, {
+                field: 'organ',
+                width: '200',
+            }, {
+                field: 'tissue',
+                width: '200',
+            }, {
+                field: 'cell_type',
+                width: '200',
+            }, {
+                field: 'donor_sex',
+                width: '200',
+            }, {
+                field: 'donor_age',
+                width: '200',
+            }, {
+                field: 'donor_ethnicity',
+                width: '200',
+            }, {
+                field: 'donor_health_status',
+                width: '200',
+            }, {
+                field: 'disease',
+                width: '200',
             }, ],
             editColumns: [],
-            searchFields: ['name', ],
+            searchFields: ['name', 'species', 'organ', 'tissue', 'cell_type', 'donor_sex', 'donor_age', 'donor_ethnicity', 'donor_health_status', 'disease', ],
             buttons: [{
                 display: 'New Cell Line',
                 pretargetFn: '',
@@ -688,13 +2026,58 @@ export const pages = {
                 display: '',
                 target: '',
                 visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'organ',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'tissue',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'cell_type',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'donor_sex',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'donor_age',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'donor_ethnicity',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'donor_health_status',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'disease',
+                display: '',
+                target: '',
+                visibleFn: '',
             }, ],
             editFields: [],
             referenceTables: [{
                 tablePage: 'find_assay',
                 display: 'Assay',
                 paramsFn: (params, data) => ({
-                    cell_line: data.id
+                    cell_line__id: data.id
                 }),
             }, ],
             buttons: [{
@@ -729,6 +2112,1154 @@ export const pages = {
             viewFields: [],
             editFields: [{
                 field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                lookup: 'find_species',
+                visibleFn: '',
+            }, {
+                field: 'organ',
+                display: '',
+                lookup: 'find_organ',
+                visibleFn: '',
+            }, {
+                field: 'tissue',
+                display: '',
+                lookup: 'find_tissue',
+                visibleFn: '',
+            }, {
+                field: 'cell_type',
+                display: '',
+                lookup: 'find_cell_type',
+                visibleFn: '',
+            }, {
+                field: 'donor_sex',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'donor_age',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'donor_ethnicity',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'donor_health_status',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'disease',
+                display: '',
+                lookup: 'find_indication',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_indication: {
+        name: 'find_indication',
+        display: 'Find Indication',
+        config: {
+            sourceTable: 'indication',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Indication',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_indication',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', ],
+            buttons: [{
+                display: 'New Indication',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_indication',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_indication: {
+        name: 'view_indication',
+        display: 'View Indication',
+        config: {
+            sourceTable: 'indication',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_program',
+                display: 'Program',
+                paramsFn: (params, data) => ({
+                    indication__id: data.id
+                }),
+            }, {
+                tablePage: 'find_cell_line',
+                display: 'Cell Line',
+                paramsFn: (params, data) => ({
+                    disease__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_indication',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_indication: {
+        name: 'edit_indication',
+        display: 'Edit Indication',
+        config: {
+            sourceTable: 'indication',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_species: {
+        name: 'find_species',
+        display: 'Find Species',
+        config: {
+            sourceTable: 'species',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Species',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_species',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', ],
+            buttons: [{
+                display: 'New Species',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_species',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_species: {
+        name: 'view_species',
+        display: 'View Species',
+        config: {
+            sourceTable: 'species',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_cell_line',
+                display: 'Cell Line',
+                paramsFn: (params, data) => ({
+                    species__id: data.id
+                }),
+            }, {
+                tablePage: 'find_organ',
+                display: 'Organ',
+                paramsFn: (params, data) => ({
+                    species__id: data.id
+                }),
+            }, {
+                tablePage: 'find_tissue',
+                display: 'Tissue',
+                paramsFn: (params, data) => ({
+                    species__id: data.id
+                }),
+            }, {
+                tablePage: 'find_cell_type',
+                display: 'Cell Type',
+                paramsFn: (params, data) => ({
+                    species__id: data.id
+                }),
+            }, {
+                tablePage: 'find_protein',
+                display: 'Protein',
+                paramsFn: (params, data) => ({
+                    species__id: data.id
+                }),
+            }, {
+                tablePage: 'find_gene',
+                display: 'Gene',
+                paramsFn: (params, data) => ({
+                    species__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_species',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_species: {
+        name: 'edit_species',
+        display: 'Edit Species',
+        config: {
+            sourceTable: 'species',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_organ: {
+        name: 'find_organ',
+        display: 'Find Organ',
+        config: {
+            sourceTable: 'organ',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Organ',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_organ',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'species',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'species', ],
+            buttons: [{
+                display: 'New Organ',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_organ',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_organ: {
+        name: 'view_organ',
+        display: 'View Organ',
+        config: {
+            sourceTable: 'organ',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_cell_line',
+                display: 'Cell Line',
+                paramsFn: (params, data) => ({
+                    organ__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_organ',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_organ: {
+        name: 'edit_organ',
+        display: 'Edit Organ',
+        config: {
+            sourceTable: 'organ',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                lookup: 'find_species',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_tissue: {
+        name: 'find_tissue',
+        display: 'Find Tissue',
+        config: {
+            sourceTable: 'tissue',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Tissue',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_tissue',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'species',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'species', ],
+            buttons: [{
+                display: 'New Tissue',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_tissue',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_tissue: {
+        name: 'view_tissue',
+        display: 'View Tissue',
+        config: {
+            sourceTable: 'tissue',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_cell_line',
+                display: 'Cell Line',
+                paramsFn: (params, data) => ({
+                    tissue__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_tissue',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_tissue: {
+        name: 'edit_tissue',
+        display: 'Edit Tissue',
+        config: {
+            sourceTable: 'tissue',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                lookup: 'find_species',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_cell_type: {
+        name: 'find_cell_type',
+        display: 'Find Cell Type',
+        config: {
+            sourceTable: 'cell_type',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Cell Type',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_cell_type',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'species',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'species', ],
+            buttons: [{
+                display: 'New Cell Type',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_cell_type',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_cell_type: {
+        name: 'view_cell_type',
+        display: 'View Cell Type',
+        config: {
+            sourceTable: 'cell_type',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_cell_line',
+                display: 'Cell Line',
+                paramsFn: (params, data) => ({
+                    cell_type__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_cell_type',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_cell_type: {
+        name: 'edit_cell_type',
+        display: 'Edit Cell Type',
+        config: {
+            sourceTable: 'cell_type',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                lookup: 'find_species',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_protein: {
+        name: 'find_protein',
+        display: 'Find Protein',
+        config: {
+            sourceTable: 'protein',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Protein',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_protein',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'gene',
+                width: '200',
+            }, {
+                field: 'species',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'gene', 'species', ],
+            buttons: [{
+                display: 'New Protein',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_protein',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_protein: {
+        name: 'view_protein',
+        display: 'View Protein',
+        config: {
+            sourceTable: 'protein',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'gene',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_program',
+                display: 'Program',
+                paramsFn: (params, data) => ({
+                    target__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_protein',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_protein: {
+        name: 'edit_protein',
+        display: 'Edit Protein',
+        config: {
+            sourceTable: 'protein',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'gene',
+                display: '',
+                lookup: 'find_gene',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                lookup: 'find_species',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_gene: {
+        name: 'find_gene',
+        display: 'Find Gene',
+        config: {
+            sourceTable: 'gene',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Gene',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_gene',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'species',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'species', ],
+            buttons: [{
+                display: 'New Gene',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_gene',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_gene: {
+        name: 'view_gene',
+        display: 'View Gene',
+        config: {
+            sourceTable: 'gene',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_protein',
+                display: 'Protein',
+                paramsFn: (params, data) => ({
+                    gene__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_gene',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_gene: {
+        name: 'edit_gene',
+        display: 'Edit Gene',
+        config: {
+            sourceTable: 'gene',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'species',
+                display: '',
+                lookup: 'find_species',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    find_compound: {
+        name: 'find_compound',
+        display: 'Find Compound',
+        config: {
+            sourceTable: 'compound',
+            newRecord: '',
+            newRecordFn: '',
+            rowAction: {
+                display: 'Select Compound',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_compound',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'smiles',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'smiles', ],
+            buttons: [{
+                display: 'New Compound',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_compound',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: TablePage,
+    },
+    view_compound: {
+        name: 'view_compound',
+        display: 'View Compound',
+        config: {
+            sourceTable: 'compound',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'smiles',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_perturbation',
+                display: 'Perturbation',
+                paramsFn: (params, data) => ({
+                    compound__id: data.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_compound',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: RecordPage,
+    },
+    edit_compound: {
+        name: 'edit_compound',
+        display: 'Edit Compound',
+        config: {
+            sourceTable: 'compound',
+            newRecord: '',
+            newRecordFn: '',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'smiles',
                 display: '',
                 lookup: '',
                 visibleFn: '',

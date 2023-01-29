@@ -6,26 +6,13 @@ enums:
   - VIVO - in-vivo | Assays involving animals
   - CILICO - in-cilico | Fake experiments done with code
 
-folders:
-- name: plate_map
-  descr: Plate map files.
-  extensions: ["xlsx", "csv", "tsv"]
-
 table_modules:
 - name: experiments
   descr: Tables related to experiments.
   tables:
 
-  - name: cell_line
-    descr: A table with one record for each cell line.
-    fields:
-    - name: name
-      type: STRING
-      descr: Name of the assay
-
   - name: assay
     descr: A table with one record for each assay protocol.
-    preprocess_new: add_assay_name
     fields:
     - name: name
       type: STRING
@@ -33,13 +20,19 @@ table_modules:
     - name: type
       type: enum:assay_type
       descr: Type of assay
+    - name: descr
+      type: TEXT
+      descr: Name of the assay
     - name: cell_line
       type: ref:cell_line
       descr: Cell line used in an in-vitro assay
+    - name: for_program
+      type: ref:program
+      descr: (Optional) The program that the assay was designed for.
 
   - name: experiment
     descr: A table with one record for each experiment.
-    preprocess_new: add_experiment_name
+    preprocess: preprocess_experiment
     fields:
     - name: name
       type: STRING
@@ -47,16 +40,49 @@ table_modules:
     - name: description
       type: TEXT
       descr: A long-form description of the experiment
+    - name: status
+      type: enum:activity_status
+      descr: Current status of the experiment
+    - name: program
+      type: ref:program
+      descr: The program that this experiment is part of
+    - name: bio_lead
+      type: ref:person
+      descr: Biology lead on the program
+      backref: experiment_bio_lead
+    - name: target_start_date
+      type: DATE
+      descr: The day on which the experiment is expected to start
+    - name: target_duration
+      type: INTEGER
+      descr: The number of work days the experiment is expected to take
     - name: start_date
       type: DATE
       descr: The day on which the experiment was started
+    - name: end_date
+      type: DATE
+      descr: The day on which the experiment was completed
     - name: assay
       type: ref:assay
       descr: The assay used in the experiment
-    - name: plate_map_file
-      type: doc:plate_map
-      descr: The file that the plate map was loaded from
     - name: type
       type: enum:assay_type
-      descr: Type of assay
+      descr: Assay type
+    - name: perturbations
+      type: ref:perturbation
+      descr: The perturbations that were tested in the experiment
+      direction: many-to-many
 
+
+  - name: perturbation
+    descr: Each record is a perturbation used in one or more experiments
+    fields:
+    - name: name
+      type: STRING
+      descr: Name of the perturbation
+    - name: compound
+      type: ref:compound
+      descr: A compound used in the perturbation
+    - name: concentration_nm
+      type: INTEGER
+      descr: The concentration of the compound in the perturbation

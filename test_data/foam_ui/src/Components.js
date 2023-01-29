@@ -12,7 +12,6 @@ function followAction(config, params, data, context) {
         var actionParams = {}
         if (config.paramsFn) {
             actionParams = config.paramsFn(params, newData, context);
-            console.log(actionParams)
         } else if (config.params) {
             actionParams = config.params;
         }
@@ -239,9 +238,11 @@ export class Table extends Component {
 
     cleanField(row, k) {
         const s = this.props.context.schema[this.props.config.sourceTable]
-        if (row[k] && row[k].id) {
+        if (k === 'id') {
+            return {[k]: row[k]}
+        } else if (row[k] && typeof row[k] === 'object') {
             return {[k]: row[k].name}
-        } else if (k!== 'id' && row[k] && s.fields[k].fieldType === 'enum') {
+        } else if (row[k] && s.fields[k].fieldType === 'enum') {
             return {[k]: this.props.context.enums[s.fields[k].enumClass].options.filter(
                 (e) => (e.name === row[k]))[0].display }
         } else {

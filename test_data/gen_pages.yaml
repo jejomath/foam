@@ -6,63 +6,283 @@ page_modules:
     type: LinksPage
     config:
       boxes:
+      - name: Programs
+        links:
+        - target: find_person
+          display: Person
+        - target: find_program
+          display: Program
+        - target: find_program_milestone
+          display: Program Milestone
       - name: Experiments
         links:
-        - target: find_cell_line
-          display: Cell Line
         - target: find_assay
           display: Assay
         - target: find_experiment
           display: Experiment
-- name: cell_line
+        - target: find_perturbation
+          display: Perturbation
+      - name: Inventory
+        links:
+        - target: find_cell_line
+          display: Cell Line
+      - name: Biology Reference
+        links:
+        - target: find_indication
+          display: Indication
+        - target: find_species
+          display: Species
+        - target: find_organ
+          display: Organ
+        - target: find_tissue
+          display: Tissue
+        - target: find_cell_type
+          display: Cell Type
+        - target: find_protein
+          display: Protein
+        - target: find_gene
+          display: Gene
+        - target: find_compound
+          display: Compound
+- name: person
   pages:
-  - name: find_cell_line
-    descr: Search page for table cell_line
+  - name: find_person
+    descr: Search page for table person
     type: TablePage
     config:
-      source_table: cell_line
+      source_table: person
       view_columns:
       - field: name
         width: 200
+      - field: given_name
+        width: 200
+      - field: family_name
+        width: 200
       search_fields:
       - name
+      - given_name
+      - family_name
       row_action:
-        display: Select Cell Line
-        target: view_cell_line
-        params_fn: '(data) => ({id: data.id})'
+        display: Select Person
+        target: view_person
+        params_fn: '({id: data.id})'
       buttons:
-      - display: New Cell Line
-        target: edit_cell_line
+      - display: New Person
+        target: edit_person
       - display: Done
         target: back
-  - name: view_cell_line
-    descr: View a record from table cell_line
+  - name: view_person
+    descr: View a record from table person
     type: RecordPage
     config:
-      source_table: cell_line
+      source_table: person
       view_fields:
       - name
+      - given_name
+      - family_name
       reference_tables:
-      - table_page: find_assay
-        display: Assay
-        params_fn: '(data) => ({cell_line__id: data.id})'
+      - table_page: find_program
+        display: Program
+        params_fn: '({bio_lead__id: data.id})'
+      - table_page: find_program
+        display: Program
+        params_fn: '({chem_lead__id: data.id})'
+      - table_page: find_program
+        display: Program
+        params_fn: '({program_manager__id: data.id})'
+      - table_page: find_experiment
+        display: Experiment
+        params_fn: '({bio_lead__id: data.id})'
       buttons:
       - display: Edit
-        target: edit_cell_line
-        params_fn: '(params) => ({ id: params.id })'
+        target: edit_person
+        params_fn: '({ id: params.id })'
       - display: Done
         target: back
-  - name: edit_cell_line
-    descr: Edit a record from table cell_line
+  - name: edit_person
+    descr: Edit a record from table person
     type: RecordPage
     config:
-      source_table: cell_line
+      source_table: person
       edit_fields:
       - name
+      - given_name
+      - family_name
       buttons:
       - display: Save
         target: back
-        pretarget_fn: (params, data, context) => { context.save() }
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: program
+  pages:
+  - name: find_program
+    descr: Search page for table program
+    type: TablePage
+    config:
+      source_table: program
+      view_columns:
+      - field: name
+        width: 200
+      - field: target
+        width: 200
+      - field: indication
+        width: 200
+      - field: status
+        width: 200
+      - field: started_date
+        width: 200
+      - field: stage
+        width: 200
+      - field: bio_lead
+        width: 200
+      - field: chem_lead
+        width: 200
+      - field: program_manager
+        width: 200
+      search_fields:
+      - name
+      - target
+      - indication
+      - status
+      - started_date
+      - stage
+      - bio_lead
+      - chem_lead
+      - program_manager
+      row_action:
+        display: Select Program
+        target: view_program
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Program
+        target: edit_program
+      - display: Done
+        target: back
+  - name: view_program
+    descr: View a record from table program
+    type: RecordPage
+    config:
+      source_table: program
+      view_fields:
+      - name
+      - target
+      - indication
+      - status
+      - started_date
+      - stage
+      - bio_lead
+      - chem_lead
+      - program_manager
+      reference_tables:
+      - table_page: find_program_milestone
+        display: Program Milestone
+        params_fn: '({program__id: data.id})'
+      - table_page: find_assay
+        display: Assay
+        params_fn: '({for_program__id: data.id})'
+      - table_page: find_experiment
+        display: Experiment
+        params_fn: '({program__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_program
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_program
+    descr: Edit a record from table program
+    type: RecordPage
+    config:
+      source_table: program
+      edit_fields:
+      - name
+      - field: target
+        lookup: find_protein
+      - field: indication
+        lookup: find_indication
+      - status
+      - started_date
+      - stage
+      - field: bio_lead
+        lookup: find_person
+      - field: chem_lead
+        lookup: find_person
+      - field: program_manager
+        lookup: find_person
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: program_milestone
+  pages:
+  - name: find_program_milestone
+    descr: Search page for table program_milestone
+    type: TablePage
+    config:
+      source_table: program_milestone
+      view_columns:
+      - field: name
+        width: 200
+      - field: program
+        width: 200
+      - field: status
+        width: 200
+      - field: target_date
+        width: 200
+      - field: completed_date
+        width: 200
+      search_fields:
+      - name
+      - program
+      - status
+      - target_date
+      - completed_date
+      row_action:
+        display: Select Program Milestone
+        target: view_program_milestone
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Program Milestone
+        target: edit_program_milestone
+      - display: Done
+        target: back
+  - name: view_program_milestone
+    descr: View a record from table program_milestone
+    type: RecordPage
+    config:
+      source_table: program_milestone
+      view_fields:
+      - name
+      - program
+      - status
+      - target_date
+      - completed_date
+      reference_tables: []
+      buttons:
+      - display: Edit
+        target: edit_program_milestone
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_program_milestone
+    descr: Edit a record from table program_milestone
+    type: RecordPage
+    config:
+      source_table: program_milestone
+      edit_fields:
+      - name
+      - field: program
+        lookup: find_program
+      - status
+      - target_date
+      - completed_date
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
       - display: Cancel
         target: back
 - name: assay
@@ -77,16 +297,22 @@ page_modules:
         width: 200
       - field: type
         width: 200
+      - field: descr
+        width: 200
       - field: cell_line
+        width: 200
+      - field: for_program
         width: 200
       search_fields:
       - name
       - type
+      - descr
       - cell_line
+      - for_program
       row_action:
         display: Select Assay
         target: view_assay
-        params_fn: '(data) => ({id: data.id})'
+        params_fn: '({id: data.id})'
       buttons:
       - display: New Assay
         target: edit_assay
@@ -100,15 +326,17 @@ page_modules:
       view_fields:
       - name
       - type
+      - descr
       - cell_line
+      - for_program
       reference_tables:
       - table_page: find_experiment
         display: Experiment
-        params_fn: '(data) => ({assay__id: data.id})'
+        params_fn: '({assay__id: data.id})'
       buttons:
       - display: Edit
         target: edit_assay
-        params_fn: '(params) => ({ id: params.id })'
+        params_fn: '({ id: params.id })'
       - display: Done
         target: back
   - name: edit_assay
@@ -119,12 +347,15 @@ page_modules:
       edit_fields:
       - name
       - type
+      - descr
       - field: cell_line
         lookup: find_cell_line
+      - field: for_program
+        lookup: find_program
       buttons:
       - display: Save
         target: back
-        pretarget_fn: (params, data, context) => { context.save() }
+        pretarget_fn: ( context.save() )
       - display: Cancel
         target: back
 - name: experiment
@@ -139,25 +370,43 @@ page_modules:
         width: 200
       - field: description
         width: 200
+      - field: status
+        width: 200
+      - field: program
+        width: 200
+      - field: bio_lead
+        width: 200
+      - field: target_start_date
+        width: 200
+      - field: target_duration
+        width: 200
       - field: start_date
+        width: 200
+      - field: end_date
         width: 200
       - field: assay
         width: 200
-      - field: plate_map_file
-        width: 200
       - field: type
+        width: 200
+      - field: perturbations
         width: 200
       search_fields:
       - name
       - description
+      - status
+      - program
+      - bio_lead
+      - target_start_date
+      - target_duration
       - start_date
+      - end_date
       - assay
-      - plate_map_file
       - type
+      - perturbations
       row_action:
         display: Select Experiment
         target: view_experiment
-        params_fn: '(data) => ({id: data.id})'
+        params_fn: '({id: data.id})'
       buttons:
       - display: New Experiment
         target: edit_experiment
@@ -171,15 +420,21 @@ page_modules:
       view_fields:
       - name
       - description
+      - status
+      - program
+      - bio_lead
+      - target_start_date
+      - target_duration
       - start_date
+      - end_date
       - assay
-      - plate_map_file
       - type
+      - perturbations
       reference_tables: []
       buttons:
       - display: Edit
         target: edit_experiment
-        params_fn: '(params) => ({ id: params.id })'
+        params_fn: '({ id: params.id })'
       - display: Done
         target: back
   - name: edit_experiment
@@ -190,14 +445,653 @@ page_modules:
       edit_fields:
       - name
       - description
+      - status
+      - field: program
+        lookup: find_program
+      - field: bio_lead
+        lookup: find_person
+      - target_start_date
+      - target_duration
       - start_date
+      - end_date
       - field: assay
         lookup: find_assay
-      - plate_map_file
       - type
+      - field: perturbations
+        lookup: find_perturbation
       buttons:
       - display: Save
         target: back
-        pretarget_fn: (params, data, context) => { context.save() }
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: perturbation
+  pages:
+  - name: find_perturbation
+    descr: Search page for table perturbation
+    type: TablePage
+    config:
+      source_table: perturbation
+      view_columns:
+      - field: name
+        width: 200
+      - field: compound
+        width: 200
+      - field: concentration_nm
+        width: 200
+      search_fields:
+      - name
+      - compound
+      - concentration_nm
+      row_action:
+        display: Select Perturbation
+        target: view_perturbation
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Perturbation
+        target: edit_perturbation
+      - display: Done
+        target: back
+  - name: view_perturbation
+    descr: View a record from table perturbation
+    type: RecordPage
+    config:
+      source_table: perturbation
+      view_fields:
+      - name
+      - compound
+      - concentration_nm
+      reference_tables:
+      - table_page: find_experiment
+        display: Experiment
+        params_fn: '({perturbations__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_perturbation
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_perturbation
+    descr: Edit a record from table perturbation
+    type: RecordPage
+    config:
+      source_table: perturbation
+      edit_fields:
+      - name
+      - field: compound
+        lookup: find_compound
+      - concentration_nm
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: cell_line
+  pages:
+  - name: find_cell_line
+    descr: Search page for table cell_line
+    type: TablePage
+    config:
+      source_table: cell_line
+      view_columns:
+      - field: name
+        width: 200
+      - field: species
+        width: 200
+      - field: organ
+        width: 200
+      - field: tissue
+        width: 200
+      - field: cell_type
+        width: 200
+      - field: donor_sex
+        width: 200
+      - field: donor_age
+        width: 200
+      - field: donor_ethnicity
+        width: 200
+      - field: donor_health_status
+        width: 200
+      - field: disease
+        width: 200
+      search_fields:
+      - name
+      - species
+      - organ
+      - tissue
+      - cell_type
+      - donor_sex
+      - donor_age
+      - donor_ethnicity
+      - donor_health_status
+      - disease
+      row_action:
+        display: Select Cell Line
+        target: view_cell_line
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Cell Line
+        target: edit_cell_line
+      - display: Done
+        target: back
+  - name: view_cell_line
+    descr: View a record from table cell_line
+    type: RecordPage
+    config:
+      source_table: cell_line
+      view_fields:
+      - name
+      - species
+      - organ
+      - tissue
+      - cell_type
+      - donor_sex
+      - donor_age
+      - donor_ethnicity
+      - donor_health_status
+      - disease
+      reference_tables:
+      - table_page: find_assay
+        display: Assay
+        params_fn: '({cell_line__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_cell_line
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_cell_line
+    descr: Edit a record from table cell_line
+    type: RecordPage
+    config:
+      source_table: cell_line
+      edit_fields:
+      - name
+      - field: species
+        lookup: find_species
+      - field: organ
+        lookup: find_organ
+      - field: tissue
+        lookup: find_tissue
+      - field: cell_type
+        lookup: find_cell_type
+      - donor_sex
+      - donor_age
+      - donor_ethnicity
+      - donor_health_status
+      - field: disease
+        lookup: find_indication
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: indication
+  pages:
+  - name: find_indication
+    descr: Search page for table indication
+    type: TablePage
+    config:
+      source_table: indication
+      view_columns:
+      - field: name
+        width: 200
+      search_fields:
+      - name
+      row_action:
+        display: Select Indication
+        target: view_indication
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Indication
+        target: edit_indication
+      - display: Done
+        target: back
+  - name: view_indication
+    descr: View a record from table indication
+    type: RecordPage
+    config:
+      source_table: indication
+      view_fields:
+      - name
+      reference_tables:
+      - table_page: find_program
+        display: Program
+        params_fn: '({indication__id: data.id})'
+      - table_page: find_cell_line
+        display: Cell Line
+        params_fn: '({disease__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_indication
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_indication
+    descr: Edit a record from table indication
+    type: RecordPage
+    config:
+      source_table: indication
+      edit_fields:
+      - name
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: species
+  pages:
+  - name: find_species
+    descr: Search page for table species
+    type: TablePage
+    config:
+      source_table: species
+      view_columns:
+      - field: name
+        width: 200
+      search_fields:
+      - name
+      row_action:
+        display: Select Species
+        target: view_species
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Species
+        target: edit_species
+      - display: Done
+        target: back
+  - name: view_species
+    descr: View a record from table species
+    type: RecordPage
+    config:
+      source_table: species
+      view_fields:
+      - name
+      reference_tables:
+      - table_page: find_cell_line
+        display: Cell Line
+        params_fn: '({species__id: data.id})'
+      - table_page: find_organ
+        display: Organ
+        params_fn: '({species__id: data.id})'
+      - table_page: find_tissue
+        display: Tissue
+        params_fn: '({species__id: data.id})'
+      - table_page: find_cell_type
+        display: Cell Type
+        params_fn: '({species__id: data.id})'
+      - table_page: find_protein
+        display: Protein
+        params_fn: '({species__id: data.id})'
+      - table_page: find_gene
+        display: Gene
+        params_fn: '({species__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_species
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_species
+    descr: Edit a record from table species
+    type: RecordPage
+    config:
+      source_table: species
+      edit_fields:
+      - name
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: organ
+  pages:
+  - name: find_organ
+    descr: Search page for table organ
+    type: TablePage
+    config:
+      source_table: organ
+      view_columns:
+      - field: name
+        width: 200
+      - field: species
+        width: 200
+      search_fields:
+      - name
+      - species
+      row_action:
+        display: Select Organ
+        target: view_organ
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Organ
+        target: edit_organ
+      - display: Done
+        target: back
+  - name: view_organ
+    descr: View a record from table organ
+    type: RecordPage
+    config:
+      source_table: organ
+      view_fields:
+      - name
+      - species
+      reference_tables:
+      - table_page: find_cell_line
+        display: Cell Line
+        params_fn: '({organ__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_organ
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_organ
+    descr: Edit a record from table organ
+    type: RecordPage
+    config:
+      source_table: organ
+      edit_fields:
+      - name
+      - field: species
+        lookup: find_species
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: tissue
+  pages:
+  - name: find_tissue
+    descr: Search page for table tissue
+    type: TablePage
+    config:
+      source_table: tissue
+      view_columns:
+      - field: name
+        width: 200
+      - field: species
+        width: 200
+      search_fields:
+      - name
+      - species
+      row_action:
+        display: Select Tissue
+        target: view_tissue
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Tissue
+        target: edit_tissue
+      - display: Done
+        target: back
+  - name: view_tissue
+    descr: View a record from table tissue
+    type: RecordPage
+    config:
+      source_table: tissue
+      view_fields:
+      - name
+      - species
+      reference_tables:
+      - table_page: find_cell_line
+        display: Cell Line
+        params_fn: '({tissue__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_tissue
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_tissue
+    descr: Edit a record from table tissue
+    type: RecordPage
+    config:
+      source_table: tissue
+      edit_fields:
+      - name
+      - field: species
+        lookup: find_species
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: cell_type
+  pages:
+  - name: find_cell_type
+    descr: Search page for table cell_type
+    type: TablePage
+    config:
+      source_table: cell_type
+      view_columns:
+      - field: name
+        width: 200
+      - field: species
+        width: 200
+      search_fields:
+      - name
+      - species
+      row_action:
+        display: Select Cell Type
+        target: view_cell_type
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Cell Type
+        target: edit_cell_type
+      - display: Done
+        target: back
+  - name: view_cell_type
+    descr: View a record from table cell_type
+    type: RecordPage
+    config:
+      source_table: cell_type
+      view_fields:
+      - name
+      - species
+      reference_tables:
+      - table_page: find_cell_line
+        display: Cell Line
+        params_fn: '({cell_type__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_cell_type
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_cell_type
+    descr: Edit a record from table cell_type
+    type: RecordPage
+    config:
+      source_table: cell_type
+      edit_fields:
+      - name
+      - field: species
+        lookup: find_species
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: protein
+  pages:
+  - name: find_protein
+    descr: Search page for table protein
+    type: TablePage
+    config:
+      source_table: protein
+      view_columns:
+      - field: name
+        width: 200
+      - field: gene
+        width: 200
+      - field: species
+        width: 200
+      search_fields:
+      - name
+      - gene
+      - species
+      row_action:
+        display: Select Protein
+        target: view_protein
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Protein
+        target: edit_protein
+      - display: Done
+        target: back
+  - name: view_protein
+    descr: View a record from table protein
+    type: RecordPage
+    config:
+      source_table: protein
+      view_fields:
+      - name
+      - gene
+      - species
+      reference_tables:
+      - table_page: find_program
+        display: Program
+        params_fn: '({target__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_protein
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_protein
+    descr: Edit a record from table protein
+    type: RecordPage
+    config:
+      source_table: protein
+      edit_fields:
+      - name
+      - field: gene
+        lookup: find_gene
+      - field: species
+        lookup: find_species
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: gene
+  pages:
+  - name: find_gene
+    descr: Search page for table gene
+    type: TablePage
+    config:
+      source_table: gene
+      view_columns:
+      - field: name
+        width: 200
+      - field: species
+        width: 200
+      search_fields:
+      - name
+      - species
+      row_action:
+        display: Select Gene
+        target: view_gene
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Gene
+        target: edit_gene
+      - display: Done
+        target: back
+  - name: view_gene
+    descr: View a record from table gene
+    type: RecordPage
+    config:
+      source_table: gene
+      view_fields:
+      - name
+      - species
+      reference_tables:
+      - table_page: find_protein
+        display: Protein
+        params_fn: '({gene__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_gene
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_gene
+    descr: Edit a record from table gene
+    type: RecordPage
+    config:
+      source_table: gene
+      edit_fields:
+      - name
+      - field: species
+        lookup: find_species
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: compound
+  pages:
+  - name: find_compound
+    descr: Search page for table compound
+    type: TablePage
+    config:
+      source_table: compound
+      view_columns:
+      - field: name
+        width: 200
+      - field: smiles
+        width: 200
+      search_fields:
+      - name
+      - smiles
+      row_action:
+        display: Select Compound
+        target: view_compound
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Compound
+        target: edit_compound
+      - display: Done
+        target: back
+  - name: view_compound
+    descr: View a record from table compound
+    type: RecordPage
+    config:
+      source_table: compound
+      view_fields:
+      - name
+      - smiles
+      reference_tables:
+      - table_page: find_perturbation
+        display: Perturbation
+        params_fn: '({compound__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_compound
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_compound
+    descr: Edit a record from table compound
+    type: RecordPage
+    config:
+      source_table: compound
+      edit_fields:
+      - name
+      - smiles
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
       - display: Cancel
         target: back

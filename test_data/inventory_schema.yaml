@@ -1,0 +1,48 @@
+enums:
+- name: ethnicity
+  descr: Test subject's ethnicity
+  options: []  # Coming soon!
+
+- name: health_status
+  descr: Test subject's health status
+  options: []  # Coming soon!
+
+table_modules:
+- name: inventory
+  descr: Tables related to experiments.
+  tables:
+
+  - name: cell_line
+    descr: A table with one record for each cell line.
+    fields:
+    - name: name
+      type: STRING
+      descr: Name of the assay
+    - name: species
+      type: ref:species
+      descr: Source species
+    - name: organ
+      type: ref:organ
+      descr: Source organ
+    - name: tissue
+      type: ref:tissue
+      descr: Source tissue
+    - name: cell_type
+      type: ref:cell_type
+      descr: Cell types found in the line
+      direction: many-to-many
+    - name: donor_sex
+      type: enum:sex
+      descr: Biological sex of the cell donor
+    - name: donor_age
+      type: INTEGER
+      descr: Age of donor when cells were donated
+    - name: donor_ethnicity
+      type: enum:ethnicity
+      descr: Ethnicity of donor
+    - name: donor_health_status
+      type: enum:health_status
+      descr: Health status of donor when cells were donated
+    - name: disease
+      type: ref:indication
+      descr: Disease that the cell line is relevant to

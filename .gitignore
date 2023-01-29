@@ -4,6 +4,8 @@
 *build
 *dist
 
+test_data/reference_data
+test_data/old_configs
 
 */node_modules
 */.pnp

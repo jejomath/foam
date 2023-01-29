@@ -82,11 +82,46 @@ tr:nth-of-type(odd) {
 <div class="menu-outer">
     <div class="menu-inner">
         
+        <div class="module-menu-div"><a href="#module-programs">Programs</a></div>
+            
+            <div class="table-menu-div"><a href="#table-person">Person</a></div>
+            
+            <div class="table-menu-div"><a href="#table-program">Program</a></div>
+            
+            <div class="table-menu-div"><a href="#table-program_milestone">Program Milestone</a></div>
+            
+        
         <div class="module-menu-div"><a href="#module-experiments">Experiments</a></div>
             
             <div class="table-menu-div"><a href="#table-assay">Assay</a></div>
             
             <div class="table-menu-div"><a href="#table-experiment">Experiment</a></div>
+            
+            <div class="table-menu-div"><a href="#table-perturbation">Perturbation</a></div>
+            
+        
+        <div class="module-menu-div"><a href="#module-inventory">Inventory</a></div>
+            
+            <div class="table-menu-div"><a href="#table-cell_line">Cell Line</a></div>
+            
+        
+        <div class="module-menu-div"><a href="#module-bio_ref">Biology Reference</a></div>
+            
+            <div class="table-menu-div"><a href="#table-indication">Indication</a></div>
+            
+            <div class="table-menu-div"><a href="#table-species">Species</a></div>
+            
+            <div class="table-menu-div"><a href="#table-organ">Organ</a></div>
+            
+            <div class="table-menu-div"><a href="#table-tissue">Tissue</a></div>
+            
+            <div class="table-menu-div"><a href="#table-cell_type">Cell Type</a></div>
+            
+            <div class="table-menu-div"><a href="#table-protein">Protein</a></div>
+            
+            <div class="table-menu-div"><a href="#table-gene">Gene</a></div>
+            
+            <div class="table-menu-div"><a href="#table-compound">Compound</a></div>
             
         
     </div>
@@ -95,34 +130,272 @@ tr:nth-of-type(odd) {
 <div class="main-outer">
     <div class="main-inner">
         
+        <div class="module-title-div" id="module-programs">Module: Programs</div>
+        <div class="description-div">Tables related to drug programs and project management.</div>
+        <div class="module-graph-div"><svg width="507pt" height="176pt"
+ viewBox="0.00 0.00 507.09 176.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 172)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-172 503.09,-172 503.09,4 -4,4"/>
+<!-- person -->
+<g id="node1" class="node">
+<title>person</title>
+<polygon fill="none" stroke="black" points="415.54,-16 415.54,-37 470.54,-37 470.54,-16 415.54,-16"/>
+<text text-anchor="start" x="418.54" y="-22.8" font-family="Times,serif" font-size="14.00">Person</text>
+<polygon fill="none" stroke="black" points="415.54,-10 415.54,-16 470.54,-16 470.54,-10 415.54,-10"/>
+</g>
+<!-- program -->
+<g id="node2" class="node">
+<title>program</title>
+<polygon fill="none" stroke="black" points="204,-115 204,-136 342,-136 342,-115 204,-115"/>
+<text text-anchor="start" x="207" y="-121.8" font-family="Times,serif" font-size="14.00">Program</text>
+<polygon fill="none" stroke="black" points="204,-109 204,-115 342,-115 342,-109 204,-109"/>
+<polygon fill="none" stroke="black" points="204,-88 204,-109 342,-109 342,-88 204,-88"/>
+<text text-anchor="start" x="207" y="-94.8" font-family="Times,serif" font-size="14.00">target</text>
+<polygon fill="none" stroke="black" points="204,-67 204,-88 342,-88 342,-67 204,-67"/>
+<text text-anchor="start" x="207" y="-73.8" font-family="Times,serif" font-size="14.00">indication</text>
+<polygon fill="none" stroke="black" points="204,-46 204,-67 342,-67 342,-46 204,-46"/>
+<text text-anchor="start" x="207" y="-52.8" font-family="Times,serif" font-size="14.00">bio_lead</text>
+<polygon fill="none" stroke="black" points="204,-25 204,-46 342,-46 342,-25 204,-25"/>
+<text text-anchor="start" x="207" y="-31.8" font-family="Times,serif" font-size="14.00">chem_lead</text>
+<polygon fill="none" stroke="black" points="204,-4 204,-25 342,-25 342,-4 204,-4"/>
+<text text-anchor="start" x="207" y="-10.8" font-family="Times,serif" font-size="14.00">program_manager</text>
+</g>
+<!-- program&#45;&gt;person -->
+<g id="edge3" class="edge">
+<title>program:bio_lead&#45;&gt;person:name_field</title>
+<path fill="none" stroke="black" d="M343,-56C373.56,-56 379.22,-33 404.33,-27.96"/>
+<polygon fill="black" stroke="black" points="404.92,-31.43 414.54,-27 404.26,-24.46 404.92,-31.43"/>
+</g>
+<!-- program&#45;&gt;person -->
+<g id="edge4" class="edge">
+<title>program:chem_lead&#45;&gt;person:name_field</title>
+<path fill="none" stroke="black" d="M343,-35C371.37,-35 380.52,-28.71 404.54,-27.28"/>
+<polygon fill="black" stroke="black" points="404.65,-30.78 414.54,-27 404.45,-23.79 404.65,-30.78"/>
+</g>
+<!-- program&#45;&gt;person -->
+<g id="edge5" class="edge">
+<title>program:program_manager&#45;&gt;person:name_field</title>
+<path fill="none" stroke="black" d="M343,-14C371.66,-14 380.34,-24.22 404.47,-26.54"/>
+<polygon fill="black" stroke="black" points="404.39,-30.04 414.54,-27 404.72,-23.05 404.39,-30.04"/>
+</g>
+<!-- protein -->
+<g id="node3" class="node">
+<title>protein</title>
+<ellipse fill="none" stroke="black" cx="442.54" cy="-132" rx="44.39" ry="18"/>
+<text text-anchor="middle" x="442.54" y="-128.3" font-family="Times,serif" font-size="14.00">protein</text>
+</g>
+<!-- program&#45;&gt;protein -->
+<g id="edge1" class="edge">
+<title>program:target&#45;&gt;protein:name_field</title>
+<path fill="none" stroke="black" d="M343,-99C364.41,-99 387.15,-106.09 405.38,-113.7"/>
+<polygon fill="black" stroke="black" points="404.18,-116.99 414.74,-117.81 406.99,-110.59 404.18,-116.99"/>
+</g>
+<!-- indication -->
+<g id="node4" class="node">
+<title>indication</title>
+<ellipse fill="none" stroke="black" cx="442.54" cy="-78" rx="56.59" ry="18"/>
+<text text-anchor="middle" x="442.54" y="-74.3" font-family="Times,serif" font-size="14.00">indication</text>
+</g>
+<!-- program&#45;&gt;indication -->
+<g id="edge2" class="edge">
+<title>program:indication&#45;&gt;indication:name_field</title>
+<path fill="none" stroke="black" d="M343,-78C353.5,-78 364.63,-78 375.49,-78"/>
+<polygon fill="black" stroke="black" points="375.78,-81.5 385.78,-78 375.78,-74.5 375.78,-81.5"/>
+</g>
+<!-- program_milestone -->
+<g id="node5" class="node">
+<title>program_milestone</title>
+<polygon fill="none" stroke="black" points="8,-143 8,-164 152,-164 152,-143 8,-143"/>
+<text text-anchor="start" x="11" y="-149.8" font-family="Times,serif" font-size="14.00">Program Milestone</text>
+<polygon fill="none" stroke="black" points="8,-137 8,-143 152,-143 152,-137 8,-137"/>
+<polygon fill="none" stroke="black" points="8,-116 8,-137 152,-137 152,-116 8,-116"/>
+<text text-anchor="start" x="11" y="-122.8" font-family="Times,serif" font-size="14.00">program</text>
+</g>
+<!-- program_milestone&#45;&gt;program -->
+<g id="edge6" class="edge">
+<title>program_milestone:program&#45;&gt;program:name_field</title>
+<path fill="none" stroke="black" d="M153,-126C171.4,-126 178.38,-126 192.85,-126"/>
+<polygon fill="black" stroke="black" points="193,-129.5 203,-126 193,-122.5 193,-129.5"/>
+</g>
+</g>
+</svg>
+</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Description</th></tr>
+            
+            <tr><td>person</td><td>Each record represents a person in the organization</td></tr>
+            
+            <tr><td>program</td><td>Each record represents a drug program or other long-term project</td></tr>
+            
+            <tr><td>program_milestone</td><td>Each record represents a milestone in a program`s roadmap</td></tr>
+            
+            </table></div>
+
+            
+            <div class="table-title-div" id="table-person">Table: Person</div>
+            <div class="description-div">Each record represents a person in the organization</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Person`s full name</td></tr>
+            
+            <tr><td>given_name</td><td>STRING</td><td>Person`s given name (first name in western cultures)</td></tr>
+            
+            <tr><td>family_name</td><td>STRING</td><td>Person`s family name (last name in western cultures)</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-program">Table: Program</div>
+            <div class="description-div">Each record represents a drug program or other long-term project</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Program`s name</td></tr>
+            
+            <tr><td>target</td><td>ref:protein</td><td>Primary target</td></tr>
+            
+            <tr><td>indication</td><td>ref:indication</td><td>Primary indication</td></tr>
+            
+            <tr><td>status</td><td>enum:program_status</td><td>Current status of the program.</td></tr>
+            
+            <tr><td>started_date</td><td>DATE</td><td>Date when the program was initiated</td></tr>
+            
+            <tr><td>stage</td><td>enum:program_stage</td><td>Current stage of the program.</td></tr>
+            
+            <tr><td>bio_lead</td><td>ref:person</td><td>Biology lead on the program</td></tr>
+            
+            <tr><td>chem_lead</td><td>ref:person</td><td>Chemistry lead on the program</td></tr>
+            
+            <tr><td>program_manager</td><td>ref:person</td><td>Program Manager</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-program_milestone">Table: Program Milestone</div>
+            <div class="description-div">Each record represents a milestone in a program`s roadmap</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Milestone name/description</td></tr>
+            
+            <tr><td>program</td><td>ref:program</td><td>Program that this is for</td></tr>
+            
+            <tr><td>status</td><td>enum:activity_status</td><td>Current status of the milestone</td></tr>
+            
+            <tr><td>target_date</td><td>DATE</td><td>Date when the milestone is projected to be completed</td></tr>
+            
+            <tr><td>completed_date</td><td>DATE</td><td>Date when the milestone was completed</td></tr>
+            
+            </table></div>
+            
+        
         <div class="module-title-div" id="module-experiments">Module: Experiments</div>
         <div class="description-div">Tables related to experiments.</div>
-        <div class="module-graph-div"><svg width="215pt" height="71pt"
- viewBox="0.00 0.00 215.00 71.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 67)">
+        <div class="module-graph-div"><svg width="431pt" height="249pt"
+ viewBox="0.00 0.00 430.99 248.50" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 244.5)">
 <title>G</title>
-<polygon fill="white" stroke="transparent" points="-4,4 -4,-67 211,-67 211,4 -4,4"/>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-244.5 426.99,-244.5 426.99,4 -4,4"/>
 <!-- assay -->
 <g id="node1" class="node">
 <title>assay</title>
-<polygon fill="none" stroke="black" points="151,-10 151,-31 199,-31 199,-10 151,-10"/>
-<text text-anchor="start" x="154" y="-16.8" font-family="Times,serif" font-size="14.00">Assay</text>
-<polygon fill="none" stroke="black" points="151,-4 151,-10 199,-10 199,-4 151,-4"/>
+<polygon fill="none" stroke="black" points="166.5,-130 166.5,-151 261.5,-151 261.5,-130 166.5,-130"/>
+<text text-anchor="start" x="169.5" y="-136.8" font-family="Times,serif" font-size="14.00">Assay</text>
+<polygon fill="none" stroke="black" points="166.5,-124 166.5,-130 261.5,-130 261.5,-124 166.5,-124"/>
+<polygon fill="none" stroke="black" points="166.5,-103 166.5,-124 261.5,-124 261.5,-103 166.5,-103"/>
+<text text-anchor="start" x="169.5" y="-109.8" font-family="Times,serif" font-size="14.00">cell_line</text>
+<polygon fill="none" stroke="black" points="166.5,-82 166.5,-103 261.5,-103 261.5,-82 166.5,-82"/>
+<text text-anchor="start" x="169.5" y="-88.8" font-family="Times,serif" font-size="14.00">for_program</text>
+</g>
+<!-- cell_line -->
+<g id="node2" class="node">
+<title>cell_line</title>
+<ellipse fill="none" stroke="black" cx="364.49" cy="-113" rx="48.19" ry="18"/>
+<text text-anchor="middle" x="364.49" y="-109.3" font-family="Times,serif" font-size="14.00">cell_line</text>
+</g>
+<!-- assay&#45;&gt;cell_line -->
+<g id="edge1" class="edge">
+<title>assay:cell_line&#45;&gt;cell_line:name_field</title>
+<path fill="none" stroke="black" d="M262.5,-113C276.61,-113 291.83,-113 306.06,-113"/>
+<polygon fill="black" stroke="black" points="306.23,-116.5 316.23,-113 306.23,-109.5 306.23,-116.5"/>
+</g>
+<!-- program -->
+<g id="node3" class="node">
+<title>program</title>
+<ellipse fill="none" stroke="black" cx="364.49" cy="-202" rx="50.89" ry="18"/>
+<text text-anchor="middle" x="364.49" y="-198.3" font-family="Times,serif" font-size="14.00">program</text>
+</g>
+<!-- assay&#45;&gt;program -->
+<g id="edge2" class="edge">
+<title>assay:for_program&#45;&gt;program:name_field</title>
+<path fill="none" stroke="black" d="M262.5,-92C291.29,-92 286.54,-118.78 306,-140 317.36,-152.4 330.07,-166.11 340.64,-177.49"/>
+<polygon fill="black" stroke="black" points="338.21,-180.01 347.58,-184.94 343.33,-175.24 338.21,-180.01"/>
 </g>
 <!-- experiment -->
-<g id="node2" class="node">
+<g id="node4" class="node">
 <title>experiment</title>
-<polygon fill="none" stroke="black" points="8.5,-38 8.5,-59 99.5,-59 99.5,-38 8.5,-38"/>
-<text text-anchor="start" x="11.5" y="-44.8" font-family="Times,serif" font-size="14.00">Experiment</text>
-<polygon fill="none" stroke="black" points="8.5,-32 8.5,-38 99.5,-38 99.5,-32 8.5,-32"/>
-<polygon fill="none" stroke="black" points="8.5,-11 8.5,-32 99.5,-32 99.5,-11 8.5,-11"/>
-<text text-anchor="start" x="11.5" y="-17.8" font-family="Times,serif" font-size="14.00">assay</text>
+<polygon fill="none" stroke="black" points="8.5,-215 8.5,-236 113.5,-236 113.5,-215 8.5,-215"/>
+<text text-anchor="start" x="11.5" y="-221.8" font-family="Times,serif" font-size="14.00">Experiment</text>
+<polygon fill="none" stroke="black" points="8.5,-209 8.5,-215 113.5,-215 113.5,-209 8.5,-209"/>
+<polygon fill="none" stroke="black" points="8.5,-188 8.5,-209 113.5,-209 113.5,-188 8.5,-188"/>
+<text text-anchor="start" x="11.5" y="-194.8" font-family="Times,serif" font-size="14.00">program</text>
+<polygon fill="none" stroke="black" points="8.5,-167 8.5,-188 113.5,-188 113.5,-167 8.5,-167"/>
+<text text-anchor="start" x="11.5" y="-173.8" font-family="Times,serif" font-size="14.00">bio_lead</text>
+<polygon fill="none" stroke="black" points="8.5,-146 8.5,-167 113.5,-167 113.5,-146 8.5,-146"/>
+<text text-anchor="start" x="11.5" y="-152.8" font-family="Times,serif" font-size="14.00">assay</text>
+<polygon fill="none" stroke="black" points="8.5,-125 8.5,-146 113.5,-146 113.5,-125 8.5,-125"/>
+<text text-anchor="start" x="11.5" y="-131.8" font-family="Times,serif" font-size="14.00">perturbations</text>
 </g>
 <!-- experiment&#45;&gt;assay -->
-<g id="edge1" class="edge">
+<g id="edge5" class="edge">
 <title>experiment:assay&#45;&gt;assay:name_field</title>
-<path fill="none" stroke="black" d="M100.5,-21C118.72,-21 125.62,-21 139.95,-21"/>
-<polygon fill="black" stroke="black" points="140,-24.5 150,-21 140,-17.5 140,-24.5"/>
+<path fill="none" stroke="black" d="M114.5,-156C134.25,-156 140.11,-145.52 155.3,-142.08"/>
+<polygon fill="black" stroke="black" points="155.92,-145.53 165.5,-141 155.19,-138.57 155.92,-145.53"/>
+</g>
+<!-- experiment&#45;&gt;program -->
+<g id="edge3" class="edge">
+<title>experiment:program&#45;&gt;program:name_field</title>
+<path fill="none" stroke="black" d="M114.5,-199C135.38,-199 136.63,-214.45 157,-219 206.01,-229.96 219.98,-223.51 270,-219 283.36,-217.8 297.66,-215.64 310.95,-213.26"/>
+<polygon fill="black" stroke="black" points="311.7,-216.68 320.89,-211.41 310.42,-209.8 311.7,-216.68"/>
+</g>
+<!-- person -->
+<g id="node5" class="node">
+<title>person</title>
+<ellipse fill="none" stroke="black" cx="213.5" cy="-192" rx="42.49" ry="18"/>
+<text text-anchor="middle" x="213.5" y="-188.3" font-family="Times,serif" font-size="14.00">person</text>
+</g>
+<!-- experiment&#45;&gt;person -->
+<g id="edge4" class="edge">
+<title>experiment:bio_lead&#45;&gt;person:name_field</title>
+<path fill="none" stroke="black" d="M114.5,-177C131.3,-177 149.54,-179.18 165.67,-181.88"/>
+<polygon fill="black" stroke="black" points="165.48,-185.4 175.94,-183.71 166.71,-178.51 165.48,-185.4"/>
+</g>
+<!-- perturbation -->
+<g id="node6" class="node">
+<title>perturbation</title>
+<polygon fill="none" stroke="black" points="165.5,-35 165.5,-56 262.5,-56 262.5,-35 165.5,-35"/>
+<text text-anchor="start" x="168.5" y="-41.8" font-family="Times,serif" font-size="14.00">Perturbation</text>
+<polygon fill="none" stroke="black" points="165.5,-29 165.5,-35 262.5,-35 262.5,-29 165.5,-29"/>
+<polygon fill="none" stroke="black" points="165.5,-8 165.5,-29 262.5,-29 262.5,-8 165.5,-8"/>
+<text text-anchor="start" x="168.5" y="-14.8" font-family="Times,serif" font-size="14.00">compound</text>
+</g>
+<!-- experiment&#45;&gt;perturbation -->
+<g id="edge6" class="edge">
+<title>experiment:perturbations&#45;&gt;perturbation:name_field</title>
+<path fill="none" stroke="black" d="M114.5,-135C155.97,-135 125.5,-60.64 154.6,-47.86"/>
+<polygon fill="black" stroke="black" points="155.32,-51.29 164.5,-46 154.03,-44.41 155.32,-51.29"/>
+</g>
+<!-- compound -->
+<g id="node7" class="node">
+<title>compound</title>
+<ellipse fill="none" stroke="black" cx="364.49" cy="-18" rx="58.49" ry="18"/>
+<text text-anchor="middle" x="364.49" y="-14.3" font-family="Times,serif" font-size="14.00">compound</text>
+</g>
+<!-- perturbation&#45;&gt;compound -->
+<g id="edge7" class="edge">
+<title>perturbation:compound&#45;&gt;compound:name_field</title>
+<path fill="none" stroke="black" d="M263.5,-18C273.89,-18 284.89,-18 295.65,-18"/>
+<polygon fill="black" stroke="black" points="295.86,-21.5 305.86,-18 295.86,-14.5 295.86,-21.5"/>
 </g>
 </g>
 </svg>
@@ -133,6 +406,8 @@ tr:nth-of-type(odd) {
             <tr><td>assay</td><td>A table with one record for each assay protocol.</td></tr>
             
             <tr><td>experiment</td><td>A table with one record for each experiment.</td></tr>
+            
+            <tr><td>perturbation</td><td>Each record is a perturbation used in one or more experiments</td></tr>
             
             </table></div>
 
@@ -146,6 +421,12 @@ tr:nth-of-type(odd) {
             
             <tr><td>type</td><td>enum:assay_type</td><td>Type of assay</td></tr>
             
+            <tr><td>descr</td><td>TEXT</td><td>Name of the assay</td></tr>
+            
+            <tr><td>cell_line</td><td>ref:cell_line</td><td>Cell line used in an in-vitro assay</td></tr>
+            
+            <tr><td>for_program</td><td>ref:program</td><td>(Optional) The program that the assay was designed for.</td></tr>
+            
             </table></div>
             
             <div class="table-title-div" id="table-experiment">Table: Experiment</div>
@@ -157,9 +438,384 @@ tr:nth-of-type(odd) {
             
             <tr><td>description</td><td>TEXT</td><td>A long-form description of the experiment</td></tr>
             
+            <tr><td>status</td><td>enum:activity_status</td><td>Current status of the experiment</td></tr>
+            
+            <tr><td>program</td><td>ref:program</td><td>The program that this experiment is part of</td></tr>
+            
+            <tr><td>bio_lead</td><td>ref:person</td><td>Biology lead on the program</td></tr>
+            
+            <tr><td>target_start_date</td><td>DATE</td><td>The day on which the experiment is expected to start</td></tr>
+            
+            <tr><td>target_duration</td><td>INTEGER</td><td>The number of work days the experiment is expected to take</td></tr>
+            
+            <tr><td>start_date</td><td>DATE</td><td>The day on which the experiment was started</td></tr>
+            
+            <tr><td>end_date</td><td>DATE</td><td>The day on which the experiment was completed</td></tr>
+            
             <tr><td>assay</td><td>ref:assay</td><td>The assay used in the experiment</td></tr>
             
-            <tr><td>plate_map_file</td><td>doc:plate_map</td><td>The file that the plate map was loaded from</td></tr>
+            <tr><td>type</td><td>enum:assay_type</td><td>Assay type</td></tr>
+            
+            <tr><td>perturbations</td><td>ref:perturbation</td><td>The perturbations that were tested in the experiment</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-perturbation">Table: Perturbation</div>
+            <div class="description-div">Each record is a perturbation used in one or more experiments</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Name of the perturbation</td></tr>
+            
+            <tr><td>compound</td><td>ref:compound</td><td>A compound used in the perturbation</td></tr>
+            
+            <tr><td>concentration_nm</td><td>INTEGER</td><td>The concentration of the compound in the perturbation</td></tr>
+            
+            </table></div>
+            
+        
+        <div class="module-title-div" id="module-inventory">Module: Inventory</div>
+        <div class="description-div">Tables related to experiments.</div>
+        <div class="module-graph-div"><svg width="243pt" height="260pt"
+ viewBox="0.00 0.00 243.09 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-256 239.09,-256 239.09,4 -4,4"/>
+<!-- cell_line -->
+<g id="node1" class="node">
+<title>cell_line</title>
+<polygon fill="none" stroke="black" points="8,-185 8,-206 78,-206 78,-185 8,-185"/>
+<text text-anchor="start" x="11" y="-191.8" font-family="Times,serif" font-size="14.00">Cell Line</text>
+<polygon fill="none" stroke="black" points="8,-179 8,-185 78,-185 78,-179 8,-179"/>
+<polygon fill="none" stroke="black" points="8,-158 8,-179 78,-179 78,-158 8,-158"/>
+<text text-anchor="start" x="11" y="-164.8" font-family="Times,serif" font-size="14.00">species</text>
+<polygon fill="none" stroke="black" points="8,-137 8,-158 78,-158 78,-137 8,-137"/>
+<text text-anchor="start" x="11" y="-143.8" font-family="Times,serif" font-size="14.00">organ</text>
+<polygon fill="none" stroke="black" points="8,-116 8,-137 78,-137 78,-116 8,-116"/>
+<text text-anchor="start" x="11" y="-122.8" font-family="Times,serif" font-size="14.00">tissue</text>
+<polygon fill="none" stroke="black" points="8,-95 8,-116 78,-116 78,-95 8,-95"/>
+<text text-anchor="start" x="11" y="-101.8" font-family="Times,serif" font-size="14.00">cell_type</text>
+<polygon fill="none" stroke="black" points="8,-74 8,-95 78,-95 78,-74 8,-74"/>
+<text text-anchor="start" x="11" y="-80.8" font-family="Times,serif" font-size="14.00">disease</text>
+</g>
+<!-- species -->
+<g id="node2" class="node">
+<title>species</title>
+<ellipse fill="none" stroke="black" cx="178.54" cy="-234" rx="44.69" ry="18"/>
+<text text-anchor="middle" x="178.54" y="-230.3" font-family="Times,serif" font-size="14.00">species</text>
+</g>
+<!-- cell_line&#45;&gt;species -->
+<g id="edge1" class="edge">
+<title>cell_line:species&#45;&gt;species:name_field</title>
+<path fill="none" stroke="black" d="M79,-169C104.5,-169 100.78,-192.85 122,-207 126.97,-210.32 132.41,-213.47 137.88,-216.37"/>
+<polygon fill="black" stroke="black" points="136.53,-219.61 147.03,-221 139.69,-213.36 136.53,-219.61"/>
+</g>
+<!-- organ -->
+<g id="node3" class="node">
+<title>organ</title>
+<ellipse fill="none" stroke="black" cx="178.54" cy="-180" rx="37.89" ry="18"/>
+<text text-anchor="middle" x="178.54" y="-176.3" font-family="Times,serif" font-size="14.00">organ</text>
+</g>
+<!-- cell_line&#45;&gt;organ -->
+<g id="edge2" class="edge">
+<title>cell_line:organ&#45;&gt;organ:name_field</title>
+<path fill="none" stroke="black" d="M79,-148C101.06,-148 124.59,-155.34 143.13,-162.99"/>
+<polygon fill="black" stroke="black" points="141.77,-166.22 152.34,-166.98 144.55,-159.79 141.77,-166.22"/>
+</g>
+<!-- tissue -->
+<g id="node4" class="node">
+<title>tissue</title>
+<ellipse fill="none" stroke="black" cx="178.54" cy="-126" rx="38.19" ry="18"/>
+<text text-anchor="middle" x="178.54" y="-122.3" font-family="Times,serif" font-size="14.00">tissue</text>
+</g>
+<!-- cell_line&#45;&gt;tissue -->
+<g id="edge3" class="edge">
+<title>cell_line:tissue&#45;&gt;tissue:name_field</title>
+<path fill="none" stroke="black" d="M79,-126C95.56,-126 113.69,-126 129.83,-126"/>
+<polygon fill="black" stroke="black" points="130.11,-129.5 140.11,-126 130.11,-122.5 130.11,-129.5"/>
+</g>
+<!-- cell_type -->
+<g id="node5" class="node">
+<title>cell_type</title>
+<ellipse fill="none" stroke="black" cx="178.54" cy="-72" rx="51.99" ry="18"/>
+<text text-anchor="middle" x="178.54" y="-68.3" font-family="Times,serif" font-size="14.00">cell_type</text>
+</g>
+<!-- cell_line&#45;&gt;cell_type -->
+<g id="edge4" class="edge">
+<title>cell_line:cell_type&#45;&gt;cell_type:name_field</title>
+<path fill="none" stroke="black" d="M79,-105C99.7,-105 121.65,-98.37 139.56,-91.05"/>
+<polygon fill="black" stroke="black" points="141.26,-94.13 149.06,-86.96 138.49,-87.7 141.26,-94.13"/>
+</g>
+<!-- indication -->
+<g id="node6" class="node">
+<title>indication</title>
+<ellipse fill="none" stroke="black" cx="178.54" cy="-18" rx="56.59" ry="18"/>
+<text text-anchor="middle" x="178.54" y="-14.3" font-family="Times,serif" font-size="14.00">indication</text>
+</g>
+<!-- cell_line&#45;&gt;indication -->
+<g id="edge5" class="edge">
+<title>cell_line:disease&#45;&gt;indication:name_field</title>
+<path fill="none" stroke="black" d="M79,-84C104.8,-84 100.63,-59.45 122,-45 126.06,-42.25 130.44,-39.63 134.9,-37.17"/>
+<polygon fill="black" stroke="black" points="136.85,-40.1 144.08,-32.36 133.6,-33.9 136.85,-40.1"/>
+</g>
+</g>
+</svg>
+</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Description</th></tr>
+            
+            <tr><td>cell_line</td><td>A table with one record for each cell line.</td></tr>
+            
+            </table></div>
+
+            
+            <div class="table-title-div" id="table-cell_line">Table: Cell Line</div>
+            <div class="description-div">A table with one record for each cell line.</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Name of the assay</td></tr>
+            
+            <tr><td>species</td><td>ref:species</td><td>Source species</td></tr>
+            
+            <tr><td>organ</td><td>ref:organ</td><td>Source organ</td></tr>
+            
+            <tr><td>tissue</td><td>ref:tissue</td><td>Source tissue</td></tr>
+            
+            <tr><td>cell_type</td><td>ref:cell_type</td><td>Cell types found in the line</td></tr>
+            
+            <tr><td>donor_sex</td><td>enum:sex</td><td>Biological sex of the cell donor</td></tr>
+            
+            <tr><td>donor_age</td><td>INTEGER</td><td>Age of donor when cells were donated</td></tr>
+            
+            <tr><td>donor_ethnicity</td><td>enum:ethnicity</td><td>Ethnicity of donor</td></tr>
+            
+            <tr><td>donor_health_status</td><td>enum:health_status</td><td>Health status of donor when cells were donated</td></tr>
+            
+            <tr><td>disease</td><td>ref:indication</td><td>Disease that the cell line is relevant to</td></tr>
+            
+            </table></div>
+            
+        
+        <div class="module-title-div" id="module-bio_ref">Module: Biology Reference</div>
+        <div class="description-div">Reference tables of biology data</div>
+        <div class="module-graph-div"><svg width="345pt" height="358pt"
+ viewBox="0.00 0.00 345.00 358.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 354)">
+<title>G</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-354 341,-354 341,4 -4,4"/>
+<!-- indication -->
+<g id="node1" class="node">
+<title>indication</title>
+<polygon fill="none" stroke="black" points="10.5,-10 10.5,-31 88.5,-31 88.5,-10 10.5,-10"/>
+<text text-anchor="start" x="13.5" y="-16.8" font-family="Times,serif" font-size="14.00">Indication</text>
+<polygon fill="none" stroke="black" points="10.5,-4 10.5,-10 88.5,-10 88.5,-4 10.5,-4"/>
+</g>
+<!-- species -->
+<g id="node2" class="node">
+<title>species</title>
+<polygon fill="none" stroke="black" points="268.5,-149 268.5,-170 329.5,-170 329.5,-149 268.5,-149"/>
+<text text-anchor="start" x="271.5" y="-155.8" font-family="Times,serif" font-size="14.00">Species</text>
+<polygon fill="none" stroke="black" points="268.5,-143 268.5,-149 329.5,-149 329.5,-143 268.5,-143"/>
+</g>
+<!-- organ -->
+<g id="node3" class="node">
+<title>organ</title>
+<polygon fill="none" stroke="black" points="150.5,-325 150.5,-346 209.5,-346 209.5,-325 150.5,-325"/>
+<text text-anchor="start" x="153.5" y="-331.8" font-family="Times,serif" font-size="14.00">Organ</text>
+<polygon fill="none" stroke="black" points="150.5,-319 150.5,-325 209.5,-325 209.5,-319 150.5,-319"/>
+<polygon fill="none" stroke="black" points="150.5,-298 150.5,-319 209.5,-319 209.5,-298 150.5,-298"/>
+<text text-anchor="start" x="153.5" y="-304.8" font-family="Times,serif" font-size="14.00">species</text>
+</g>
+<!-- organ&#45;&gt;species -->
+<g id="edge1" class="edge">
+<title>organ:species&#45;&gt;species:name_field</title>
+<path fill="none" stroke="black" d="M210.5,-308C277.13,-308 205.74,-175.74 257.27,-161.28"/>
+<polygon fill="black" stroke="black" points="258.01,-164.71 267.5,-160 257.14,-157.77 258.01,-164.71"/>
+</g>
+<!-- tissue -->
+<g id="node4" class="node">
+<title>tissue</title>
+<polygon fill="none" stroke="black" points="150.5,-251 150.5,-272 209.5,-272 209.5,-251 150.5,-251"/>
+<text text-anchor="start" x="153.5" y="-257.8" font-family="Times,serif" font-size="14.00">Tissue</text>
+<polygon fill="none" stroke="black" points="150.5,-245 150.5,-251 209.5,-251 209.5,-245 150.5,-245"/>
+<polygon fill="none" stroke="black" points="150.5,-224 150.5,-245 209.5,-245 209.5,-224 150.5,-224"/>
+<text text-anchor="start" x="153.5" y="-230.8" font-family="Times,serif" font-size="14.00">species</text>
+</g>
+<!-- tissue&#45;&gt;species -->
+<g id="edge2" class="edge">
+<title>tissue:species&#45;&gt;species:name_field</title>
+<path fill="none" stroke="black" d="M210.5,-234C248.12,-234 230.27,-173.22 257.49,-161.83"/>
+<polygon fill="black" stroke="black" points="258.29,-165.24 267.5,-160 257.03,-158.36 258.29,-165.24"/>
+</g>
+<!-- cell_type -->
+<g id="node5" class="node">
+<title>cell_type</title>
+<polygon fill="none" stroke="black" points="143.5,-177 143.5,-198 216.5,-198 216.5,-177 143.5,-177"/>
+<text text-anchor="start" x="146.5" y="-183.8" font-family="Times,serif" font-size="14.00">Cell Type</text>
+<polygon fill="none" stroke="black" points="143.5,-171 143.5,-177 216.5,-177 216.5,-171 143.5,-171"/>
+<polygon fill="none" stroke="black" points="143.5,-150 143.5,-171 216.5,-171 216.5,-150 143.5,-150"/>
+<text text-anchor="start" x="146.5" y="-156.8" font-family="Times,serif" font-size="14.00">species</text>
+</g>
+<!-- cell_type&#45;&gt;species -->
+<g id="edge3" class="edge">
+<title>cell_type:species&#45;&gt;species:name_field</title>
+<path fill="none" stroke="black" d="M217.5,-160C235.9,-160 242.88,-160 257.35,-160"/>
+<polygon fill="black" stroke="black" points="257.5,-163.5 267.5,-160 257.5,-156.5 257.5,-163.5"/>
+</g>
+<!-- protein -->
+<g id="node6" class="node">
+<title>protein</title>
+<polygon fill="none" stroke="black" points="20.5,-106 20.5,-127 79.5,-127 79.5,-106 20.5,-106"/>
+<text text-anchor="start" x="23.5" y="-112.8" font-family="Times,serif" font-size="14.00">Protein</text>
+<polygon fill="none" stroke="black" points="20.5,-100 20.5,-106 79.5,-106 79.5,-100 20.5,-100"/>
+<polygon fill="none" stroke="black" points="20.5,-79 20.5,-100 79.5,-100 79.5,-79 20.5,-79"/>
+<text text-anchor="start" x="23.5" y="-85.8" font-family="Times,serif" font-size="14.00">gene</text>
+<polygon fill="none" stroke="black" points="20.5,-58 20.5,-79 79.5,-79 79.5,-58 20.5,-58"/>
+<text text-anchor="start" x="23.5" y="-64.8" font-family="Times,serif" font-size="14.00">species</text>
+</g>
+<!-- protein&#45;&gt;species -->
+<g id="edge5" class="edge">
+<title>protein:species&#45;&gt;species:name_field</title>
+<path fill="none" stroke="black" d="M80.5,-68C144.32,-68 170.43,-28.32 224,-63 260.25,-86.47 227.1,-148.08 257.22,-158.49"/>
+<polygon fill="black" stroke="black" points="257.1,-162.01 267.5,-160 258.11,-155.09 257.1,-162.01"/>
+</g>
+<!-- gene -->
+<g id="node7" class="node">
+<title>gene</title>
+<polygon fill="none" stroke="black" points="150.5,-103 150.5,-124 209.5,-124 209.5,-103 150.5,-103"/>
+<text text-anchor="start" x="153.5" y="-109.8" font-family="Times,serif" font-size="14.00">Gene</text>
+<polygon fill="none" stroke="black" points="150.5,-97 150.5,-103 209.5,-103 209.5,-97 150.5,-97"/>
+<polygon fill="none" stroke="black" points="150.5,-76 150.5,-97 209.5,-97 209.5,-76 150.5,-76"/>
+<text text-anchor="start" x="153.5" y="-82.8" font-family="Times,serif" font-size="14.00">species</text>
+</g>
+<!-- protein&#45;&gt;gene -->
+<g id="edge4" class="edge">
+<title>protein:gene&#45;&gt;gene:name_field</title>
+<path fill="none" stroke="black" d="M80.5,-89C109.42,-89 115.66,-108.66 139.44,-113.11"/>
+<polygon fill="black" stroke="black" points="139.23,-116.61 149.5,-114 139.85,-109.63 139.23,-116.61"/>
+</g>
+<!-- gene&#45;&gt;species -->
+<g id="edge6" class="edge">
+<title>gene:species&#45;&gt;species:name_field</title>
+<path fill="none" stroke="black" d="M210.5,-86C248.12,-86 230.27,-146.78 257.49,-158.17"/>
+<polygon fill="black" stroke="black" points="257.03,-161.64 267.5,-160 258.29,-154.76 257.03,-161.64"/>
+</g>
+<!-- compound -->
+<g id="node8" class="node">
+<title>compound</title>
+<polygon fill="none" stroke="black" points="8.5,-160 8.5,-181 91.5,-181 91.5,-160 8.5,-160"/>
+<text text-anchor="start" x="11.5" y="-166.8" font-family="Times,serif" font-size="14.00">Compound</text>
+<polygon fill="none" stroke="black" points="8.5,-154 8.5,-160 91.5,-160 91.5,-154 8.5,-154"/>
+</g>
+</g>
+</svg>
+</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Description</th></tr>
+            
+            <tr><td>indication</td><td>Each record represents a disease or medical condition</td></tr>
+            
+            <tr><td>species</td><td>Each record represents a plant or animal species</td></tr>
+            
+            <tr><td>organ</td><td>Each record represents an animal organ</td></tr>
+            
+            <tr><td>tissue</td><td>Each record represents an animal tissue</td></tr>
+            
+            <tr><td>cell_type</td><td>Each record represents a cell type</td></tr>
+            
+            <tr><td>protein</td><td>Each record represents a gene in a particular species</td></tr>
+            
+            <tr><td>gene</td><td>Each record represents a gene in a particular species</td></tr>
+            
+            <tr><td>compound</td><td>Each record represents a small molecule</td></tr>
+            
+            </table></div>
+
+            
+            <div class="table-title-div" id="table-indication">Table: Indication</div>
+            <div class="description-div">Each record represents a disease or medical condition</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Indication name</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-species">Table: Species</div>
+            <div class="description-div">Each record represents a plant or animal species</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Species name</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-organ">Table: Organ</div>
+            <div class="description-div">Each record represents an animal organ</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Organ name</td></tr>
+            
+            <tr><td>species</td><td>ref:species</td><td>Species it's from</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-tissue">Table: Tissue</div>
+            <div class="description-div">Each record represents an animal tissue</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Tissue name</td></tr>
+            
+            <tr><td>species</td><td>ref:species</td><td>Species it's from</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-cell_type">Table: Cell Type</div>
+            <div class="description-div">Each record represents a cell type</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Cell type name</td></tr>
+            
+            <tr><td>species</td><td>ref:species</td><td>Species it's from</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-protein">Table: Protein</div>
+            <div class="description-div">Each record represents a gene in a particular species</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Protein name</td></tr>
+            
+            <tr><td>gene</td><td>ref:gene</td><td>Gene that generates this protein</td></tr>
+            
+            <tr><td>species</td><td>ref:species</td><td>Species in which this protein is present</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-gene">Table: Gene</div>
+            <div class="description-div">Each record represents a gene in a particular species</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Protein name</td></tr>
+            
+            <tr><td>species</td><td>ref:species</td><td>Species in which this gene is present</td></tr>
+            
+            </table></div>
+            
+            <div class="table-title-div" id="table-compound">Table: Compound</div>
+            <div class="description-div">Each record represents a small molecule</div>
+            <div class="table-table-div"><table>
+            <tr><th>Name</th><th>Type</th><th>Description</th></tr>
+            
+            <tr><td>name</td><td>STRING</td><td>Protein name</td></tr>
+            
+            <tr><td>smiles</td><td>STRING</td><td>SMILES string defining the compound's structure</td></tr>
             
             </table></div>
             

@@ -1,0 +1,92 @@
+enums:
+- name: sex
+  descr: Biological sex
+  options:
+  - MALE - Male
+  - FEMALE - Female
+  - OTHER - Other
+
+
+table_modules:
+- name: bio_ref
+  display: Biology Reference
+  descr: Reference tables of biology data
+  tables:
+
+  - name: indication
+    descr: Each record represents a disease or medical condition
+    fields:
+    - name: name
+      type: STRING
+      descr: Indication name
+
+  - name: species
+    descr: Each record represents a plant or animal species
+    fields:
+    - name: name
+      type: STRING
+      descr: Species name
+
+  # Is this different from tissue?
+  - name: organ
+    descr: Each record represents an animal organ
+    fields:
+    - name: name
+      type: STRING
+      descr: Organ name
+    - name: species
+      type: ref:species
+      descr: Species it's from
+
+  - name: tissue
+    descr: Each record represents an animal tissue
+    fields:
+    - name: name
+      type: STRING
+      descr: Tissue name
+    - name: species
+      type: ref:species
+      descr: Species it's from
+
+  - name: cell_type
+    descr: Each record represents a cell type
+    fields:
+    - name: name
+      type: STRING
+      descr: Cell type name
+    - name: species
+      type: ref:species
+      descr: Species it's from
+
+  - name: protein
+    descr: Each record represents a gene in a particular species
+    fields:
+    - name: name
+      type: STRING
+      descr: Protein name
+    - name: gene
+      type: ref:gene
+      descr: Gene that generates this protein
+    - name: species
+      type: ref:species
+      descr: Species in which this protein is present
+
+  - name: gene
+    descr: Each record represents a gene in a particular species
+    fields:
+    - name: name
+      type: STRING
+      descr: Protein name
+    - name: species
+      type: ref:species
+      descr: Species in which this gene is present
+
+  - name: compound
+    descr: Each record represents a small molecule
+    fields:
+    - name: name
+      type: STRING
+      descr: Protein name
+    - name: smiles
+      type: STRING
+      descr: SMILES string defining the compound's structure

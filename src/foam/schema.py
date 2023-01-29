@@ -97,7 +97,7 @@ def get_gen_pages(config):
                     'buttons': [{
                         'display': 'Save',
                         'target': 'back',
-                        'pretarget_fn': '{ context.save() }'
+                        'pretarget_fn': '( context.save() )'
                     }, {
                         'display': 'Cancel',
                         'target': 'back'
@@ -259,8 +259,7 @@ class Table:
     display: str = ''
     class_name: str = ''
     descr: str = ''
-    preprocess_new: str = ''
-    preprocess_update: str = ''
+    preprocess: str = ''
 
     # Generated after construction
     backref_fields = None
@@ -300,7 +299,7 @@ def make_schema_refs(config):
                 else:
                     f.ref_table = config.tables_dict[f.ref_table]
                     f.ref_table.backref_fields.append(f)
-                    f.model_def = f'models.ForeignKey(\'{f.ref_table.class_name}\', null=True, on_delete=models.SET_NULL)'
+                    f.model_def = f'models.ForeignKey(\'{f.ref_table.class_name}\', related_name=\'{f.backref}\', null=True, on_delete=models.SET_NULL)'
             if f.enum_class:
                 if f.enum_class not in config.enums_dict:
                     config_error(f'Enum "{f.enum_class}" not found while processing field "{f.name}" in table "{f.table.name}".')

@@ -383,3 +383,16 @@ react-datepicker
 react-data-grid
 react-router
 react-router-dom
+
+
+# Dump database
+
+```bash
+python3 -m manage dumpdata |jq > ../test_dump.json
+```
+
+Then reload:
+
+```bash
+python3 -m manage loaddata ../test_dump.json 
+```
