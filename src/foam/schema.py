@@ -23,28 +23,29 @@ def get_router_code(config):
     return jinja_template('router_py.jnj').render(config=config)
 
 
-def get_gen_pages(config):
+def get_gen_pages(config, prefix=''):
+    prefix = f'{prefix}_' if prefix else ''
     result = {
         'page_modules': [{
-            'name': 'home',
+            'name': f'{prefix}home',
             'pages': [{
-                'name': 'home',
+                'name': f'{prefix}home',
                 'descr': 'Landing Page',
                 'type': 'LinksPage',
                 'config': {
                     'boxes': [{
                         'name': m.display,
                         'links': [{
-                            'target': f'find_{t.name}', 'display': t.display
+                            'target': f'find_{prefix}{t.name}', 'display': t.display
                         } for t in m.tables]
                     } for m in config.table_modules]
                 }
             }]
 
         }] + [{
-            'name': t.name, 
+            'name': f'{prefix}{t.name}', 
             'pages': [{
-                'name': f'find_{t.name}',
+                'name': f'find_{prefix}{t.name}',
                 'descr': f'Search page for table {t.name}',
                 'type': 'TablePage',
                 'config': {
@@ -53,32 +54,32 @@ def get_gen_pages(config):
                     'search_fields': [f.name for f in t.fields],
                     'row_action': {
                         'display': f'Select {t.display}',
-                        'target': f'view_{t.name}',
+                        'target': f'view_{prefix}{t.name}',
                         'params_fn': '({id: data.id})' 
                     },
                     'buttons': [{
                         'display': f'New {t.display}',
-                        'target': f'edit_{t.name}'
+                        'target': f'edit_{prefix}{t.name}'
                     }, {
                         'display': 'Done',
                         'target': 'back'
                     }]
                 }
             }, {
-                'name': f'view_{t.name}',
+                'name': f'view_{prefix}{t.name}',
                 'descr': f'View a record from table {t.name}',
                 'type': 'RecordPage',
                 'config': {
                     'source_table': t.name,
                     'view_fields': [f.name for f in t.fields],
                     'reference_tables': [{
-                        'table_page': f'find_{r.table.name}',
+                        'table_page': f'find_{prefix}{r.table.name}',
                         'display': r.table.display,
                         'params_fn': f'({{{r.name}__id: data.id}})'
                     } for r in t.backref_fields],
                     'buttons': [{
                         'display': 'Edit',
-                        'target': f'edit_{t.name}',
+                        'target': f'edit_{prefix}{t.name}',
                         'params_fn': '({ id: params.id })'
                     }, {
                         'display': 'Done',
@@ -86,13 +87,13 @@ def get_gen_pages(config):
                     }]
                 },
             }, {
-                'name': f'edit_{t.name}',
+                'name': f'edit_{prefix}{t.name}',
                 'descr': f'Edit a record from table {t.name}',
                 'type': 'RecordPage',
                 'config': {
                     'source_table': t.name,
                     'edit_fields': [
-                        {'field': f.name, 'lookup': f'find_{f.ref_table.name}'} if f.ref_table else f.name
+                        {'field': f.name, 'lookup': f'find_{prefix}{f.ref_table.name}'} if f.ref_table else f.name
                         for f in t.fields],
                     'buttons': [{
                         'display': 'Save',
@@ -131,6 +132,9 @@ def write_schema_code(config):
     if config.paths.gen_pages_path:
         with open(config.paths.gen_pages_path / 'gen_pages.yaml', 'w') as f:
             f.write(get_gen_pages(config))
+
+        with open(config.paths.gen_pages_path / 'admin_pages.yaml', 'w') as f:
+            f.write(get_gen_pages(config, 'admin'))
 
 def write_schema_docs(config):
     if config.paths.docs_path:

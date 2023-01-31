@@ -27,6 +27,7 @@ page_modules:
         target: edit_person
       - display: Done
         target: back
+
   - name: view_person
     descr: View a record from table person
     type: RecordPage
@@ -55,6 +56,7 @@ page_modules:
         params_fn: '({ id: params.id })'
       - display: Done
         target: back
+
   - name: edit_person
     descr: Edit a record from table person
     type: RecordPage

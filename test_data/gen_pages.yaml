@@ -44,7 +44,6 @@ page_modules:
           display: Gene
         - target: find_compound
           display: Compound
-
 - name: person
   pages:
   - name: find_person
@@ -286,8 +285,6 @@ page_modules:
         pretarget_fn: ( context.save() )
       - display: Cancel
         target: back
-
-
 - name: assay
   pages:
   - name: find_assay
@@ -468,7 +465,6 @@ page_modules:
         pretarget_fn: ( context.save() )
       - display: Cancel
         target: back
-
 - name: perturbation
   pages:
   - name: find_perturbation
@@ -632,7 +628,6 @@ page_modules:
         pretarget_fn: ( context.save() )
       - display: Cancel
         target: back
-
 - name: indication
   pages:
   - name: find_indication

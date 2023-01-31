@@ -204,16 +204,20 @@ install in the React library under
 ## Create the Database and Run the backend
 
 By default, Django uses a SQLite database backed by a local file. Because this database includes credentials, it
-isn't included in the git repo. So you have to recreate it in your local copy.
+isn't included in the git repo. So you have to recreate it in your local copy. Luckily, there's a script that will
+do this for you, including loading test data.
 
 From `foam/test_data/foam_backend` run:
 
 ```bash
-python3 -m manage migrate
+./reset_db.sh
 ```
 
-You'll see a list of messages applying migrations, and you can also check that the `db.sqlite3` file is created
-in the `foam_backend` directory. This database is empty, but that's enough to run the server:
+You'll see a list of messages applying migrations and loading data. You can also check that the `db.sqlite3` file is created
+in the `foam_backend` directory. Note that the first line in `reset_db.sh` deletes this file if it exists, so rerunning the
+scripte will reset all the data in the database.
+
+You can now run the server:
 
 ```bash
 python3 -m manage runserver
@@ -255,24 +259,25 @@ able to create, view and edit assays and experiments.
 # Modify the example
 
 To get you started building your own system, we'll walk through some small changes to the frontend and backend.
-We'll start by adding an `end_date` field to the `experiment` table. After we make the change on the backend, we'll
+We'll start by adding a `description` field to the `program` table. After we make the change on the backend, we'll
 update the UI to incorporate this new field.
 
 ## Update the Schema
 
 First, we'll add the field in the schema configuration, which is in the `table_modules` section of
-`test_data/experiments_schema.yaml`. We'll add it between `start_date` and `assay` as like this:
+`test_data/programs_schema.yaml`. We'll add it between `name` and `target` like this:
 
 ```yaml
     ...
-    - name: start_date
-      type: DATE
-      descr: The day on which the experiment was started
-    - name: end_date
-      type: DATE
-      descr: The day on which the experiment was completed
-    - name: assay
-      type: ref:assay
+    - name: name
+      type: STRING
+      descr: Program`s name
+    - name: description
+      type: TEXT
+      descr: A description of the program
+    - name: target
+      type: ref:protein
+      descr: Primary target
     ...
 ```
 
@@ -296,15 +301,15 @@ Then restart the server for the next step.
 ## Updating the UI
 
 Because we won't want certain fields to appear in particular pages, we have to explicitly add them to the UI
-configuration. Let's start by adding `end_date` to the `find_experiment` page by adding it between `start_date`
-and `assay` in the file `test_data/experiments_pages.yaml` as below:
+configuration. Let's start by adding `description` to the `find_program` page by adding it between `name`
+and `target` in the file `test_data/programs_pages.yaml` as below:
 
 ```yaml
-      - field: start_date
+      - field: name
         width: 200
-      - field: end_date
-        width: 50
-      - field: assay
+      - field: description
+        width: 400
+      - field: target
         width: 200
 ```
 
@@ -315,10 +320,10 @@ foam pages-code
 ```
 
 If the frontend server is already running, React will notice the changes and automatically reload the page. If not,
-you can start it as above. In either case, if you navigate to the `find_experiment` page by clicking on the Experiment
-link on the landing page, you should see the new `end_date` column in the table.
+you can start it as above. In either case, if you navigate to the `find_program` page by clicking on the Experiment
+link on the landing page, you should see the new `description` column in the table.
 
-You'll also need to add this new field in the `edit_experiment` and `view_experiment` configs, but we won't walk through
+You'll also need to add this new field in the `edit_program` and `view_program` configs, but we won't walk through
 the details here.
 
 
