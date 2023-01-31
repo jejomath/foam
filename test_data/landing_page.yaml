@@ -1,0 +1,81 @@
+page_modules:
+- name: home
+  pages:
+
+  - name: home
+    descr: Landing Page
+    type: LinksPage
+    config:
+      boxes:
+      - name: Dashboards
+        links:
+        - target: home
+          display: Program Timelines
+        - target: home
+          display: HTS Dashboard
+        - target: home
+          display: Analysis Status
+
+      - name: Experiments
+        links:
+        - target: find_experiment
+          display: Review Experiments
+        - target: new_experiment
+          display: Create New Experiment
+          mode: modal
+        - target: find_assay
+          display: Review Assays
+        - target: new_assay
+          display: Create New Assay
+          mode: modal
+
+      - name: Analysis
+        links:
+        - target: home
+          display: Review Analysis Results
+        - target: home
+          display: Review CRCs
+
+      - name: Compounds
+        links:
+        - target: home
+          display: Search Compounds
+        - target: home
+          display: Review Compounds Status
+        - target: find_perturbation
+          display: Review Perturbations
+
+      - name: Inventory
+        links:
+        - target: find_cell_line
+          display: Manage Cell Lines
+        - target: home
+          display: Manage Platemaps
+
+      - name: Project Management
+        links:
+        - target: admin_home
+          display: Admin Pages
+        - target: find_person
+          display: Manage Org Chart
+        - target: find_program
+          display: Manage Programs
+
+      - name: Biology Reference
+        links:
+        - target: find_indication
+          display: Disease Indications
+        - target: find_species
+          display: Species
+        - target: find_organ
+          display: Organs
+        - target: find_tissue
+          display: Tissue Types
+        - target: find_cell_type
+          display: Cell Types
+        - target: find_protein
+          display: Proteins
+        - target: find_gene
+          display: Genes
+        - target: find_compound
+          display: Compounds

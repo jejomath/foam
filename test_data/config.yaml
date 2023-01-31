@@ -16,5 +16,9 @@ config_files:
 - inventory_schema.yaml
 - bio_ref_schema.yaml
 
-
-- gen_pages.yaml
+- landing_page.yaml
+- programs_pages.yaml
+- experiments_pages.yaml
+- inventory_pages.yaml
+- bio_ref_pages.yaml
+- admin_pages.yaml

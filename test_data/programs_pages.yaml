@@ -1,0 +1,254 @@
+page_modules:
+
+- name: project_management
+  pages:
+  - name: find_person
+    descr: Search page for table person
+    type: TablePage
+    config:
+      source_table: person
+      view_columns:
+      - field: name
+        width: 200
+      - field: given_name
+        width: 200
+      - field: family_name
+        width: 200
+      search_fields:
+      - name
+      - given_name
+      - family_name
+      row_action:
+        display: Select Person
+        target: view_person
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Person
+        target: edit_person
+      - display: Done
+        target: back
+  - name: view_person
+    descr: View a record from table person
+    type: RecordPage
+    config:
+      source_table: person
+      view_fields:
+      - name
+      - given_name
+      - family_name
+      reference_tables:
+      - table_page: find_program
+        display: Bio Lead
+        params_fn: '({bio_lead__id: data.id})'
+      - table_page: find_program
+        display: Chem Lead
+        params_fn: '({chem_lead__id: data.id})'
+      - table_page: find_program
+        display: Program Manager
+        params_fn: '({program_manager__id: data.id})'
+      - table_page: find_experiment
+        display: Experiments
+        params_fn: '({bio_lead__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_person
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_person
+    descr: Edit a record from table person
+    type: RecordPage
+    config:
+      source_table: person
+      edit_fields:
+      - name
+      - given_name
+      - family_name
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+
+  - name: find_program
+    descr: Search page for table program
+    type: TablePage
+    config:
+      source_table: program
+      view_columns:
+      - field: name
+        width: 200
+      - field: target
+        width: 200
+      - field: indication
+        width: 200
+      - field: status
+        width: 200
+      - field: started_date
+        width: 200
+      - field: stage
+        width: 200
+      - field: bio_lead
+        width: 200
+      - field: chem_lead
+        width: 200
+      - field: program_manager
+        width: 200
+      search_fields:
+      - name
+      - target
+      - indication
+      - status
+      - started_date
+      - stage
+      - bio_lead
+      - chem_lead
+      - program_manager
+      row_action:
+        display: Select Program
+        target: view_program
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Program
+        target: edit_program
+      - display: Done
+        target: back
+  - name: view_program
+    descr: View a record from table program
+    type: RecordPage
+    config:
+      source_table: program
+      view_fields:
+      - name
+      - target
+      - indication
+      - status
+      - started_date
+      - stage
+      - bio_lead
+      - chem_lead
+      - program_manager
+      reference_tables:
+      - table_page: find_program_milestone
+        display: Program Milestone
+        params_fn: '({program__id: data.id})'
+      - table_page: find_assay
+        display: Assay
+        params_fn: '({for_program__id: data.id})'
+      - table_page: find_experiment
+        display: Experiment
+        params_fn: '({program__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_program
+        params_fn: '({ id: params.id })'
+      - display: Add Milestone
+        target: edit_program_milestone
+        params_fn: '({ program: data })'
+        mode: modal
+      - display: New Experiment
+        target: new_experiment
+        mode: modal
+        params_fn: '({ program: data })'
+      - display: Done
+        target: back
+
+  - name: edit_program
+    descr: Edit a record from table program
+    type: RecordPage
+    config:
+      source_table: program
+      edit_fields:
+      - name
+      - field: target
+        lookup: find_protein
+      - field: indication
+        lookup: find_indication
+      - status
+      - started_date
+      - stage
+      - field: bio_lead
+        lookup: find_person
+      - field: chem_lead
+        lookup: find_person
+      - field: program_manager
+        lookup: find_person
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+
+
+- name: program_milestone
+  pages:
+  - name: find_program_milestone
+    descr: Search page for table program_milestone
+    type: TablePage
+    config:
+      source_table: program_milestone
+      view_columns:
+      - field: name
+        width: 200
+      - field: program
+        width: 200
+      - field: status
+        width: 200
+      - field: target_date
+        width: 200
+      - field: completed_date
+        width: 200
+      search_fields:
+      - name
+      - program
+      - status
+      - target_date
+      - completed_date
+      row_action:
+        display: Select Program Milestone
+        target: view_program_milestone
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Program Milestone
+        target: edit_program_milestone
+      - display: Done
+        target: back
+  - name: view_program_milestone
+    descr: View a record from table program_milestone
+    type: RecordPage
+    config:
+      source_table: program_milestone
+      view_fields:
+      - program
+      - name
+      - status
+      - target_date
+      - completed_date
+      reference_tables: []
+      buttons:
+      - display: Edit
+        target: edit_program_milestone
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+
+  - name: edit_program_milestone
+    descr: Edit a record from table program_milestone
+    type: RecordPage
+    config:
+      source_table: program_milestone
+      view_fields:
+      - program
+      edit_fields:
+      - name
+      - status
+      - target_date
+      - completed_date
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back

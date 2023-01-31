@@ -1,0 +1,145 @@
+page_modules:
+- name: inventory
+  pages:
+
+#############################################################
+# Perturbations
+#############################################################
+
+  - name: find_perturbation
+    descr: Search page for table perturbation
+    type: TablePage
+    config:
+      source_table: perturbation
+      view_columns:
+      - field: name
+        width: 200
+      - field: compound
+        width: 200
+      - field: concentration_nm
+        width: 200
+      search_fields:
+      - name
+      - compound
+      - concentration_nm
+      row_action:
+        display: Select Perturbation
+        target: view_perturbation
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: Done
+        target: back
+
+  - name: view_perturbation
+    descr: View a record from table perturbation
+    type: RecordPage
+    config:
+      source_table: perturbation
+      view_fields:
+      - name
+      - compound
+      - concentration_nm
+      reference_tables:
+      - table_page: find_experiment
+        display: Experiment
+        params_fn: '({perturbations__id: data.id})'
+      buttons:
+      - display: Done
+        target: back
+
+
+#############################################################
+# Cell Lines
+#############################################################
+
+  - name: find_cell_line
+    descr: Search page for table cell_line
+    type: TablePage
+    config:
+      source_table: cell_line
+      view_columns:
+      - field: name
+        width: 200
+      - field: species
+        width: 200
+      - field: organ
+        width: 200
+      - field: tissue
+        width: 200
+      - field: cell_type
+        width: 200
+      search_fields:
+      - name
+      - species
+      - organ
+      - tissue
+      - cell_type
+      - donor_sex
+      - donor_age
+      - donor_ethnicity
+      - donor_health_status
+      - disease
+      row_action:
+        display: Select Cell Line
+        target: view_cell_line
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Cell Line
+        target: edit_cell_line
+      - display: Done
+        target: back
+
+  - name: view_cell_line
+    descr: View a record from table cell_line
+    type: RecordPage
+    config:
+      source_table: cell_line
+      view_fields:
+      - name
+      - species
+      - organ
+      - tissue
+      - cell_type
+      - donor_sex
+      - donor_age
+      - donor_ethnicity
+      - donor_health_status
+      - disease
+      reference_tables:
+      - table_page: find_assay
+        display: Assay
+        params_fn: '({cell_line__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_cell_line
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+
+  - name: edit_cell_line
+    descr: Edit a record from table cell_line
+    type: RecordPage
+    config:
+      source_table: cell_line
+      edit_fields:
+      - name
+      - field: species
+        lookup: find_species
+      - field: organ
+        lookup: find_organ
+      - field: tissue
+        lookup: find_tissue
+      - field: cell_type
+        lookup: find_cell_type
+      - donor_sex
+      - donor_age
+      - donor_ethnicity
+      - donor_health_status
+      - field: disease
+        lookup: find_indication
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back

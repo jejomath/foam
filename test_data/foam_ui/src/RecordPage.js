@@ -10,6 +10,10 @@ export default class RecordPage extends Component {
         }
     }
 
+    cleanParam(field, value) {
+        return {id: value, name: value}
+    }
+
     componentDidMount() {
         var createRecord = null;
         if (this.props.config.newEntry !== 'Always' && Object.keys(this.props.params).length > 0) {
@@ -19,14 +23,18 @@ export default class RecordPage extends Component {
         } else { createRecord = Promise.resolve(null) }
 
         createRecord.then((record) => {
-        var newRecord = null
-        if (!record) {
-            const fields = this.props.context.schema[this.props.config.sourceTable].fields;
-            newRecord = Object.assign({}, ...Object.keys(fields).map((f) => ({[f]: null}))) }
-        else { newRecord = record; }
-        this.setState({
-            data: newRecord,
-        })
+            var newRecord = null
+            if (!record) {
+                const fields = this.props.context.schema[this.props.config.sourceTable].fields;
+                newRecord = Object.assign({}, ...Object.keys(fields).map((f) => (
+                    {[f]: this.props.params[f] ? this.props.params[f] : null}
+                ))) 
+            } else { 
+                newRecord = record; 
+            }
+            this.setState({
+                data: newRecord,
+            })
         })
     }
 

@@ -1,0 +1,237 @@
+page_modules:
+- name: assay
+  pages:
+
+#############################################################
+# Assays
+#############################################################
+
+
+  - name: find_assay
+    descr: Search page for table assay
+    type: TablePage
+    config:
+      source_table: assay
+      view_columns:
+      - field: name
+        width: 200
+      - field: type
+        width: 200
+      - field: descr
+        width: 200
+      - field: cell_line
+        width: 200
+      - field: for_program
+        width: 200
+      search_fields:
+      - name
+      - type
+      - descr
+      - cell_line
+      - for_program
+      row_action:
+        display: Select Assay
+        target: view_assay
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Assay
+        target: new_assay
+        mode: modal
+      - display: Done
+        target: back
+
+  - name: view_assay
+    descr: View a record from table assay
+    type: RecordPage
+    config:
+      source_table: assay
+      view_fields:
+      - name
+      - type
+      - descr
+      - field: cell_line
+        visible_fn: (data.type === 'VITRO')
+      - for_program
+      reference_tables:
+      - table_page: find_experiment
+        display: Experiment
+        params_fn: '({assay__id: data.id})'
+      buttons:
+      - display: Edit
+        target: edit_assay
+        params_fn: '({ id: params.id })'
+      - display: New Experiment
+        target: new_experiment
+        mode: modal
+        params_fn: '({ assay: data })'
+      - display: Done
+        target: back
+
+  - name: new_assay
+    descr: Edit a record from table assay
+    type: RecordPage
+    config:
+      source_table: assay
+      edit_fields:
+      - name
+      - type
+      buttons:
+      - display: Done
+        target: edit_assay
+        params_fn: '( {id: data.id })'
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+
+  - name: edit_assay
+    descr: Edit a record from table assay
+    type: RecordPage
+    config:
+      source_table: assay
+      view_fields:
+      - name
+      - type
+      edit_fields:
+      - descr
+      - field: cell_line
+        lookup: find_cell_line
+        visible_fn: (data.type === 'VITRO')
+      - field: for_program
+        lookup: find_program
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+
+
+#############################################################
+# Experiments
+#############################################################
+
+  - name: find_experiment
+    descr: Search page for table experiment
+    type: TablePage
+    config:
+      source_table: experiment
+      view_columns:
+      - field: name
+        width: 200
+      - field: description
+        width: 200
+      - field: status
+        width: 200
+      - field: program
+        width: 200
+      - field: bio_lead
+        width: 200
+      - field: target_start_date
+        width: 200
+      - field: target_duration
+        width: 200
+      - field: start_date
+        width: 200
+      - field: end_date
+        width: 200
+      - field: assay
+        width: 200
+      - field: type
+        width: 200
+      - field: perturbations
+        width: 200
+      search_fields:
+      - name
+      - description
+      - status
+      - program
+      - bio_lead
+      - target_start_date
+      - target_duration
+      - start_date
+      - end_date
+      - assay
+      - type
+      - perturbations
+      row_action:
+        display: Select Experiment
+        target: view_experiment
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Experiment
+        target: new_experiment
+        mode: modal
+      - display: Done
+        target: back
+
+  - name: view_experiment
+    descr: View a record from table experiment
+    type: RecordPage
+    config:
+      source_table: experiment
+      view_fields:
+      - name
+      - description
+      - status
+      - program
+      - bio_lead
+      - target_start_date
+      - target_duration
+      - start_date
+      - end_date
+      - assay
+      - type
+      - perturbations
+      reference_tables: []
+      buttons:
+      - display: Edit
+        target: edit_experiment
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+
+  - name: new_experiment
+    descr: Create a new record in table experiment
+    type: RecordPage
+    config:
+      source_table: experiment
+      edit_fields:
+      - field: assay
+        lookup: find_assay
+      - field: program
+      buttons:
+      - display: Done
+        pretarget_fn: '( context.save() )'
+        target: edit_experiment
+        params_fn: '( {id: data.id} )'
+      - display: Cancel
+        target: back
+
+  - name: edit_experiment
+    descr: Edit a record from table experiment
+    type: RecordPage
+    config:
+      source_table: experiment
+      view_fields:
+      - name
+      - program
+      edit_fields:
+      - description
+      - status
+      - field: bio_lead
+        lookup: find_person
+      - target_start_date
+      - target_duration
+      - start_date
+      - end_date
+      - field: assay
+        lookup: find_assay
+      - type
+      - field: perturbations
+        lookup: find_perturbation
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
