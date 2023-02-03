@@ -1,6 +1,9 @@
 import RecordPage from './RecordPage.js';
 import TablePage from './TablePage.js';
 import LinksPage from './LinksPage.js';
+import {
+    UnderConstruction
+} from './Components.js';
 
 export const schema = {
     person: {
@@ -660,7 +663,7 @@ export const pages = {
                     display: 'Program Timelines',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'not_yet',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -668,7 +671,7 @@ export const pages = {
                     display: 'HTS Dashboard',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'not_yet',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -676,7 +679,7 @@ export const pages = {
                     display: 'Analysis Status',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'not_yet',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -722,7 +725,7 @@ export const pages = {
                     display: 'Review Analysis Results',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'not_yet',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -730,7 +733,7 @@ export const pages = {
                     display: 'Review CRCs',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'not_yet',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -741,7 +744,7 @@ export const pages = {
                     display: 'Search Compounds',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'not_yet',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -749,7 +752,7 @@ export const pages = {
                     display: 'Review Compounds Status',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'home',
+                    target: 'not_yet',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -878,6 +881,12 @@ export const pages = {
             }, ],
         },
         type: LinksPage,
+    },
+    not_yet: {
+        name: 'not_yet',
+        display: 'Not Yet',
+        config: null,
+        type: UnderConstruction,
     },
     find_person: {
         name: 'find_person',

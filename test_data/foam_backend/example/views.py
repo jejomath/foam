@@ -3,15 +3,19 @@ from rest_framework import viewsets
 
 from .serializers import PersonSerializer, ProgramSerializer, ProgramMilestoneSerializer
 from .serializers import PersonWriteSerializer, ProgramWriteSerializer, ProgramMilestoneWriteSerializer
+from .serializers import PersonStatsSerializer, ProgramStatsSerializer, ProgramMilestoneStatsSerializer
 
 from .serializers import AssaySerializer, ExperimentSerializer, PerturbationSerializer
 from .serializers import AssayWriteSerializer, ExperimentWriteSerializer, PerturbationWriteSerializer
+from .serializers import AssayStatsSerializer, ExperimentStatsSerializer, PerturbationStatsSerializer
 
 from .serializers import CellLineSerializer
 from .serializers import CellLineWriteSerializer
+from .serializers import CellLineStatsSerializer
 
 from .serializers import IndicationSerializer, SpeciesSerializer, OrganSerializer, TissueSerializer, CellTypeSerializer, ProteinSerializer, GeneSerializer, CompoundSerializer
 from .serializers import IndicationWriteSerializer, SpeciesWriteSerializer, OrganWriteSerializer, TissueWriteSerializer, CellTypeWriteSerializer, ProteinWriteSerializer, GeneWriteSerializer, CompoundWriteSerializer
+from .serializers import IndicationStatsSerializer, SpeciesStatsSerializer, OrganStatsSerializer, TissueStatsSerializer, CellTypeStatsSerializer, ProteinStatsSerializer, GeneStatsSerializer, CompoundStatsSerializer
 
 
 from .models import Person, Program, ProgramMilestone
@@ -236,4 +240,66 @@ class GeneWriteView(viewsets.ModelViewSet):
 
 class CompoundWriteView(viewsets.ModelViewSet):
     serializer_class = CompoundWriteSerializer
+    queryset = Compound.objects.all()
+
+
+
+class PersonStatsView(viewsets.ModelViewSet):
+    serializer_class = PersonStatsSerializer
+    queryset = Person.objects.all()
+
+class ProgramStatsView(viewsets.ModelViewSet):
+    serializer_class = ProgramStatsSerializer
+    queryset = Program.objects.all()
+
+class ProgramMilestoneStatsView(viewsets.ModelViewSet):
+    serializer_class = ProgramMilestoneStatsSerializer
+    queryset = ProgramMilestone.objects.all()
+
+class AssayStatsView(viewsets.ModelViewSet):
+    serializer_class = AssayStatsSerializer
+    queryset = Assay.objects.all()
+
+class ExperimentStatsView(viewsets.ModelViewSet):
+    serializer_class = ExperimentStatsSerializer
+    queryset = Experiment.objects.all()
+
+class PerturbationStatsView(viewsets.ModelViewSet):
+    serializer_class = PerturbationStatsSerializer
+    queryset = Perturbation.objects.all()
+
+class CellLineStatsView(viewsets.ModelViewSet):
+    serializer_class = CellLineStatsSerializer
+    queryset = CellLine.objects.all()
+
+class IndicationStatsView(viewsets.ModelViewSet):
+    serializer_class = IndicationStatsSerializer
+    queryset = Indication.objects.all()
+
+class SpeciesStatsView(viewsets.ModelViewSet):
+    serializer_class = SpeciesStatsSerializer
+    queryset = Species.objects.all()
+
+class OrganStatsView(viewsets.ModelViewSet):
+    serializer_class = OrganStatsSerializer
+    queryset = Organ.objects.all()
+
+class TissueStatsView(viewsets.ModelViewSet):
+    serializer_class = TissueStatsSerializer
+    queryset = Tissue.objects.all()
+
+class CellTypeStatsView(viewsets.ModelViewSet):
+    serializer_class = CellTypeStatsSerializer
+    queryset = CellType.objects.all()
+
+class ProteinStatsView(viewsets.ModelViewSet):
+    serializer_class = ProteinStatsSerializer
+    queryset = Protein.objects.all()
+
+class GeneStatsView(viewsets.ModelViewSet):
+    serializer_class = GeneStatsSerializer
+    queryset = Gene.objects.all()
+
+class CompoundStatsView(viewsets.ModelViewSet):
+    serializer_class = CompoundStatsSerializer
     queryset = Compound.objects.all()

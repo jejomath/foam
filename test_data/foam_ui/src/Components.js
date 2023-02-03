@@ -413,3 +413,21 @@ export class SearchBar extends Component {
         </div>
     }
 }
+
+export class UnderConstruction extends Component {
+
+    render() {
+        return <div>
+            This page is not yet implemented.
+            <Button 
+                    config={{
+                        display: 'Back',
+                        target: 'back',
+                    }}
+                    params={null}
+                    data={null}
+                    context={this.props.context}
+                />
+        </div>
+    }
+}

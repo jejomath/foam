@@ -9,11 +9,11 @@ page_modules:
       boxes:
       - name: Dashboards
         links:
-        - target: home
+        - target: not_yet
           display: Program Timelines
-        - target: home
+        - target: not_yet
           display: HTS Dashboard
-        - target: home
+        - target: not_yet
           display: Analysis Status
 
       - name: Experiments
@@ -31,16 +31,16 @@ page_modules:
 
       - name: Analysis
         links:
-        - target: home
+        - target: not_yet
           display: Review Analysis Results
-        - target: home
+        - target: not_yet
           display: Review CRCs
 
       - name: Compounds
         links:
-        - target: home
+        - target: not_yet
           display: Search Compounds
-        - target: home
+        - target: not_yet
           display: Review Compounds Status
         - target: find_perturbation
           display: Review Perturbations
@@ -79,3 +79,7 @@ page_modules:
           display: Genes
         - target: find_compound
           display: Compounds
+
+  - name: not_yet
+    descr: Under Construction
+    type: UnderConstruction

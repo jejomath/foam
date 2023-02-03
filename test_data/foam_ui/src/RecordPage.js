@@ -83,7 +83,7 @@ export default class RecordPage extends Component {
                 {this.props.config.referenceTables.map((t, i) => (
                     <div className='reference-table-div' key={i}>
                         {t.display}
-                        <TablePage 
+                        <TablePage
                             config={this.props.context.pages[t.tablePage].config}
                             context={this.props.context}
                             params={t.paramsFn ? t.paramsFn(this.props.params, this.state.data) : {}}
