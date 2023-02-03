@@ -18,21 +18,21 @@
   width: 100%;
   position: fixed;
   top: 0;
+  height: 80;
   color: white;
   padding: 10px;
   padding-left: 30px;
   font-size: 32px;
 }
 
-.header-back-div {
-  background-color: black;
-  color: black;
-  width: 100%;
-  top: 0;
-  padding: 10px;
-  font-size: 32px;
+.content-div {
+  position:absolute;
+  top: 60px;
+  left:0px;
+  right:0px;
+  bottom:0px;
+  overflow-y:scroll;
 }
-
 .App-link {
   color: #61dafb;
 }

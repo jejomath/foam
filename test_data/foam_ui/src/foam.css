@@ -36,6 +36,10 @@
     background-color: whitesmoke;
 }
 
+.data-grid-div {
+    max-width: 700px;
+}
+
 .links-page-outer-div {
     display: inline-block;
     padding: 20px;

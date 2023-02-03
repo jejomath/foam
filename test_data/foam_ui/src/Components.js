@@ -261,16 +261,18 @@ export class Table extends Component {
     }
 
     render() {
-        return <DataGrid 
+        const dynamicHeight = Math.min(this.props.data.length, 25) * 35 + 37
+        return <div className="data-grid-div"><DataGrid 
             columns={this.props.config.viewColumns.map((col) => ({
                 name: col.field, 
                 key: col.field,
-                width: col.width,
+                width: parseInt(col.width),
                 resizable: true,
             }))}
             rows={this.cleanRows()}
             onRowClick={this.rowClick}
-        />
+            style={{height: dynamicHeight}}
+        /></div>
     }
 }
 
