@@ -1,6 +1,7 @@
 import RecordPage from './RecordPage.js';
 import TablePage from './TablePage.js';
 import LinksPage from './LinksPage.js';
+import FigurePage from './FigurePage.js';
 import {
     UnderConstruction
 } from './Components.js';
@@ -660,10 +661,10 @@ export const pages = {
             boxes: [{
                 name: 'Dashboards',
                 links: [{
-                    display: 'Program Timelines',
+                    display: 'Program Dashboard',
                     pretargetFn: '',
                     pretarget: '',
-                    target: 'not_yet',
+                    target: 'program_dashboard',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -1479,6 +1480,38 @@ export const pages = {
             }, ],
         },
         type: RecordPage,
+    },
+    program_dashboard: {
+        name: 'program_dashboard',
+        display: 'Program Dashboard',
+        config: {
+            sourceTable: 'program_stats',
+            plots: [{
+                config: {
+                    type: 'bar',
+                    orientation: 'h',
+                },
+                data: {
+                    x: 'experiment',
+                    y: 'name',
+                },
+            }, ],
+            layout: {
+                title: 'Experiments per Program',
+                width: '700',
+                height: '400',
+            },
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        type: FigurePage,
     },
     find_assay: {
         name: 'find_assay',

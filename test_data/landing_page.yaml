@@ -9,8 +9,8 @@ page_modules:
       boxes:
       - name: Dashboards
         links:
-        - target: not_yet
-          display: Program Timelines
+        - target: program_dashboard
+          display: Program Dashboard
         - target: not_yet
           display: HTS Dashboard
         - target: not_yet

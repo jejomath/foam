@@ -184,8 +184,6 @@ page_modules:
         target: back
 
 
-- name: program_milestone
-  pages:
   - name: find_program_milestone
     descr: Search page for table program_milestone
     type: TablePage
@@ -253,4 +251,24 @@ page_modules:
         target: back
         pretarget_fn: ( context.save() )
       - display: Cancel
+        target: back
+
+  - name: program_dashboard
+    descr: Dashboard of program stats
+    type: FigurePage
+    config:
+      source_table: program_stats
+      plots:
+      - config:
+          type: 'bar'
+          orientation: h
+        data:
+          x: experiment
+          y: name
+      layout:
+        title: Experiments per Program
+        width: 700
+        height: 400
+      buttons:
+      - display: Done
         target: back

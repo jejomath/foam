@@ -316,7 +316,7 @@ class PersonStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Person
-        fields = ('id', 'program_bio_lead', 'program_chem_lead', 'program_manager', 'experiment_bio_lead', )
+        fields = ('id', 'name', 'program_bio_lead', 'program_chem_lead', 'program_manager', 'experiment_bio_lead', )
 
 class ProgramStatsSerializer(serializers.ModelSerializer):
     
@@ -328,13 +328,13 @@ class ProgramStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Program
-        fields = ('id', 'program_milestone', 'assay', 'experiment', )
+        fields = ('id', 'name', 'program_milestone', 'assay', 'experiment', )
 
 class ProgramMilestoneStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = ProgramMilestone
-        fields = ('id', )
+        fields = ('id', 'name', )
 
 class AssayStatsSerializer(serializers.ModelSerializer):
     
@@ -342,13 +342,13 @@ class AssayStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Assay
-        fields = ('id', 'experiment', )
+        fields = ('id', 'name', 'experiment', )
 
 class ExperimentStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Experiment
-        fields = ('id', )
+        fields = ('id', 'name', )
 
 class PerturbationStatsSerializer(serializers.ModelSerializer):
     
@@ -356,7 +356,7 @@ class PerturbationStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Perturbation
-        fields = ('id', 'experiment', )
+        fields = ('id', 'name', 'experiment', )
 
 class CellLineStatsSerializer(serializers.ModelSerializer):
     
@@ -364,7 +364,7 @@ class CellLineStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = CellLine
-        fields = ('id', 'assay', )
+        fields = ('id', 'name', 'assay', )
 
 class IndicationStatsSerializer(serializers.ModelSerializer):
     
@@ -374,7 +374,7 @@ class IndicationStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Indication
-        fields = ('id', 'program', 'cell_line', )
+        fields = ('id', 'name', 'program', 'cell_line', )
 
 class SpeciesStatsSerializer(serializers.ModelSerializer):
     
@@ -392,7 +392,7 @@ class SpeciesStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Species
-        fields = ('id', 'cell_line', 'organ', 'tissue', 'cell_type', 'protein', 'gene', )
+        fields = ('id', 'name', 'cell_line', 'organ', 'tissue', 'cell_type', 'protein', 'gene', )
 
 class OrganStatsSerializer(serializers.ModelSerializer):
     
@@ -400,7 +400,7 @@ class OrganStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Organ
-        fields = ('id', 'cell_line', )
+        fields = ('id', 'name', 'cell_line', )
 
 class TissueStatsSerializer(serializers.ModelSerializer):
     
@@ -408,7 +408,7 @@ class TissueStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Tissue
-        fields = ('id', 'cell_line', )
+        fields = ('id', 'name', 'cell_line', )
 
 class CellTypeStatsSerializer(serializers.ModelSerializer):
     
@@ -416,7 +416,7 @@ class CellTypeStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = CellType
-        fields = ('id', 'cell_line', )
+        fields = ('id', 'name', 'cell_line', )
 
 class ProteinStatsSerializer(serializers.ModelSerializer):
     
@@ -424,7 +424,7 @@ class ProteinStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Protein
-        fields = ('id', 'program', )
+        fields = ('id', 'name', 'program', )
 
 class GeneStatsSerializer(serializers.ModelSerializer):
     
@@ -432,7 +432,7 @@ class GeneStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Gene
-        fields = ('id', 'protein', )
+        fields = ('id', 'name', 'protein', )
 
 class CompoundStatsSerializer(serializers.ModelSerializer):
     
@@ -440,5 +440,5 @@ class CompoundStatsSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Compound
-        fields = ('id', 'perturbation', )
+        fields = ('id', 'name', 'perturbation', )
 
