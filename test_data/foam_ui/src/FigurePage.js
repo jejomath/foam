@@ -48,11 +48,3 @@ export default class FigurePage extends Component {
         )
     }
 }
-
-// data={[{
-//     type: 'bar', 
-//     y: this.state.data.map((d) => (d.name)), 
-//     x: this.state.data.map((d) => (d[this.props.config.figureConfig.field])),
-//     orientation: 'h'
-// }]}
-// layout={ {width: 700, height: 400, title: this.props.config.figureConfig.title} }

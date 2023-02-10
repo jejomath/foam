@@ -10,54 +10,22 @@
     background-color: rgba(0, 0, 0, 0.5);
 }
 
-.record-page-outer-div {
+.base-page-outer-div {
     padding: 20px;
     background-color: white;
     text-align: center;
 }
 
-.record-page-inner-div {
+.base-page-inner-div {
     display: inline-block;
     text-align: left;
     padding: 20px;
     background-color: whitesmoke;
 }
 
-.table-page-outer-div {
-    padding: 20px;
-    background-color: white;
-    text-align: center;
-}
-
-.table-page-inner-div {
-    display: inline-block;
-    text-align: left;
-    padding: 20px;
-    background-color: whitesmoke;
-}
-
-.figure-page-outer-div {
-    padding: 20px;
-    background-color: white;
-    text-align: center;
-}
-
-.figure-page-inner-div {
-    display: inline-block;
-    text-align: left;
-    padding: 20px;
-    background-color: whitesmoke;
-}
 
 .data-grid-div {
     max-width: 700px;
-}
-
-.links-page-outer-div {
-    display: inline-block;
-    padding: 20px;
-    background-color: white;
-    text-align: center;
 }
 
 .links-page-inner-div {
@@ -76,7 +44,7 @@
     text-align: left;
     padding: 20px;
     margin: 5px;
-    background-color: whitesmoke;
+    background-color: white;
 }
 
 .field-list-field-div {
@@ -88,9 +56,6 @@
 
 .field-list-name-div {
     text-align: right;
-}
-
-.field-list-value-div {
 }
 
 .reference-table-div {

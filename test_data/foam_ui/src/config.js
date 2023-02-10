@@ -2,6 +2,7 @@ import RecordPage from './RecordPage.js';
 import TablePage from './TablePage.js';
 import LinksPage from './LinksPage.js';
 import FigurePage from './FigurePage.js';
+import LayoutPage from './LayoutPage.js';
 import {
     UnderConstruction
 } from './Components.js';
@@ -1513,6 +1514,30 @@ export const pages = {
         },
         type: FigurePage,
     },
+    fancy_dashboard: {
+        name: 'fancy_dashboard',
+        display: 'Fancy Dashboard',
+        config: {
+            direction: 'vertical',
+            pages: [{
+                direction: null,
+                pages: [],
+                name: null,
+                from_page: 'find_program',
+                params_from: null,
+            }, {
+                direction: null,
+                pages: [],
+                name: null,
+                from_page: 'program_dashboard',
+                params_from: null,
+            }, ],
+            name: null,
+            from_page: null,
+            params_from: null,
+        },
+        type: LayoutPage,
+    },
     find_assay: {
         name: 'find_assay',
         display: 'Find Assay',
@@ -2369,7 +2394,7 @@ export const pages = {
             },
             viewColumns: [{
                 field: 'name',
-                width: '200',
+                width: '400',
             }, ],
             editColumns: [],
             searchFields: ['name', ],

@@ -13,7 +13,7 @@ page_modules:
       source_table: indication
       view_columns:
       - field: name
-        width: 200
+        width: 400
       search_fields:
       - name
       row_action:

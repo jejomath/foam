@@ -7,7 +7,7 @@ import './foam.css';
 function App() {
     return (
         <div className='page-div'>
-            <div className='header-div'>Synergy Therapeutics</div>
+            <div className='header-div'>[Your Name Here]</div>
             <div className='content-div'>
                 <AppRouter schema={schema} enums={enums} pages={pages} />
             </div>

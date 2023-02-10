@@ -67,7 +67,11 @@ class PageWrapper extends Component {
         if (!this.state.page) {return <div /> }
         return (
             <div className="App">
-                { this.state.page }
+                <div className="base-page-outer-div">
+                    <div className="base-page-inner-div">
+                        { this.state.page }
+                    </div>
+                </div>
                 { this.state.modalStack.map((page, i) => (
                     <div className="modal-outer" key={i}>
                         <div className="modal-inner">
