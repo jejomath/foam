@@ -79,7 +79,9 @@ def get_js_dict(data):
         if data[k] is None:
             result += f'{k}: null, '
         elif type(data[k]) == str or type(data[k]) == int:
-            if data[k] and (k.endswith('Fn') or k == 'type'):
+            if data[k] and k.startswith('noquotes_'):
+                result += f'{k[9:]}: {data[k]}, '
+            elif data[k] and k.endswith('Fn'):
                 result += f'{k}: {data[k]}, '
             else:
                 result += f'{k}: \'{data[k]}\', '
@@ -375,10 +377,71 @@ class TablePageConfig:
         }
 
 
+@dataclass
+class FigurePageConfig:
+    source_table: str
+    plots: dict
+    layout: dict
+    buttons: list[Action] = None
+
+    def __post_init__(self):
+        self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
+
+    def add_refs(self, config, page):
+        next_pages = []
+        if self.source_table:
+            source_table = self.source_table[:-6] if self.source_table.endswith('_stats') else self.source_table
+            if source_table not in config.tables_dict.keys():
+                config_error(f'Unexpected source table "{self.source_table}" found in page config "{page}"')
+            else:
+                for b in self.buttons:
+                    next_pages += b.add_refs(config, page)
+        return next_pages
+
+    @property
+    def js_config(self):
+        return {
+            'sourceTable': self.source_table,
+            'plots': self.plots,
+            'layout': self.layout,
+            'buttons': [b.js_config for b in self.buttons],
+        }
+
+
+@dataclass
+class LayoutPageConfig:
+    direction: str = None
+    pages: list = None
+    name: str = None
+    from_page: str = None
+    params_from: list = None
+
+    def __post_init__(self):
+        self.pages = [LayoutPageConfig(**p) for p in self.pages] if self.pages else []
+
+    def add_refs(self, config, page):
+        next_pages = []
+        ### Need to look at from_page configs to populate this list.
+        ### Also verify that these pages exist.
+        return next_pages
+
+    @property
+    def js_config(self):
+        return {
+            'direction': self.direction,
+            'pages': [p.js_config for p in self.pages],
+            'name': self.name,
+            'from_page': self.from_page,
+            'params_from': self.params_from,
+        }
+
+
 page_configs = {
     'RecordPage': RecordPageConfig,
     'TablePage': TablePageConfig,
+    'FigurePage': FigurePageConfig,
     'LinksPage': LinksPageConfig,
+    'LayoutPage': LayoutPageConfig,
 }
 
 
@@ -428,7 +491,7 @@ class Page:
             'name': self.name,
             'display': self.display,
             'config': self.config.js_config,
-            'type': self.type,
+            'noquotes_type': self.type,
         }
 
 

@@ -26,3 +26,14 @@ class {{ t.class_name }}WriteSerializer(serializers.ModelSerializer):
         model = {{ t.class_name }}
         fields = ('id', {% for f in t.fields %}'{{ f.name }}', {% endfor %})
 {% endfor %}{% endfor %}
+
+{% for m in config.table_modules %}{% for t in m.tables %}
+class {{ t.class_name }}StatsSerializer(serializers.ModelSerializer):
+    {% for f in t.backref_fields %}
+    {{ f.backref }} = serializers.IntegerField(source='{{ f.backref }}.count', read_only=True)
+    {% endfor %}
+    class Meta:
+        model = {{ t.class_name }}
+        fields = ('id', 'name', {% for f in t.backref_fields %}'{{ f.backref }}', {% endfor %})
+{% endfor %}{% endfor %}
+
