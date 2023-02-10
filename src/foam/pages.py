@@ -224,7 +224,7 @@ class Action:
     visible_fn: str = ''
 
     def add_refs(self, config, page):
-        if self.target not in config.pages_dict.keys() and self.target not in RESERVED_TARGETS:
+        if self.target and self.target not in config.pages_dict.keys() and self.target not in RESERVED_TARGETS:
             config_error(f'Unexpected page "{self.target}" found in config for button on page "{page}".')
         return [] if self.target in RESERVED_TARGETS else [NextPage(display=self.display, target=self.target)]
 

@@ -3,6 +3,7 @@ import TablePage from './TablePage.js';
 import LinksPage from './LinksPage.js';
 import FigurePage from './FigurePage.js';
 import LayoutPage from './LayoutPage.js';
+import LoginPage from './LoginPage.js';
 import {
     UnderConstruction
 } from './Components.js';
@@ -876,6 +877,17 @@ export const pages = {
                     pretargetFn: '',
                     pretarget: '',
                     target: 'find_compound',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, ],
+            }, {
+                name: 'Account',
+                links: [{
+                    display: 'Log Out',
+                    pretargetFn: (params, data, context) => (context.logOut()),
+                    pretarget: '',
+                    target: '',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',

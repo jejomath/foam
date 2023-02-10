@@ -235,6 +235,13 @@ python manage.py createsuperuser
 You can then get to the admin console (while the server is running) at `http://localhost:8000/admin/`. (See the Django
 documentation for more details about manging users and admins.)
 
+## Add a user
+
+To create a user who can log in through the frontend, go to `http://localhost:8000/auth/users/` and fill out the form
+at the bottom of the page:
+
+
+
 
 ## Build and Run the Frontend
 

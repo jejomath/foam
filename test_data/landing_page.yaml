@@ -80,6 +80,11 @@ page_modules:
         - target: find_compound
           display: Compounds
 
+      - name: Account
+        links:
+        - pretarget_fn: '( context.logOut() )'
+          display: Log Out
+
   - name: not_yet
     descr: Under Construction
     type: UnderConstruction

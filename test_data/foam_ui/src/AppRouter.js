@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
+import LoginPage from './LoginPage.js';
 
 import { 
     getRecord,
     getRecords,
+    logIn,
+    logOut,
+    loggedIn,
     saveRecord 
 } from './comms.js';
 
@@ -22,6 +26,7 @@ class PageWrapper extends Component {
         this.state = {
             page: null,
             modalStack: [],
+            loginStatus: loggedIn()
         }
     }
   
@@ -52,7 +57,12 @@ class PageWrapper extends Component {
         return React.createElement(page.type, {
             config: page.config,
             params: params,
-            context: {...this.props.context, go: this.go}
+            context: {
+                ...this.props.context,
+                go: this.go,
+                logIn: this.logIn,
+                logOut: this.logOut
+            }
         })
     }
 
@@ -63,24 +73,45 @@ class PageWrapper extends Component {
         this.setState({page: this.getPage(this.props.page, params)})
     }
 
+    logIn = (username, password) => {
+        return logIn(username, password).then(() => this.setState({loginStatus: loggedIn()}))
+    }
+
+    logOut = () => {
+        logOut()
+        this.setState({loginStatus: loggedIn()})
+        return Promise.resolve()
+    }
+
     render() {
-        if (!this.state.page) {return <div /> }
-        return (
-            <div className="App">
-                <div className="base-page-outer-div">
-                    <div className="base-page-inner-div">
-                        { this.state.page }
+        if (!this.state.loginStatus) {
+            return (
+                <div className="modal-outer">
+                    <div className="modal-inner">
+                        <LoginPage context={{logIn: this.logIn}} />
                     </div>
                 </div>
-                { this.state.modalStack.map((page, i) => (
-                    <div className="modal-outer" key={i}>
-                        <div className="modal-inner">
-                            { page }
+            )
+        } else if (!this.state.page) {
+            return <div /> 
+        } else {
+            return (
+                <div className="App">
+                    <div className="base-page-outer-div">
+                        <div className="base-page-inner-div">
+                            { this.state.page }
                         </div>
                     </div>
-                ))}
-            </div>
-        )
+                    { this.state.modalStack.map((page, i) => (
+                        <div className="modal-outer" key={i}>
+                            <div className="modal-inner">
+                                { page }
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )
+        }
     }        
 }
     
