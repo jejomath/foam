@@ -348,6 +348,8 @@ Add the following three lines to `INSTALLED_APPS` in `settings.py`:
     'rest_framework',
     'django_filters',
     '<your app name>',
+    'rest_framework.authtoken',
+    'djoser',  # <--- Only if you want to require authentication.
 ```
 
 Add `'corsheaders.middleware.CorsMiddleware',` to the `MIDDLEWARE` list.
@@ -365,6 +367,21 @@ CORS_ORIGIN_WHITELIST = (
 
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 100,
+
+    # The following lines are only if you want to enable authentication.
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ]
+}
+
+# The following lines are only if you want to enable authentication.
+DJOSER = {
+    "USER_ID_FIELD": "username"
 }```
 
 Then update `urls.py` to look like this:
@@ -374,10 +391,13 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
 from <your app name> import router
+from djoser import urls as durls  # If you want to use authentication
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.router.urls)),
+    path('auth/', include(durls)),  # If you want to use authentication
+    path('auth/', include('djoser.urls.authtoken')),  # If you want to use authentication
 ]
 ```
 
@@ -388,7 +408,8 @@ react-datepicker
 react-data-grid
 react-router
 react-router-dom
-
+react-plotly.js
+plotly.js
 
 # Dump database
 
