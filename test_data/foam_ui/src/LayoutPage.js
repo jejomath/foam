@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
-import { ButtonList } from './Components.js'
-import Plot from 'react-plotly.js';
 
-export default class FigurePage extends Component {
+export default class LayoutPage extends Component {
     render() {
         return (
             <div>
