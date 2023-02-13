@@ -1,10 +1,4 @@
-import RecordPage from './RecordPage.js';
-import TablePage from './TablePage.js';
-import LinksPage from './LinksPage.js';
-import FigurePage from './FigurePage.js';
-import LayoutPage from './LayoutPage.js';
-import LoginPage from './LoginPage.js';
-import { UnderConstruction } from './Components.js';
+import { RecordPage, TablePage, LinksPage, FigurePage, LayoutPage, UnderConstruction} from 'foam_ui';
 
 export const schema = {{ schema }}
 
