@@ -252,7 +252,8 @@ class Field:
             self.short_type = self.type
             if self.short_type not in field_types:
                 config_error(f'Unexpected type "{self.type}" found in field "{self.name}" of table "{self.table.name}".')
-            (self.model_def, self.filters) = field_types[self.short_type]
+            else:
+                (self.model_def, self.filters) = field_types[self.short_type]
 
 
 @dataclass

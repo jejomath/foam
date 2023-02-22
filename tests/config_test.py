@@ -78,7 +78,7 @@ table_modules:
 
   - name: assay
     descr: A table with one record for each assay protocol.
-    preprocess_new: add_assay_name
+    preprocess: add_assay_name
     fields:
     - name: name
       type: STRING
@@ -90,7 +90,7 @@ table_modules:
   - name: experiment
     display: My Experiment
     descr: A table with one record for each experiment.
-    preprocess_new: add_experiment_name
+    preprocess: add_experiment_name
     fields:
     - name: name
       type: STRING
@@ -218,6 +218,7 @@ page_modules:
         - name
         reference_tables:
         - table_page: find_experiment
+          display: Find Experiment
         buttons:
         - display: Edit
           target: edit_experiment
@@ -240,7 +241,7 @@ page_modules:
 
     - name: find_experiment
       descr: Use this page to find experiments
-      type: ListPage
+      type: TablePage
       config:
         source_table: experiment
         view_columns:
@@ -252,6 +253,7 @@ page_modules:
         search_fields:
         - name
         row_action:
+          display: View Experiment
           target: view_experiment
         buttons:
         - display: Done
@@ -300,15 +302,17 @@ def test_parse_record_page():
     assert len(c1.edit_fields) == 1
     assert c1.edit_fields[0].field == 'name'
 
-def test_catch_bad_page_type():
+def test_handle_custom_page_type():
     config = pages_config()
     config['page_modules'][0]['pages'][0]['type'] = 'no_type'
     clear_errors()
     assert len(get_errors()) == 0
-    Config(**config)
+    result = Config(**config)
     print(get_errors())
-    assert len(get_errors()) == 1
-    assert get_errors()[0].startswith('Unexpected page type')
+    assert len(get_errors()) == 0
+    m = result.page_modules[0]
+    p = m.pages[0]
+    assert type(p.config.config) is dict
 
 def test_catch_record_page_bad_source_table():
     config = pages_config()
@@ -372,7 +376,7 @@ def test_parse_list_page():
     result = Config(**pages_config())
     m = result.page_modules[0]
     p = m.pages[2]
-    assert p.type == 'ListPage'
+    assert p.type == 'TablePage'
     c = p.config
 
     assert len(c.view_columns) == 1
