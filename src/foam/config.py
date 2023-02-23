@@ -2,7 +2,7 @@ from dataclasses import dataclass, field
 import yaml
 from pathlib import Path
 
-from .schema import Enum, Folder, TableModule, make_schema_refs
+from .schema import Enum, Folder, TableModule, SchemaTest, make_schema_refs
 from .pages import PageClass, PageModule, validate_page_refs
 
 BASE_CONFIG_FILE = 'config.yaml'
@@ -29,6 +29,7 @@ class Config:
     folders: list[Folder] = field(default_factory=list)
     table_modules: list[TableModule] = field(default_factory=list)
     page_modules: list[PageModule] = field(default_factory=list)
+    schema_tests: list[SchemaTest] = field(default_factory=list)
 
     # Generated in post-processing
     enums_dict = {}
@@ -43,6 +44,7 @@ class Config:
         self.table_modules = [TableModule(**m) for m in self.table_modules]
         self.page_classes = [PageClass(**c) for c in self.page_classes]
         self.page_modules = [PageModule(**m) for m in self.page_modules]
+        self.schema_tests = [SchemaTest(**t) for t in self.schema_tests]
         make_schema_refs(self)
         validate_page_refs(self)
 

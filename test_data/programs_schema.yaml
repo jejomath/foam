@@ -101,3 +101,19 @@ table_modules:
     - name: completed_date
       type: DATE
       descr: Date when the milestone was completed
+
+schema_tests:
+- name: person
+  actions:
+  - mode: POST
+    table: person
+    data:
+      name: Test User
+      given_name: Test
+      family_name: User
+  - mode: GET
+    table: person
+    data:
+      name: Test User
+      given_name: Test
+      family_name: User

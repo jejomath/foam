@@ -1,0 +1,32 @@
+from django.test import TestCase
+from django.contrib.auth.models import User
+
+from rest_framework.test import APIClient
+
+TEST_USER = 'test'
+TEST_PASSWORD = 'test123!'
+
+class MyTestCase(TestCase):
+
+    def setUp(self):
+        self.client = APIClient()
+        User.objects.create_user(
+            username=TEST_USER, email='', password=TEST_PASSWORD)
+        response = self.client.post('/auth/token/login/', {'username': TEST_USER, 'password': TEST_PASSWORD})
+        token = response.json()['auth_token']
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + token)
+
+{% for test in config.tests %}
+    def test_{{ test.name }}(self):
+    {% for action in test.actions -%}
+    {% if action.mode == "POST" %}
+        id = self.client.post('/api/{{ action.table }}/', { {% for field in action.data %} '{{ field.key }}': '{{ field.value }}', {% endfor %} }).json()['id']
+    {% endif -%}
+    {% if action.mode == "GET" %}
+        response = self.client.get(f'/api/{{ action.table }}/{id}/').json()
+        {% for field in action.data %}
+        assert response['{{field.key}}'] == '{{ field.value }}'
+        {% endfor %}
+    {% endif -%}
+    {% endfor -%}
+{% endfor %}

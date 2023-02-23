@@ -22,6 +22,19 @@ def get_views_code(config):
 def get_router_code(config):
     return jinja_template('router_py.jnj').render(config=config)
 
+def get_tests_code(config):
+    test_config = {
+        'tests': [{
+            'name': t.name,
+            'actions': [{
+                'mode': a.mode,
+                'table': a.table,
+                'data': [{'key': k, 'value': a.data[k]} for k in a.data.keys()],
+            } for a in t.actions]
+        } for t in config.schema_tests]
+    }
+    return jinja_template('test_api_py.jnj').render(config=test_config)
+
 
 def get_gen_pages(config, prefix=''):
     prefix = f'{prefix}_' if prefix else ''
@@ -126,6 +139,10 @@ def write_schema_code(config):
 
         with open(config.paths.schema_path / 'router.py', 'w') as f:
             f.write(get_router_code(config))
+
+        with open(config.paths.schema_path / 'test_api.py', 'w') as f:
+            f.write(get_tests_code(config))
+
     else:
         print('No docs_path set in config.')
 
@@ -287,6 +304,22 @@ class TableModule:
     def __post_init__(self):
         add_display(self)
         self.tables = [Table(**t, module=self) for t in self.tables]
+
+
+@dataclass
+class SchemaTestAction:
+    mode: str
+    table: str
+    data: dict
+
+@dataclass
+class SchemaTest:
+    name: str
+    actions: list[SchemaTestAction]
+
+    def __post_init__(self):
+        self.actions = [SchemaTestAction(**a) for a in self.actions]
+
 
 
 def make_schema_refs(config):

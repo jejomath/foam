@@ -229,7 +229,7 @@ see a page telling you that the `experiment` table is empty.
 You may also want to configure an admin user with the following command:
 
 ```bash
-python manage.py createsuperuser
+python3 -m manage createsuperuser
 ```
 
 You can then get to the admin console (while the server is running) at `http://localhost:8000/admin/`. (See the Django
@@ -429,3 +429,9 @@ Then reload:
 ```bash
 python3 -m manage loaddata ../test_dump.json 
 ```
+
+
+# Tests
+
+CLI Tests: Run `python3 -m pytest` from the `/tests/` directory.
+Django API tests: Run `python3 -m manage test` from `/test_data/foam_backend/`
