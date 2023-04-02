@@ -8,9 +8,9 @@ page_modules:
 
   - name: find_perturbation
     descr: Search page for table perturbation
-    type: TablePage
+    type: Table
     config:
-      source_table: perturbation
+      source: perturbation
       view_columns:
       - field: name
         width: 200
@@ -32,9 +32,9 @@ page_modules:
 
   - name: view_perturbation
     descr: View a record from table perturbation
-    type: RecordPage
+    type: Form
     config:
-      source_table: perturbation
+      source: perturbation
       view_fields:
       - name
       - compound
@@ -54,9 +54,9 @@ page_modules:
 
   - name: find_cell_line
     descr: Search page for table cell_line
-    type: TablePage
+    type: Table
     config:
-      source_table: cell_line
+      source: cell_line
       view_columns:
       - field: name
         width: 200
@@ -91,9 +91,9 @@ page_modules:
 
   - name: view_cell_line
     descr: View a record from table cell_line
-    type: RecordPage
+    type: Form
     config:
-      source_table: cell_line
+      source: cell_line
       view_fields:
       - name
       - species
@@ -118,9 +118,9 @@ page_modules:
 
   - name: edit_cell_line
     descr: Edit a record from table cell_line
-    type: RecordPage
+    type: Form
     config:
-      source_table: cell_line
+      source: cell_line
       edit_fields:
       - name
       - field: species

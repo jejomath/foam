@@ -1,4 +1,4 @@
-import { RecordPage, TablePage, LinksPage, FigurePage, LayoutPage, UnderConstruction} from 'foam_ui';
+import { RecordData, TableData, Form, Table, Links, Figure, Layout, UnderConstruction} from './lib/index.js';
 
 export const schema = {{ schema }}
 

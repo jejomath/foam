@@ -8,9 +8,9 @@ page_modules:
 
   - name: find_indication
     descr: Search page for table indication
-    type: TablePage
+    type: Table
     config:
-      source_table: indication
+      source: indication
       view_columns:
       - field: name
         width: 400
@@ -26,9 +26,9 @@ page_modules:
 
   - name: view_indication
     descr: View a record from table indication
-    type: RecordPage
+    type: Form
     config:
-      source_table: indication
+      source: indication
       view_fields:
       - name
       reference_tables:
@@ -48,9 +48,9 @@ page_modules:
 
   - name: find_species
     descr: Search page for table species
-    type: TablePage
+    type: Table
     config:
-      source_table: species
+      source: species
       view_columns:
       - field: name
         width: 200
@@ -66,9 +66,9 @@ page_modules:
 
   - name: view_species
     descr: View a record from table species
-    type: RecordPage
+    type: Form
     config:
-      source_table: species
+      source: species
       view_fields:
       - name
       reference_tables:
@@ -101,9 +101,9 @@ page_modules:
 
   - name: find_organ
     descr: Search page for table organ
-    type: TablePage
+    type: Table
     config:
-      source_table: organ
+      source: organ
       view_columns:
       - field: name
         width: 200
@@ -122,9 +122,9 @@ page_modules:
 
   - name: view_organ
     descr: View a record from table organ
-    type: RecordPage
+    type: Form
     config:
-      source_table: organ
+      source: organ
       view_fields:
       - name
       - species
@@ -143,9 +143,9 @@ page_modules:
 
   - name: find_tissue
     descr: Search page for table tissue
-    type: TablePage
+    type: Table
     config:
-      source_table: tissue
+      source: tissue
       view_columns:
       - field: name
         width: 200
@@ -164,9 +164,9 @@ page_modules:
 
   - name: view_tissue
     descr: View a record from table tissue
-    type: RecordPage
+    type: Form
     config:
-      source_table: tissue
+      source: tissue
       view_fields:
       - name
       - species
@@ -185,9 +185,9 @@ page_modules:
 
   - name: find_cell_type
     descr: Search page for table cell_type
-    type: TablePage
+    type: Table
     config:
-      source_table: cell_type
+      source: cell_type
       view_columns:
       - field: name
         width: 200
@@ -206,9 +206,9 @@ page_modules:
 
   - name: view_cell_type
     descr: View a record from table cell_type
-    type: RecordPage
+    type: Form
     config:
-      source_table: cell_type
+      source: cell_type
       view_fields:
       - name
       - species
@@ -227,9 +227,9 @@ page_modules:
 
   - name: find_protein
     descr: Search page for table protein
-    type: TablePage
+    type: Table
     config:
-      source_table: protein
+      source: protein
       view_columns:
       - field: name
         width: 200
@@ -251,9 +251,9 @@ page_modules:
 
   - name: view_protein
     descr: View a record from table protein
-    type: RecordPage
+    type: Form
     config:
-      source_table: protein
+      source: protein
       view_fields:
       - name
       - gene
@@ -273,9 +273,9 @@ page_modules:
 
   - name: find_gene
     descr: Search page for table gene
-    type: TablePage
+    type: Table
     config:
-      source_table: gene
+      source: gene
       view_columns:
       - field: name
         width: 200
@@ -294,9 +294,9 @@ page_modules:
 
   - name: view_gene
     descr: View a record from table gene
-    type: RecordPage
+    type: Form
     config:
-      source_table: gene
+      source: gene
       view_fields:
       - name
       - species
@@ -315,9 +315,9 @@ page_modules:
 
   - name: find_compound
     descr: Search page for table compound
-    type: TablePage
+    type: Table
     config:
-      source_table: compound
+      source: compound
       view_columns:
       - field: name
         width: 200
@@ -336,9 +336,9 @@ page_modules:
 
   - name: view_compound
     descr: View a record from table compound
-    type: RecordPage
+    type: Form
     config:
-      source_table: compound
+      source: compound
       view_fields:
       - name
       - smiles

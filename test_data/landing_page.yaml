@@ -4,7 +4,7 @@ page_modules:
 
   - name: home
     descr: Landing Page
-    type: LinksPage
+    type: Links
     config:
       boxes:
       - name: Dashboards

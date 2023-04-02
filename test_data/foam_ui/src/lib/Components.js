@@ -15,7 +15,6 @@ function followAction(config, params, data, context) {
         } else if (config.params) {
             actionParams = config.params;
         }
-
         context.go(config.target, actionParams, config.mode);
     })
 }
@@ -237,8 +236,8 @@ export class Table extends Component {
     }
 
     cleanField(row, k) {
-        const s = this.props.context.schema[this.props.config.sourceTable]
-        if (k === 'id') {
+        const s = this.props.context.schema[this.props.config.source]
+            if (k === 'id') {
             return {[k]: row[k]}
         } else if (row[k] && typeof row[k] === 'object') {
             return {[k]: row[k].name}
@@ -382,7 +381,7 @@ class SearchField extends Component {
 
 export class SearchBar extends Component {
     componentDidMount() {
-        if (this.props.data.length === 0) { this.addParam() }
+        // if (this.props.data.length === 0) { this.addParam() }
     }
 
     update = (index, field, filter, value) => {

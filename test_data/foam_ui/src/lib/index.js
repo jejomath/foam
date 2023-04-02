@@ -1,10 +1,11 @@
+import { RecordData, TableData } from './Data.js';
 import AppRouter from './AppRouter';
-import RecordPage from './RecordPage.js';
-import TablePage from './TablePage.js';
-import LinksPage from './LinksPage.js';
-import FigurePage from './FigurePage.js';
-import LayoutPage from './LayoutPage.js';
-import LoginPage from './LoginPage.js';
+import Form from './RecordPage.js';
+import Table from './TablePage.js';
+import Links from './LinksPage.js';
+import Figure from './FigurePage.js';
+import Layout from './LayoutPage.js';
 import { UnderConstruction } from './Components.js';
+import LoginPage from './LoginPage.js';
 
-export { AppRouter, RecordPage, TablePage, LinksPage, FigurePage, LayoutPage, LoginPage, UnderConstruction }
+export { RecordData, TableData, AppRouter, Form, Table, Links, Figure, Layout, UnderConstruction, LoginPage }

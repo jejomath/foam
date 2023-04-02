@@ -20,7 +20,52 @@ import {
 } from "react-router-dom";
 
 
-class PageWrapper extends Component {
+/* Connects the data to the page */
+class Page extends Component {
+    constructor(props) {
+        super(props);
+        const page = this.props.context.pages[this.props.name]
+        this.clients = {
+            base: page.data ? new page.data.type(
+                'base',
+                page.data.source,
+                this.props.params,
+                {
+                    ...this.props.context,
+                    setState: (data) => { this.setState({data: {base: data}}) },
+                    getState: () => { return this.state.data.base; }
+                }) : null
+        }
+        this.state = {
+            data: {base: null},
+            params: {base: this.props.params},
+        }
+    }
+
+    componentDidMount() {
+        if (this.clients.base) { this.clients.base.load(); }
+    }
+
+    updateSearchParams = (params) => {
+        this.setState({searchParams: params})
+    }
+
+    render() {
+        const page = this.props.context.pages[this.props.name]
+        return React.createElement(page.type, {
+            data: this.state.data.base,
+            config: page.config,
+            params: this.clients.base ? this.clients.base.internalParams() : {},
+            context: {
+                ...this.props.context,
+                update: this.clients.base.update,
+            }
+        })
+    }
+}
+
+/* Controls the stack of modals above the current page. */
+class PageStack extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,20 +97,6 @@ class PageWrapper extends Component {
         }
     }
 
-    getPage(pageName, params) {
-        const page = this.props.context.pages[pageName]
-        return React.createElement(page.type, {
-            config: page.config,
-            params: params,
-            context: {
-                ...this.props.context,
-                go: this.go,
-                logIn: this.logIn,
-                logOut: this.logOut
-            }
-        })
-    }
-
     componentDidMount() {
         var params = {};
         for (let [k, v] of this.props.params[0]) { params[k] = v; }
@@ -81,6 +112,19 @@ class PageWrapper extends Component {
         logOut()
         this.setState({loginStatus: loggedIn()})
         return Promise.resolve()
+    }
+
+    getPage(pageName, params) {
+        return <Page 
+            name={pageName}
+            params={params}
+            context={{
+                ...this.props.context,
+                go: this.go,
+                logIn: this.logIn,
+                logOut: this.logOut
+            }}
+        />
     }
 
     render() {
@@ -114,12 +158,13 @@ class PageWrapper extends Component {
         }
     }        
 }
-    
+
+/* Controls the router that translates URLs to individual pages */
 export default class AppRouter extends Component {
 
-    getWrapper(context, page) {
+    getStack(context, page) {
         return () => {
-        return <PageWrapper page={page} context={context} navigate={useNavigate()} params={useSearchParams()} />
+        return <PageStack page={page} context={context} navigate={useNavigate()} params={useSearchParams()} />
         }
     }
 
@@ -138,7 +183,7 @@ export default class AppRouter extends Component {
             <Routes>
             {Object.keys(this.props.pages).map((page) => 
                 React.createElement(Route, {path: page, key: page, element: 
-                React.createElement(this.getWrapper(context, page))}))}
+                React.createElement(this.getStack(context, page))}))}
             </Routes>
         </BrowserRouter>
         );

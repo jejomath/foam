@@ -78,7 +78,7 @@ def get_js_dict(data):
     for k in data.keys():
         if data[k] is None:
             result += f'{k}: null, '
-        elif type(data[k]) == str or type(data[k]) == int:
+        elif type(data[k]) in [str, int, bool]:
             if data[k] and k.startswith('noquotes_'):
                 result += f'{k[9:]}: {data[k]}, '
             elif data[k] and k.endswith('Fn'):
@@ -201,8 +201,8 @@ class ReferenceTable:
             config_error(f'Unexpected page {self.table_page} found in config for page "{page}".')
         else:
             table_page = config.pages_dict[self.table_page]
-            if table_page.type and table_page.type != 'TablePage':
-                config_error(f'The table_page for a reference page must be a TablePage, but "{table_page.name}" is a {table_page.type} in "{page}".')
+            if table_page.type and table_page.type != 'Table':
+                config_error(f'The table_page for a reference page must be a Table, but "{table_page.name}" is a {table_page.type} in "{page}".')
         return []
 
     @property
@@ -242,10 +242,11 @@ class Action:
 
 
 @dataclass
-class RecordPageConfig:
-    source_table: str
+class FormPage:
+    source: str
     new_record: str = ''
     new_record_fn: str = ''
+    params_fn: str = ''
     view_fields: list[ViewField] = None
     edit_fields: list[EditField] = None
     reference_tables: list[ReferenceTable] = None
@@ -259,14 +260,14 @@ class RecordPageConfig:
 
     def add_refs(self, config, page):
         next_pages = []
-        if self.source_table:
-            if self.source_table not in config.tables_dict.keys():
-                config_error(f'Unexpected source table "{self.source_table}" found in page config "{page}"')
+        if self.source:
+            if self.source not in config.tables_dict.keys():
+                config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
             else:
                 for f in self.view_fields:
-                    next_pages += f.add_refs(config.tables_dict[self.source_table], page)
+                    next_pages += f.add_refs(config.tables_dict[self.source], page)
                 for f in self.edit_fields:
-                    next_pages += f.add_refs(config.tables_dict[self.source_table], page)
+                    next_pages += f.add_refs(config.tables_dict[self.source], page)
                 for t in self.reference_tables:
                     next_pages += t.add_refs(config, page)
                 for b in self.buttons:
@@ -276,9 +277,7 @@ class RecordPageConfig:
     @property
     def js_config(self):
         return {
-            'sourceTable': self.source_table,
-            'newRecord': self.new_record,
-            'newRecordFn': f'(params, data) => {self.new_record_fn}' if self.new_record_fn else '',
+            'source': self.source,
             'viewFields': [f.js_config for f in self.view_fields],
             'editFields': [f.js_config for f in self.edit_fields],
             'referenceTables': [t.js_config for t in self.reference_tables],
@@ -308,7 +307,7 @@ class LinksBox:
 
 
 @dataclass
-class LinksPageConfig:
+class LinksPage:
     boxes: list[LinksBox] = None
 
     def __post_init__(self):
@@ -328,10 +327,11 @@ class LinksPageConfig:
 
 
 @dataclass
-class TablePageConfig:
-    source_table: str
-    new_record: str = ''
-    new_record_fn: str = ''
+class TablePage:
+    source: str
+    new_records: str = ''
+    new_records_fn: str = ''
+    params_fn: str = ''
     view_columns: list[Column] = None
     edit_columns: list[Column] = None
     search_fields: list[ReferenceTable] = None
@@ -346,11 +346,11 @@ class TablePageConfig:
 
     def add_refs(self, config, page):
         next_pages = []
-        if self.source_table:
-            if self.source_table not in config.tables_dict.keys():
-                config_error(f'Unexpected source table "{self.source_table}" found in page config "{page}"')
+        if self.source:
+            if self.source not in config.tables_dict.keys():
+                config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
             else:
-                table_config = config.tables_dict[self.source_table]
+                table_config = config.tables_dict[self.source]
                 for c in self.view_columns:
                     next_pages += c.add_refs(table_config, page)
                 for c in self.edit_columns:
@@ -366,9 +366,7 @@ class TablePageConfig:
     @property
     def js_config(self):
         return {
-            'sourceTable': self.source_table,
-            'newRecord': self.new_record,
-            'newRecordFn': f'(params, data) => {self.new_record_fn}' if self.new_record_fn else '',
+            'source': self.source,
             'rowAction': self.row_action.js_config,
             'viewColumns': [c.js_config for c in self.view_columns],
             'editColumns': [c.js_config for c in self.edit_columns],
@@ -378,21 +376,24 @@ class TablePageConfig:
 
 
 @dataclass
-class FigurePageConfig:
-    source_table: str
+class FigurePage:
+    source: str
     plots: dict
     layout: dict
     buttons: list[Action] = None
-
+    new_records: str = False
+    new_records_fn: str = ''
+    params_fn: str = ''
+ 
     def __post_init__(self):
         self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
 
     def add_refs(self, config, page):
         next_pages = []
-        if self.source_table:
-            source_table = self.source_table[:-6] if self.source_table.endswith('_stats') else self.source_table
-            if source_table not in config.tables_dict.keys():
-                config_error(f'Unexpected source table "{self.source_table}" found in page config "{page}"')
+        if self.source:
+            source = self.source[:-6] if self.source.endswith('_stats') else self.source
+            if source not in config.tables_dict.keys():
+                config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
             else:
                 for b in self.buttons:
                     next_pages += b.add_refs(config, page)
@@ -401,7 +402,7 @@ class FigurePageConfig:
     @property
     def js_config(self):
         return {
-            'sourceTable': self.source_table,
+            'source': self.source,
             'plots': self.plots,
             'layout': self.layout,
             'buttons': [b.js_config for b in self.buttons],
@@ -409,7 +410,7 @@ class FigurePageConfig:
 
 
 @dataclass
-class LayoutPageConfig:
+class LayoutPage:
     direction: str = None
     pages: list = None
     name: str = None
@@ -417,7 +418,7 @@ class LayoutPageConfig:
     params_from: list = None
 
     def __post_init__(self):
-        self.pages = [LayoutPageConfig(**p) for p in self.pages] if self.pages else []
+        self.pages = [LayoutPage(**p) for p in self.pages] if self.pages else []
 
     def add_refs(self, config, page):
         next_pages = []
@@ -435,26 +436,73 @@ class LayoutPageConfig:
             'params_from': self.params_from,
         }
 
-
-page_configs = {
-    'RecordPage': RecordPageConfig,
-    'TablePage': TablePageConfig,
-    'FigurePage': FigurePageConfig,
-    'LinksPage': LinksPageConfig,
-    'LayoutPage': LayoutPageConfig,
-}
-
-
 @dataclass
-class CustomPageConfig:
-    config: str
+class UnderConstruction:
 
     def add_refs(self, config, page):
         return []
 
     @property
     def js_config(self):
-        return self.config
+        return {}
+
+
+@dataclass
+class RecordData:
+    source: str
+    new: str = ''
+    new_fn: str = ''
+    parameters_fn: str = ''
+
+    def __init__(self, page_config):
+        self.source = page_config.source
+        self.new = page_config.new_record
+        self.new_fn = page_config.new_record_fn
+        self.params_fn = page_config.params_fn
+
+    @property
+    def js_config(self):
+        return {
+            'noquotes_type': 'RecordData',
+            'source': self.source,
+            'new': self.new,
+            'newFn': f'(params, data) => {self.new_fn}' if self.new_fn else '',
+            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
+        }
+
+
+@dataclass
+class TableData:
+    source: str
+    new: str = ''
+    new_fn: str = ''
+    parameters_fn: str = ''
+
+    def __init__(self, page_config):
+        self.source = page_config.source
+        self.new = page_config.new_records
+        self.new_fn = page_config.new_records_fn
+        self.params_fn = page_config.params_fn
+
+    @property
+    def js_config(self):
+        return {
+            'noquotes_type': 'TableData',
+            'source': self.source,
+            'new': self.new,
+            'newFn': f'(params, data) => {self.new_fn}' if self.new_fn else '',
+            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
+        }
+
+
+page_configs = {
+    'Form': (FormPage, RecordData),
+    'Table': (TablePage, TableData),
+    'Figure': (FigurePage, TableData),
+    'Links': (LinksPage, None),
+    'Layout': (LayoutPage, None),
+    'UnderConstruction': (UnderConstruction, None),
+}
 
 
 @dataclass
@@ -472,13 +520,22 @@ class Page:
     next_pages: list[NextPage] = ''
     type: str = ''
     config: str = None
+    buttons: list[Action] = None
+    data: str = None
 
     def __post_init__(self):
         add_display(self)
-        if self.config and self.type in page_configs:
-            self.config = page_configs[self.type](**self.config)
+        if not self.config:
+            self.type = self.type or 'UnderConstruction'
+            self.config = page_configs['UnderConstruction'][0]()
+        elif self.type in page_configs:
+            page_class, data_class = page_configs[self.type]
+            self.config = page_class(**self.config)
+            if data_class:
+                self.data = data_class(self.config)
         else:
-            self.config = CustomPageConfig(config=self.config)
+            config_error(f'Unexpected page type "{self.type}" found in page config "{self.name}"')
+
         self.next_pages = [NextPage(**n) for n in self.next_pages] if self.next_pages else []
 
     def add_refs(self, config):
@@ -491,6 +548,7 @@ class Page:
             'name': self.name,
             'display': self.display,
             'config': self.config.js_config,
+            'data': self.data.js_config if self.data else None,
             'noquotes_type': self.type,
         }
 

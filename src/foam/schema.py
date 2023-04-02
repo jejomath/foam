@@ -62,7 +62,7 @@ def get_gen_pages(config, prefix=''):
                 'descr': f'Search page for table {t.name}',
                 'type': 'TablePage',
                 'config': {
-                    'source_table': t.name,
+                    'source': t.name,
                     'view_columns': [{'field': f.name, 'width': 200} for f in t.fields],
                     'search_fields': [f.name for f in t.fields],
                     'row_action': {
@@ -83,7 +83,7 @@ def get_gen_pages(config, prefix=''):
                 'descr': f'View a record from table {t.name}',
                 'type': 'RecordPage',
                 'config': {
-                    'source_table': t.name,
+                    'source': t.name,
                     'view_fields': [f.name for f in t.fields],
                     'reference_tables': [{
                         'table_page': f'find_{prefix}{r.table.name}',
@@ -104,7 +104,7 @@ def get_gen_pages(config, prefix=''):
                 'descr': f'Edit a record from table {t.name}',
                 'type': 'RecordPage',
                 'config': {
-                    'source_table': t.name,
+                    'source': t.name,
                     'edit_fields': [
                         {'field': f.name, 'lookup': f'find_{prefix}{f.ref_table.name}'} if f.ref_table else f.name
                         for f in t.fields],

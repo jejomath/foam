@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { ButtonList } from './Components.js'
 import Plot from 'react-plotly.js';
 
-export default class FigurePage extends Component {
+export default class Figure extends Component {
     constructor(props) {
         super(props);
         this.state = {

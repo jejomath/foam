@@ -4,9 +4,9 @@ page_modules:
   pages:
   - name: find_person
     descr: Search page for table person
-    type: TablePage
+    type: Table
     config:
-      source_table: person
+      source: person
       view_columns:
       - field: name
         width: 200
@@ -30,9 +30,9 @@ page_modules:
 
   - name: view_person
     descr: View a record from table person
-    type: RecordPage
+    type: Form
     config:
-      source_table: person
+      source: person
       view_fields:
       - name
       - given_name
@@ -59,9 +59,9 @@ page_modules:
 
   - name: edit_person
     descr: Edit a record from table person
-    type: RecordPage
+    type: Form
     config:
-      source_table: person
+      source: person
       edit_fields:
       - name
       - given_name
@@ -75,9 +75,9 @@ page_modules:
 
   - name: find_program
     descr: Search page for table program
-    type: TablePage
+    type: Table
     config:
-      source_table: program
+      source: program
       view_columns:
       - field: name
         width: 200
@@ -118,9 +118,9 @@ page_modules:
         target: back
   - name: view_program
     descr: View a record from table program
-    type: RecordPage
+    type: Form
     config:
-      source_table: program
+      source: program
       view_fields:
       - name
       - target
@@ -158,9 +158,9 @@ page_modules:
 
   - name: edit_program
     descr: Edit a record from table program
-    type: RecordPage
+    type: Form
     config:
-      source_table: program
+      source: program
       edit_fields:
       - name
       - field: target
@@ -186,9 +186,9 @@ page_modules:
 
   - name: find_program_milestone
     descr: Search page for table program_milestone
-    type: TablePage
+    type: Table
     config:
-      source_table: program_milestone
+      source: program_milestone
       view_columns:
       - field: name
         width: 200
@@ -217,9 +217,9 @@ page_modules:
         target: back
   - name: view_program_milestone
     descr: View a record from table program_milestone
-    type: RecordPage
+    type: Form
     config:
-      source_table: program_milestone
+      source: program_milestone
       view_fields:
       - program
       - name
@@ -236,9 +236,9 @@ page_modules:
 
   - name: edit_program_milestone
     descr: Edit a record from table program_milestone
-    type: RecordPage
+    type: Form
     config:
-      source_table: program_milestone
+      source: program_milestone
       view_fields:
       - program
       edit_fields:
@@ -255,9 +255,9 @@ page_modules:
 
   - name: program_dashboard
     descr: Dashboard of program stats
-    type: FigurePage
+    type: Figure
     config:
-      source_table: program_stats
+      source: program_stats
       plots:
       - config:
           type: 'bar'
@@ -275,7 +275,7 @@ page_modules:
 
   - name: fancy_dashboard
     descr: Dashboard with multiple panes
-    type: LayoutPage
+    type: Layout
     config:
       direction: vertical
       pages:
