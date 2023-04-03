@@ -16,7 +16,8 @@ import {
     Route,
     useNavigate,
     createSearchParams,
-    useSearchParams
+    useSearchParams,
+    useParams
 } from "react-router-dom";
 
 
@@ -33,7 +34,9 @@ class Page extends Component {
                 {
                     ...this.props.context,
                     setState: (data) => { this.setState({data: {base: data}}) },
-                    getState: () => { return this.state.data.base; }
+                    getState: () => { return this.state.data.base; },
+                    setParams: (params) => { this.setState({params: {base: params}})},
+                    getParams: () => { return this.state.params.base; },
                 }) : null
         }
         this.state = {
@@ -46,18 +49,15 @@ class Page extends Component {
         if (this.clients.base) { this.clients.base.load(); }
     }
 
-    updateSearchParams = (params) => {
-        this.setState({searchParams: params})
-    }
-
     render() {
         const page = this.props.context.pages[this.props.name]
         return React.createElement(page.type, {
             data: this.state.data.base,
             config: page.config,
-            params: this.clients.base ? this.clients.base.internalParams() : {},
+            params: this.state.params.base,
             context: {
                 ...this.props.context,
+                client: this.clients.base,
                 update: this.clients.base ? this.clients.base.update : null,
                 save: this.clients.base ? this.clients.base.save : null,
             }
@@ -165,7 +165,12 @@ export default class AppRouter extends Component {
 
     getStack(context, page) {
         return () => {
-        return <PageStack page={page} context={context} navigate={useNavigate()} params={useSearchParams()} />
+            return <PageStack
+                page={page}
+                context={context}
+                navigate={useNavigate()}
+                params={useSearchParams()}
+            />
         }
     }
 

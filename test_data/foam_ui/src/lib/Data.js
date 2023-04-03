@@ -1,3 +1,8 @@
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+///  Send whole config instead of just source!!!!!!!!!!!!!  //
+//////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
 
 export class RecordData {
 
@@ -56,26 +61,60 @@ export class RecordData {
     }
 }
 
+const fieldFilters = {
+    STRING: [
+        {display: 'contains', value: 'contains'},
+        {display: '=', value: ''},
+    ],
+    TEXT: [
+        {display: 'contains', value: 'contains'},
+        {display: '=', value: ''},
+    ],
+    DATE: [
+        {display: '=', value: ''},
+        {display: 'before', value: 'lte'},
+        {display: 'after', value: 'gte'},
+    ],
+    INTEGER: [
+        {display: '=', value: ''},
+        {display: '<', value: 'lt'},
+        {display: '>', value: 'gt'},
+        {display: '=<', value: 'lte'},
+        {display: '>=', value: 'gte'},
+    ],
+    ref: [{display: '=', value: 'id'},],
+    enum: [{display: '=', value: ''},],
+    doc: [{display: '=', value: ''},],
+}
+
 export class TableData {
 
     constructor(name, source, searchParams, context) {
         this.name = name;
         this.source = source;
         this.context = context;
-        this.params = searchParams;
+        this.schema = this.context.schema[this.source];
+        this.params = this.parseParams(searchParams);
     }
 
-    //////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////
-    ///  Need to add in parameter manipulation!!!!!!!!!!!!!!!!  //
-    //////////////////////////////////////////////////////////////
-    //////////////////////////////////////////////////////////////
+    parseParams(params) {
+        var internal = []
+        Object.keys(params).forEach((k) => {
+            const s = k.split('__');
+            if (this.schema[s[0]]) {
+                internal.push({...this.newParam(s[0]), filter: s[1] ? s[1] : '', value: params[k]})
+            }
+        })
+        return internal
+    }
+
     internalParams() {
-        return []
+        return this.params;
     }
 
     searchParams() {
-        return this.params;
+        return Object.assign({}, this.params,
+            Object.assign({}, ...this.params.map((s) => (this.getSearchDict(s)))))
     }
 
     getSearchDict(param) {
@@ -84,13 +123,45 @@ export class TableData {
         return {[key]: value}
     }
 
-    load = (params) => {
-        // const params = Object.assign({}, this.props.params,
-        //     Object.assign({}, ...this.state.searchParams.map((s) => (this.getSearchDict(s)))))
+    newParam(name) {
+        const field = this.schema.fields[name];
+        const fieldType = field.fieldType;
+        return {
+            field: name,
+            filter: fieldFilters[fieldType][0].value,
+            filters: fieldFilters[fieldType],
+            value: ''
+        }
+    }
+
+    addParam = () => {
+        this.params.push(this.newParam(Object.keys(this.schema.fields)[0]))
+        this.context.setParams(this.searchParams)
+    }
+
+    changeParamField = (index, value) => {
+        this.params[index] = this.newParam(value)
+        this.context.setParams(this.searchParams)
+    }
+
+    changeParamFilter = (index, value) => {
+        var param = this.params[index]
+        param.filter = value
+        this.context.setParams(this.searchParams)
+    }
+
+    changeParamValue = (index, value) => {
+        var param = this.params[index]
+        param.value = value
+        this.context.setParams(this.searchParams)
+    }
+
+    load = () => {
         this.context.getRecords(
             this.source,
-            params).then((data) => {
+            this.searchParams()).then((data) => {
                 this.context.setState(data)
-            })
+            }
+        )
     }
 }

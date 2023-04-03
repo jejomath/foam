@@ -275,32 +275,6 @@ export class Table extends Component {
     }
 }
 
-const fieldFilters = {
-    STRING: [
-        {display: 'contains', value: 'contains'},
-        {display: '=', value: ''},
-    ],
-    TEXT: [
-        {display: 'contains', value: 'contains'},
-        {display: '=', value: ''},
-    ],
-    DATE: [
-        {display: '=', value: ''},
-        {display: 'before', value: 'lte'},
-        {display: 'after', value: 'gte'},
-    ],
-    INTEGER: [
-        {display: '=', value: ''},
-        {display: '<', value: 'lt'},
-        {display: '>', value: 'gt'},
-        {display: '=<', value: 'lte'},
-        {display: '>=', value: 'gte'},
-    ],
-    ref: [{display: '=', value: 'id'},],
-    enum: [{display: '=', value: ''},],
-    doc: [{display: '=', value: ''},],
-}
-
 class SearchField extends Component {
     constructor(props) {
         super(props);
@@ -309,45 +283,16 @@ class SearchField extends Component {
         }
     }
 
-    componentDidMount() {
-        this.changeField(this.props.config.fields[0])
-    }
-
-    changeFieldEvent = (event) => {
-        this.changeField(event.target.value);
-    }
-
-    changeField = (value) => {
-        const field = this.props.context.schema[this.props.config.table].fields[value];
-        const fieldType = field.fieldType;
-        this.setState({
-            filters: fieldFilters[fieldType]
-        }, () => {
-            this.props.context.update(
-                this.props.config.index, 
-                value,
-                this.state.filters[0].value,
-                ''
-            )
-        })
+    changeField = (event) => {
+        this.props.context.client.changeParamField(this.props.index, event.target.value);
     }
 
     changeFilter = (event) => {
-        this.props.context.update(
-            this.props.config.index,
-            this.props.data.field,
-            event.target.value,
-            this.props.data.value
-        )
+        this.props.context.client.changeParamFilter(this.props.index, event.target.value);
     }
 
     changeValue = (field, value) => {
-        this.props.context.update(
-            this.props.config.index,
-            this.props.data.field,
-            this.props.data.filter,
-            value
-        )
+        this.props.context.client.changeParamValue(this.props.index, value);
     }
 
     render() {
@@ -355,19 +300,19 @@ class SearchField extends Component {
         return (
             <div className='search-field-div'>
                 <div className='search-field-select-div'>
-                    <select value={this.props.data.field} onChange={this.changeFieldEvent}>
+                    <select value={this.props.data.field} onChange={this.changeField}>
                         {this.props.config.fields.map((field, i) => (
                             <option value={field} key={i}>{field}</option>))}
                     </select>
                 </div>
                 <div className='search-field-filter-div'>
                     <select value={this.state.filter} onChange={this.changeFilter}>
-                        {this.state.filters.map((filter, i) => (
+                        {this.props.data.filters.map((filter, i) => (
                             <option value={filter.value} key={i}>{filter.display}</option>))}
                     </select>
                 </div>
                 <div className='search-field-edit-div'>
-                    <EditField 
+                    <EditField
                         data={this.props.data.value}
                         config={{table: this.props.config.table, field: this.props.data, small: true}}
                         context={{...this.props.context, update: this.changeValue}}
@@ -381,33 +326,22 @@ class SearchField extends Component {
 
 export class SearchBar extends Component {
     componentDidMount() {
-        // if (this.props.data.length === 0) { this.addParam() }
-    }
-
-    update = (index, field, filter, value) => {
-        var data = this.props.data;
-        data[index] = {field: field, filter: filter, value: value};
-        this.props.context.fullUpdate(data);
-    }
-
-    addParam = () => {
-        var data = this.props.data;
-        data.push({field: '', filter: '', value: ''})
-        this.props.context.fullUpdate(data);
+        if (this.props.params.length === 0) { this.props.context.client.addParam() }
     }
 
     render() {
         return <div className='search-bar-div'>
             <div className='search-bar-fields-div'>
-                {this.props.data.map((data, index) => (<SearchField 
+                {this.props.context.client.internalParams().map((data, index) => (<SearchField 
                     config={{...this.props.config, index: index}}
-                    context={{...this.props.context, update: this.update}}
+                    context={this.props.context}
                     data={data}
+                    index={index}
                     key={index}/>))}
-                <div className='search-bar-add-term-div' onClick={this.addParam}>Add Term</div>
+                <div className='search-bar-add-term-div' onClick={this.props.context.client.addParam}>Add Term</div>
             </div>
             <div className='search-bar-button-div'>
-                <button onClick={this.props.context.updateTable}>Search</button>
+                <button onClick={this.props.context.client.load}>Search</button>
             </div>
         </div>
     }

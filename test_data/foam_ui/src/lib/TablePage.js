@@ -5,12 +5,16 @@ export default class TablePage extends Component {
 
     render() {
         if (!this.props.data) { return <div />}
+        const data = this.props.data;
+        const config = this.props.config;
+        const params = this.props.params;
+        const context = this.props.context;
         if (this.props.mode === 'reference') {
             return <Table
-                config={this.props.config}
-                params={this.props.params}
-                data={this.props.data}
-                context={this.props.context}
+                config={config}
+                params={params}
+                data={data}
+                context={context}
             />
         }
         return (
@@ -18,42 +22,38 @@ export default class TablePage extends Component {
             <div className='table-page-inner-div'>
                 <SearchBar
                     config={{
-                        table: this.props.config.sourceTable,
-                        fields: this.props.config.searchFields
+                        table: config.source,
+                        fields: config.searchFields
                     }}
-                    params = {this.props.params}
-                    data = {this.props.params}
-                    context = {{...this.props.context, 
-                        fullUpdate: this.updateSearchParams, 
-                        updateTable: this.updateTable,
-                    }}
+                    params = {params}
+                    context = {context}
                 />
                 <Table
-                    config={this.props.config}
-                    params={this.props.params}
-                    data={this.props.data}
-                    context={this.props.context}
+                    config={config}
+                    params={params}
+                    data={data}
+                    context={context}
                 />
                 <ButtonList
                     config={{
-                        buttons: this.props.config.buttons,
+                        buttons: config.buttons,
                     }}
-                    params = {this.props.params}
-                    data = {this.props.data}
-                    context = {this.props.context}
-                    hide={this.props.params.mode === 'select'}
+                    params = {params}
+                    data = {data}
+                    context = {context}
+                    hide={params.mode === 'select'}
                 />
                 <ButtonList
                     config={{
                         buttons: [
                             {display: 'Cancel', target: 'back'},
-                            {...this.props.params.rowAction, display: 'None'}
+                            {...params.rowAction, display: 'None'}
                         ]
                     }}
-                    params = {this.props.params}
+                    params = {params}
                     data = {null}
-                    context = {this.props.context}
-                    hide={this.props.params.mode !== 'select'}
+                    context = {context}
+                    hide={params.mode !== 'select'}
                 />
             </div>
             </div>
