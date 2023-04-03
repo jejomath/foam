@@ -49,10 +49,8 @@ export class RecordData {
     }
 
     save = () => {
-        return this.props.context.saveRecord(this.props.config.sourceTable, this.state.data).then((record) =>{
-            this.setState({
-                data: record,
-            })
+        return this.context.saveRecord(this.source, this.context.getState()).then((record) =>{
+            this.context.setState(record)
             return record;
         });
     }

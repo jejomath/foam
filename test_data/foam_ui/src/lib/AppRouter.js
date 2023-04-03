@@ -58,7 +58,8 @@ class Page extends Component {
             params: this.clients.base ? this.clients.base.internalParams() : {},
             context: {
                 ...this.props.context,
-                update: this.clients.base.update,
+                update: this.clients.base ? this.clients.base.update : null,
+                save: this.clients.base ? this.clients.base.save : null,
             }
         })
     }

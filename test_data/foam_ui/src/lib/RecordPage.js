@@ -45,7 +45,7 @@ export default class RecordPage extends Component {
                     }}
                     params={this.props.params}
                     data={this.props.data}
-                    context={{...this.props.context, save: this.save }}
+                    context={this.props.context}
                 />
             </div>
             </div>
