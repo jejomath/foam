@@ -275,6 +275,10 @@ class FormPage:
         return next_pages
 
     @property
+    def default_data(self):
+        return RecordData(self)
+
+    @property
     def js_config(self):
         return {
             'source': self.source,
@@ -318,6 +322,10 @@ class LinksPage:
         for b in self.boxes:
             next_pages += b.add_refs(config, page)
         return next_pages
+
+    @property
+    def default_data(self):
+        return None
 
     @property
     def js_config(self):
@@ -364,6 +372,10 @@ class TablePage:
         return next_pages
 
     @property
+    def default_data(self):
+        return TableData(self)
+
+    @property
     def js_config(self):
         return {
             'source': self.source,
@@ -400,6 +412,10 @@ class FigurePage:
         return next_pages
 
     @property
+    def default_data(self):
+        return TableData(self)
+
+    @property
     def js_config(self):
         return {
             'source': self.source,
@@ -427,6 +443,10 @@ class LayoutPage:
         return next_pages
 
     @property
+    def default_data(self):
+        return None
+
+    @property
     def js_config(self):
         return {
             'direction': self.direction,
@@ -443,32 +463,12 @@ class UnderConstruction:
         return []
 
     @property
-    def js_config(self):
-        return {}
-
-
-@dataclass
-class RecordData:
-    source: str
-    new: str = ''
-    new_fn: str = ''
-    parameters_fn: str = ''
-
-    def __init__(self, page_config):
-        self.source = page_config.source
-        self.new = page_config.new_record
-        self.new_fn = page_config.new_record_fn
-        self.params_fn = page_config.params_fn
+    def default_data(self):
+        return None
 
     @property
     def js_config(self):
-        return {
-            'noquotes_type': 'RecordData',
-            'source': self.source,
-            'new': self.new,
-            'newFn': f'(params, data) => {self.new_fn}' if self.new_fn else '',
-            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
-        }
+        return {}
 
 
 @dataclass
@@ -495,13 +495,42 @@ class TableData:
         }
 
 
+@dataclass
+class RecordData:
+    source: str
+    new: str = ''
+    new_fn: str = ''
+    parameters_fn: str = ''
+    tables: list[TableData] = None
+
+    def __init__(self, page_config):
+        self.source = page_config.source
+        self.new = page_config.new_record
+        self.new_fn = page_config.new_record_fn
+        self.params_fn = page_config.params_fn
+        self.tables = []
+
+    def add_table(self, config):
+        self.tables.append(TableData(**config))
+
+    @property
+    def js_config(self):
+        return {
+            'noquotes_type': 'RecordData',
+            'source': self.source,
+            'new': self.new,
+            'newFn': f'(params, data) => {self.new_fn}' if self.new_fn else '',
+            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
+        }
+
+
 page_configs = {
-    'Form': (FormPage, RecordData),
-    'Table': (TablePage, TableData),
-    'Figure': (FigurePage, TableData),
-    'Links': (LinksPage, None),
-    'Layout': (LayoutPage, None),
-    'UnderConstruction': (UnderConstruction, None),
+    'Form': FormPage,
+    'Table': TablePage,
+    'Figure': FigurePage,
+    'Links': LinksPage,
+    'Layout': LayoutPage,
+    'UnderConstruction': UnderConstruction,
 }
 
 
@@ -527,12 +556,12 @@ class Page:
         add_display(self)
         if not self.config:
             self.type = self.type or 'UnderConstruction'
-            self.config = page_configs['UnderConstruction'][0]()
+            self.config = page_configs['UnderConstruction']()
         elif self.type in page_configs:
-            page_class, data_class = page_configs[self.type]
-            self.config = page_class(**self.config)
-            if data_class:
-                self.data = data_class(self.config)
+            self.config = page_configs[self.type](**self.config)
+            self.data = self.config.default_data
+            # if data_class:
+                # self.data = data_class(self.config)
         else:
             config_error(f'Unexpected page type "{self.type}" found in page config "{self.name}"')
 
