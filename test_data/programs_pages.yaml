@@ -40,16 +40,16 @@ page_modules:
       reference_tables:
       - table_page: find_program
         display: Bio Lead
-        params_fn: '({bio_lead__id: data.id})'
+        params_fn: '({bio_lead__id: data.record.id})'
       - table_page: find_program
         display: Chem Lead
-        params_fn: '({chem_lead__id: data.id})'
+        params_fn: '({chem_lead__id: data.record.id})'
       - table_page: find_program
         display: Program Manager
-        params_fn: '({program_manager__id: data.id})'
+        params_fn: '({program_manager__id: data.record.id})'
       - table_page: find_experiment
         display: Experiments
-        params_fn: '({bio_lead__id: data.id})'
+        params_fn: '({bio_lead__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_person
@@ -134,13 +134,13 @@ page_modules:
       reference_tables:
       - table_page: find_program_milestone
         display: Program Milestone
-        params_fn: '({program__id: data.id})'
+        params_fn: '({program__id: data.record.id})'
       - table_page: find_assay
         display: Assay
-        params_fn: '({for_program__id: data.id})'
+        params_fn: '({for_program__id: data.record.id})'
       - table_page: find_experiment
         display: Experiment
-        params_fn: '({program__id: data.id})'
+        params_fn: '({program__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_program

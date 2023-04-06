@@ -2,7 +2,7 @@ page_modules:
 - name: admin_home
   pages:
   - name: admin_home
-    descr: Landing 
+    descr: Landing Page
     type: Links
     config:
       boxes:
@@ -83,16 +83,16 @@ page_modules:
       reference_tables:
       - table_page: find_admin_program
         display: Program
-        params_fn: '({bio_lead__id: data.id})'
+        params_fn: '({bio_lead__id: data.record.id})'
       - table_page: find_admin_program
         display: Program
-        params_fn: '({chem_lead__id: data.id})'
+        params_fn: '({chem_lead__id: data.record.id})'
       - table_page: find_admin_program
         display: Program
-        params_fn: '({program_manager__id: data.id})'
+        params_fn: '({program_manager__id: data.record.id})'
       - table_page: find_admin_experiment
         display: Experiment
-        params_fn: '({bio_lead__id: data.id})'
+        params_fn: '({bio_lead__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_person
@@ -177,13 +177,13 @@ page_modules:
       reference_tables:
       - table_page: find_admin_program_milestone
         display: Program Milestone
-        params_fn: '({program__id: data.id})'
+        params_fn: '({program__id: data.record.id})'
       - table_page: find_admin_assay
         display: Assay
-        params_fn: '({for_program__id: data.id})'
+        params_fn: '({for_program__id: data.record.id})'
       - table_page: find_admin_experiment
         display: Experiment
-        params_fn: '({program__id: data.id})'
+        params_fn: '({program__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_program
@@ -332,7 +332,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_experiment
         display: Experiment
-        params_fn: '({assay__id: data.id})'
+        params_fn: '({assay__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_assay
@@ -504,7 +504,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_experiment
         display: Experiment
-        params_fn: '({perturbations__id: data.id})'
+        params_fn: '({perturbations__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_perturbation
@@ -594,7 +594,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_assay
         display: Assay
-        params_fn: '({cell_line__id: data.id})'
+        params_fn: '({cell_line__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_cell_line
@@ -659,10 +659,10 @@ page_modules:
       reference_tables:
       - table_page: find_admin_program
         display: Program
-        params_fn: '({indication__id: data.id})'
+        params_fn: '({indication__id: data.record.id})'
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({disease__id: data.id})'
+        params_fn: '({disease__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_indication
@@ -713,22 +713,22 @@ page_modules:
       reference_tables:
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_organ
         display: Organ
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_tissue
         display: Tissue
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_cell_type
         display: Cell Type
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_protein
         display: Protein
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_gene
         display: Gene
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_species
@@ -783,7 +783,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({organ__id: data.id})'
+        params_fn: '({organ__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_organ
@@ -840,7 +840,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({tissue__id: data.id})'
+        params_fn: '({tissue__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_tissue
@@ -897,7 +897,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({cell_type__id: data.id})'
+        params_fn: '({cell_type__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_cell_type
@@ -958,7 +958,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_program
         display: Program
-        params_fn: '({target__id: data.id})'
+        params_fn: '({target__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_protein
@@ -1017,7 +1017,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_protein
         display: Protein
-        params_fn: '({gene__id: data.id})'
+        params_fn: '({gene__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_gene
@@ -1074,7 +1074,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_perturbation
         display: Perturbation
-        params_fn: '({compound__id: data.id})'
+        params_fn: '({compound__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_compound

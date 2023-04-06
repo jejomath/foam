@@ -55,7 +55,7 @@ page_modules:
       reference_tables:
       - table_page: find_experiment
         display: Experiment
-        params_fn: '({assay__id: data.id})'
+        params_fn: '({assay__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_assay

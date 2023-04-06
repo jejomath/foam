@@ -34,10 +34,10 @@ page_modules:
       reference_tables:
       - table_page: find_program
         display: Program
-        params_fn: '({indication__id: data.id})'
+        params_fn: '({indication__id: data.record.id})'
       - table_page: find_cell_line
         display: Cell Line
-        params_fn: '({disease__id: data.id})'
+        params_fn: '({disease__id: data.record.id})'
       buttons:
       - display: Done
         target: back
@@ -74,22 +74,22 @@ page_modules:
       reference_tables:
       - table_page: find_cell_line
         display: Cell Line
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_organ
         display: Organ
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_tissue
         display: Tissue
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_cell_type
         display: Cell Type
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_protein
         display: Protein
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_gene
         display: Gene
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       buttons:
       - display: Done
         target: back
@@ -131,7 +131,7 @@ page_modules:
       reference_tables:
       - table_page: find_cell_line
         display: Cell Line
-        params_fn: '({organ__id: data.id})'
+        params_fn: '({organ__id: data.record.id})'
       buttons:
       - display: Done
         target: back
@@ -173,7 +173,7 @@ page_modules:
       reference_tables:
       - table_page: find_cell_line
         display: Cell Line
-        params_fn: '({tissue__id: data.id})'
+        params_fn: '({tissue__id: data.record.id})'
       buttons:
       - display: Done
         target: back
@@ -215,7 +215,7 @@ page_modules:
       reference_tables:
       - table_page: find_cell_line
         display: Cell Line
-        params_fn: '({cell_type__id: data.id})'
+        params_fn: '({cell_type__id: data.record.id})'
       buttons:
       - display: Done
         target: back
@@ -261,7 +261,7 @@ page_modules:
       reference_tables:
       - table_page: find_program
         display: Program
-        params_fn: '({target__id: data.id})'
+        params_fn: '({target__id: data.record.id})'
       buttons:
       - display: Done
         target: back
@@ -303,7 +303,7 @@ page_modules:
       reference_tables:
       - table_page: find_protein
         display: Protein
-        params_fn: '({gene__id: data.id})'
+        params_fn: '({gene__id: data.record.id})'
       buttons:
       - display: Done
         target: back
@@ -345,7 +345,7 @@ page_modules:
       reference_tables:
       - table_page: find_perturbation
         display: Perturbation
-        params_fn: '({compound__id: data.id})'
+        params_fn: '({compound__id: data.record.id})'
       buttons:
       - display: Done
         target: back

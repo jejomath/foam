@@ -1,50 +1,28 @@
-//////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
-///  Send whole config instead of just source!!!!!!!!!!!!!  //
-//////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
 
 export class RecordData {
 
-    constructor(name, source, searchParams, context) {
-        this.name = name;
-        this.source = source;
+    constructor(config, searchParams, context) {
+        this.config = config;
+        this.source = config.source;
         this.context = context;
         this.params = searchParams;
     }
 
-    internalParams() {
-        return this.params;
-    }
-
-    searchParams() {
-        return this.params;
-    }
-
-    cleanParam(field, value) {
-        return {id: value, name: value}
-    }
-
-    load = () => {
-        var createRecord = null;
-        if (Object.keys(this.params).length > 0) {  // this.props.config.newEntry !== 'Always' && 
-            createRecord = this.context.getRecord(
+    load = async () => {
+        var record = null;
+        if (this.config.newEntry !== 'Always' && Object.keys(this.params).length > 0) {
+            record = await this.context.getRecord(
                 this.source,
                 this.params);
-        } else { createRecord = Promise.resolve(null) }
+        }
 
-        createRecord.then((record) => {
-            var newRecord = null
-            if (!record) {
-                const fields = this.context.schema[this.source].fields;
-                newRecord = Object.assign({}, ...Object.keys(fields).map((f) => (
-                    {[f]: this.params[f] ? this.params[f] : null}
-                ))) 
-            } else { 
-                newRecord = record; 
-            }
-            this.context.setState(newRecord)
-        })
+        if (!record) {
+            const fields = this.context.schema[this.source].fields;
+            record = Object.assign({}, ...Object.keys(fields).map((f) => (
+                {[f]: this.params[f] ? this.params[f] : null}
+            ))) 
+        }
+        this.context.setState(record)
     }
 
     update = (field, value) => {
@@ -89,15 +67,17 @@ const fieldFilters = {
 
 export class TableData {
 
-    constructor(name, source, searchParams, context) {
-        this.name = name;
-        this.source = source;
+    constructor(config, searchParams, context) {
+        this.config = config;
+        this.source = config.source;
         this.context = context;
         this.schema = this.context.schema[this.source];
-        this.params = this.parseParams(searchParams);
+        this.params = searchParams ? searchParams : {}
+        this.params._internal = this.parseParams(searchParams);
     }
 
     parseParams(params) {
+        if (params._internal) { return params._internal; }  // Shouldn't need this...
         var internal = []
         Object.keys(params).forEach((k) => {
             const s = k.split('__');
@@ -108,13 +88,9 @@ export class TableData {
         return internal
     }
 
-    internalParams() {
-        return this.params;
-    }
-
     searchParams() {
         return Object.assign({}, this.params,
-            Object.assign({}, ...this.params.map((s) => (this.getSearchDict(s)))))
+            Object.assign({}, ...this.params._internal.map((s) => (this.getSearchDict(s)))))
     }
 
     getSearchDict(param) {
@@ -135,33 +111,30 @@ export class TableData {
     }
 
     addParam = () => {
-        this.params.push(this.newParam(Object.keys(this.schema.fields)[0]))
-        this.context.setParams(this.searchParams)
+        this.params._internal.push(this.newParam(Object.keys(this.schema.fields)[0]))
+        this.context.setParams(this.params)
     }
 
     changeParamField = (index, value) => {
-        this.params[index] = this.newParam(value)
-        this.context.setParams(this.searchParams)
+        this.params._internal[index] = this.newParam(value)
+        this.context.setParams(this.params)
     }
 
     changeParamFilter = (index, value) => {
-        var param = this.params[index]
+        var param = this.params._internal[index]
         param.filter = value
-        this.context.setParams(this.searchParams)
+        this.context.setParams(this.params)
     }
 
     changeParamValue = (index, value) => {
-        var param = this.params[index]
+        var param = this.params._internal[index]
         param.value = value
-        this.context.setParams(this.searchParams)
+        this.context.setParams(this.params)
     }
 
-    load = () => {
-        this.context.getRecords(
-            this.source,
-            this.searchParams()).then((data) => {
-                this.context.setState(data)
-            }
-        )
+    load = async (allData) => {
+        const params = this.config.paramsFn ? this.config.paramsFn(this.searchParams(), allData) : this.searchParams()
+        const data = await this.context.getRecords(this.source, params)
+        this.context.setState(data)
     }
 }

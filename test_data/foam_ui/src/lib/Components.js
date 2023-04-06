@@ -332,7 +332,7 @@ export class SearchBar extends Component {
     render() {
         return <div className='search-bar-div'>
             <div className='search-bar-fields-div'>
-                {this.props.context.client.internalParams().map((data, index) => (<SearchField 
+                {this.props.params._internal.map((data, index) => (<SearchField 
                     config={{...this.props.config, index: index}}
                     context={this.props.context}
                     data={data}

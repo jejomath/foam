@@ -42,7 +42,7 @@ page_modules:
       reference_tables:
       - table_page: find_experiment
         display: Experiment
-        params_fn: '({perturbations__id: data.id})'
+        params_fn: '({perturbations__id: data.record.id})'
       buttons:
       - display: Done
         target: back
@@ -108,7 +108,7 @@ page_modules:
       reference_tables:
       - table_page: find_assay
         display: Assay
-        params_fn: '({cell_line__id: data.id})'
+        params_fn: '({cell_line__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_cell_line

@@ -274,9 +274,13 @@ class FormPage:
                     next_pages += b.add_refs(config, page)
         return next_pages
 
-    @property
-    def default_data(self):
-        return RecordData(self)
+    def default_data(self, config):
+        result = [RecordData('record', self)]
+        for t in self.reference_tables:
+            ref = config.pages_dict[t.table_page].config.default_data(config, t.table_page)[0]
+            ref.params_fn = t.params_fn
+            result.append(ref)
+        return result
 
     @property
     def js_config(self):
@@ -323,9 +327,8 @@ class LinksPage:
             next_pages += b.add_refs(config, page)
         return next_pages
 
-    @property
-    def default_data(self):
-        return None
+    def default_data(self, config):
+        return []
 
     @property
     def js_config(self):
@@ -371,9 +374,8 @@ class TablePage:
                 next_pages += self.row_action.add_refs(config, page)
         return next_pages
 
-    @property
-    def default_data(self):
-        return TableData(self)
+    def default_data(self, config, name=None):
+        return [TableData(name or 'table', self)]
 
     @property
     def js_config(self):
@@ -411,9 +413,8 @@ class FigurePage:
                     next_pages += b.add_refs(config, page)
         return next_pages
 
-    @property
-    def default_data(self):
-        return TableData(self)
+    def default_data(self, config, name=None):
+        return [TableData(name or 'table', self)]
 
     @property
     def js_config(self):
@@ -442,9 +443,8 @@ class LayoutPage:
         ### Also verify that these pages exist.
         return next_pages
 
-    @property
-    def default_data(self):
-        return None
+    def default_data(self, config):
+        return []
 
     @property
     def js_config(self):
@@ -462,9 +462,8 @@ class UnderConstruction:
     def add_refs(self, config, page):
         return []
 
-    @property
-    def default_data(self):
-        return None
+    def default_data(self, config):
+        return []
 
     @property
     def js_config(self):
@@ -473,12 +472,14 @@ class UnderConstruction:
 
 @dataclass
 class TableData:
+    name: str
     source: str
     new: str = ''
     new_fn: str = ''
     parameters_fn: str = ''
 
-    def __init__(self, page_config):
+    def __init__(self, name, page_config):
+        self.name = name
         self.source = page_config.source
         self.new = page_config.new_records
         self.new_fn = page_config.new_records_fn
@@ -487,6 +488,7 @@ class TableData:
     @property
     def js_config(self):
         return {
+            'name': self.name,
             'noquotes_type': 'TableData',
             'source': self.source,
             'new': self.new,
@@ -497,25 +499,24 @@ class TableData:
 
 @dataclass
 class RecordData:
+    name: str
     source: str
     new: str = ''
     new_fn: str = ''
     parameters_fn: str = ''
-    tables: list[TableData] = None
 
-    def __init__(self, page_config):
+    def __init__(self, name, page_config):
+        self.name = name
         self.source = page_config.source
         self.new = page_config.new_record
         self.new_fn = page_config.new_record_fn
         self.params_fn = page_config.params_fn
         self.tables = []
 
-    def add_table(self, config):
-        self.tables.append(TableData(**config))
-
     @property
     def js_config(self):
         return {
+            'name': self.name,
             'noquotes_type': 'RecordData',
             'source': self.source,
             'new': self.new,
@@ -559,17 +560,18 @@ class Page:
             self.config = page_configs['UnderConstruction']()
         elif self.type in page_configs:
             self.config = page_configs[self.type](**self.config)
-            self.data = self.config.default_data
-            # if data_class:
-                # self.data = data_class(self.config)
         else:
+            print('Ack!')
+            print(self.type)
             config_error(f'Unexpected page type "{self.type}" found in page config "{self.name}"')
 
         self.next_pages = [NextPage(**n) for n in self.next_pages] if self.next_pages else []
 
     def add_refs(self, config):
-        if self.type and self.type in page_configs.keys():
-            self.next_pages = self.next_pages + self.config.add_refs(config, self.name)
+        if type(self.config) == dict:
+            print(self.config)
+        self.next_pages = self.next_pages + self.config.add_refs(config, self.name)
+        self.data = self.config.default_data(config)
 
     @property
     def js_config(self):
@@ -577,7 +579,7 @@ class Page:
             'name': self.name,
             'display': self.display,
             'config': self.config.js_config,
-            'data': self.data.js_config if self.data else None,
+            'data': [d.js_config for d in self.data],
             'noquotes_type': self.type,
         }
 

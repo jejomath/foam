@@ -895,14 +895,14 @@ export const pages = {
                 }, ],
             }, ],
         },
-        data: null,
+        data: [],
         type: Links,
     },
     not_yet: {
         name: 'not_yet',
         display: 'Not Yet',
         config: {},
-        data: null,
+        data: [],
         type: UnderConstruction,
     },
     find_person: {
@@ -951,13 +951,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'person',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_person: {
@@ -986,25 +987,25 @@ export const pages = {
                 tablePage: 'find_program',
                 display: 'Bio Lead',
                 paramsFn: (params, data) => ({
-                    bio_lead__id: data.id
+                    bio_lead__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_program',
                 display: 'Chem Lead',
                 paramsFn: (params, data) => ({
-                    chem_lead__id: data.id
+                    chem_lead__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_program',
                 display: 'Program Manager',
                 paramsFn: (params, data) => ({
-                    program_manager__id: data.id
+                    program_manager__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_experiment',
                 display: 'Experiments',
                 paramsFn: (params, data) => ({
-                    bio_lead__id: data.id
+                    bio_lead__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -1027,13 +1028,50 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'person',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                bio_lead__id: data.record.id
+            }),
+        }, {
+            name: 'find_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                chem_lead__id: data.record.id
+            }),
+        }, {
+            name: 'find_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                program_manager__id: data.record.id
+            }),
+        }, {
+            name: 'find_experiment',
+            type: TableData,
+            source: 'experiment',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                bio_lead__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_person: {
@@ -1077,13 +1115,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'person',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_program: {
@@ -1150,13 +1189,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'program',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_program: {
@@ -1215,19 +1255,19 @@ export const pages = {
                 tablePage: 'find_program_milestone',
                 display: 'Program Milestone',
                 paramsFn: (params, data) => ({
-                    program__id: data.id
+                    program__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_assay',
                 display: 'Assay',
                 paramsFn: (params, data) => ({
-                    for_program__id: data.id
+                    for_program__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_experiment',
                 display: 'Experiment',
                 paramsFn: (params, data) => ({
-                    program__id: data.id
+                    program__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -1270,13 +1310,41 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'program',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_program_milestone',
+            type: TableData,
+            source: 'program_milestone',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                program__id: data.record.id
+            }),
+        }, {
+            name: 'find_assay',
+            type: TableData,
+            source: 'assay',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                for_program__id: data.record.id
+            }),
+        }, {
+            name: 'find_experiment',
+            type: TableData,
+            source: 'experiment',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                program__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_program: {
@@ -1350,13 +1418,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'program',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_program_milestone: {
@@ -1411,13 +1480,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'program_milestone',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_program_milestone: {
@@ -1473,13 +1543,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'program_milestone',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     edit_program_milestone: {
@@ -1533,13 +1604,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'program_milestone',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     program_dashboard: {
@@ -1572,13 +1644,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'program_stats',
             new: 'False',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Figure,
     },
     fancy_dashboard: {
@@ -1603,7 +1676,7 @@ export const pages = {
             from_page: null,
             params_from: null,
         },
-        data: null,
+        data: [],
         type: Layout,
     },
     find_assay: {
@@ -1658,13 +1731,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'assay',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_assay: {
@@ -1703,7 +1777,7 @@ export const pages = {
                 tablePage: 'find_experiment',
                 display: 'Experiment',
                 paramsFn: (params, data) => ({
-                    assay__id: data.id
+                    assay__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -1736,13 +1810,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'assay',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_experiment',
+            type: TableData,
+            source: 'experiment',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                assay__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     new_assay: {
@@ -1783,13 +1867,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'assay',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     edit_assay: {
@@ -1843,13 +1928,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'assay',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_experiment: {
@@ -1925,13 +2011,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'experiment',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_experiment: {
@@ -2022,13 +2109,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'experiment',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     new_experiment: {
@@ -2069,13 +2157,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'experiment',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     edit_experiment: {
@@ -2164,13 +2253,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'experiment',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_perturbation: {
@@ -2211,13 +2301,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'perturbation',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_perturbation: {
@@ -2246,7 +2337,7 @@ export const pages = {
                 tablePage: 'find_experiment',
                 display: 'Experiment',
                 paramsFn: (params, data) => ({
-                    perturbations__id: data.id
+                    perturbations__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -2259,13 +2350,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'perturbation',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_experiment',
+            type: TableData,
+            source: 'experiment',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                perturbations__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     find_cell_line: {
@@ -2320,13 +2421,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'cell_line',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_cell_line: {
@@ -2390,7 +2492,7 @@ export const pages = {
                 tablePage: 'find_assay',
                 display: 'Assay',
                 paramsFn: (params, data) => ({
-                    cell_line__id: data.id
+                    cell_line__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -2413,13 +2515,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'cell_line',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_assay',
+            type: TableData,
+            source: 'assay',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                cell_line__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_cell_line: {
@@ -2498,13 +2610,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'cell_line',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_indication: {
@@ -2539,13 +2652,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'indication',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_indication: {
@@ -2564,13 +2678,13 @@ export const pages = {
                 tablePage: 'find_program',
                 display: 'Program',
                 paramsFn: (params, data) => ({
-                    indication__id: data.id
+                    indication__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    disease__id: data.id
+                    disease__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -2583,13 +2697,32 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'indication',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                indication__id: data.record.id
+            }),
+        }, {
+            name: 'find_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                disease__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     find_species: {
@@ -2624,13 +2757,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'species',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_species: {
@@ -2649,37 +2783,37 @@ export const pages = {
                 tablePage: 'find_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_organ',
                 display: 'Organ',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_tissue',
                 display: 'Tissue',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_cell_type',
                 display: 'Cell Type',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_protein',
                 display: 'Protein',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_gene',
                 display: 'Gene',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -2692,13 +2826,68 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'species',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_organ',
+            type: TableData,
+            source: 'organ',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_tissue',
+            type: TableData,
+            source: 'tissue',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_cell_type',
+            type: TableData,
+            source: 'cell_type',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_protein',
+            type: TableData,
+            source: 'protein',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_gene',
+            type: TableData,
+            source: 'gene',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     find_organ: {
@@ -2736,13 +2925,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'organ',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_organ: {
@@ -2766,7 +2956,7 @@ export const pages = {
                 tablePage: 'find_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    organ__id: data.id
+                    organ__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -2779,13 +2969,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'organ',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                organ__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     find_tissue: {
@@ -2823,13 +3023,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'tissue',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_tissue: {
@@ -2853,7 +3054,7 @@ export const pages = {
                 tablePage: 'find_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    tissue__id: data.id
+                    tissue__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -2866,13 +3067,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'tissue',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                tissue__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     find_cell_type: {
@@ -2910,13 +3121,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'cell_type',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_cell_type: {
@@ -2940,7 +3152,7 @@ export const pages = {
                 tablePage: 'find_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    cell_type__id: data.id
+                    cell_type__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -2953,13 +3165,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'cell_type',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                cell_type__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     find_protein: {
@@ -3000,13 +3222,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'protein',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_protein: {
@@ -3035,7 +3258,7 @@ export const pages = {
                 tablePage: 'find_program',
                 display: 'Program',
                 paramsFn: (params, data) => ({
-                    target__id: data.id
+                    target__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -3048,13 +3271,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'protein',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                target__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     find_gene: {
@@ -3092,13 +3325,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'gene',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_gene: {
@@ -3122,7 +3356,7 @@ export const pages = {
                 tablePage: 'find_protein',
                 display: 'Protein',
                 paramsFn: (params, data) => ({
-                    gene__id: data.id
+                    gene__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -3135,13 +3369,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'gene',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_protein',
+            type: TableData,
+            source: 'protein',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                gene__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     find_compound: {
@@ -3179,13 +3423,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'compound',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_compound: {
@@ -3209,7 +3454,7 @@ export const pages = {
                 tablePage: 'find_perturbation',
                 display: 'Perturbation',
                 paramsFn: (params, data) => ({
-                    compound__id: data.id
+                    compound__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -3222,13 +3467,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'compound',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_perturbation',
+            type: TableData,
+            source: 'perturbation',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                compound__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     admin_home: {
@@ -3369,7 +3624,7 @@ export const pages = {
                 }, ],
             }, ],
         },
-        data: null,
+        data: [],
         type: Links,
     },
     find_admin_person: {
@@ -3418,13 +3673,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'person',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_person: {
@@ -3453,25 +3709,25 @@ export const pages = {
                 tablePage: 'find_admin_program',
                 display: 'Program',
                 paramsFn: (params, data) => ({
-                    bio_lead__id: data.id
+                    bio_lead__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_program',
                 display: 'Program',
                 paramsFn: (params, data) => ({
-                    chem_lead__id: data.id
+                    chem_lead__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_program',
                 display: 'Program',
                 paramsFn: (params, data) => ({
-                    program_manager__id: data.id
+                    program_manager__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_experiment',
                 display: 'Experiment',
                 paramsFn: (params, data) => ({
-                    bio_lead__id: data.id
+                    bio_lead__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -3494,13 +3750,50 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'person',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                bio_lead__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                chem_lead__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                program_manager__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_experiment',
+            type: TableData,
+            source: 'experiment',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                bio_lead__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_person: {
@@ -3544,13 +3837,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'person',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_program: {
@@ -3617,13 +3911,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'program',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_program: {
@@ -3682,19 +3977,19 @@ export const pages = {
                 tablePage: 'find_admin_program_milestone',
                 display: 'Program Milestone',
                 paramsFn: (params, data) => ({
-                    program__id: data.id
+                    program__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_assay',
                 display: 'Assay',
                 paramsFn: (params, data) => ({
-                    for_program__id: data.id
+                    for_program__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_experiment',
                 display: 'Experiment',
                 paramsFn: (params, data) => ({
-                    program__id: data.id
+                    program__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -3717,13 +4012,41 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'program',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_program_milestone',
+            type: TableData,
+            source: 'program_milestone',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                program__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_assay',
+            type: TableData,
+            source: 'assay',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                for_program__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_experiment',
+            type: TableData,
+            source: 'experiment',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                program__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_program: {
@@ -3797,13 +4120,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'program',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_program_milestone: {
@@ -3858,13 +4182,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'program_milestone',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_program_milestone: {
@@ -3920,13 +4245,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'program_milestone',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     edit_admin_program_milestone: {
@@ -3980,13 +4306,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'program_milestone',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_assay: {
@@ -4041,13 +4368,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'assay',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_assay: {
@@ -4086,7 +4414,7 @@ export const pages = {
                 tablePage: 'find_admin_experiment',
                 display: 'Experiment',
                 paramsFn: (params, data) => ({
-                    assay__id: data.id
+                    assay__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -4109,13 +4437,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'assay',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_experiment',
+            type: TableData,
+            source: 'experiment',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                assay__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_assay: {
@@ -4169,13 +4507,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'assay',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_experiment: {
@@ -4251,13 +4590,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'experiment',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_experiment: {
@@ -4348,13 +4688,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'experiment',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     edit_admin_experiment: {
@@ -4443,13 +4784,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'experiment',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_perturbation: {
@@ -4498,13 +4840,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'perturbation',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_perturbation: {
@@ -4533,7 +4876,7 @@ export const pages = {
                 tablePage: 'find_admin_experiment',
                 display: 'Experiment',
                 paramsFn: (params, data) => ({
-                    perturbations__id: data.id
+                    perturbations__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -4556,13 +4899,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'perturbation',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_experiment',
+            type: TableData,
+            source: 'experiment',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                perturbations__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_perturbation: {
@@ -4606,13 +4959,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'perturbation',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_cell_line: {
@@ -4682,13 +5036,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'cell_line',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_cell_line: {
@@ -4752,7 +5107,7 @@ export const pages = {
                 tablePage: 'find_admin_assay',
                 display: 'Assay',
                 paramsFn: (params, data) => ({
-                    cell_line__id: data.id
+                    cell_line__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -4775,13 +5130,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'cell_line',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_assay',
+            type: TableData,
+            source: 'assay',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                cell_line__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_cell_line: {
@@ -4860,13 +5225,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'cell_line',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_indication: {
@@ -4909,13 +5275,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'indication',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_indication: {
@@ -4934,13 +5301,13 @@ export const pages = {
                 tablePage: 'find_admin_program',
                 display: 'Program',
                 paramsFn: (params, data) => ({
-                    indication__id: data.id
+                    indication__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    disease__id: data.id
+                    disease__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -4963,13 +5330,32 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'indication',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                indication__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                disease__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_indication: {
@@ -5003,13 +5389,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'indication',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_species: {
@@ -5052,13 +5439,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'species',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_species: {
@@ -5077,37 +5465,37 @@ export const pages = {
                 tablePage: 'find_admin_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_organ',
                 display: 'Organ',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_tissue',
                 display: 'Tissue',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_cell_type',
                 display: 'Cell Type',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_protein',
                 display: 'Protein',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_admin_gene',
                 display: 'Gene',
                 paramsFn: (params, data) => ({
-                    species__id: data.id
+                    species__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -5130,13 +5518,68 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'species',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_organ',
+            type: TableData,
+            source: 'organ',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_tissue',
+            type: TableData,
+            source: 'tissue',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_cell_type',
+            type: TableData,
+            source: 'cell_type',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_protein',
+            type: TableData,
+            source: 'protein',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_gene',
+            type: TableData,
+            source: 'gene',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                species__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_species: {
@@ -5170,13 +5613,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'species',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_organ: {
@@ -5222,13 +5666,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'organ',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_organ: {
@@ -5252,7 +5697,7 @@ export const pages = {
                 tablePage: 'find_admin_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    organ__id: data.id
+                    organ__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -5275,13 +5720,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'organ',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                organ__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_organ: {
@@ -5320,13 +5775,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'organ',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_tissue: {
@@ -5372,13 +5828,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'tissue',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_tissue: {
@@ -5402,7 +5859,7 @@ export const pages = {
                 tablePage: 'find_admin_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    tissue__id: data.id
+                    tissue__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -5425,13 +5882,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'tissue',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                tissue__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_tissue: {
@@ -5470,13 +5937,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'tissue',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_cell_type: {
@@ -5522,13 +5990,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'cell_type',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_cell_type: {
@@ -5552,7 +6021,7 @@ export const pages = {
                 tablePage: 'find_admin_cell_line',
                 display: 'Cell Line',
                 paramsFn: (params, data) => ({
-                    cell_type__id: data.id
+                    cell_type__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -5575,13 +6044,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'cell_type',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_cell_line',
+            type: TableData,
+            source: 'cell_line',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                cell_type__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_cell_type: {
@@ -5620,13 +6099,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'cell_type',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_protein: {
@@ -5675,13 +6155,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'protein',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_protein: {
@@ -5710,7 +6191,7 @@ export const pages = {
                 tablePage: 'find_admin_program',
                 display: 'Program',
                 paramsFn: (params, data) => ({
-                    target__id: data.id
+                    target__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -5733,13 +6214,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'protein',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_program',
+            type: TableData,
+            source: 'program',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                target__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_protein: {
@@ -5783,13 +6274,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'protein',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_gene: {
@@ -5835,13 +6327,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'gene',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_gene: {
@@ -5865,7 +6358,7 @@ export const pages = {
                 tablePage: 'find_admin_protein',
                 display: 'Protein',
                 paramsFn: (params, data) => ({
-                    gene__id: data.id
+                    gene__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -5888,13 +6381,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'gene',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_protein',
+            type: TableData,
+            source: 'protein',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                gene__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_gene: {
@@ -5933,13 +6436,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'gene',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
     find_admin_compound: {
@@ -5985,13 +6489,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'table',
             type: TableData,
             source: 'compound',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Table,
     },
     view_admin_compound: {
@@ -6015,7 +6520,7 @@ export const pages = {
                 tablePage: 'find_admin_perturbation',
                 display: 'Perturbation',
                 paramsFn: (params, data) => ({
-                    compound__id: data.id
+                    compound__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -6038,13 +6543,23 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'compound',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, {
+            name: 'find_admin_perturbation',
+            type: TableData,
+            source: 'perturbation',
+            new: '',
+            newFn: '',
+            paramsFn: (params, data) => ({
+                compound__id: data.record.id
+            }),
+        }, ],
         type: Form,
     },
     edit_admin_compound: {
@@ -6083,13 +6598,14 @@ export const pages = {
                 visibleFn: '',
             }, ],
         },
-        data: {
+        data: [{
+            name: 'record',
             type: RecordData,
             source: 'compound',
             new: '',
             newFn: '',
             paramsFn: '',
-        },
+        }, ],
         type: Form,
     },
 }

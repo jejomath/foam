@@ -26,40 +26,61 @@ class Page extends Component {
     constructor(props) {
         super(props);
         const page = this.props.context.pages[this.props.name]
-        this.clients = {
-            base: page.data ? new page.data.type(
-                'base',
-                page.data.source,
+        this.clientDict = {}
+        this.clientList = []
+        var dataDict = {}
+        var paramsDict = {}
+        for (const config of page.data) {
+            const name = config.name;
+            const client = new config.type(
+                config,
                 this.props.params,
                 {
                     ...this.props.context,
-                    setState: (data) => { this.setState({data: {base: data}}) },
-                    getState: () => { return this.state.data.base; },
-                    setParams: (params) => { this.setState({params: {base: params}})},
-                    getParams: () => { return this.state.params.base; },
-                }) : null
+                    setState: (data) => {
+                        var stateData = this.state.data;
+                        stateData[name] = data;
+                        this.setState({data: stateData}); 
+                    },
+                    getState: () => { return this.state.data[name]; },
+                    setParams: (params) => { 
+                        var stateParams = this.state.params;
+                        stateParams[name] = params;
+                        this.setState({params: stateParams});
+                    },
+                    getParams: () => { return this.state.params[name]; },
+                }
+            )
+            this.clientDict[name] = client;
+            this.clientList.push(client);
+            dataDict[name] = null;
+            paramsDict[name] = this.props.params;
         }
         this.state = {
-            data: {base: null},
-            params: {base: this.props.params},
+            data: dataDict,
+            params: paramsDict,
+        }
+    }
+
+    async loadData() {
+        for (const client of this.clientList) {
+            await client.load(this.state.data);
         }
     }
 
     componentDidMount() {
-        if (this.clients.base) { this.clients.base.load(); }
+        this.loadData()
     }
 
     render() {
         const page = this.props.context.pages[this.props.name]
         return React.createElement(page.type, {
-            data: this.state.data.base,
+            data: this.state.data,
             config: page.config,
-            params: this.state.params.base,
+            params: this.state.params,
             context: {
                 ...this.props.context,
-                client: this.clients.base,
-                update: this.clients.base ? this.clients.base.update : null,
-                save: this.clients.base ? this.clients.base.save : null,
+                clients: this.clientDict,
             }
         })
     }

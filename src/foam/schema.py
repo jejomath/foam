@@ -44,7 +44,7 @@ def get_gen_pages(config, prefix=''):
             'pages': [{
                 'name': f'{prefix}home',
                 'descr': 'Landing Page',
-                'type': 'LinksPage',
+                'type': 'Links',
                 'config': {
                     'boxes': [{
                         'name': m.display,
@@ -60,7 +60,7 @@ def get_gen_pages(config, prefix=''):
             'pages': [{
                 'name': f'find_{prefix}{t.name}',
                 'descr': f'Search page for table {t.name}',
-                'type': 'TablePage',
+                'type': 'Table',
                 'config': {
                     'source': t.name,
                     'view_columns': [{'field': f.name, 'width': 200} for f in t.fields],
@@ -81,14 +81,14 @@ def get_gen_pages(config, prefix=''):
             }, {
                 'name': f'view_{prefix}{t.name}',
                 'descr': f'View a record from table {t.name}',
-                'type': 'RecordPage',
+                'type': 'Form',
                 'config': {
                     'source': t.name,
                     'view_fields': [f.name for f in t.fields],
                     'reference_tables': [{
                         'table_page': f'find_{prefix}{r.table.name}',
                         'display': r.table.display,
-                        'params_fn': f'({{{r.name}__id: data.id}})'
+                        'params_fn': f'({{{r.name}__id: data.record.id}})'
                     } for r in t.backref_fields],
                     'buttons': [{
                         'display': 'Edit',
@@ -102,7 +102,7 @@ def get_gen_pages(config, prefix=''):
             }, {
                 'name': f'edit_{prefix}{t.name}',
                 'descr': f'Edit a record from table {t.name}',
-                'type': 'RecordPage',
+                'type': 'Form',
                 'config': {
                     'source': t.name,
                     'edit_fields': [
