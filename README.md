@@ -130,9 +130,9 @@ Each page in the config will look something like this:
 ```yaml
   - name: edit_experiment
     descr: Edit a record from table experiment
-    type: RecordPage
+    type: Form
     config:
-      source_table: experiment
+      source: experiment
       edit_fields:
       - name
       - description
@@ -149,7 +149,7 @@ Each page in the config will look something like this:
         target: back
       - display: Add Platemap
         target: new_platemap
-        params_fn: "(params, data) => {{ experiment: data.experiment }}"
+        params_fn: "(params, data) => {{ experiment: data.record.experiment }}"
 ```
 
 This config defines a page based on one of the built-in templates (`RecordPage`) that allows the user to edit then
