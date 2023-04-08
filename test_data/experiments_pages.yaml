@@ -9,9 +9,9 @@ page_modules:
 
   - name: find_assay
     descr: Search page for table assay
-    type: TablePage
+    type: Table
     config:
-      source_table: assay
+      source: assay
       view_columns:
       - field: name
         width: 200
@@ -42,9 +42,9 @@ page_modules:
 
   - name: view_assay
     descr: View a record from table assay
-    type: RecordPage
+    type: Form
     config:
-      source_table: assay
+      source: assay
       view_fields:
       - name
       - type
@@ -55,7 +55,7 @@ page_modules:
       reference_tables:
       - table_page: find_experiment
         display: Experiment
-        params_fn: '({assay__id: data.id})'
+        params_fn: '({assay__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_assay
@@ -69,9 +69,9 @@ page_modules:
 
   - name: new_assay
     descr: Edit a record from table assay
-    type: RecordPage
+    type: Form
     config:
-      source_table: assay
+      source: assay
       edit_fields:
       - name
       - type
@@ -85,9 +85,9 @@ page_modules:
 
   - name: edit_assay
     descr: Edit a record from table assay
-    type: RecordPage
+    type: Form
     config:
-      source_table: assay
+      source: assay
       view_fields:
       - name
       - type
@@ -112,9 +112,9 @@ page_modules:
 
   - name: find_experiment
     descr: Search page for table experiment
-    type: TablePage
+    type: Table
     config:
-      source_table: experiment
+      source: experiment
       view_columns:
       - field: name
         width: 200
@@ -166,9 +166,9 @@ page_modules:
 
   - name: view_experiment
     descr: View a record from table experiment
-    type: RecordPage
+    type: Form
     config:
-      source_table: experiment
+      source: experiment
       view_fields:
       - name
       - description
@@ -192,9 +192,9 @@ page_modules:
 
   - name: new_experiment
     descr: Create a new record in table experiment
-    type: RecordPage
+    type: Form
     config:
-      source_table: experiment
+      source: experiment
       edit_fields:
       - field: assay
         lookup: find_assay
@@ -209,9 +209,9 @@ page_modules:
 
   - name: edit_experiment
     descr: Edit a record from table experiment
-    type: RecordPage
+    type: Form
     config:
-      source_table: experiment
+      source: experiment
       view_fields:
       - name
       - program

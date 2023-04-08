@@ -16,11 +16,78 @@ import {
     Route,
     useNavigate,
     createSearchParams,
-    useSearchParams
+    useSearchParams,
+    useParams
 } from "react-router-dom";
 
 
-class PageWrapper extends Component {
+/* Connects the data to the page */
+class Page extends Component {
+    constructor(props) {
+        super(props);
+        const page = this.props.context.pages[this.props.name]
+        this.clientDict = {}
+        this.clientList = []
+        var dataDict = {}
+        var paramsDict = {}
+        for (const config of page.data) {
+            const name = config.name;
+            const client = new config.type(
+                config,
+                this.props.params,
+                {
+                    ...this.props.context,
+                    setState: (data) => {
+                        var stateData = this.state.data;
+                        stateData[name] = data;
+                        this.setState({data: stateData}); 
+                    },
+                    getState: () => { return this.state.data[name]; },
+                    setParams: (params) => { 
+                        var stateParams = this.state.params;
+                        stateParams[name] = params;
+                        this.setState({params: stateParams});
+                    },
+                    getParams: () => { return this.state.params[name]; },
+                }
+            )
+            this.clientDict[name] = client;
+            this.clientList.push(client);
+            dataDict[name] = null;
+            paramsDict[name] = this.props.params;
+        }
+        this.state = {
+            data: dataDict,
+            params: paramsDict,
+        }
+    }
+
+    async loadData() {
+        for (const client of this.clientList) {
+            await client.load(this.state.data);
+        }
+    }
+
+    componentDidMount() {
+        this.loadData()
+    }
+
+    render() {
+        const page = this.props.context.pages[this.props.name]
+        return React.createElement(page.type, {
+            data: this.state.data,
+            config: page.config,
+            params: this.state.params,
+            context: {
+                ...this.props.context,
+                clients: this.clientDict,
+            }
+        })
+    }
+}
+
+/* Controls the stack of modals above the current page. */
+class PageStack extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -52,20 +119,6 @@ class PageWrapper extends Component {
         }
     }
 
-    getPage(pageName, params) {
-        const page = this.props.context.pages[pageName]
-        return React.createElement(page.type, {
-            config: page.config,
-            params: params,
-            context: {
-                ...this.props.context,
-                go: this.go,
-                logIn: this.logIn,
-                logOut: this.logOut
-            }
-        })
-    }
-
     componentDidMount() {
         var params = {};
         for (let [k, v] of this.props.params[0]) { params[k] = v; }
@@ -81,6 +134,19 @@ class PageWrapper extends Component {
         logOut()
         this.setState({loginStatus: loggedIn()})
         return Promise.resolve()
+    }
+
+    getPage(pageName, params) {
+        return <Page 
+            name={pageName}
+            params={params}
+            context={{
+                ...this.props.context,
+                go: this.go,
+                logIn: this.logIn,
+                logOut: this.logOut
+            }}
+        />
     }
 
     render() {
@@ -114,12 +180,18 @@ class PageWrapper extends Component {
         }
     }        
 }
-    
+
+/* Controls the router that translates URLs to individual pages */
 export default class AppRouter extends Component {
 
-    getWrapper(context, page) {
+    getStack(context, page) {
         return () => {
-        return <PageWrapper page={page} context={context} navigate={useNavigate()} params={useSearchParams()} />
+            return <PageStack
+                page={page}
+                context={context}
+                navigate={useNavigate()}
+                params={useSearchParams()}
+            />
         }
     }
 
@@ -138,7 +210,7 @@ export default class AppRouter extends Component {
             <Routes>
             {Object.keys(this.props.pages).map((page) => 
                 React.createElement(Route, {path: page, key: page, element: 
-                React.createElement(this.getWrapper(context, page))}))}
+                React.createElement(this.getStack(context, page))}))}
             </Routes>
         </BrowserRouter>
         );

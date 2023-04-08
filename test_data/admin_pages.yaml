@@ -3,7 +3,7 @@ page_modules:
   pages:
   - name: admin_home
     descr: Landing Page
-    type: LinksPage
+    type: Links
     config:
       boxes:
       - name: Programs
@@ -48,9 +48,9 @@ page_modules:
   pages:
   - name: find_admin_person
     descr: Search page for table person
-    type: TablePage
+    type: Table
     config:
-      source_table: person
+      source: person
       view_columns:
       - field: name
         width: 200
@@ -73,9 +73,9 @@ page_modules:
         target: back
   - name: view_admin_person
     descr: View a record from table person
-    type: RecordPage
+    type: Form
     config:
-      source_table: person
+      source: person
       view_fields:
       - name
       - given_name
@@ -83,16 +83,16 @@ page_modules:
       reference_tables:
       - table_page: find_admin_program
         display: Program
-        params_fn: '({bio_lead__id: data.id})'
+        params_fn: '({bio_lead__id: data.record.id})'
       - table_page: find_admin_program
         display: Program
-        params_fn: '({chem_lead__id: data.id})'
+        params_fn: '({chem_lead__id: data.record.id})'
       - table_page: find_admin_program
         display: Program
-        params_fn: '({program_manager__id: data.id})'
+        params_fn: '({program_manager__id: data.record.id})'
       - table_page: find_admin_experiment
         display: Experiment
-        params_fn: '({bio_lead__id: data.id})'
+        params_fn: '({bio_lead__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_person
@@ -101,9 +101,9 @@ page_modules:
         target: back
   - name: edit_admin_person
     descr: Edit a record from table person
-    type: RecordPage
+    type: Form
     config:
-      source_table: person
+      source: person
       edit_fields:
       - name
       - given_name
@@ -118,9 +118,9 @@ page_modules:
   pages:
   - name: find_admin_program
     descr: Search page for table program
-    type: TablePage
+    type: Table
     config:
-      source_table: program
+      source: program
       view_columns:
       - field: name
         width: 200
@@ -161,9 +161,9 @@ page_modules:
         target: back
   - name: view_admin_program
     descr: View a record from table program
-    type: RecordPage
+    type: Form
     config:
-      source_table: program
+      source: program
       view_fields:
       - name
       - target
@@ -177,13 +177,13 @@ page_modules:
       reference_tables:
       - table_page: find_admin_program_milestone
         display: Program Milestone
-        params_fn: '({program__id: data.id})'
+        params_fn: '({program__id: data.record.id})'
       - table_page: find_admin_assay
         display: Assay
-        params_fn: '({for_program__id: data.id})'
+        params_fn: '({for_program__id: data.record.id})'
       - table_page: find_admin_experiment
         display: Experiment
-        params_fn: '({program__id: data.id})'
+        params_fn: '({program__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_program
@@ -192,9 +192,9 @@ page_modules:
         target: back
   - name: edit_admin_program
     descr: Edit a record from table program
-    type: RecordPage
+    type: Form
     config:
-      source_table: program
+      source: program
       edit_fields:
       - name
       - field: target
@@ -220,9 +220,9 @@ page_modules:
   pages:
   - name: find_admin_program_milestone
     descr: Search page for table program_milestone
-    type: TablePage
+    type: Table
     config:
-      source_table: program_milestone
+      source: program_milestone
       view_columns:
       - field: name
         width: 200
@@ -251,9 +251,9 @@ page_modules:
         target: back
   - name: view_admin_program_milestone
     descr: View a record from table program_milestone
-    type: RecordPage
+    type: Form
     config:
-      source_table: program_milestone
+      source: program_milestone
       view_fields:
       - name
       - program
@@ -269,9 +269,9 @@ page_modules:
         target: back
   - name: edit_admin_program_milestone
     descr: Edit a record from table program_milestone
-    type: RecordPage
+    type: Form
     config:
-      source_table: program_milestone
+      source: program_milestone
       edit_fields:
       - name
       - field: program
@@ -289,9 +289,9 @@ page_modules:
   pages:
   - name: find_admin_assay
     descr: Search page for table assay
-    type: TablePage
+    type: Table
     config:
-      source_table: assay
+      source: assay
       view_columns:
       - field: name
         width: 200
@@ -320,9 +320,9 @@ page_modules:
         target: back
   - name: view_admin_assay
     descr: View a record from table assay
-    type: RecordPage
+    type: Form
     config:
-      source_table: assay
+      source: assay
       view_fields:
       - name
       - type
@@ -332,7 +332,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_experiment
         display: Experiment
-        params_fn: '({assay__id: data.id})'
+        params_fn: '({assay__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_assay
@@ -341,9 +341,9 @@ page_modules:
         target: back
   - name: edit_admin_assay
     descr: Edit a record from table assay
-    type: RecordPage
+    type: Form
     config:
-      source_table: assay
+      source: assay
       edit_fields:
       - name
       - type
@@ -362,9 +362,9 @@ page_modules:
   pages:
   - name: find_admin_experiment
     descr: Search page for table experiment
-    type: TablePage
+    type: Table
     config:
-      source_table: experiment
+      source: experiment
       view_columns:
       - field: name
         width: 200
@@ -414,9 +414,9 @@ page_modules:
         target: back
   - name: view_admin_experiment
     descr: View a record from table experiment
-    type: RecordPage
+    type: Form
     config:
-      source_table: experiment
+      source: experiment
       view_fields:
       - name
       - description
@@ -439,9 +439,9 @@ page_modules:
         target: back
   - name: edit_admin_experiment
     descr: Edit a record from table experiment
-    type: RecordPage
+    type: Form
     config:
-      source_table: experiment
+      source: experiment
       edit_fields:
       - name
       - description
@@ -469,9 +469,9 @@ page_modules:
   pages:
   - name: find_admin_perturbation
     descr: Search page for table perturbation
-    type: TablePage
+    type: Table
     config:
-      source_table: perturbation
+      source: perturbation
       view_columns:
       - field: name
         width: 200
@@ -494,9 +494,9 @@ page_modules:
         target: back
   - name: view_admin_perturbation
     descr: View a record from table perturbation
-    type: RecordPage
+    type: Form
     config:
-      source_table: perturbation
+      source: perturbation
       view_fields:
       - name
       - compound
@@ -504,7 +504,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_experiment
         display: Experiment
-        params_fn: '({perturbations__id: data.id})'
+        params_fn: '({perturbations__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_perturbation
@@ -513,9 +513,9 @@ page_modules:
         target: back
   - name: edit_admin_perturbation
     descr: Edit a record from table perturbation
-    type: RecordPage
+    type: Form
     config:
-      source_table: perturbation
+      source: perturbation
       edit_fields:
       - name
       - field: compound
@@ -531,9 +531,9 @@ page_modules:
   pages:
   - name: find_admin_cell_line
     descr: Search page for table cell_line
-    type: TablePage
+    type: Table
     config:
-      source_table: cell_line
+      source: cell_line
       view_columns:
       - field: name
         width: 200
@@ -577,9 +577,9 @@ page_modules:
         target: back
   - name: view_admin_cell_line
     descr: View a record from table cell_line
-    type: RecordPage
+    type: Form
     config:
-      source_table: cell_line
+      source: cell_line
       view_fields:
       - name
       - species
@@ -594,7 +594,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_assay
         display: Assay
-        params_fn: '({cell_line__id: data.id})'
+        params_fn: '({cell_line__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_cell_line
@@ -603,9 +603,9 @@ page_modules:
         target: back
   - name: edit_admin_cell_line
     descr: Edit a record from table cell_line
-    type: RecordPage
+    type: Form
     config:
-      source_table: cell_line
+      source: cell_line
       edit_fields:
       - name
       - field: species
@@ -632,9 +632,9 @@ page_modules:
   pages:
   - name: find_admin_indication
     descr: Search page for table indication
-    type: TablePage
+    type: Table
     config:
-      source_table: indication
+      source: indication
       view_columns:
       - field: name
         width: 200
@@ -651,18 +651,18 @@ page_modules:
         target: back
   - name: view_admin_indication
     descr: View a record from table indication
-    type: RecordPage
+    type: Form
     config:
-      source_table: indication
+      source: indication
       view_fields:
       - name
       reference_tables:
       - table_page: find_admin_program
         display: Program
-        params_fn: '({indication__id: data.id})'
+        params_fn: '({indication__id: data.record.id})'
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({disease__id: data.id})'
+        params_fn: '({disease__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_indication
@@ -671,9 +671,9 @@ page_modules:
         target: back
   - name: edit_admin_indication
     descr: Edit a record from table indication
-    type: RecordPage
+    type: Form
     config:
-      source_table: indication
+      source: indication
       edit_fields:
       - name
       buttons:
@@ -686,9 +686,9 @@ page_modules:
   pages:
   - name: find_admin_species
     descr: Search page for table species
-    type: TablePage
+    type: Table
     config:
-      source_table: species
+      source: species
       view_columns:
       - field: name
         width: 200
@@ -705,30 +705,30 @@ page_modules:
         target: back
   - name: view_admin_species
     descr: View a record from table species
-    type: RecordPage
+    type: Form
     config:
-      source_table: species
+      source: species
       view_fields:
       - name
       reference_tables:
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_organ
         display: Organ
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_tissue
         display: Tissue
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_cell_type
         display: Cell Type
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_protein
         display: Protein
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       - table_page: find_admin_gene
         display: Gene
-        params_fn: '({species__id: data.id})'
+        params_fn: '({species__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_species
@@ -737,9 +737,9 @@ page_modules:
         target: back
   - name: edit_admin_species
     descr: Edit a record from table species
-    type: RecordPage
+    type: Form
     config:
-      source_table: species
+      source: species
       edit_fields:
       - name
       buttons:
@@ -752,9 +752,9 @@ page_modules:
   pages:
   - name: find_admin_organ
     descr: Search page for table organ
-    type: TablePage
+    type: Table
     config:
-      source_table: organ
+      source: organ
       view_columns:
       - field: name
         width: 200
@@ -774,16 +774,16 @@ page_modules:
         target: back
   - name: view_admin_organ
     descr: View a record from table organ
-    type: RecordPage
+    type: Form
     config:
-      source_table: organ
+      source: organ
       view_fields:
       - name
       - species
       reference_tables:
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({organ__id: data.id})'
+        params_fn: '({organ__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_organ
@@ -792,9 +792,9 @@ page_modules:
         target: back
   - name: edit_admin_organ
     descr: Edit a record from table organ
-    type: RecordPage
+    type: Form
     config:
-      source_table: organ
+      source: organ
       edit_fields:
       - name
       - field: species
@@ -809,9 +809,9 @@ page_modules:
   pages:
   - name: find_admin_tissue
     descr: Search page for table tissue
-    type: TablePage
+    type: Table
     config:
-      source_table: tissue
+      source: tissue
       view_columns:
       - field: name
         width: 200
@@ -831,16 +831,16 @@ page_modules:
         target: back
   - name: view_admin_tissue
     descr: View a record from table tissue
-    type: RecordPage
+    type: Form
     config:
-      source_table: tissue
+      source: tissue
       view_fields:
       - name
       - species
       reference_tables:
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({tissue__id: data.id})'
+        params_fn: '({tissue__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_tissue
@@ -849,9 +849,9 @@ page_modules:
         target: back
   - name: edit_admin_tissue
     descr: Edit a record from table tissue
-    type: RecordPage
+    type: Form
     config:
-      source_table: tissue
+      source: tissue
       edit_fields:
       - name
       - field: species
@@ -866,9 +866,9 @@ page_modules:
   pages:
   - name: find_admin_cell_type
     descr: Search page for table cell_type
-    type: TablePage
+    type: Table
     config:
-      source_table: cell_type
+      source: cell_type
       view_columns:
       - field: name
         width: 200
@@ -888,16 +888,16 @@ page_modules:
         target: back
   - name: view_admin_cell_type
     descr: View a record from table cell_type
-    type: RecordPage
+    type: Form
     config:
-      source_table: cell_type
+      source: cell_type
       view_fields:
       - name
       - species
       reference_tables:
       - table_page: find_admin_cell_line
         display: Cell Line
-        params_fn: '({cell_type__id: data.id})'
+        params_fn: '({cell_type__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_cell_type
@@ -906,9 +906,9 @@ page_modules:
         target: back
   - name: edit_admin_cell_type
     descr: Edit a record from table cell_type
-    type: RecordPage
+    type: Form
     config:
-      source_table: cell_type
+      source: cell_type
       edit_fields:
       - name
       - field: species
@@ -923,9 +923,9 @@ page_modules:
   pages:
   - name: find_admin_protein
     descr: Search page for table protein
-    type: TablePage
+    type: Table
     config:
-      source_table: protein
+      source: protein
       view_columns:
       - field: name
         width: 200
@@ -948,9 +948,9 @@ page_modules:
         target: back
   - name: view_admin_protein
     descr: View a record from table protein
-    type: RecordPage
+    type: Form
     config:
-      source_table: protein
+      source: protein
       view_fields:
       - name
       - gene
@@ -958,7 +958,7 @@ page_modules:
       reference_tables:
       - table_page: find_admin_program
         display: Program
-        params_fn: '({target__id: data.id})'
+        params_fn: '({target__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_protein
@@ -967,9 +967,9 @@ page_modules:
         target: back
   - name: edit_admin_protein
     descr: Edit a record from table protein
-    type: RecordPage
+    type: Form
     config:
-      source_table: protein
+      source: protein
       edit_fields:
       - name
       - field: gene
@@ -986,9 +986,9 @@ page_modules:
   pages:
   - name: find_admin_gene
     descr: Search page for table gene
-    type: TablePage
+    type: Table
     config:
-      source_table: gene
+      source: gene
       view_columns:
       - field: name
         width: 200
@@ -1008,16 +1008,16 @@ page_modules:
         target: back
   - name: view_admin_gene
     descr: View a record from table gene
-    type: RecordPage
+    type: Form
     config:
-      source_table: gene
+      source: gene
       view_fields:
       - name
       - species
       reference_tables:
       - table_page: find_admin_protein
         display: Protein
-        params_fn: '({gene__id: data.id})'
+        params_fn: '({gene__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_gene
@@ -1026,9 +1026,9 @@ page_modules:
         target: back
   - name: edit_admin_gene
     descr: Edit a record from table gene
-    type: RecordPage
+    type: Form
     config:
-      source_table: gene
+      source: gene
       edit_fields:
       - name
       - field: species
@@ -1043,9 +1043,9 @@ page_modules:
   pages:
   - name: find_admin_compound
     descr: Search page for table compound
-    type: TablePage
+    type: Table
     config:
-      source_table: compound
+      source: compound
       view_columns:
       - field: name
         width: 200
@@ -1065,16 +1065,16 @@ page_modules:
         target: back
   - name: view_admin_compound
     descr: View a record from table compound
-    type: RecordPage
+    type: Form
     config:
-      source_table: compound
+      source: compound
       view_fields:
       - name
       - smiles
       reference_tables:
       - table_page: find_admin_perturbation
         display: Perturbation
-        params_fn: '({compound__id: data.id})'
+        params_fn: '({compound__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_admin_compound
@@ -1083,9 +1083,9 @@ page_modules:
         target: back
   - name: edit_admin_compound
     descr: Edit a record from table compound
-    type: RecordPage
+    type: Form
     config:
-      source_table: compound
+      source: compound
       edit_fields:
       - name
       - smiles

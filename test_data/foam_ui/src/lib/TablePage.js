@@ -2,48 +2,19 @@ import React, { Component } from 'react';
 import { SearchBar, Table, ButtonList } from './Components.js'
 
 export default class TablePage extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            data: null,
-            searchParams: [],
-        }
-    }
-
-    componentDidMount() {
-        this.updateTable();
-    }
-
-    updateSearchParams = (params) => {
-        this.setState({searchParams: params})
-    }
-
-    getSearchDict(param) {
-        const key = (param.filter === '') ? param.field : `${param.field}__${param.filter}`;
-        const value = param.value.id ? param.value.id : param.value;
-        return {[key]: value}
-    }
-
-    updateTable = () => {
-        const params = Object.assign({}, this.props.params,
-            Object.assign({}, ...this.state.searchParams.map((s) => (this.getSearchDict(s)))))
-        this.props.context.getRecords(
-            this.props.config.sourceTable,
-            params).then((data) => {
-                this.setState({
-                    data: data
-                })
-            })
-    }
 
     render() {
-        if (!this.state.data) { return <div />}
+        if (!this.props.data.table) { return <div />}
+        const data = this.props.data.table;
+        const config = this.props.config;
+        const params = this.props.params.table;
+        const context = this.props.context;
         if (this.props.mode === 'reference') {
             return <Table
-                config={this.props.config}
-                params={this.props.params}
-                data={this.state.data}
-                context={this.props.context}
+                config={config}
+                params={params}
+                data={data}
+                context={context}
             />
         }
         return (
@@ -51,45 +22,41 @@ export default class TablePage extends Component {
             <div className='table-page-inner-div'>
                 <SearchBar
                     config={{
-                        table: this.props.config.sourceTable,
-                        fields: this.props.config.searchFields
+                        table: config.source,
+                        fields: config.searchFields
                     }}
-                    params = {this.props.params}
-                    data = {this.state.searchParams}
-                    context = {{...this.props.context, 
-                        fullUpdate: this.updateSearchParams, 
-                        updateTable: this.updateTable,
-                    }}
+                    params = {params}
+                    context = {{...context, client: context.clients.table }}
                 />
                 <Table
-                    config={this.props.config}
-                    params={this.props.params}
-                    data={this.state.data}
-                    context={this.props.context}
+                    config={config}
+                    params={params}
+                    data={data}
+                    context={context}
                 />
                 <ButtonList
                     config={{
-                        buttons: this.props.config.buttons,
+                        buttons: config.buttons,
                     }}
-                    params = {this.props.params}
-                    data = {this.state.data}
-                    context = {this.props.context}
-                    hide={this.props.params.mode === 'select'}
+                    params = {params}
+                    data = {data}
+                    context = {context}
+                    hide={params._mode === 'select'}
                 />
                 <ButtonList
                     config={{
                         buttons: [
                             {display: 'Cancel', target: 'back'},
-                            {...this.props.params.rowAction, display: 'None'}
+                            {...params.rowAction, display: 'None'}
                         ]
                     }}
-                    params = {this.props.params}
+                    params = {params}
                     data = {null}
-                    context = {this.props.context}
-                    hide={this.props.params.mode !== 'select'}
+                    context = {context}
+                    hide={params._mode !== 'select'}
                 />
             </div>
             </div>
-    )
+        )
     }
 }
