@@ -1523,6 +1523,16 @@ export const pages = {
                 paramsFn: '',
                 visibleFn: '',
             }, {
+                display: 'New Milestone',
+                pretargetFn: (params, data, context) => (context.addNew({
+                    program: params.program
+                })),
+                pretarget: '',
+                target: '',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
                 display: 'Save',
                 pretargetFn: (params, data, context) => (context.save()),
                 pretarget: '',

@@ -236,6 +236,8 @@ page_modules:
       buttons:
       - display: Done
         target: back
+      - display: New Milestone
+        pretarget_fn: "( context.addNew({program: params.program}) )"
       - display: Save
         pretarget_fn: ( context.save() )
 

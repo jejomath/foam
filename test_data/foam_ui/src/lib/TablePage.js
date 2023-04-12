@@ -40,7 +40,7 @@ export default class TablePage extends Component {
                     }}
                     params = {params}
                     data = {data}
-                    context = {{...context, save: context.clients.table.save }}
+                    context = {{...context, save: context.clients.table.save, addNew: context.clients.table.addNew }}
                     hide={params._mode === 'select'}
                 />
                 <ButtonList
