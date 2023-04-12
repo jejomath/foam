@@ -1490,6 +1490,58 @@ export const pages = {
         }, ],
         type: Table,
     },
+    edit_program_milestone_table: {
+        name: 'edit_program_milestone_table',
+        display: 'Edit Program Milestone Table',
+        config: {
+            source: 'program_milestone',
+            rowAction: null,
+            viewColumns: [],
+            editColumns: [{
+                field: 'program',
+                width: '200',
+            }, {
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'status',
+                width: '200',
+            }, {
+                field: 'target_date',
+                width: '200',
+            }, {
+                field: 'completed_date',
+                width: '200',
+            }, ],
+            searchFields: null,
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: '',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'program_milestone',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, ],
+        type: Table,
+    },
     view_program_milestone: {
         name: 'view_program_milestone',
         display: 'View Program Milestone',

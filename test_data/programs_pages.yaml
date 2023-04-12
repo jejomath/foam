@@ -215,6 +215,30 @@ page_modules:
         target: edit_program_milestone
       - display: Done
         target: back
+
+  - name: edit_program_milestone_table
+    descr: Search page for table program_milestone
+    type: Table
+    config:
+      source: program_milestone
+      view_columns:
+      edit_columns:
+      - field: program
+        width: 200
+      - field: name
+        width: 200
+      - field: status
+        width: 200
+      - field: target_date
+        width: 200
+      - field: completed_date
+        width: 200
+      buttons:
+      - display: Done
+        target: back
+      - display: Save
+        pretarget_fn: ( context.save() )
+
   - name: view_program_milestone
     descr: View a record from table program_milestone
     type: Form

@@ -368,10 +368,11 @@ class TablePage:
                     next_pages += c.add_refs(table_config, page)
                 for b in self.buttons:
                     next_pages += b.add_refs(config, page)
-                for s in self.search_fields:
+                for s in self.search_fields or []:
                     if s not in [f.name for f in table_config.fields]:
                         config_error(f'Unexpected field {table_config.name}.{s} found in config for page "{page}".')
-                next_pages += self.row_action.add_refs(config, page)
+                if self.row_action:
+                    next_pages += self.row_action.add_refs(config, page)
         return next_pages
 
     def default_data(self, config, name=None):
@@ -381,7 +382,7 @@ class TablePage:
     def js_config(self):
         return {
             'source': self.source,
-            'rowAction': self.row_action.js_config,
+            'rowAction': self.row_action.js_config if self.row_action else None,
             'viewColumns': [c.js_config for c in self.view_columns],
             'editColumns': [c.js_config for c in self.edit_columns],
             'searchFields': self.search_fields,

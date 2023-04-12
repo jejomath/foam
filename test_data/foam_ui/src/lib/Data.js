@@ -88,6 +88,10 @@ export class TableData {
         return internal
     }
 
+    update = (value) => {
+        this.context.setState(value);
+    }
+
     searchParams() {
         return Object.assign({}, this.params,
             Object.assign({}, ...this.params._internal.map((s) => (this.getSearchDict(s)))))
@@ -136,5 +140,13 @@ export class TableData {
         const params = this.config.paramsFn ? this.config.paramsFn(this.searchParams(), allData) : this.searchParams()
         const data = await this.context.getRecords(this.source, params)
         this.context.setState(data)
+    }
+
+    save = async () => {
+        var tableData = this.context.getState();
+        await Promise.all(tableData.map((record, i) => (
+            this.context.saveRecord(this.source, record).then((newRecord) => { tableData[i] = newRecord; })
+        )));
+        return tableData;
     }
 }
