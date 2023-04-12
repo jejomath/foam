@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
 import DataGrid, { textEditor } from 'react-data-grid';
+import {createPortal} from 'react-dom';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-data-grid/lib/styles.css';
@@ -154,6 +155,7 @@ export class EditField extends Component {
                 selected={Date.parse(`${this.props.data}T23:59:59`)}
                 onChange={this.handleDateChange}
                 dateFormat="yyyy-MM-dd"
+                popperContainer={({children}) => createPortal(children,document.body)}
             />
 
         } else if (fieldType === 'INTEGER') {
@@ -345,6 +347,7 @@ export class SearchBar extends Component {
     }
 
     render() {
+        if (this.props.hide) { return <div />}
         return <div className='search-bar-div'>
             <div className='search-bar-fields-div'>
                 {this.props.params._internal.map((data, index) => (<SearchField 

@@ -1281,13 +1281,14 @@ export const pages = {
                 }),
                 visibleFn: '',
             }, {
-                display: 'Add Milestone',
+                display: 'Edit Milestones',
                 pretargetFn: '',
                 pretarget: '',
-                target: 'edit_program_milestone',
+                target: 'edit_program_milestone_table',
                 mode: 'modal',
                 paramsFn: (params, data) => ({
-                    program: data
+                    program__id: data.id,
+                    _program: data
                 }),
                 visibleFn: '',
             }, {
@@ -1448,9 +1449,6 @@ export const pages = {
                 field: 'name',
                 width: '200',
             }, {
-                field: 'program',
-                width: '200',
-            }, {
                 field: 'status',
                 width: '200',
             }, {
@@ -1525,7 +1523,7 @@ export const pages = {
             }, {
                 display: 'New Milestone',
                 pretargetFn: (params, data, context) => (context.addNew({
-                    program: params.program
+                    program: params._program
                 })),
                 pretarget: '',
                 target: '',

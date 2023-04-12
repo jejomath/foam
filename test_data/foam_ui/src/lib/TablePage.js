@@ -27,6 +27,7 @@ export default class TablePage extends Component {
                     }}
                     params = {params}
                     context = {{...context, client: context.clients.table }}
+                    hide={config.searchFields == null}
                 />
                 <Table
                     config={config}
