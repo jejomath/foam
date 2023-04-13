@@ -141,6 +141,10 @@ export class EditField extends Component {
         if (this.props.focus) { input?.focus(); }
     }
     
+    dateFocus = (input) => {
+        if (this.props.focus) { document.getElementById('date-picker').focus(); }
+    }
+    
     render() {
         const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field.field];
         const fieldType = field.fieldType;
@@ -156,6 +160,8 @@ export class EditField extends Component {
                 onChange={this.handleDateChange}
                 dateFormat="yyyy-MM-dd"
                 popperContainer={({children}) => createPortal(children,document.body)}
+                id="date-picker"
+                ref={this.dateFocus}
             />
 
         } else if (fieldType === 'INTEGER') {
