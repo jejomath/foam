@@ -27,12 +27,13 @@ export default class TablePage extends Component {
                     }}
                     params = {params}
                     context = {{...context, client: context.clients.table }}
+                    hide={config.searchFields == null}
                 />
                 <Table
                     config={config}
                     params={params}
                     data={data}
-                    context={context}
+                    context={{...context, update: context.clients.table.update}}
                 />
                 <ButtonList
                     config={{
@@ -40,7 +41,7 @@ export default class TablePage extends Component {
                     }}
                     params = {params}
                     data = {data}
-                    context = {context}
+                    context = {{...context, save: context.clients.table.save, addNew: context.clients.table.addNew }}
                     hide={params._mode === 'select'}
                 />
                 <ButtonList

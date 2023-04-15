@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
-import DataGrid from 'react-data-grid';
+import DataGrid, { textEditor } from 'react-data-grid';
+import {createPortal} from 'react-dom';
 
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-data-grid/lib/styles.css';
@@ -94,7 +95,6 @@ export class ViewField extends Component {
     }
 }
 
-
 export class EditField extends Component {
     constructor(props) {
         super(props);
@@ -137,11 +137,19 @@ export class EditField extends Component {
         this.props.context.update(this.props.config.field.field, strDate)
     }
 
+    focus = (input) => {
+        if (this.props.focus) { input?.focus(); }
+    }
+    
+    dateFocus = (input) => {
+        if (this.props.focus) { document.getElementById('date-picker').focus(); }
+    }
+    
     render() {
         const field = this.props.context.schema[this.props.config.table].fields[this.props.config.field.field];
         const fieldType = field.fieldType;
         if (fieldType === 'STRING' || (fieldType === 'TEXT' && this.props.config.small)) {
-            return (<input type='text' value={this.props.data || ''} onChange={this.handlChange}/>)
+            return (<input type='text' value={this.props.data || ''} onChange={this.handlChange} ref={this.focus}/>)
 
         } else if (fieldType === 'TEXT') {
             return (<textarea type='text' value={this.props.data || ''} onChange={this.handlChange}/>)
@@ -151,6 +159,9 @@ export class EditField extends Component {
                 selected={Date.parse(`${this.props.data}T23:59:59`)}
                 onChange={this.handleDateChange}
                 dateFormat="yyyy-MM-dd"
+                popperContainer={({children}) => createPortal(children,document.body)}
+                id="date-picker"
+                ref={this.dateFocus}
             />
 
         } else if (fieldType === 'INTEGER') {
@@ -158,7 +169,7 @@ export class EditField extends Component {
 
         } else if (fieldType === 'enum') {
             const options = this.props.context.enums[field.enumClass].options;
-            return (<select value={this.props.data || ''} onChange={this.handlChange}>
+            return (<select value={this.props.data || ''} onChange={this.handlChange} ref={this.focus}>
                 <option value=''></option>
                 {options.map((o, i) => (<option value={o.name} key={i}>{o.display}</option>))}
             </select>)
@@ -193,7 +204,7 @@ export class EditField extends Component {
 
         } else if (fieldType === 'ref') {
             if (!this.state.options) { return <div />}
-            return (<select value={this.props.data ? this.props.data.id : ''} onChange={this.handlChange}>
+            return (<select value={this.props.data ? this.props.data.id : ''} onChange={this.handlChange}  ref={this.focus}>
                 <option value=''></option>
                 {this.state.options.map((o, i) => (<option value={o.id} key={i}>{o.name}</option>))}
             </select>)
@@ -232,48 +243,60 @@ export class FieldList extends Component {
 export class Table extends Component {
     rowClick = (rowData) => {
         const rowAction = this.props.params.rowAction || this.props.config.rowAction;
-        followAction(rowAction, this.props.params, rowData, this.props.context)
-    }
-
-    cleanField(row, k) {
-        const s = this.props.context.schema[this.props.config.source]
-            if (k === 'id') {
-            return {[k]: row[k]}
-        } else if (row[k] && typeof row[k] === 'object') {
-            return {[k]: row[k].name}
-        } else if (row[k] && s.fields[k].fieldType === 'enum') {
-            return {[k]: this.props.context.enums[s.fields[k].enumClass].options.filter(
-                (e) => (e.name === row[k]))[0].display }
-        } else {
-            return {[k]: row[k]}
+        if (rowAction) {
+            followAction(rowAction, this.props.params, rowData, this.props.context);
         }
     }
 
-    cleanRows() {
-        return this.props.data.map((row) => (
-            Object.assign(
-                {}, ...Object.keys(row).map((k) => (
-                    this.cleanField(row, k)
-                ))
-            )
-        ))
+    format = (value, field) => {
+        if (field.name === 'id') {
+            return value
+        } else if (value && typeof value === 'object') {
+            return value.name
+        } else if (value && field.fieldType === 'enum') {
+            return this.props.context.enums[field.enumClass].options.filter(
+                (e) => (e.name === value))[0].display
+        } else {
+            return value
+        }
     }
 
     render() {
         const dynamicHeight = Math.min(this.props.data.length, 25) * 35 + 37
+        const s = this.props.context.schema[this.props.config.source]
         return <div className="data-grid-div"><DataGrid 
-            columns={this.props.config.viewColumns.map((col) => ({
-                name: col.field, 
-                key: col.field,
-                width: parseInt(col.width),
-                resizable: true,
-            }))}
-            rows={this.cleanRows()}
+            columns={[
+                ...this.props.config.viewColumns.map((col) => ({
+                    name: col.field, 
+                    key: col.field,
+                    width: parseInt(col.width),
+                    resizable: true,
+                    formatter: (data) => this.format(data.row[col.field], s.fields[col.field]),
+                })),
+                ...this.props.config.editColumns.map((col) => ({
+                    name: col.field,
+                    key: col.field,
+                    width: parseInt(col.width),
+                    resizable: true,
+                    formatter: (data) => this.format(data.row[col.field], s.fields[col.field]),
+                    editor: (context) => (<EditField
+                                config={{table: this.props.config.source, field: col}}
+                                params={this.props.params}
+                                data={context.row[col.field]}
+                                focus={true}
+                                context={{...this.props.context, update: (field, value) => {context.onRowChange(
+                                    {...context.row, [field]: value})} }}
+                            />),
+                }))
+            ]}
             onRowClick={this.rowClick}
+            onRowsChange={(data) => { this.props.context.update(data); }}
+            rows={this.props.data}
             style={{height: dynamicHeight}}
         /></div>
     }
 }
+
 
 class SearchField extends Component {
     constructor(props) {
@@ -330,6 +353,7 @@ export class SearchBar extends Component {
     }
 
     render() {
+        if (this.props.hide) { return <div />}
         return <div className='search-bar-div'>
             <div className='search-bar-fields-div'>
                 {this.props.params._internal.map((data, index) => (<SearchField 

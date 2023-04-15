@@ -1,4 +1,10 @@
 
+function newRecord(schema, params) {
+    return Object.assign({}, ...Object.keys(schema.fields).map((f) => (
+        {[f]: params[f] ? params[f] : null}
+    )))
+}
+
 export class RecordData {
 
     constructor(config, searchParams, context) {
@@ -17,10 +23,7 @@ export class RecordData {
         }
 
         if (!record) {
-            const fields = this.context.schema[this.source].fields;
-            record = Object.assign({}, ...Object.keys(fields).map((f) => (
-                {[f]: this.params[f] ? this.params[f] : null}
-            ))) 
+            record = newRecord(this.context.schema[this.source], this.params)
         }
         this.context.setState(record)
     }
@@ -88,6 +91,10 @@ export class TableData {
         return internal
     }
 
+    update = (value) => {
+        this.context.setState(value);
+    }
+
     searchParams() {
         return Object.assign({}, this.params,
             Object.assign({}, ...this.params._internal.map((s) => (this.getSearchDict(s)))))
@@ -136,5 +143,20 @@ export class TableData {
         const params = this.config.paramsFn ? this.config.paramsFn(this.searchParams(), allData) : this.searchParams()
         const data = await this.context.getRecords(this.source, params)
         this.context.setState(data)
+    }
+
+    addNew = async (params) => {
+        var tableData = this.context.getState();
+        tableData.push(newRecord(this.context.schema[this.source], params))
+        this.context.setState(tableData)
+        return tableData;
+    }
+
+    save = async () => {
+        var tableData = this.context.getState();
+        await Promise.all(tableData.map((record, i) => (
+            this.context.saveRecord(this.source, record).then((newRecord) => { tableData[i] = newRecord; })
+        )));
+        return tableData;
     }
 }

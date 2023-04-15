@@ -98,7 +98,9 @@ class PageStack extends Component {
     }
   
     go = (target, params, mode) => {
-        if (target === 'back') { 
+        if (!target) {
+            return;
+        } else if (target === 'back') { 
             if (this.state.modalStack.length > 0) {
                 this.state.modalStack.pop()
                 this.setState({ modalStack: this.state.modalStack })

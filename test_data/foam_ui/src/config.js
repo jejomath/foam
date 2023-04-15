@@ -1281,13 +1281,14 @@ export const pages = {
                 }),
                 visibleFn: '',
             }, {
-                display: 'Add Milestone',
+                display: 'Edit Milestones',
                 pretargetFn: '',
                 pretarget: '',
-                target: 'edit_program_milestone',
+                target: 'edit_program_milestone_table',
                 mode: 'modal',
                 paramsFn: (params, data) => ({
-                    program: data
+                    program__id: data.id,
+                    _program: data
                 }),
                 visibleFn: '',
             }, {
@@ -1448,9 +1449,6 @@ export const pages = {
                 field: 'name',
                 width: '200',
             }, {
-                field: 'program',
-                width: '200',
-            }, {
                 field: 'status',
                 width: '200',
             }, {
@@ -1475,6 +1473,68 @@ export const pages = {
                 pretargetFn: '',
                 pretarget: '',
                 target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'program_milestone',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, ],
+        type: Table,
+    },
+    edit_program_milestone_table: {
+        name: 'edit_program_milestone_table',
+        display: 'Edit Program Milestone Table',
+        config: {
+            source: 'program_milestone',
+            rowAction: null,
+            viewColumns: [],
+            editColumns: [{
+                field: 'program',
+                width: '200',
+            }, {
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'status',
+                width: '200',
+            }, {
+                field: 'target_date',
+                width: '200',
+            }, {
+                field: 'completed_date',
+                width: '200',
+            }, ],
+            searchFields: null,
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'New Milestone',
+                pretargetFn: (params, data, context) => (context.addNew({
+                    program: params._program
+                })),
+                pretarget: '',
+                target: '',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: '',
                 mode: '',
                 paramsFn: '',
                 visibleFn: '',
