@@ -23,6 +23,7 @@ dependencies = [
   'django-cors-headers',
   'django-filter',
   'djoser',
+  'pydot',
 ]
 
 [project.scripts]
@@ -31,3 +32,12 @@ foam = "foam.main:main"
 [project.urls]
 "Homepage" = "TBD"
 "Bug Tracker" = "TBD"
+
+[tool.setuptools]
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ['src']
+
+[tool.setuptools.package-data]
+foam = ['templates/*.jnj']

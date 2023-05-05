@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import Person, Program, ProgramMilestone
 
-from .models import Assay, Experiment, Perturbation
+from .models import Assay, Experiment, Perturbation, Plate, PlateWell
 
 from .models import CellLine
 
@@ -38,6 +38,16 @@ class ExperimentShortSerializer(serializers.ModelSerializer):
 class PerturbationShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = Perturbation
+        fields = ('id', 'name')
+
+class PlateShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plate
+        fields = ('id', 'name')
+
+class PlateWellShortSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlateWell
         fields = ('id', 'name')
 
 class CellLineShortSerializer(serializers.ModelSerializer):
@@ -149,6 +159,24 @@ class PerturbationSerializer(serializers.ModelSerializer):
         model = Perturbation
         fields = ('id', 'name', 'compound', 'concentration_nm', )
 
+class PlateSerializer(serializers.ModelSerializer):
+    
+    experiment = ExperimentShortSerializer(read_only=True)
+    
+    class Meta:
+        model = Plate
+        fields = ('id', 'name', 'experiment', 'row_count', 'column_count', )
+
+class PlateWellSerializer(serializers.ModelSerializer):
+    
+    plate = PlateShortSerializer(read_only=True)
+    
+    perturbation = PerturbationShortSerializer(read_only=True)
+    
+    class Meta:
+        model = PlateWell
+        fields = ('id', 'name', 'plate', 'row', 'column', 'purpose', 'perturbation', )
+
 class CellLineSerializer(serializers.ModelSerializer):
     
     species = SpeciesShortSerializer(read_only=True)
@@ -257,6 +285,16 @@ class PerturbationWriteSerializer(serializers.ModelSerializer):
         model = Perturbation
         fields = ('id', 'name', 'compound', 'concentration_nm', )
 
+class PlateWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Plate
+        fields = ('id', 'name', 'experiment', 'row_count', 'column_count', )
+
+class PlateWellWriteSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = PlateWell
+        fields = ('id', 'name', 'plate', 'row', 'column', 'purpose', 'perturbation', )
+
 class CellLineWriteSerializer(serializers.ModelSerializer):
     class Meta:
         model = CellLine
@@ -346,17 +384,35 @@ class AssayStatsSerializer(serializers.ModelSerializer):
 
 class ExperimentStatsSerializer(serializers.ModelSerializer):
     
+    plate = serializers.IntegerField(source='plate.count', read_only=True)
+    
     class Meta:
         model = Experiment
-        fields = ('id', 'name', )
+        fields = ('id', 'name', 'plate', )
 
 class PerturbationStatsSerializer(serializers.ModelSerializer):
     
     experiment = serializers.IntegerField(source='experiment.count', read_only=True)
     
+    plate_well = serializers.IntegerField(source='plate_well.count', read_only=True)
+    
     class Meta:
         model = Perturbation
-        fields = ('id', 'name', 'experiment', )
+        fields = ('id', 'name', 'experiment', 'plate_well', )
+
+class PlateStatsSerializer(serializers.ModelSerializer):
+    
+    plate_well = serializers.IntegerField(source='plate_well.count', read_only=True)
+    
+    class Meta:
+        model = Plate
+        fields = ('id', 'name', 'plate_well', )
+
+class PlateWellStatsSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = PlateWell
+        fields = ('id', 'name', )
 
 class CellLineStatsSerializer(serializers.ModelSerializer):
     

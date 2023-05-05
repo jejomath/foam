@@ -63,7 +63,7 @@ page_modules:
       - display: New Experiment
         target: new_experiment
         mode: modal
-        params_fn: '({ assay: data })'
+        params_fn: '({ assay: data.record })'
       - display: Done
         target: back
 
@@ -75,6 +75,9 @@ page_modules:
       edit_fields:
       - name
       - type
+      - field: cell_line
+        lookup: find_cell_line
+        visible_fn: (data.type === 'VITRO')
       buttons:
       - display: Done
         target: edit_assay

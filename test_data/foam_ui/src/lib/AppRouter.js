@@ -108,6 +108,7 @@ class PageStack extends Component {
                 this.props.navigate(-1)
             }
         } else {
+            if (target === 'home') { target = ''; }
             if (mode === 'modal') {
                 this.state.modalStack.push(this.getPage(target, params))
                 this.setState({ modalStack: this.state.modalStack })

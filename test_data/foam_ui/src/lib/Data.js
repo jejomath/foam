@@ -140,9 +140,18 @@ export class TableData {
     }
 
     load = async (allData) => {
-        const params = this.config.paramsFn ? this.config.paramsFn(this.searchParams(), allData) : this.searchParams()
-        const data = await this.context.getRecords(this.source, params)
-        this.context.setState(data)
+        this.context.setState([])
+        if (this.config.onLoadFn) {
+            this.config.onLoadFn(
+                this.params,
+                allData,
+                { ...this.context, addNew: this.addNew }
+            );
+        } else {
+            const params = this.config.paramsFn ? this.config.paramsFn(this.searchParams(), allData) : this.searchParams()
+            const data = await this.context.getRecords(this.source, params)
+            this.context.setState(data)
+        }
     }
 
     addNew = async (params) => {

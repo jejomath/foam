@@ -49,7 +49,7 @@ export default class RecordPage extends Component {
                         buttons: config.buttons,
                     }}
                     params={params}
-                    data={data}
+                    data={this.props.data}
                     context={{ ...context, save: context.clients.record.save }}
                 />
             </div>
