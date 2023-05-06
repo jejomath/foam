@@ -72,12 +72,11 @@ API. Here's an example of what this might look like for an Experiments table:
 ```yaml
   - name: experiment
     descr: A table with one record for each experiment.
-    preprocess_new: add_experiment_name
+    preprocess: add_experiment_name
     fields:
     - name: name
       type: STRING
       descr: Name of the experiment
-      preprocess_new: name_new_experiment
     - name: description
       type: TEXT
       descr: A long-form description of the experiment
@@ -130,9 +129,9 @@ Each page in the config will look something like this:
 ```yaml
   - name: edit_experiment
     descr: Edit a record from table experiment
-    type: RecordPage
+    type: Form
     config:
-      source_table: experiment
+      source: experiment
       edit_fields:
       - name
       - description
@@ -144,12 +143,12 @@ Each page in the config will look something like this:
       buttons:
       - display: Save
         target: back
-        pretarget_fn: (params, data, context) => { context.save() }
+        pretarget_fn: { context.save() }
       - display: Cancel
         target: back
       - display: Add Platemap
         target: new_platemap
-        params_fn: "(params, data) => {{ experiment: data.experiment }}"
+        params_fn: "{{ experiment: data.experiment }}"
 ```
 
 This config defines a page based on one of the built-in templates (`RecordPage`) that allows the user to edit then
@@ -389,7 +388,8 @@ REST_FRAMEWORK = {
 # The following lines are only if you want to enable authentication.
 DJOSER = {
     "USER_ID_FIELD": "username"
-}```
+}
+```
 
 Then update `urls.py` to look like this:
 
@@ -408,7 +408,16 @@ urlpatterns = [
 ]
 ```
 
-# Node packages
+# Deploying to remote hosts
+
+The example in `test_data` is written to have both the API and UI running on localhost be default. But if
+you want to run it on a remote instance, you can do so by setting the environment variables `REACT_APP_API` and
+`REACT_APP_UI` on the instance where each is running. Each should be set to a URL starting with `http://` or
+`https://`, but without the trailing slash.
+
+# Scratch notes for the package author. Stop reading here.
+
+## Node packages
 
 axios
 react-datepicker
@@ -418,7 +427,7 @@ react-router-dom
 react-plotly.js
 plotly.js
 
-# Dump database
+## Dump database
 
 ```bash
 python3 -m manage dumpdata |jq > ../test_dump.json
@@ -431,7 +440,7 @@ python3 -m manage loaddata ../test_dump.json
 ```
 
 
-# Tests
+## Tests
 
 CLI Tests: Run `python3 -m pytest` from the `/tests/` directory.
 Django API tests: Run `python3 -m manage test` from `/test_data/foam_backend/`
