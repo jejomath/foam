@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from os import environ
+from urllib.parse import urlparse
+
+UI_URL = environ['REACT_APP_UI'] if 'REACT_APP_UI' in environ else None
+API_URL = environ['REACT_APP_API'] if 'REACT_APP_API' in environ else None
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,10 +28,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8#k3f5xph12)2y3=s$ymz+cl-2&)0d#lh5^f_#l61!)5e0+l&+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (API_URL is None)
 
-ALLOWED_HOSTS = []
-
+ALLOWED_HOSTS = [urlparse(API_URL).netloc] if API_URL else []
 
 # Application definition
 
@@ -130,7 +134,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_WHITELIST = (
-  'http://localhost:3000',
+    UI_URL or 'http://localhost:3000',
 )
 
 REST_FRAMEWORK = {
