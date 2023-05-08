@@ -38,7 +38,7 @@ export default class RecordPage extends Component {
                         <TablePage
                             config={context.pages[t.tablePage].config}
                             context={context}
-                            params={{}}
+                            params={{table: {}}}
                             data={{table: this.props.data[t.tablePage]}}
                             mode='reference'
                         />

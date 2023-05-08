@@ -10,7 +10,7 @@ enums:
   descr: The purpose of a well within a plate.
   options:
   - POS_CTRL - Positive Control | Positive Control
-  - NEG_CTRL - Netagive Control | Netagive Control
+  - NEG_CTRL - Negative Control | Netagive Control
   - PERT - Perturbation | A perturbation
 
 

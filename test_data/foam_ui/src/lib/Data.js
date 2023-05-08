@@ -1,7 +1,7 @@
 
 function newRecord(schema, params) {
     return Object.assign({}, ...Object.keys(schema.fields).map((f) => (
-        {[f]: params[f] ? params[f] : null}
+        {[f]: params[f]}
     )))
 }
 
@@ -141,14 +141,14 @@ export class TableData {
 
     load = async (allData) => {
         this.context.setState([])
+        const params = this.config.paramsFn ? this.config.paramsFn(this.searchParams(), allData) : this.searchParams()
         if (this.config.onLoadFn) {
             this.config.onLoadFn(
-                this.params,
+                params,
                 allData,
                 { ...this.context, addNew: this.addNew }
             );
         } else {
-            const params = this.config.paramsFn ? this.config.paramsFn(this.searchParams(), allData) : this.searchParams()
             const data = await this.context.getRecords(this.source, params)
             this.context.setState(data)
         }

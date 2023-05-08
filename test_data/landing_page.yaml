@@ -28,6 +28,8 @@ page_modules:
         - target: new_assay
           display: Create New Assay
           mode: modal
+        - target: find_plate
+          display: Review Plates
 
       - name: Analysis
         links:

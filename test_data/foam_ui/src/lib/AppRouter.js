@@ -17,7 +17,6 @@ import {
     useNavigate,
     createSearchParams,
     useSearchParams,
-    useParams
 } from "react-router-dom";
 
 

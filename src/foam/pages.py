@@ -493,7 +493,7 @@ class TableData:
             'noquotes_type': 'TableData',
             'source': self.source,
             'new': self.new,
-            'onLoadFn': f'(params, data, context) => {self.on_load_fn}' if self.on_load_fn else '',
+            'onLoadFn': f'async (params, data, context) => {self.on_load_fn}' if self.on_load_fn else '',
             'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
         }
 

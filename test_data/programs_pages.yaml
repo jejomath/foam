@@ -154,7 +154,7 @@ page_modules:
         target: new_program_milestone_table
         params_fn: '({ program__id: data.id, _program: data.record })'
         mode: modal
-        visible_fn: ( data.find_program_milestone.length == 0 )
+        visible_fn: ( data.find_program_milestone.length === 0 )
       - display: New Experiment
         target: new_experiment
         mode: modal

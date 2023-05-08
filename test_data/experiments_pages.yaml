@@ -185,11 +185,18 @@ page_modules:
       - assay
       - type
       - perturbations
-      reference_tables: []
+      reference_tables:
+      - table_page: find_plate
+        display: Plates
+        params_fn: '({ experiment__id: data.record.id })'
       buttons:
       - display: Edit
         target: edit_experiment
         params_fn: '({ id: params.id })'
+      - display: Add Plate
+        target: edit_plate
+        params_fn: '({ experiment: data.record })'
+        mode: modal
       - display: Done
         target: back
 
@@ -238,3 +245,118 @@ page_modules:
         pretarget_fn: ( context.save() )
       - display: Cancel
         target: back
+
+#############################################################
+# Plates
+#############################################################
+
+- name: plate
+  pages:
+
+  - name: find_plate
+    descr: Search page for table plate
+    type: Table
+    config:
+      source: plate
+      view_columns:
+      - field: name
+        width: 200
+      - field: experiment
+        width: 200
+      - field: row_count
+        width: 200
+      - field: column_count
+        width: 200
+      search_fields:
+      - name
+      - experiment
+      - row_count
+      - column_count
+      row_action:
+        display: Select Plate
+        target: view_plate
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Plate
+        target: edit_plate
+      - display: Done
+        target: back
+
+  - name: view_plate
+    descr: View a record from table plate
+    type: Form
+    config:
+      source: plate
+      view_fields:
+      - name
+      - experiment
+      - row_count
+      - column_count
+      reference_tables:
+      - table_page: find_plate_well
+        display: Plate Well
+        params_fn: '({ plate__id: data.record.id, rows: data.record.row_count, cols: data.record.column_count })'
+      buttons:
+      - display: Edit
+        target: edit_plate
+        params_fn: '({ id: params.id })'
+      - display: Edit Wells
+        target: find_plate_well
+        params_fn: '({ plate__id: data.record.id, rows: data.record.row_count, cols: data.record.column_count })'
+      - display: Done
+        target: back
+
+  - name: edit_plate
+    descr: Edit a record from table plate
+    type: Form
+    config:
+      source: plate
+      edit_fields:
+      - name
+      - field: experiment
+        lookup: find_experiment
+      - row_count
+      - column_count
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+
+- name: plate_well
+  pages:
+  - name: find_plate_well
+    descr: Search page for table plate_well
+    type: Table
+    config:
+      source: plate_well
+      edit_columns:
+      - field: row
+        width: 20
+      - field: column
+        width: 20
+      - field: purpose
+        width: 200
+      - field: perturbation
+        width: 200
+      on_load_fn: "
+{
+  const existing = await context.getRecords('plate_well', { plate__id: params.plate__id });
+  if (existing.length > 0) {
+    context.setState(existing)
+  } else {
+    Array(parseInt(params.rows)).fill().forEach((_, r) => {
+      Array(parseInt(params.cols)).fill().forEach((_, c) => {
+        context.addNew({name: `p${params.plate__id}r${r}c${c}`, plate: params.plate__id, row: r, column: c})
+      })
+    }) 
+  }
+}"
+
+      buttons:
+      - display: Done
+        target: back
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )

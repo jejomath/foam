@@ -718,7 +718,7 @@ export const enums = {
             descr: 'Positive Control',
         }, {
             name: 'NEG_CTRL',
-            display: 'Netagive Control',
+            display: 'Negative Control',
             descr: 'Netagive Control',
         }, {
             name: 'PERT',
@@ -816,6 +816,14 @@ export const pages = {
                     pretarget: '',
                     target: 'new_assay',
                     mode: 'modal',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Review Plates',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_plate',
+                    mode: '',
                     paramsFn: '',
                     visibleFn: '',
                 }, ],
@@ -1397,7 +1405,7 @@ export const pages = {
                     program__id: data.id,
                     _program: data.record
                 }),
-                visibleFn: (params, data) => (data.find_program_milestone.length == 0),
+                visibleFn: (params, data) => (data.find_program_milestone.length === 0),
             }, {
                 display: 'New Experiment',
                 pretargetFn: '',
@@ -1714,7 +1722,7 @@ export const pages = {
             type: TableData,
             source: 'program_milestone',
             new: '',
-            onLoadFn: (params, data, context) => {
+            onLoadFn: async (params, data, context) => {
                 for (let i = 0; i < 3; i++) {
                     context.addNew({
                         program: params._program
@@ -2328,7 +2336,13 @@ export const pages = {
                 visibleFn: '',
             }, ],
             editFields: [],
-            referenceTables: [],
+            referenceTables: [{
+                tablePage: 'find_plate',
+                display: 'Plates',
+                paramsFn: (params, data) => ({
+                    experiment__id: data.record.id
+                }),
+            }, ],
             buttons: [{
                 display: 'Edit',
                 pretargetFn: '',
@@ -2337,6 +2351,16 @@ export const pages = {
                 mode: '',
                 paramsFn: (params, data) => ({
                     id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Add Plate',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_plate',
+                mode: 'modal',
+                paramsFn: (params, data) => ({
+                    experiment: data.record
                 }),
                 visibleFn: '',
             }, {
@@ -2356,6 +2380,15 @@ export const pages = {
             new: '',
             newFn: '',
             paramsFn: '',
+        }, {
+            name: 'find_plate',
+            type: TableData,
+            source: 'plate',
+            new: '',
+            onLoadFn: '',
+            paramsFn: (params, data) => ({
+                experiment__id: data.record.id
+            }),
         }, ],
         type: Form,
     },
@@ -2502,6 +2535,295 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+    },
+    find_plate: {
+        name: 'find_plate',
+        display: 'Find Plate',
+        config: {
+            source: 'plate',
+            rowAction: {
+                display: 'Select Plate',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_plate',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'experiment',
+                width: '200',
+            }, {
+                field: 'row_count',
+                width: '200',
+            }, {
+                field: 'column_count',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'experiment', 'row_count', 'column_count', ],
+            buttons: [{
+                display: 'New Plate',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_plate',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'plate',
+            new: '',
+            onLoadFn: '',
+            paramsFn: '',
+        }, ],
+        type: Table,
+    },
+    view_plate: {
+        name: 'view_plate',
+        display: 'View Plate',
+        config: {
+            source: 'plate',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'experiment',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'row_count',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'column_count',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_plate_well',
+                display: 'Plate Well',
+                paramsFn: (params, data) => ({
+                    plate__id: data.record.id,
+                    rows: data.record.row_count,
+                    cols: data.record.column_count
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_plate',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Edit Wells',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'find_plate_well',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    plate__id: data.record.id,
+                    rows: data.record.row_count,
+                    cols: data.record.column_count
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'record',
+            type: RecordData,
+            source: 'plate',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, {
+            name: 'find_plate_well',
+            type: TableData,
+            source: 'plate_well',
+            new: '',
+            onLoadFn: async (params, data, context) => {
+                const existing = await context.getRecords('plate_well', {
+                    plate__id: params.plate__id
+                });
+                if (existing.length > 0) {
+                    context.setState(existing)
+                } else {
+                    Array(parseInt(params.rows)).fill().forEach((_, r) => {
+                        Array(parseInt(params.cols)).fill().forEach((_, c) => {
+                            context.addNew({
+                                name: `p${params.plate__id}r${r}c${c}`,
+                                plate: params.plate__id,
+                                row: r,
+                                column: c
+                            })
+                        })
+                    })
+                }
+            },
+            paramsFn: (params, data) => ({
+                plate__id: data.record.id,
+                rows: data.record.row_count,
+                cols: data.record.column_count
+            }),
+        }, ],
+        type: Form,
+    },
+    edit_plate: {
+        name: 'edit_plate',
+        display: 'Edit Plate',
+        config: {
+            source: 'plate',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'experiment',
+                display: '',
+                lookup: 'find_experiment',
+                visibleFn: '',
+            }, {
+                field: 'row_count',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'column_count',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'record',
+            type: RecordData,
+            source: 'plate',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, ],
+        type: Form,
+    },
+    find_plate_well: {
+        name: 'find_plate_well',
+        display: 'Find Plate Well',
+        config: {
+            source: 'plate_well',
+            rowAction: null,
+            viewColumns: [],
+            editColumns: [{
+                field: 'row',
+                width: '20',
+            }, {
+                field: 'column',
+                width: '20',
+            }, {
+                field: 'purpose',
+                width: '200',
+            }, {
+                field: 'perturbation',
+                width: '200',
+            }, ],
+            searchFields: null,
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'plate_well',
+            new: '',
+            onLoadFn: async (params, data, context) => {
+                const existing = await context.getRecords('plate_well', {
+                    plate__id: params.plate__id
+                });
+                if (existing.length > 0) {
+                    context.setState(existing)
+                } else {
+                    Array(parseInt(params.rows)).fill().forEach((_, r) => {
+                        Array(parseInt(params.cols)).fill().forEach((_, c) => {
+                            context.addNew({
+                                name: `p${params.plate__id}r${r}c${c}`,
+                                plate: params.plate__id,
+                                row: r,
+                                column: c
+                            })
+                        })
+                    })
+                }
+            },
+            paramsFn: '',
+        }, ],
+        type: Table,
     },
     find_perturbation: {
         name: 'find_perturbation',
