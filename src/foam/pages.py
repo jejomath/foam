@@ -341,7 +341,7 @@ class LinksPage:
 class TablePage:
     source: str
     new_records: str = ''
-    new_records_fn: str = ''
+    on_load_fn: str = ''
     params_fn: str = ''
     view_columns: list[Column] = None
     edit_columns: list[Column] = None
@@ -368,10 +368,11 @@ class TablePage:
                     next_pages += c.add_refs(table_config, page)
                 for b in self.buttons:
                     next_pages += b.add_refs(config, page)
-                for s in self.search_fields:
+                for s in self.search_fields or []:
                     if s not in [f.name for f in table_config.fields]:
                         config_error(f'Unexpected field {table_config.name}.{s} found in config for page "{page}".')
-                next_pages += self.row_action.add_refs(config, page)
+                if self.row_action:
+                    next_pages += self.row_action.add_refs(config, page)
         return next_pages
 
     def default_data(self, config, name=None):
@@ -381,7 +382,7 @@ class TablePage:
     def js_config(self):
         return {
             'source': self.source,
-            'rowAction': self.row_action.js_config,
+            'rowAction': self.row_action.js_config if self.row_action else None,
             'viewColumns': [c.js_config for c in self.view_columns],
             'editColumns': [c.js_config for c in self.edit_columns],
             'searchFields': self.search_fields,
@@ -396,7 +397,7 @@ class FigurePage:
     layout: dict
     buttons: list[Action] = None
     new_records: str = False
-    new_records_fn: str = ''
+    on_load_fn: str = ''
     params_fn: str = ''
  
     def __post_init__(self):
@@ -475,14 +476,14 @@ class TableData:
     name: str
     source: str
     new: str = ''
-    new_fn: str = ''
+    on_load_fn: str = ''
     parameters_fn: str = ''
 
     def __init__(self, name, page_config):
         self.name = name
         self.source = page_config.source
         self.new = page_config.new_records
-        self.new_fn = page_config.new_records_fn
+        self.on_load_fn = page_config.on_load_fn
         self.params_fn = page_config.params_fn
 
     @property
@@ -492,7 +493,7 @@ class TableData:
             'noquotes_type': 'TableData',
             'source': self.source,
             'new': self.new,
-            'newFn': f'(params, data) => {self.new_fn}' if self.new_fn else '',
+            'onLoadFn': f'async (params, data, context) => {self.on_load_fn}' if self.on_load_fn else '',
             'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
         }
 

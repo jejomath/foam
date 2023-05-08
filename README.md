@@ -148,7 +148,7 @@ Each page in the config will look something like this:
         target: back
       - display: Add Platemap
         target: new_platemap
-        params_fn: "{{ experiment: data.experiment }}"
+        params_fn: "{{ experiment: data.record.experiment }}"
 ```
 
 This config defines a page based on one of the built-in templates (`RecordPage`) that allows the user to edit then
