@@ -22,6 +22,10 @@ page_modules:
           display: Experiment
         - target: find_perturbation
           display: Perturbation
+        - target: find_plate
+          display: Plate
+        - target: find_plate_well
+          display: Plate Well
       - name: Inventory
         links:
         - target: find_cell_line
@@ -430,7 +434,10 @@ page_modules:
       - assay
       - type
       - perturbations
-      reference_tables: []
+      reference_tables:
+      - table_page: find_plate
+        display: Plate
+        params_fn: '({experiment__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_experiment
@@ -505,6 +512,9 @@ page_modules:
       - table_page: find_experiment
         display: Experiment
         params_fn: '({perturbations__id: data.record.id})'
+      - table_page: find_plate_well
+        display: Plate Well
+        params_fn: '({perturbation__id: data.record.id})'
       buttons:
       - display: Edit
         target: edit_perturbation
@@ -521,6 +531,148 @@ page_modules:
       - field: compound
         lookup: find_compound
       - concentration_nm
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: plate
+  pages:
+  - name: find_plate
+    descr: Search page for table plate
+    type: Table
+    config:
+      source: plate
+      view_columns:
+      - field: name
+        width: 200
+      - field: experiment
+        width: 200
+      - field: row_count
+        width: 200
+      - field: column_count
+        width: 200
+      search_fields:
+      - name
+      - experiment
+      - row_count
+      - column_count
+      row_action:
+        display: Select Plate
+        target: view_plate
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Plate
+        target: edit_plate
+      - display: Done
+        target: back
+  - name: view_plate
+    descr: View a record from table plate
+    type: Form
+    config:
+      source: plate
+      view_fields:
+      - name
+      - experiment
+      - row_count
+      - column_count
+      reference_tables:
+      - table_page: find_plate_well
+        display: Plate Well
+        params_fn: '({plate__id: data.record.id})'
+      buttons:
+      - display: Edit
+        target: edit_plate
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_plate
+    descr: Edit a record from table plate
+    type: Form
+    config:
+      source: plate
+      edit_fields:
+      - name
+      - field: experiment
+        lookup: find_experiment
+      - row_count
+      - column_count
+      buttons:
+      - display: Save
+        target: back
+        pretarget_fn: ( context.save() )
+      - display: Cancel
+        target: back
+- name: plate_well
+  pages:
+  - name: find_plate_well
+    descr: Search page for table plate_well
+    type: Table
+    config:
+      source: plate_well
+      view_columns:
+      - field: name
+        width: 200
+      - field: plate
+        width: 200
+      - field: row
+        width: 200
+      - field: column
+        width: 200
+      - field: purpose
+        width: 200
+      - field: perturbation
+        width: 200
+      search_fields:
+      - name
+      - plate
+      - row
+      - column
+      - purpose
+      - perturbation
+      row_action:
+        display: Select Plate Well
+        target: view_plate_well
+        params_fn: '({id: data.id})'
+      buttons:
+      - display: New Plate Well
+        target: edit_plate_well
+      - display: Done
+        target: back
+  - name: view_plate_well
+    descr: View a record from table plate_well
+    type: Form
+    config:
+      source: plate_well
+      view_fields:
+      - name
+      - plate
+      - row
+      - column
+      - purpose
+      - perturbation
+      reference_tables: []
+      buttons:
+      - display: Edit
+        target: edit_plate_well
+        params_fn: '({ id: params.id })'
+      - display: Done
+        target: back
+  - name: edit_plate_well
+    descr: Edit a record from table plate_well
+    type: Form
+    config:
+      source: plate_well
+      edit_fields:
+      - name
+      - field: plate
+        lookup: find_plate
+      - row
+      - column
+      - purpose
+      - field: perturbation
+        lookup: find_perturbation
       buttons:
       - display: Save
         target: back

@@ -6,6 +6,14 @@ enums:
   - VIVO - in-vivo | Assays involving animals
   - CILICO - in-cilico | Fake experiments done with code
 
+- name: well_purpose
+  descr: The purpose of a well within a plate.
+  options:
+  - POS_CTRL - Positive Control | Positive Control
+  - NEG_CTRL - Negative Control | Netagive Control
+  - PERT - Perturbation | A perturbation
+
+
 table_modules:
 - name: experiments
   descr: Tables related to experiments.
@@ -86,3 +94,41 @@ table_modules:
     - name: concentration_nm
       type: INTEGER
       descr: The concentration of the compound in the perturbation
+
+  - name: plate
+    descr: Each record is a perturbation used in one or more experiments
+    fields:
+    - name: name
+      type: STRING
+      descr: Plate name
+    - name: experiment
+      type: ref:experiment
+      descr: The experiment that this plate is used in.
+    - name: row_count
+      type: INTEGER
+      descr: The number of rows in the plate.
+    - name: column_count
+      type: INTEGER
+      descr: The number of columns in the plate.
+
+  - name: plate_well
+    descr: Each record is a perturbation used in one or more experiments
+    fields:
+    - name: name
+      type: STRING
+      descr: Plate name
+    - name: plate
+      type: ref:plate
+      descr: The plate that this well lives in.
+    - name: row
+      type: INTEGER
+      descr: The well's row.
+    - name: column
+      type: INTEGER
+      descr: The well's column.
+    - name: purpose
+      type: enum:well_purpose
+      descr: Whether this well is a control or a perturbation.
+    - name: perturbation
+      type: ref:perturbation
+      descr: The perturbation applied to the plate.

@@ -5,9 +5,9 @@ from .serializers import PersonSerializer, ProgramSerializer, ProgramMilestoneSe
 from .serializers import PersonWriteSerializer, ProgramWriteSerializer, ProgramMilestoneWriteSerializer
 from .serializers import PersonStatsSerializer, ProgramStatsSerializer, ProgramMilestoneStatsSerializer
 
-from .serializers import AssaySerializer, ExperimentSerializer, PerturbationSerializer
-from .serializers import AssayWriteSerializer, ExperimentWriteSerializer, PerturbationWriteSerializer
-from .serializers import AssayStatsSerializer, ExperimentStatsSerializer, PerturbationStatsSerializer
+from .serializers import AssaySerializer, ExperimentSerializer, PerturbationSerializer, PlateSerializer, PlateWellSerializer
+from .serializers import AssayWriteSerializer, ExperimentWriteSerializer, PerturbationWriteSerializer, PlateWriteSerializer, PlateWellWriteSerializer
+from .serializers import AssayStatsSerializer, ExperimentStatsSerializer, PerturbationStatsSerializer, PlateStatsSerializer, PlateWellStatsSerializer
 
 from .serializers import CellLineSerializer
 from .serializers import CellLineWriteSerializer
@@ -20,7 +20,7 @@ from .serializers import IndicationStatsSerializer, SpeciesStatsSerializer, Orga
 
 from .models import Person, Program, ProgramMilestone
 
-from .models import Assay, Experiment, Perturbation
+from .models import Assay, Experiment, Perturbation, Plate, PlateWell
 
 from .models import CellLine
 
@@ -99,6 +99,28 @@ class PerturbationView(viewsets.ModelViewSet):
         'name': ['exact', 'contains', ],
         'compound__id': ['exact', ],
         'concentration_nm': ['exact', 'gt', 'lt', 'gte', 'lte', ],
+    }
+
+class PlateView(viewsets.ModelViewSet):
+    serializer_class = PlateSerializer
+    queryset = Plate.objects.all()
+    filterset_fields = {
+        'name': ['exact', 'contains', ],
+        'experiment__id': ['exact', ],
+        'row_count': ['exact', 'gt', 'lt', 'gte', 'lte', ],
+        'column_count': ['exact', 'gt', 'lt', 'gte', 'lte', ],
+    }
+
+class PlateWellView(viewsets.ModelViewSet):
+    serializer_class = PlateWellSerializer
+    queryset = PlateWell.objects.all()
+    filterset_fields = {
+        'name': ['exact', 'contains', ],
+        'plate__id': ['exact', ],
+        'row': ['exact', 'gt', 'lt', 'gte', 'lte', ],
+        'column': ['exact', 'gt', 'lt', 'gte', 'lte', ],
+        'purpose': ['exact', ],
+        'perturbation__id': ['exact', ],
     }
 
 class CellLineView(viewsets.ModelViewSet):
@@ -206,6 +228,14 @@ class PerturbationWriteView(viewsets.ModelViewSet):
     serializer_class = PerturbationWriteSerializer
     queryset = Perturbation.objects.all()
 
+class PlateWriteView(viewsets.ModelViewSet):
+    serializer_class = PlateWriteSerializer
+    queryset = Plate.objects.all()
+
+class PlateWellWriteView(viewsets.ModelViewSet):
+    serializer_class = PlateWellWriteSerializer
+    queryset = PlateWell.objects.all()
+
 class CellLineWriteView(viewsets.ModelViewSet):
     serializer_class = CellLineWriteSerializer
     queryset = CellLine.objects.all()
@@ -267,6 +297,14 @@ class ExperimentStatsView(viewsets.ModelViewSet):
 class PerturbationStatsView(viewsets.ModelViewSet):
     serializer_class = PerturbationStatsSerializer
     queryset = Perturbation.objects.all()
+
+class PlateStatsView(viewsets.ModelViewSet):
+    serializer_class = PlateStatsSerializer
+    queryset = Plate.objects.all()
+
+class PlateWellStatsView(viewsets.ModelViewSet):
+    serializer_class = PlateWellStatsSerializer
+    queryset = PlateWell.objects.all()
 
 class CellLineStatsView(viewsets.ModelViewSet):
     serializer_class = CellLineStatsSerializer

@@ -61,6 +61,22 @@ class Perturbation(models.Model):
     concentration_nm = models.IntegerField(null=True, blank=True)
     
 
+class Plate(models.Model):
+    name = models.CharField(max_length=200, null=True, blank=True)
+    experiment = models.ForeignKey('Experiment', related_name='plate', null=True, on_delete=models.SET_NULL)
+    row_count = models.IntegerField(null=True, blank=True)
+    column_count = models.IntegerField(null=True, blank=True)
+    
+
+class PlateWell(models.Model):
+    name = models.CharField(max_length=200, null=True, blank=True)
+    plate = models.ForeignKey('Plate', related_name='plate_well', null=True, on_delete=models.SET_NULL)
+    row = models.IntegerField(null=True, blank=True)
+    column = models.IntegerField(null=True, blank=True)
+    purpose = models.CharField(max_length=200, null=True, blank=True)
+    perturbation = models.ForeignKey('Perturbation', related_name='plate_well', null=True, on_delete=models.SET_NULL)
+    
+
 class CellLine(models.Model):
     name = models.CharField(max_length=200, null=True, blank=True)
     species = models.ForeignKey('Species', related_name='cell_line', null=True, on_delete=models.SET_NULL)

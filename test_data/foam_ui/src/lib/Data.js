@@ -1,7 +1,7 @@
 
 function newRecord(schema, params) {
     return Object.assign({}, ...Object.keys(schema.fields).map((f) => (
-        {[f]: params[f] ? params[f] : null}
+        {[f]: params[f]}
     )))
 }
 
@@ -140,9 +140,33 @@ export class TableData {
     }
 
     load = async (allData) => {
+        this.context.setState([])
         const params = this.config.paramsFn ? this.config.paramsFn(this.searchParams(), allData) : this.searchParams()
-        const data = await this.context.getRecords(this.source, params)
-        this.context.setState(data)
+        if (this.config.onLoadFn) {
+            this.config.onLoadFn(
+                params,
+                allData,
+                { ...this.context, addNew: this.addNew }
+            );
+        } else {
+            const data = await this.context.getRecords(this.source, params)
+            this.context.setState(data)
+        }
+    }
+
+    addNew = async (params) => {
+        var tableData = this.context.getState();
+        tableData.push(newRecord(this.context.schema[this.source], params))
+        this.context.setState(tableData)
+        return tableData;
+    }
+
+    save = async () => {
+        var tableData = this.context.getState();
+        await Promise.all(tableData.map((record, i) => (
+            this.context.saveRecord(this.source, record).then((newRecord) => { tableData[i] = newRecord; })
+        )));
+        return tableData;
     }
 
     addNew = async (params) => {

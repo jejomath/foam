@@ -341,7 +341,7 @@ class LinksPage:
 class TablePage:
     source: str
     new_records: str = ''
-    new_records_fn: str = ''
+    on_load_fn: str = ''
     params_fn: str = ''
     view_columns: list[Column] = None
     edit_columns: list[Column] = None
@@ -397,7 +397,7 @@ class FigurePage:
     layout: dict
     buttons: list[Action] = None
     new_records: str = False
-    new_records_fn: str = ''
+    on_load_fn: str = ''
     params_fn: str = ''
  
     def __post_init__(self):
@@ -476,14 +476,14 @@ class TableData:
     name: str
     source: str
     new: str = ''
-    new_fn: str = ''
+    on_load_fn: str = ''
     parameters_fn: str = ''
 
     def __init__(self, name, page_config):
         self.name = name
         self.source = page_config.source
         self.new = page_config.new_records
-        self.new_fn = page_config.new_records_fn
+        self.on_load_fn = page_config.on_load_fn
         self.params_fn = page_config.params_fn
 
     @property
@@ -493,7 +493,7 @@ class TableData:
             'noquotes_type': 'TableData',
             'source': self.source,
             'new': self.new,
-            'newFn': f'(params, data) => {self.new_fn}' if self.new_fn else '',
+            'onLoadFn': f'async (params, data, context) => {self.on_load_fn}' if self.on_load_fn else '',
             'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
         }
 

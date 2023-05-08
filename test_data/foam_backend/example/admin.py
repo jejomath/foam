@@ -2,7 +2,7 @@ from django.contrib import admin
 
 from .models import Person, Program, ProgramMilestone
 
-from .models import Assay, Experiment, Perturbation
+from .models import Assay, Experiment, Perturbation, Plate, PlateWell
 
 from .models import CellLine
 
@@ -15,6 +15,8 @@ admin.site.register(ProgramMilestone)
 admin.site.register(Assay)
 admin.site.register(Experiment)
 admin.site.register(Perturbation)
+admin.site.register(Plate)
+admin.site.register(PlateWell)
 admin.site.register(CellLine)
 admin.site.register(Indication)
 admin.site.register(Species)

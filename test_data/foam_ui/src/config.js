@@ -299,6 +299,86 @@ export const schema = {
             },
         },
     },
+    plate: {
+        name: 'plate',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            experiment: {
+                name: 'experiment',
+                display: 'Experiment',
+                fieldType: 'ref',
+                refTable: 'experiment',
+                enumClass: '',
+            },
+            row_count: {
+                name: 'row_count',
+                display: 'Row Count',
+                fieldType: 'INTEGER',
+                refTable: '',
+                enumClass: '',
+            },
+            column_count: {
+                name: 'column_count',
+                display: 'Column Count',
+                fieldType: 'INTEGER',
+                refTable: '',
+                enumClass: '',
+            },
+        },
+    },
+    plate_well: {
+        name: 'plate_well',
+        fields: {
+            name: {
+                name: 'name',
+                display: 'Name',
+                fieldType: 'STRING',
+                refTable: '',
+                enumClass: '',
+            },
+            plate: {
+                name: 'plate',
+                display: 'Plate',
+                fieldType: 'ref',
+                refTable: 'plate',
+                enumClass: '',
+            },
+            row: {
+                name: 'row',
+                display: 'Row',
+                fieldType: 'INTEGER',
+                refTable: '',
+                enumClass: '',
+            },
+            column: {
+                name: 'column',
+                display: 'Column',
+                fieldType: 'INTEGER',
+                refTable: '',
+                enumClass: '',
+            },
+            purpose: {
+                name: 'purpose',
+                display: 'Purpose',
+                fieldType: 'enum',
+                refTable: '',
+                enumClass: 'well_purpose',
+            },
+            perturbation: {
+                name: 'perturbation',
+                display: 'Perturbation',
+                fieldType: 'ref',
+                refTable: 'perturbation',
+                enumClass: '',
+            },
+        },
+    },
     cell_line: {
         name: 'cell_line',
         fields: {
@@ -630,6 +710,22 @@ export const enums = {
             descr: 'Fake experiments done with code',
         }, ],
     },
+    well_purpose: {
+        name: 'well_purpose',
+        options: [{
+            name: 'POS_CTRL',
+            display: 'Positive Control',
+            descr: 'Positive Control',
+        }, {
+            name: 'NEG_CTRL',
+            display: 'Negative Control',
+            descr: 'Netagive Control',
+        }, {
+            name: 'PERT',
+            display: 'Perturbation',
+            descr: 'A perturbation',
+        }, ],
+    },
     ethnicity: {
         name: 'ethnicity',
         options: [],
@@ -720,6 +816,14 @@ export const pages = {
                     pretarget: '',
                     target: 'new_assay',
                     mode: 'modal',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Review Plates',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_plate',
+                    mode: '',
                     paramsFn: '',
                     visibleFn: '',
                 }, ],
@@ -956,7 +1060,7 @@ export const pages = {
             type: TableData,
             source: 'person',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -1040,7 +1144,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 bio_lead__id: data.record.id
             }),
@@ -1049,7 +1153,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 chem_lead__id: data.record.id
             }),
@@ -1058,7 +1162,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 program_manager__id: data.record.id
             }),
@@ -1067,7 +1171,7 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 bio_lead__id: data.record.id
             }),
@@ -1194,7 +1298,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -1253,19 +1357,19 @@ export const pages = {
             editFields: [],
             referenceTables: [{
                 tablePage: 'find_program_milestone',
-                display: 'Program Milestone',
+                display: 'Milestones',
                 paramsFn: (params, data) => ({
                     program__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_assay',
-                display: 'Assay',
+                display: 'Assays',
                 paramsFn: (params, data) => ({
                     for_program__id: data.record.id
                 }),
             }, {
                 tablePage: 'find_experiment',
-                display: 'Experiment',
+                display: 'Experiments',
                 paramsFn: (params, data) => ({
                     program__id: data.record.id
                 }),
@@ -1288,9 +1392,20 @@ export const pages = {
                 mode: 'modal',
                 paramsFn: (params, data) => ({
                     program__id: data.id,
-                    _program: data
+                    _program: data.record
                 }),
                 visibleFn: '',
+            }, {
+                display: 'Create Milestones',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'new_program_milestone_table',
+                mode: 'modal',
+                paramsFn: (params, data) => ({
+                    program__id: data.id,
+                    _program: data.record
+                }),
+                visibleFn: (params, data) => (data.find_program_milestone.length === 0),
             }, {
                 display: 'New Experiment',
                 pretargetFn: '',
@@ -1298,7 +1413,7 @@ export const pages = {
                 target: 'new_experiment',
                 mode: 'modal',
                 paramsFn: (params, data) => ({
-                    program: data
+                    program: data.record
                 }),
                 visibleFn: '',
             }, {
@@ -1323,7 +1438,7 @@ export const pages = {
             type: TableData,
             source: 'program_milestone',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 program__id: data.record.id
             }),
@@ -1332,7 +1447,7 @@ export const pages = {
             type: TableData,
             source: 'assay',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 for_program__id: data.record.id
             }),
@@ -1341,7 +1456,7 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 program__id: data.record.id
             }),
@@ -1483,7 +1598,137 @@ export const pages = {
             type: TableData,
             source: 'program_milestone',
             new: '',
-            newFn: '',
+            onLoadFn: '',
+            paramsFn: '',
+        }, ],
+        type: Table,
+    },
+    edit_program_milestone_table: {
+        name: 'edit_program_milestone_table',
+        display: 'Edit Program Milestone Table',
+        config: {
+            source: 'program_milestone',
+            rowAction: null,
+            viewColumns: [],
+            editColumns: [{
+                field: 'program',
+                width: '200',
+            }, {
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'status',
+                width: '200',
+            }, {
+                field: 'target_date',
+                width: '200',
+            }, {
+                field: 'completed_date',
+                width: '200',
+            }, ],
+            searchFields: null,
+            buttons: [{
+                display: 'New Milestone',
+                pretargetFn: (params, data, context) => (context.addNew({
+                    program: params._program
+                })),
+                pretarget: '',
+                target: '',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Save & Close',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'program_milestone',
+            new: '',
+            onLoadFn: '',
+            paramsFn: '',
+        }, ],
+        type: Table,
+    },
+    new_program_milestone_table: {
+        name: 'new_program_milestone_table',
+        display: 'New Program Milestone Table',
+        config: {
+            source: 'program_milestone',
+            rowAction: null,
+            viewColumns: [],
+            editColumns: [{
+                field: 'program',
+                width: '200',
+            }, {
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'status',
+                width: '200',
+            }, {
+                field: 'target_date',
+                width: '200',
+            }, {
+                field: 'completed_date',
+                width: '200',
+            }, ],
+            searchFields: null,
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'New Milestone',
+                pretargetFn: (params, data, context) => (context.addNew({
+                    program: params._program
+                })),
+                pretarget: '',
+                target: '',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: '',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'program_milestone',
+            new: '',
+            onLoadFn: async (params, data, context) => {
+                for (let i = 0; i < 3; i++) {
+                    context.addNew({
+                        program: params._program
+                    })
+                }
+            },
             paramsFn: '',
         }, ],
         type: Table,
@@ -1709,7 +1954,7 @@ export const pages = {
             type: TableData,
             source: 'program_stats',
             new: 'False',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Figure,
@@ -1796,7 +2041,7 @@ export const pages = {
             type: TableData,
             source: 'assay',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -1857,7 +2102,7 @@ export const pages = {
                 target: 'new_experiment',
                 mode: 'modal',
                 paramsFn: (params, data) => ({
-                    assay: data
+                    assay: data.record
                 }),
                 visibleFn: '',
             }, {
@@ -1882,7 +2127,7 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 assay__id: data.record.id
             }),
@@ -1905,6 +2150,11 @@ export const pages = {
                 display: '',
                 lookup: '',
                 visibleFn: '',
+            }, {
+                field: 'cell_line',
+                display: '',
+                lookup: 'find_cell_line',
+                visibleFn: (params, data) => (data.type === 'VITRO'),
             }, ],
             referenceTables: [],
             buttons: [{
@@ -2076,7 +2326,7 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -2148,7 +2398,13 @@ export const pages = {
                 visibleFn: '',
             }, ],
             editFields: [],
-            referenceTables: [],
+            referenceTables: [{
+                tablePage: 'find_plate',
+                display: 'Plates',
+                paramsFn: (params, data) => ({
+                    experiment__id: data.record.id
+                }),
+            }, ],
             buttons: [{
                 display: 'Edit',
                 pretargetFn: '',
@@ -2157,6 +2413,16 @@ export const pages = {
                 mode: '',
                 paramsFn: (params, data) => ({
                     id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Add Plate',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_plate',
+                mode: 'modal',
+                paramsFn: (params, data) => ({
+                    experiment: data.record
                 }),
                 visibleFn: '',
             }, {
@@ -2176,6 +2442,15 @@ export const pages = {
             new: '',
             newFn: '',
             paramsFn: '',
+        }, {
+            name: 'find_plate',
+            type: TableData,
+            source: 'plate',
+            new: '',
+            onLoadFn: '',
+            paramsFn: (params, data) => ({
+                experiment__id: data.record.id
+            }),
         }, ],
         type: Form,
     },
@@ -2323,6 +2598,295 @@ export const pages = {
         }, ],
         type: Form,
     },
+    find_plate: {
+        name: 'find_plate',
+        display: 'Find Plate',
+        config: {
+            source: 'plate',
+            rowAction: {
+                display: 'Select Plate',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_plate',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'experiment',
+                width: '200',
+            }, {
+                field: 'row_count',
+                width: '200',
+            }, {
+                field: 'column_count',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'experiment', 'row_count', 'column_count', ],
+            buttons: [{
+                display: 'New Plate',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_plate',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'plate',
+            new: '',
+            onLoadFn: '',
+            paramsFn: '',
+        }, ],
+        type: Table,
+    },
+    view_plate: {
+        name: 'view_plate',
+        display: 'View Plate',
+        config: {
+            source: 'plate',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'experiment',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'row_count',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'column_count',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_plate_well',
+                display: 'Plate Well',
+                paramsFn: (params, data) => ({
+                    plate__id: data.record.id,
+                    rows: data.record.row_count,
+                    cols: data.record.column_count
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_plate',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Edit Wells',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'find_plate_well',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    plate__id: data.record.id,
+                    rows: data.record.row_count,
+                    cols: data.record.column_count
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'record',
+            type: RecordData,
+            source: 'plate',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, {
+            name: 'find_plate_well',
+            type: TableData,
+            source: 'plate_well',
+            new: '',
+            onLoadFn: async (params, data, context) => {
+                const existing = await context.getRecords('plate_well', {
+                    plate__id: params.plate__id
+                });
+                if (existing.length > 0) {
+                    context.setState(existing)
+                } else {
+                    Array(parseInt(params.rows)).fill().forEach((_, r) => {
+                        Array(parseInt(params.cols)).fill().forEach((_, c) => {
+                            context.addNew({
+                                name: `p${params.plate__id}r${r}c${c}`,
+                                plate: params.plate__id,
+                                row: r,
+                                column: c
+                            })
+                        })
+                    })
+                }
+            },
+            paramsFn: (params, data) => ({
+                plate__id: data.record.id,
+                rows: data.record.row_count,
+                cols: data.record.column_count
+            }),
+        }, ],
+        type: Form,
+    },
+    edit_plate: {
+        name: 'edit_plate',
+        display: 'Edit Plate',
+        config: {
+            source: 'plate',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'experiment',
+                display: '',
+                lookup: 'find_experiment',
+                visibleFn: '',
+            }, {
+                field: 'row_count',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'column_count',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'record',
+            type: RecordData,
+            source: 'plate',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, ],
+        type: Form,
+    },
+    find_plate_well: {
+        name: 'find_plate_well',
+        display: 'Find Plate Well',
+        config: {
+            source: 'plate_well',
+            rowAction: null,
+            viewColumns: [],
+            editColumns: [{
+                field: 'row',
+                width: '20',
+            }, {
+                field: 'column',
+                width: '20',
+            }, {
+                field: 'purpose',
+                width: '200',
+            }, {
+                field: 'perturbation',
+                width: '200',
+            }, ],
+            searchFields: null,
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'plate_well',
+            new: '',
+            onLoadFn: async (params, data, context) => {
+                const existing = await context.getRecords('plate_well', {
+                    plate__id: params.plate__id
+                });
+                if (existing.length > 0) {
+                    context.setState(existing)
+                } else {
+                    Array(parseInt(params.rows)).fill().forEach((_, r) => {
+                        Array(parseInt(params.cols)).fill().forEach((_, c) => {
+                            context.addNew({
+                                name: `p${params.plate__id}r${r}c${c}`,
+                                plate: params.plate__id,
+                                row: r,
+                                column: c
+                            })
+                        })
+                    })
+                }
+            },
+            paramsFn: '',
+        }, ],
+        type: Table,
+    },
     find_perturbation: {
         name: 'find_perturbation',
         display: 'Find Perturbation',
@@ -2366,7 +2930,7 @@ export const pages = {
             type: TableData,
             source: 'perturbation',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -2422,7 +2986,7 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 perturbations__id: data.record.id
             }),
@@ -2486,7 +3050,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -2587,7 +3151,7 @@ export const pages = {
             type: TableData,
             source: 'assay',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 cell_line__id: data.record.id
             }),
@@ -2717,7 +3281,7 @@ export const pages = {
             type: TableData,
             source: 'indication',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -2769,7 +3333,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 indication__id: data.record.id
             }),
@@ -2778,7 +3342,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 disease__id: data.record.id
             }),
@@ -2822,7 +3386,7 @@ export const pages = {
             type: TableData,
             source: 'species',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -2898,7 +3462,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -2907,7 +3471,7 @@ export const pages = {
             type: TableData,
             source: 'organ',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -2916,7 +3480,7 @@ export const pages = {
             type: TableData,
             source: 'tissue',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -2925,7 +3489,7 @@ export const pages = {
             type: TableData,
             source: 'cell_type',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -2934,7 +3498,7 @@ export const pages = {
             type: TableData,
             source: 'protein',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -2943,7 +3507,7 @@ export const pages = {
             type: TableData,
             source: 'gene',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -2990,7 +3554,7 @@ export const pages = {
             type: TableData,
             source: 'organ',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -3041,7 +3605,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 organ__id: data.record.id
             }),
@@ -3088,7 +3652,7 @@ export const pages = {
             type: TableData,
             source: 'tissue',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -3139,7 +3703,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 tissue__id: data.record.id
             }),
@@ -3186,7 +3750,7 @@ export const pages = {
             type: TableData,
             source: 'cell_type',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -3237,7 +3801,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 cell_type__id: data.record.id
             }),
@@ -3287,7 +3851,7 @@ export const pages = {
             type: TableData,
             source: 'protein',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -3343,7 +3907,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 target__id: data.record.id
             }),
@@ -3390,7 +3954,7 @@ export const pages = {
             type: TableData,
             source: 'gene',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -3441,7 +4005,7 @@ export const pages = {
             type: TableData,
             source: 'protein',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 gene__id: data.record.id
             }),
@@ -3488,7 +4052,7 @@ export const pages = {
             type: TableData,
             source: 'compound',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -3539,7 +4103,7 @@ export const pages = {
             type: TableData,
             source: 'perturbation',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 compound__id: data.record.id
             }),
@@ -3600,6 +4164,22 @@ export const pages = {
                     pretargetFn: '',
                     pretarget: '',
                     target: 'find_admin_perturbation',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Plate',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_admin_plate',
+                    mode: '',
+                    paramsFn: '',
+                    visibleFn: '',
+                }, {
+                    display: 'Plate Well',
+                    pretargetFn: '',
+                    pretarget: '',
+                    target: 'find_admin_plate_well',
                     mode: '',
                     paramsFn: '',
                     visibleFn: '',
@@ -3738,7 +4318,7 @@ export const pages = {
             type: TableData,
             source: 'person',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -3822,7 +4402,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 bio_lead__id: data.record.id
             }),
@@ -3831,7 +4411,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 chem_lead__id: data.record.id
             }),
@@ -3840,7 +4420,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 program_manager__id: data.record.id
             }),
@@ -3849,7 +4429,7 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 bio_lead__id: data.record.id
             }),
@@ -3976,7 +4556,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -4084,7 +4664,7 @@ export const pages = {
             type: TableData,
             source: 'program_milestone',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 program__id: data.record.id
             }),
@@ -4093,7 +4673,7 @@ export const pages = {
             type: TableData,
             source: 'assay',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 for_program__id: data.record.id
             }),
@@ -4102,7 +4682,7 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 program__id: data.record.id
             }),
@@ -4247,7 +4827,7 @@ export const pages = {
             type: TableData,
             source: 'program_milestone',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -4433,7 +5013,7 @@ export const pages = {
             type: TableData,
             source: 'assay',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -4509,7 +5089,7 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 assay__id: data.record.id
             }),
@@ -4655,7 +5235,7 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -4727,7 +5307,13 @@ export const pages = {
                 visibleFn: '',
             }, ],
             editFields: [],
-            referenceTables: [],
+            referenceTables: [{
+                tablePage: 'find_admin_plate',
+                display: 'Plate',
+                paramsFn: (params, data) => ({
+                    experiment__id: data.record.id
+                }),
+            }, ],
             buttons: [{
                 display: 'Edit',
                 pretargetFn: '',
@@ -4755,6 +5341,15 @@ export const pages = {
             new: '',
             newFn: '',
             paramsFn: '',
+        }, {
+            name: 'find_admin_plate',
+            type: TableData,
+            source: 'plate',
+            new: '',
+            onLoadFn: '',
+            paramsFn: (params, data) => ({
+                experiment__id: data.record.id
+            }),
         }, ],
         type: Form,
     },
@@ -4905,7 +5500,7 @@ export const pages = {
             type: TableData,
             source: 'perturbation',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -4937,6 +5532,12 @@ export const pages = {
                 display: 'Experiment',
                 paramsFn: (params, data) => ({
                     perturbations__id: data.record.id
+                }),
+            }, {
+                tablePage: 'find_admin_plate_well',
+                display: 'Plate Well',
+                paramsFn: (params, data) => ({
+                    perturbation__id: data.record.id
                 }),
             }, ],
             buttons: [{
@@ -4971,9 +5572,18 @@ export const pages = {
             type: TableData,
             source: 'experiment',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 perturbations__id: data.record.id
+            }),
+        }, {
+            name: 'find_admin_plate_well',
+            type: TableData,
+            source: 'plate_well',
+            new: '',
+            onLoadFn: '',
+            paramsFn: (params, data) => ({
+                perturbation__id: data.record.id
             }),
         }, ],
         type: Form,
@@ -5023,6 +5633,393 @@ export const pages = {
             name: 'record',
             type: RecordData,
             source: 'perturbation',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, ],
+        type: Form,
+    },
+    find_admin_plate: {
+        name: 'find_admin_plate',
+        display: 'Find Admin Plate',
+        config: {
+            source: 'plate',
+            rowAction: {
+                display: 'Select Plate',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_admin_plate',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'experiment',
+                width: '200',
+            }, {
+                field: 'row_count',
+                width: '200',
+            }, {
+                field: 'column_count',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'experiment', 'row_count', 'column_count', ],
+            buttons: [{
+                display: 'New Plate',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_admin_plate',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'plate',
+            new: '',
+            onLoadFn: '',
+            paramsFn: '',
+        }, ],
+        type: Table,
+    },
+    view_admin_plate: {
+        name: 'view_admin_plate',
+        display: 'View Admin Plate',
+        config: {
+            source: 'plate',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'experiment',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'row_count',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'column_count',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [{
+                tablePage: 'find_admin_plate_well',
+                display: 'Plate Well',
+                paramsFn: (params, data) => ({
+                    plate__id: data.record.id
+                }),
+            }, ],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_admin_plate',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'record',
+            type: RecordData,
+            source: 'plate',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, {
+            name: 'find_admin_plate_well',
+            type: TableData,
+            source: 'plate_well',
+            new: '',
+            onLoadFn: '',
+            paramsFn: (params, data) => ({
+                plate__id: data.record.id
+            }),
+        }, ],
+        type: Form,
+    },
+    edit_admin_plate: {
+        name: 'edit_admin_plate',
+        display: 'Edit Admin Plate',
+        config: {
+            source: 'plate',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'experiment',
+                display: '',
+                lookup: 'find_admin_experiment',
+                visibleFn: '',
+            }, {
+                field: 'row_count',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'column_count',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'record',
+            type: RecordData,
+            source: 'plate',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, ],
+        type: Form,
+    },
+    find_admin_plate_well: {
+        name: 'find_admin_plate_well',
+        display: 'Find Admin Plate Well',
+        config: {
+            source: 'plate_well',
+            rowAction: {
+                display: 'Select Plate Well',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'view_admin_plate_well',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: data.id
+                }),
+                visibleFn: '',
+            },
+            viewColumns: [{
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'plate',
+                width: '200',
+            }, {
+                field: 'row',
+                width: '200',
+            }, {
+                field: 'column',
+                width: '200',
+            }, {
+                field: 'purpose',
+                width: '200',
+            }, {
+                field: 'perturbation',
+                width: '200',
+            }, ],
+            editColumns: [],
+            searchFields: ['name', 'plate', 'row', 'column', 'purpose', 'perturbation', ],
+            buttons: [{
+                display: 'New Plate Well',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_admin_plate_well',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'plate_well',
+            new: '',
+            onLoadFn: '',
+            paramsFn: '',
+        }, ],
+        type: Table,
+    },
+    view_admin_plate_well: {
+        name: 'view_admin_plate_well',
+        display: 'View Admin Plate Well',
+        config: {
+            source: 'plate_well',
+            viewFields: [{
+                field: 'name',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'plate',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'row',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'column',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'purpose',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, {
+                field: 'perturbation',
+                display: '',
+                target: '',
+                visibleFn: '',
+            }, ],
+            editFields: [],
+            referenceTables: [],
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_admin_plate_well',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'record',
+            type: RecordData,
+            source: 'plate_well',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, ],
+        type: Form,
+    },
+    edit_admin_plate_well: {
+        name: 'edit_admin_plate_well',
+        display: 'Edit Admin Plate Well',
+        config: {
+            source: 'plate_well',
+            viewFields: [],
+            editFields: [{
+                field: 'name',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'plate',
+                display: '',
+                lookup: 'find_admin_plate',
+                visibleFn: '',
+            }, {
+                field: 'row',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'column',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'purpose',
+                display: '',
+                lookup: '',
+                visibleFn: '',
+            }, {
+                field: 'perturbation',
+                display: '',
+                lookup: 'find_admin_perturbation',
+                visibleFn: '',
+            }, ],
+            referenceTables: [],
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
+        },
+        data: [{
+            name: 'record',
+            type: RecordData,
+            source: 'plate_well',
             new: '',
             newFn: '',
             paramsFn: '',
@@ -5101,7 +6098,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -5202,7 +6199,7 @@ export const pages = {
             type: TableData,
             source: 'assay',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 cell_line__id: data.record.id
             }),
@@ -5340,7 +6337,7 @@ export const pages = {
             type: TableData,
             source: 'indication',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -5402,7 +6399,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 indication__id: data.record.id
             }),
@@ -5411,7 +6408,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 disease__id: data.record.id
             }),
@@ -5504,7 +6501,7 @@ export const pages = {
             type: TableData,
             source: 'species',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -5590,7 +6587,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -5599,7 +6596,7 @@ export const pages = {
             type: TableData,
             source: 'organ',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -5608,7 +6605,7 @@ export const pages = {
             type: TableData,
             source: 'tissue',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -5617,7 +6614,7 @@ export const pages = {
             type: TableData,
             source: 'cell_type',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -5626,7 +6623,7 @@ export const pages = {
             type: TableData,
             source: 'protein',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -5635,7 +6632,7 @@ export const pages = {
             type: TableData,
             source: 'gene',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 species__id: data.record.id
             }),
@@ -5731,7 +6728,7 @@ export const pages = {
             type: TableData,
             source: 'organ',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -5792,7 +6789,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 organ__id: data.record.id
             }),
@@ -5893,7 +6890,7 @@ export const pages = {
             type: TableData,
             source: 'tissue',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -5954,7 +6951,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 tissue__id: data.record.id
             }),
@@ -6055,7 +7052,7 @@ export const pages = {
             type: TableData,
             source: 'cell_type',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -6116,7 +7113,7 @@ export const pages = {
             type: TableData,
             source: 'cell_line',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 cell_type__id: data.record.id
             }),
@@ -6220,7 +7217,7 @@ export const pages = {
             type: TableData,
             source: 'protein',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -6286,7 +7283,7 @@ export const pages = {
             type: TableData,
             source: 'program',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 target__id: data.record.id
             }),
@@ -6392,7 +7389,7 @@ export const pages = {
             type: TableData,
             source: 'gene',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -6453,7 +7450,7 @@ export const pages = {
             type: TableData,
             source: 'protein',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 gene__id: data.record.id
             }),
@@ -6554,7 +7551,7 @@ export const pages = {
             type: TableData,
             source: 'compound',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Table,
@@ -6615,7 +7612,7 @@ export const pages = {
             type: TableData,
             source: 'perturbation',
             new: '',
-            newFn: '',
+            onLoadFn: '',
             paramsFn: (params, data) => ({
                 compound__id: data.record.id
             }),

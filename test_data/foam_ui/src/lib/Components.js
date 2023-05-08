@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import DatePicker from "react-datepicker";
-import DataGrid, { textEditor } from 'react-data-grid';
+import DataGrid from 'react-data-grid';
 import {createPortal} from 'react-dom';
 
 import 'react-datepicker/dist/react-datepicker.css';
@@ -53,9 +53,9 @@ export class ButtonList extends Component {
                     (!config.visibleFn || config.visibleFn(this.props.params, this.props.data)) ?
                     <Button 
                         config={config}
-                        params = {this.props.params}
-                        data = {this.props.data}
-                        context = {this.props.context}
+                        params={this.props.params}
+                        data={this.props.data}
+                        context={this.props.context}
                         key={index}
                     /> : <div key={index} />))}
             </div>
@@ -132,9 +132,13 @@ export class EditField extends Component {
     }
 
     handleDateChange = (date) => {
-        date.setHours(0, 0, 0, 0);
-        const strDate = date.toISOString().substring(0, 10);
-        this.props.context.update(this.props.config.field.field, strDate)
+        if (!date) {
+            this.props.context.update(this.props.config.field.field, null)
+        } else {
+            date.setHours(0, 0, 0, 0);
+            const strDate = date.toISOString().substring(0, 10);
+            this.props.context.update(this.props.config.field.field, strDate)
+        }
     }
 
     focus = (input) => {
@@ -165,7 +169,7 @@ export class EditField extends Component {
             />
 
         } else if (fieldType === 'INTEGER') {
-            return <div>Not Implemented</div>
+            return (<input type='text' value={this.props.data || ''} onChange={this.handlChange} ref={this.focus}/>)
 
         } else if (fieldType === 'enum') {
             const options = this.props.context.enums[field.enumClass].options;
@@ -240,6 +244,13 @@ export class FieldList extends Component {
     }
 }
 
+function rowRenderer(key, rows) {
+    console.log(rows);
+    return rows;
+}
+
+
+
 export class Table extends Component {
     rowClick = (rowData) => {
         const rowAction = this.props.params.rowAction || this.props.config.rowAction;
@@ -293,6 +304,9 @@ export class Table extends Component {
             onRowsChange={(data) => { this.props.context.update(data); }}
             rows={this.props.data}
             style={{height: dynamicHeight}}
+            onRowChange={ (foo) => { console.log(foo); }}
+            rowReorderColumn={true}
+            renderers={ rowRenderer }
         /></div>
     }
 }
