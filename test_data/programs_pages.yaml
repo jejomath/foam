@@ -277,8 +277,6 @@ page_modules:
       - display: Save
         pretarget_fn: ( context.save() )
 
-
-
   - name: view_program_milestone
     descr: View a record from table program_milestone
     type: Form

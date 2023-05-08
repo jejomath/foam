@@ -168,4 +168,19 @@ export class TableData {
         )));
         return tableData;
     }
+
+    addNew = async (params) => {
+        var tableData = this.context.getState();
+        tableData.push(newRecord(this.context.schema[this.source], params))
+        this.context.setState(tableData)
+        return tableData;
+    }
+
+    save = async () => {
+        var tableData = this.context.getState();
+        await Promise.all(tableData.map((record, i) => (
+            this.context.saveRecord(this.source, record).then((newRecord) => { tableData[i] = newRecord; })
+        )));
+        return tableData;
+    }
 }
