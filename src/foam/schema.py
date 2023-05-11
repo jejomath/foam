@@ -70,14 +70,14 @@ def get_gen_pages(config, prefix=''):
                         'target': f'view_{prefix}{t.name}',
                         'params_fn': '({id: data.id})' 
                     },
-                    'buttons': [{
-                        'display': f'New {t.display}',
-                        'target': f'edit_{prefix}{t.name}'
-                    }, {
-                        'display': 'Done',
-                        'target': 'back'
-                    }]
-                }
+                },
+                'buttons': [{
+                    'display': f'New {t.display}',
+                    'target': f'edit_{prefix}{t.name}'
+                }, {
+                    'display': 'Done',
+                    'target': 'back'
+                }]
             }, {
                 'name': f'view_{prefix}{t.name}',
                 'descr': f'View a record from table {t.name}',
@@ -90,15 +90,15 @@ def get_gen_pages(config, prefix=''):
                         'display': r.table.display,
                         'params_fn': f'({{{r.name}__id: data.record.id}})'
                     } for r in t.backref_fields],
-                    'buttons': [{
-                        'display': 'Edit',
-                        'target': f'edit_{prefix}{t.name}',
-                        'params_fn': '({ id: params.id })'
-                    }, {
-                        'display': 'Done',
-                        'target': 'back'
-                    }]
                 },
+                'buttons': [{
+                    'display': 'Edit',
+                    'target': f'edit_{prefix}{t.name}',
+                    'params_fn': '({ id: params.id })'
+                }, {
+                    'display': 'Done',
+                    'target': 'back'
+                }]
             }, {
                 'name': f'edit_{prefix}{t.name}',
                 'descr': f'Edit a record from table {t.name}',
@@ -108,15 +108,15 @@ def get_gen_pages(config, prefix=''):
                     'edit_fields': [
                         {'field': f.name, 'lookup': f'find_{prefix}{f.ref_table.name}'} if f.ref_table else f.name
                         for f in t.fields],
-                    'buttons': [{
-                        'display': 'Save',
-                        'target': 'back',
-                        'pretarget_fn': '( context.save() )'
-                    }, {
-                        'display': 'Cancel',
-                        'target': 'back'
-                    }]
                 },
+                'buttons': [{
+                    'display': 'Save',
+                    'target': 'back',
+                    'pretarget_fn': '( context.clients.record.save() )'
+                }, {
+                    'display': 'Cancel',
+                    'target': 'back'
+                }]
             }]
         } for t in sum([m.tables for m in config.table_modules], [])]
     }

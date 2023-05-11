@@ -70,11 +70,11 @@ page_modules:
         display: Select Person
         target: view_person
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Person
-        target: edit_person
-      - display: Done
-        target: back
+    buttons:
+    - display: New Person
+      target: edit_person
+    - display: Done
+      target: back
   - name: view_person
     descr: View a record from table person
     type: Form
@@ -97,12 +97,12 @@ page_modules:
       - table_page: find_experiment
         display: Experiment
         params_fn: '({bio_lead__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_person
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_person
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_person
     descr: Edit a record from table person
     type: Form
@@ -112,12 +112,12 @@ page_modules:
       - name
       - given_name
       - family_name
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: program
   pages:
   - name: find_program
@@ -158,11 +158,11 @@ page_modules:
         display: Select Program
         target: view_program
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Program
-        target: edit_program
-      - display: Done
-        target: back
+    buttons:
+    - display: New Program
+      target: edit_program
+    - display: Done
+      target: back
   - name: view_program
     descr: View a record from table program
     type: Form
@@ -188,12 +188,12 @@ page_modules:
       - table_page: find_experiment
         display: Experiment
         params_fn: '({program__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_program
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_program
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_program
     descr: Edit a record from table program
     type: Form
@@ -214,12 +214,12 @@ page_modules:
         lookup: find_person
       - field: program_manager
         lookup: find_person
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: program_milestone
   pages:
   - name: find_program_milestone
@@ -248,11 +248,11 @@ page_modules:
         display: Select Program Milestone
         target: view_program_milestone
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Program Milestone
-        target: edit_program_milestone
-      - display: Done
-        target: back
+    buttons:
+    - display: New Program Milestone
+      target: edit_program_milestone
+    - display: Done
+      target: back
   - name: view_program_milestone
     descr: View a record from table program_milestone
     type: Form
@@ -265,12 +265,12 @@ page_modules:
       - target_date
       - completed_date
       reference_tables: []
-      buttons:
-      - display: Edit
-        target: edit_program_milestone
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_program_milestone
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_program_milestone
     descr: Edit a record from table program_milestone
     type: Form
@@ -283,12 +283,12 @@ page_modules:
       - status
       - target_date
       - completed_date
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: assay
   pages:
   - name: find_assay
@@ -317,11 +317,11 @@ page_modules:
         display: Select Assay
         target: view_assay
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Assay
-        target: edit_assay
-      - display: Done
-        target: back
+    buttons:
+    - display: New Assay
+      target: edit_assay
+    - display: Done
+      target: back
   - name: view_assay
     descr: View a record from table assay
     type: Form
@@ -337,12 +337,12 @@ page_modules:
       - table_page: find_experiment
         display: Experiment
         params_fn: '({assay__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_assay
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_assay
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_assay
     descr: Edit a record from table assay
     type: Form
@@ -356,12 +356,12 @@ page_modules:
         lookup: find_cell_line
       - field: for_program
         lookup: find_program
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: experiment
   pages:
   - name: find_experiment
@@ -411,11 +411,11 @@ page_modules:
         display: Select Experiment
         target: view_experiment
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Experiment
-        target: edit_experiment
-      - display: Done
-        target: back
+    buttons:
+    - display: New Experiment
+      target: edit_experiment
+    - display: Done
+      target: back
   - name: view_experiment
     descr: View a record from table experiment
     type: Form
@@ -438,12 +438,12 @@ page_modules:
       - table_page: find_plate
         display: Plate
         params_fn: '({experiment__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_experiment
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_experiment
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_experiment
     descr: Edit a record from table experiment
     type: Form
@@ -466,12 +466,12 @@ page_modules:
       - type
       - field: perturbations
         lookup: find_perturbation
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: perturbation
   pages:
   - name: find_perturbation
@@ -494,11 +494,11 @@ page_modules:
         display: Select Perturbation
         target: view_perturbation
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Perturbation
-        target: edit_perturbation
-      - display: Done
-        target: back
+    buttons:
+    - display: New Perturbation
+      target: edit_perturbation
+    - display: Done
+      target: back
   - name: view_perturbation
     descr: View a record from table perturbation
     type: Form
@@ -515,12 +515,12 @@ page_modules:
       - table_page: find_plate_well
         display: Plate Well
         params_fn: '({perturbation__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_perturbation
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_perturbation
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_perturbation
     descr: Edit a record from table perturbation
     type: Form
@@ -531,12 +531,12 @@ page_modules:
       - field: compound
         lookup: find_compound
       - concentration_nm
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: plate
   pages:
   - name: find_plate
@@ -562,11 +562,11 @@ page_modules:
         display: Select Plate
         target: view_plate
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Plate
-        target: edit_plate
-      - display: Done
-        target: back
+    buttons:
+    - display: New Plate
+      target: edit_plate
+    - display: Done
+      target: back
   - name: view_plate
     descr: View a record from table plate
     type: Form
@@ -581,12 +581,12 @@ page_modules:
       - table_page: find_plate_well
         display: Plate Well
         params_fn: '({plate__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_plate
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_plate
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_plate
     descr: Edit a record from table plate
     type: Form
@@ -598,12 +598,12 @@ page_modules:
         lookup: find_experiment
       - row_count
       - column_count
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: plate_well
   pages:
   - name: find_plate_well
@@ -635,11 +635,11 @@ page_modules:
         display: Select Plate Well
         target: view_plate_well
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Plate Well
-        target: edit_plate_well
-      - display: Done
-        target: back
+    buttons:
+    - display: New Plate Well
+      target: edit_plate_well
+    - display: Done
+      target: back
   - name: view_plate_well
     descr: View a record from table plate_well
     type: Form
@@ -653,12 +653,12 @@ page_modules:
       - purpose
       - perturbation
       reference_tables: []
-      buttons:
-      - display: Edit
-        target: edit_plate_well
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_plate_well
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_plate_well
     descr: Edit a record from table plate_well
     type: Form
@@ -673,12 +673,12 @@ page_modules:
       - purpose
       - field: perturbation
         lookup: find_perturbation
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: cell_line
   pages:
   - name: find_cell_line
@@ -722,11 +722,11 @@ page_modules:
         display: Select Cell Line
         target: view_cell_line
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Cell Line
-        target: edit_cell_line
-      - display: Done
-        target: back
+    buttons:
+    - display: New Cell Line
+      target: edit_cell_line
+    - display: Done
+      target: back
   - name: view_cell_line
     descr: View a record from table cell_line
     type: Form
@@ -747,12 +747,12 @@ page_modules:
       - table_page: find_assay
         display: Assay
         params_fn: '({cell_line__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_cell_line
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_cell_line
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_cell_line
     descr: Edit a record from table cell_line
     type: Form
@@ -774,12 +774,12 @@ page_modules:
       - donor_health_status
       - field: disease
         lookup: find_indication
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: indication
   pages:
   - name: find_indication
@@ -796,11 +796,11 @@ page_modules:
         display: Select Indication
         target: view_indication
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Indication
-        target: edit_indication
-      - display: Done
-        target: back
+    buttons:
+    - display: New Indication
+      target: edit_indication
+    - display: Done
+      target: back
   - name: view_indication
     descr: View a record from table indication
     type: Form
@@ -815,12 +815,12 @@ page_modules:
       - table_page: find_cell_line
         display: Cell Line
         params_fn: '({disease__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_indication
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_indication
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_indication
     descr: Edit a record from table indication
     type: Form
@@ -828,12 +828,12 @@ page_modules:
       source: indication
       edit_fields:
       - name
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: species
   pages:
   - name: find_species
@@ -850,11 +850,11 @@ page_modules:
         display: Select Species
         target: view_species
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Species
-        target: edit_species
-      - display: Done
-        target: back
+    buttons:
+    - display: New Species
+      target: edit_species
+    - display: Done
+      target: back
   - name: view_species
     descr: View a record from table species
     type: Form
@@ -881,12 +881,12 @@ page_modules:
       - table_page: find_gene
         display: Gene
         params_fn: '({species__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_species
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_species
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_species
     descr: Edit a record from table species
     type: Form
@@ -894,12 +894,12 @@ page_modules:
       source: species
       edit_fields:
       - name
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: organ
   pages:
   - name: find_organ
@@ -919,11 +919,11 @@ page_modules:
         display: Select Organ
         target: view_organ
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Organ
-        target: edit_organ
-      - display: Done
-        target: back
+    buttons:
+    - display: New Organ
+      target: edit_organ
+    - display: Done
+      target: back
   - name: view_organ
     descr: View a record from table organ
     type: Form
@@ -936,12 +936,12 @@ page_modules:
       - table_page: find_cell_line
         display: Cell Line
         params_fn: '({organ__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_organ
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_organ
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_organ
     descr: Edit a record from table organ
     type: Form
@@ -951,12 +951,12 @@ page_modules:
       - name
       - field: species
         lookup: find_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: tissue
   pages:
   - name: find_tissue
@@ -976,11 +976,11 @@ page_modules:
         display: Select Tissue
         target: view_tissue
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Tissue
-        target: edit_tissue
-      - display: Done
-        target: back
+    buttons:
+    - display: New Tissue
+      target: edit_tissue
+    - display: Done
+      target: back
   - name: view_tissue
     descr: View a record from table tissue
     type: Form
@@ -993,12 +993,12 @@ page_modules:
       - table_page: find_cell_line
         display: Cell Line
         params_fn: '({tissue__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_tissue
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_tissue
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_tissue
     descr: Edit a record from table tissue
     type: Form
@@ -1008,12 +1008,12 @@ page_modules:
       - name
       - field: species
         lookup: find_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: cell_type
   pages:
   - name: find_cell_type
@@ -1033,11 +1033,11 @@ page_modules:
         display: Select Cell Type
         target: view_cell_type
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Cell Type
-        target: edit_cell_type
-      - display: Done
-        target: back
+    buttons:
+    - display: New Cell Type
+      target: edit_cell_type
+    - display: Done
+      target: back
   - name: view_cell_type
     descr: View a record from table cell_type
     type: Form
@@ -1050,12 +1050,12 @@ page_modules:
       - table_page: find_cell_line
         display: Cell Line
         params_fn: '({cell_type__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_cell_type
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_cell_type
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_cell_type
     descr: Edit a record from table cell_type
     type: Form
@@ -1065,12 +1065,12 @@ page_modules:
       - name
       - field: species
         lookup: find_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: protein
   pages:
   - name: find_protein
@@ -1093,11 +1093,11 @@ page_modules:
         display: Select Protein
         target: view_protein
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Protein
-        target: edit_protein
-      - display: Done
-        target: back
+    buttons:
+    - display: New Protein
+      target: edit_protein
+    - display: Done
+      target: back
   - name: view_protein
     descr: View a record from table protein
     type: Form
@@ -1111,12 +1111,12 @@ page_modules:
       - table_page: find_program
         display: Program
         params_fn: '({target__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_protein
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_protein
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_protein
     descr: Edit a record from table protein
     type: Form
@@ -1128,12 +1128,12 @@ page_modules:
         lookup: find_gene
       - field: species
         lookup: find_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: gene
   pages:
   - name: find_gene
@@ -1153,11 +1153,11 @@ page_modules:
         display: Select Gene
         target: view_gene
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Gene
-        target: edit_gene
-      - display: Done
-        target: back
+    buttons:
+    - display: New Gene
+      target: edit_gene
+    - display: Done
+      target: back
   - name: view_gene
     descr: View a record from table gene
     type: Form
@@ -1170,12 +1170,12 @@ page_modules:
       - table_page: find_protein
         display: Protein
         params_fn: '({gene__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_gene
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_gene
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_gene
     descr: Edit a record from table gene
     type: Form
@@ -1185,12 +1185,12 @@ page_modules:
       - name
       - field: species
         lookup: find_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: compound
   pages:
   - name: find_compound
@@ -1210,11 +1210,11 @@ page_modules:
         display: Select Compound
         target: view_compound
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Compound
-        target: edit_compound
-      - display: Done
-        target: back
+    buttons:
+    - display: New Compound
+      target: edit_compound
+    - display: Done
+      target: back
   - name: view_compound
     descr: View a record from table compound
     type: Form
@@ -1227,12 +1227,12 @@ page_modules:
       - table_page: find_perturbation
         display: Perturbation
         params_fn: '({compound__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_compound
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_compound
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
   - name: edit_compound
     descr: Edit a record from table compound
     type: Form
@@ -1241,9 +1241,9 @@ page_modules:
       edit_fields:
       - name
       - smiles
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back

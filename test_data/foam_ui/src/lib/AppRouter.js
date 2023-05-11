@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import LoginPage from './LoginPage.js';
+import { ButtonList } from './Components.js'
 
 import { 
     getRecord,
@@ -71,8 +72,7 @@ class Page extends Component {
         this.loadData()
     }
 
-    render() {
-        const page = this.props.context.pages[this.props.name]
+    getPage(page) {
         return React.createElement(page.type, {
             data: this.state.data,
             config: page.config,
@@ -83,6 +83,25 @@ class Page extends Component {
             }
         })
     }
+
+    render() {
+        const page = this.props.context.pages[this.props.name]
+        return (
+            <div>
+                <div className='page-title-div'>{page.display}</div>
+                {this.getPage(page)}
+                <ButtonList
+                    config={{
+                        buttons: page.buttons,
+                    }}
+                    params = {this.state.params}
+                    data = {this.state.data}
+                    context = {{...this.props.context, clients: this.clientDict }}
+                />
+            </div>
+        )
+    }
+
 }
 
 /* Controls the stack of modals above the current page. */
@@ -152,6 +171,7 @@ class PageStack extends Component {
     }
 
     render() {
+        if (!this.state.page) { return <div></div> }
         if (!this.state.loginStatus) {
             return (
                 <div className="modal-outer">
