@@ -11,7 +11,12 @@ export default class TablePage extends Component {
         const context = this.props.context;
         if (this.props.mode === 'reference') {
             return <Table
-                config={config}
+                config={{ 
+                    source: config.source,
+                    viewColumns: config.viewColumns.concat(config.editColumns),
+                    editColumns: [],
+                    rowAction: config.rowAction
+                }}
                 params={params}
                 data={data}
                 context={context}

@@ -3,6 +3,7 @@ import {
     TableData,
     Form,
     Table,
+    Grid,
     Links,
     Figure,
     Layout,
@@ -1001,6 +1002,7 @@ export const pages = {
         },
         data: [],
         type: Links,
+        buttons: [],
     },
     not_yet: {
         name: 'not_yet',
@@ -1008,6 +1010,7 @@ export const pages = {
         config: {},
         data: [],
         type: UnderConstruction,
+        buttons: [],
     },
     find_person: {
         name: 'find_person',
@@ -1064,6 +1067,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_person: {
         name: 'view_person',
@@ -1177,6 +1181,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_person: {
         name: 'edit_person',
@@ -1228,6 +1233,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_program: {
         name: 'find_program',
@@ -1302,6 +1308,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_program: {
         name: 'view_program',
@@ -1462,6 +1469,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_program: {
         name: 'edit_program',
@@ -1543,6 +1551,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_program_milestone: {
         name: 'find_program_milestone',
@@ -1602,6 +1611,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     edit_program_milestone_table: {
         name: 'edit_program_milestone_table',
@@ -1664,6 +1674,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     new_program_milestone_table: {
         name: 'new_program_milestone_table',
@@ -1732,68 +1743,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-    },
-    edit_program_milestone_table: {
-        name: 'edit_program_milestone_table',
-        display: 'Edit Program Milestone Table',
-        config: {
-            source: 'program_milestone',
-            rowAction: null,
-            viewColumns: [],
-            editColumns: [{
-                field: 'program',
-                width: '200',
-            }, {
-                field: 'name',
-                width: '200',
-            }, {
-                field: 'status',
-                width: '200',
-            }, {
-                field: 'target_date',
-                width: '200',
-            }, {
-                field: 'completed_date',
-                width: '200',
-            }, ],
-            searchFields: null,
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'New Milestone',
-                pretargetFn: (params, data, context) => (context.addNew({
-                    program: params._program
-                })),
-                pretarget: '',
-                target: '',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: '',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
-        },
-        data: [{
-            name: 'table',
-            type: TableData,
-            source: 'program_milestone',
-            new: '',
-            newFn: '',
-            paramsFn: '',
-        }, ],
-        type: Table,
+        buttons: [],
     },
     view_program_milestone: {
         name: 'view_program_milestone',
@@ -1857,6 +1807,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_program_milestone: {
         name: 'edit_program_milestone',
@@ -1918,6 +1869,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     program_dashboard: {
         name: 'program_dashboard',
@@ -1958,6 +1910,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Figure,
+        buttons: [],
     },
     fancy_dashboard: {
         name: 'fancy_dashboard',
@@ -1983,6 +1936,7 @@ export const pages = {
         },
         data: [],
         type: Layout,
+        buttons: [],
     },
     find_assay: {
         name: 'find_assay',
@@ -2018,23 +1972,7 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'type', 'descr', 'cell_line', 'for_program', ],
-            buttons: [{
-                display: 'New Assay',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'new_assay',
-                mode: 'modal',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'table',
@@ -2045,6 +1983,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [{
+            display: 'New Assay',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'new_assay',
+            mode: 'modal',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_assay: {
         name: 'view_assay',
@@ -2085,35 +2040,7 @@ export const pages = {
                     assay__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_assay',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'New Experiment',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'new_experiment',
-                mode: 'modal',
-                paramsFn: (params, data) => ({
-                    assay: data.record
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2133,6 +2060,35 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_assay',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'New Experiment',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'new_experiment',
+            mode: 'modal',
+            paramsFn: (params, data) => ({
+                assay: data.record
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     new_assay: {
         name: 'new_assay',
@@ -2157,25 +2113,7 @@ export const pages = {
                 visibleFn: (params, data) => (data.type === 'VITRO'),
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'edit_assay',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: data.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2186,6 +2124,25 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [{
+            display: 'Done',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'edit_assay',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: data.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_assay: {
         name: 'edit_assay',
@@ -2220,23 +2177,7 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2247,6 +2188,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_experiment: {
         name: 'find_experiment',
@@ -2303,23 +2261,7 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'description', 'status', 'program', 'bio_lead', 'target_start_date', 'target_duration', 'start_date', 'end_date', 'assay', 'type', 'perturbations', ],
-            buttons: [{
-                display: 'New Experiment',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'new_experiment',
-                mode: 'modal',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'table',
@@ -2330,6 +2272,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [{
+            display: 'New Experiment',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'new_experiment',
+            mode: 'modal',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_experiment: {
         name: 'view_experiment',
@@ -2405,35 +2364,7 @@ export const pages = {
                     experiment__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_experiment',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Add Plate',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_plate',
-                mode: 'modal',
-                paramsFn: (params, data) => ({
-                    experiment: data.record
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2453,6 +2384,35 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_experiment',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Add Plate',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_plate',
+            mode: 'modal',
+            paramsFn: (params, data) => ({
+                experiment: data.record
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     new_experiment: {
         name: 'new_experiment',
@@ -2472,25 +2432,7 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'edit_experiment',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: data.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2501,6 +2443,25 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [{
+            display: 'Done',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'edit_experiment',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: data.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_experiment: {
         name: 'edit_experiment',
@@ -2570,23 +2531,7 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2597,6 +2542,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_plate: {
         name: 'find_plate',
@@ -2629,23 +2591,7 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'experiment', 'row_count', 'column_count', ],
-            buttons: [{
-                display: 'New Plate',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_plate',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'table',
@@ -2656,6 +2602,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [{
+            display: 'New Plate',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_plate',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_plate: {
         name: 'view_plate',
@@ -2693,37 +2656,7 @@ export const pages = {
                     cols: data.record.column_count
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_plate',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Edit Wells',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'find_plate_well',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    plate__id: data.record.id,
-                    rows: data.record.row_count,
-                    cols: data.record.column_count
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2763,6 +2696,47 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_plate',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Edit Wells',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'find_plate_well',
+            mode: '',
+            paramsFn: (params, data) => ({
+                plate__id: data.record.id,
+                rows: data.record.row_count,
+                cols: data.record.column_count
+            }),
+            visibleFn: '',
+        }, {
+            display: 'View Plate Map',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'view_plate_map',
+            mode: '',
+            paramsFn: (params, data) => ({
+                plate__id: data.record.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_plate: {
         name: 'edit_plate',
@@ -2792,23 +2766,7 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2819,6 +2777,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_plate_well: {
         name: 'find_plate_well',
@@ -2841,23 +2816,7 @@ export const pages = {
                 width: '200',
             }, ],
             searchFields: null,
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
+            buttons: [],
         },
         data: [{
             name: 'table',
@@ -2886,6 +2845,60 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
+    },
+    view_plate_map: {
+        name: 'view_plate_map',
+        display: 'View Plate Map',
+        config: {
+            source: 'plate_well',
+            rowField: 'row',
+            columnField: 'column',
+            displayField: 'purpose',
+            buttons: [],
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'plate_well',
+            new: '',
+            onLoadFn: '',
+            paramsFn: '',
+        }, ],
+        type: Grid,
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.table.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_perturbation: {
         name: 'find_perturbation',
@@ -2934,6 +2947,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_perturbation: {
         name: 'view_perturbation',
@@ -2992,6 +3006,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     find_cell_line: {
         name: 'find_cell_line',
@@ -3054,6 +3069,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_cell_line: {
         name: 'view_cell_line',
@@ -3157,6 +3173,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_cell_line: {
         name: 'edit_cell_line',
@@ -3243,6 +3260,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_indication: {
         name: 'find_indication',
@@ -3285,6 +3303,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_indication: {
         name: 'view_indication',
@@ -3348,6 +3367,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     find_species: {
         name: 'find_species',
@@ -3390,6 +3410,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_species: {
         name: 'view_species',
@@ -3513,6 +3534,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     find_organ: {
         name: 'find_organ',
@@ -3558,6 +3580,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_organ: {
         name: 'view_organ',
@@ -3611,6 +3634,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     find_tissue: {
         name: 'find_tissue',
@@ -3656,6 +3680,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_tissue: {
         name: 'view_tissue',
@@ -3709,6 +3734,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     find_cell_type: {
         name: 'find_cell_type',
@@ -3754,6 +3780,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_cell_type: {
         name: 'view_cell_type',
@@ -3807,6 +3834,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     find_protein: {
         name: 'find_protein',
@@ -3855,6 +3883,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_protein: {
         name: 'view_protein',
@@ -3913,6 +3942,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     find_gene: {
         name: 'find_gene',
@@ -3958,6 +3988,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_gene: {
         name: 'view_gene',
@@ -4011,6 +4042,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     find_compound: {
         name: 'find_compound',
@@ -4056,6 +4088,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_compound: {
         name: 'view_compound',
@@ -4109,6 +4142,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     admin_home: {
         name: 'admin_home',
@@ -4266,6 +4300,7 @@ export const pages = {
         },
         data: [],
         type: Links,
+        buttons: [],
     },
     find_admin_person: {
         name: 'find_admin_person',
@@ -4322,6 +4357,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_person: {
         name: 'view_admin_person',
@@ -4435,6 +4471,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_person: {
         name: 'edit_admin_person',
@@ -4486,6 +4523,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_program: {
         name: 'find_admin_program',
@@ -4560,6 +4598,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_program: {
         name: 'view_admin_program',
@@ -4688,6 +4727,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_program: {
         name: 'edit_admin_program',
@@ -4769,6 +4809,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_program_milestone: {
         name: 'find_admin_program_milestone',
@@ -4831,6 +4872,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_program_milestone: {
         name: 'view_admin_program_milestone',
@@ -4894,6 +4936,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_program_milestone: {
         name: 'edit_admin_program_milestone',
@@ -4955,6 +4998,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_assay: {
         name: 'find_admin_assay',
@@ -5017,6 +5061,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_assay: {
         name: 'view_admin_assay',
@@ -5095,6 +5140,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_assay: {
         name: 'edit_admin_assay',
@@ -5156,6 +5202,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_experiment: {
         name: 'find_admin_experiment',
@@ -5239,6 +5286,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_experiment: {
         name: 'view_admin_experiment',
@@ -5352,6 +5400,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_experiment: {
         name: 'edit_admin_experiment',
@@ -5448,6 +5497,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_perturbation: {
         name: 'find_admin_perturbation',
@@ -5504,6 +5554,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_perturbation: {
         name: 'view_admin_perturbation',
@@ -5587,6 +5638,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_perturbation: {
         name: 'edit_admin_perturbation',
@@ -5638,6 +5690,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_plate: {
         name: 'find_admin_plate',
@@ -5697,6 +5750,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_plate: {
         name: 'view_admin_plate',
@@ -5770,6 +5824,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_plate: {
         name: 'edit_admin_plate',
@@ -5826,6 +5881,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_plate_well: {
         name: 'find_admin_plate_well',
@@ -5891,6 +5947,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_plate_well: {
         name: 'view_admin_plate_well',
@@ -5959,6 +6016,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_plate_well: {
         name: 'edit_admin_plate_well',
@@ -6025,6 +6083,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_cell_line: {
         name: 'find_admin_cell_line',
@@ -6102,6 +6161,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_cell_line: {
         name: 'view_admin_cell_line',
@@ -6205,6 +6265,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_cell_line: {
         name: 'edit_admin_cell_line',
@@ -6291,6 +6352,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_indication: {
         name: 'find_admin_indication',
@@ -6341,6 +6403,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_indication: {
         name: 'view_admin_indication',
@@ -6414,6 +6477,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_indication: {
         name: 'edit_admin_indication',
@@ -6455,6 +6519,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_species: {
         name: 'find_admin_species',
@@ -6505,6 +6570,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_species: {
         name: 'view_admin_species',
@@ -6638,6 +6704,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_species: {
         name: 'edit_admin_species',
@@ -6679,6 +6746,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_organ: {
         name: 'find_admin_organ',
@@ -6732,6 +6800,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_organ: {
         name: 'view_admin_organ',
@@ -6795,6 +6864,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_organ: {
         name: 'edit_admin_organ',
@@ -6841,6 +6911,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_tissue: {
         name: 'find_admin_tissue',
@@ -6894,6 +6965,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_tissue: {
         name: 'view_admin_tissue',
@@ -6957,6 +7029,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_tissue: {
         name: 'edit_admin_tissue',
@@ -7003,6 +7076,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_cell_type: {
         name: 'find_admin_cell_type',
@@ -7056,6 +7130,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_cell_type: {
         name: 'view_admin_cell_type',
@@ -7119,6 +7194,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_cell_type: {
         name: 'edit_admin_cell_type',
@@ -7165,6 +7241,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_protein: {
         name: 'find_admin_protein',
@@ -7221,6 +7298,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_protein: {
         name: 'view_admin_protein',
@@ -7289,6 +7367,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_protein: {
         name: 'edit_admin_protein',
@@ -7340,6 +7419,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_gene: {
         name: 'find_admin_gene',
@@ -7393,6 +7473,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_gene: {
         name: 'view_admin_gene',
@@ -7456,6 +7537,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_gene: {
         name: 'edit_admin_gene',
@@ -7502,6 +7584,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
     find_admin_compound: {
         name: 'find_admin_compound',
@@ -7555,6 +7638,7 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
+        buttons: [],
     },
     view_admin_compound: {
         name: 'view_admin_compound',
@@ -7618,6 +7702,7 @@ export const pages = {
             }),
         }, ],
         type: Form,
+        buttons: [],
     },
     edit_admin_compound: {
         name: 'edit_admin_compound',
@@ -7664,5 +7749,6 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
+        buttons: [],
     },
 }

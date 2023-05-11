@@ -122,22 +122,22 @@ export class EditField extends Component {
         const fieldType = field.fieldType;
         if (fieldType === 'ref') {
             if (event.target.value === '') {
-                this.props.context.update(this.props.config.field.field, null);
+                this.props.context.update(null);
             } else {
-                this.props.context.update(this.props.config.field.field, this.state.oDict[parseInt(event.target.value)])
+                this.props.context.update(this.state.oDict[parseInt(event.target.value)])
             }
         } else {
-            this.props.context.update(this.props.config.field.field, event.target.value)
+            this.props.context.update(event.target.value)
         }
     }
 
     handleDateChange = (date) => {
         if (!date) {
-            this.props.context.update(this.props.config.field.field, null)
+            this.props.context.update(null)
         } else {
             date.setHours(0, 0, 0, 0);
             const strDate = date.toISOString().substring(0, 10);
-            this.props.context.update(this.props.config.field.field, strDate)
+            this.props.context.update(strDate)
         }
     }
 
@@ -192,7 +192,6 @@ export class EditField extends Component {
                                 target: 'back', 
                                 pretargetFn: (params, data) => {
                                     this.props.context.update(
-                                        this.props.config.field.field,
                                         data ? {id: data.id, name: data.name} : null
                                     )
                                     return Promise.resolve()
@@ -224,6 +223,7 @@ export class FieldList extends Component {
         if (field.display) { return field.display }
         return this.props.context.schema[this.props.config.table].fields[field.field].display
     }
+
     render() {
         return this.props.config.fields.map((field, index) => (
             (!field.visibleFn || field.visibleFn(this.props.params, this.props.data)) ?
@@ -235,7 +235,10 @@ export class FieldList extends Component {
                             config: {table: this.props.config.table, field: field},
                             params: this.props.params,
                             data: this.props.data[field.field],
-                            context: this.props.context,
+                            context: {
+                                ...this.props.context, 
+                                update: (value) => this.props.context.update(field.field, value) 
+                            },
                         })
                     }
                 </div>
@@ -243,13 +246,6 @@ export class FieldList extends Component {
         ))
     }
 }
-
-function rowRenderer(key, rows) {
-    console.log(rows);
-    return rows;
-}
-
-
 
 export class Table extends Component {
     rowClick = (rowData) => {
@@ -295,8 +291,8 @@ export class Table extends Component {
                                 params={this.props.params}
                                 data={context.row[col.field]}
                                 focus={true}
-                                context={{...this.props.context, update: (field, value) => {context.onRowChange(
-                                    {...context.row, [field]: value})} }}
+                                context={{...this.props.context, update: (value) => {context.onRowChange(
+                                    {...context.row, [col.field]: value})} }}
                             />),
                 }))
             ]}
@@ -304,9 +300,88 @@ export class Table extends Component {
             onRowsChange={(data) => { this.props.context.update(data); }}
             rows={this.props.data}
             style={{height: dynamicHeight}}
-            onRowChange={ (foo) => { console.log(foo); }}
             rowReorderColumn={true}
-            renderers={ rowRenderer }
+            renderers={ (key, rows) => (rows) }
+        /></div>
+    }
+}
+
+export class Grid extends Component {
+
+    formatter = (field) => {
+        if (field.name === 'id') {
+            return (value) => (value)
+        } else if (field.fieldType === 'enum') {
+            return (value) => {
+                if (value) { 
+                    return this.props.context.enums[field.enumClass].options.filter(
+                        (e) => (e.name === value))[0].display
+                } else { return value }
+            }
+        } else {
+            return (value) => {
+                if (value && typeof value === 'object') {
+                    return value.name
+                } else {
+                    return (value) => (value)
+                }
+            }
+        }
+    }
+
+    updateRows = (data) => {
+        data.forEach((row) => {
+            Object.entries(row).forEach((k) =>  {
+                const key = parseInt(k);
+                if (!isNaN(key)) { 
+                    const i = row.source[key];
+                    this.props.data[i][this.props.config.displayField] = row[key];
+                }
+            })
+        })
+        this.props.context.update(this.props.data);
+    }
+
+    render() {
+        const rowCount = Math.max(...this.props.data.map((r) => r[this.props.config.rowField])) + 1
+        const columnCount = Math.max(...this.props.data.map((r) => r[this.props.config.columnField])) + 1
+        const displayField = this.props.config.displayField;
+        const dynamicHeight = rowCount * 35 + 37
+
+        const s = this.props.context.schema[this.props.config.source]
+        const format = this.formatter(s.fields[displayField])
+
+        var gridData = new Array(rowCount).fill(null).map(
+            (r, i) => ({key: i, source: {}})
+        )
+        this.props.data.forEach((record, i) => { 
+            gridData[record.row][record.column] = record[displayField]
+            gridData[record.row].source[record.column] = i
+        })
+
+        return <div className="data-grid-div"><DataGrid 
+            columns={[
+                {name: '', key: 'key', width: 10},
+                ...new Array(columnCount).fill(null).map(
+                (r, i) => ({
+                    name: i,
+                    key: i,
+                    width: 150,
+                    formatter: (data) => format(data.row[i]),
+                    editor: (context) => (<EditField
+                        config={{table: this.props.config.source, field: {field: displayField}}}
+                        params={this.props.params}
+                        data={context.row[i]}
+                        focus={true}
+                        context={{...this.props.context, update: (value) => {context.onRowChange(
+                            {...context.row, [i]: value})} }}
+                    />),
+        }))
+            ]}
+            rows={gridData}
+            onRowsChange={this.updateRows}
+            style={{height: dynamicHeight}}
+            renderers={ (key, rows) => (rows) }
         /></div>
     }
 }
@@ -328,7 +403,7 @@ class SearchField extends Component {
         this.props.context.client.changeParamFilter(this.props.index, event.target.value);
     }
 
-    changeValue = (field, value) => {
+    changeValue = (value) => {
         this.props.context.client.changeParamValue(this.props.index, value);
     }
 

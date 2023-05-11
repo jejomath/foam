@@ -391,6 +391,45 @@ class TablePage:
 
 
 @dataclass
+class GridPage:
+    source: str
+    row_field: str
+    column_field: str
+    display_field: str
+    new_records: str = ''
+    on_load_fn: str = ''
+    params_fn: str = ''
+    buttons: list[Action] = None
+
+    def __post_init__(self):
+        self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
+
+    def add_refs(self, config, page):
+        next_pages = []
+        if self.source:
+            if self.source not in config.tables_dict.keys():
+                config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
+            else:
+                for b in self.buttons:
+                    next_pages += b.add_refs(config, page)
+        return next_pages
+
+    def default_data(self, config, name=None):
+        return [TableData(name or 'table', self)]
+
+    @property
+    def js_config(self):
+        return {
+            'source': self.source,
+            'rowField': self.row_field,
+            'columnField': self.column_field,
+            'displayField': self.display_field,
+            'buttons': [b.js_config for b in self.buttons],
+        }
+
+
+
+@dataclass
 class FigurePage:
     source: str
     plots: dict
@@ -529,6 +568,7 @@ class RecordData:
 page_configs = {
     'Form': FormPage,
     'Table': TablePage,
+    'Grid': GridPage,
     'Figure': FigurePage,
     'Links': LinksPage,
     'Layout': LayoutPage,
@@ -562,16 +602,16 @@ class Page:
         elif self.type in page_configs:
             self.config = page_configs[self.type](**self.config)
         else:
-            print('Ack!')
-            print(self.type)
             config_error(f'Unexpected page type "{self.type}" found in page config "{self.name}"')
+
+        self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
 
         self.next_pages = [NextPage(**n) for n in self.next_pages] if self.next_pages else []
 
     def add_refs(self, config):
-        if type(self.config) == dict:
-            print(self.config)
         self.next_pages = self.next_pages + self.config.add_refs(config, self.name)
+        for b in self.buttons:
+            self.next_pages += b.add_refs(config, self.name)
         self.data = self.config.default_data(config)
 
     @property
@@ -582,6 +622,7 @@ class Page:
             'config': self.config.js_config,
             'data': [d.js_config for d in self.data],
             'noquotes_type': self.type,
+            'buttons': [b.js_config for b in self.buttons],
         }
 
 

@@ -23,6 +23,11 @@
     background-color: whitesmoke;
 }
 
+.page-title-div {
+    padding-bottom: 20px;
+    text-align: center;
+    font-size: 24px;
+}
 .modal-inner {
     padding: 20px;
     background-color: whitesmoke;

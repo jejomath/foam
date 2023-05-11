@@ -141,15 +141,15 @@ Each page in the config will look something like this:
         lookup: find_assay
       - plate_map_file
       - type
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: (params, data, context) => { context.save() }
-      - display: Cancel
-        target: back
-      - display: Add Platemap
-        target: new_platemap
-        params_fn: "(params, data) => {{ experiment: data.record.experiment }}"
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
+    - display: Add Platemap
+      target: new_platemap
+      params_fn: '({ experiment: data.record.experiment })'
 ```
 
 This config defines a page based on one of the built-in templates (`RecordPage`) that allows the user to edit then

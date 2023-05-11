@@ -33,12 +33,12 @@ page_modules:
         display: Select Assay
         target: view_assay
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Assay
-        target: new_assay
-        mode: modal
-      - display: Done
-        target: back
+    buttons:
+    - display: New Assay
+      target: new_assay
+      mode: modal
+    - display: Done
+      target: back
 
   - name: view_assay
     descr: View a record from table assay
@@ -56,16 +56,16 @@ page_modules:
       - table_page: find_experiment
         display: Experiment
         params_fn: '({assay__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_assay
-        params_fn: '({ id: params.id })'
-      - display: New Experiment
-        target: new_experiment
-        mode: modal
-        params_fn: '({ assay: data.record })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_assay
+      params_fn: '({ id: params.id })'
+    - display: New Experiment
+      target: new_experiment
+      mode: modal
+      params_fn: '({ assay: data.record })'
+    - display: Done
+      target: back
 
   - name: new_assay
     descr: Edit a record from table assay
@@ -78,13 +78,13 @@ page_modules:
       - field: cell_line
         lookup: find_cell_line
         visible_fn: (data.type === 'VITRO')
-      buttons:
-      - display: Done
-        target: edit_assay
-        params_fn: '( {id: data.id })'
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Done
+      target: edit_assay
+      params_fn: '( {id: data.id })'
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 
   - name: edit_assay
     descr: Edit a record from table assay
@@ -101,12 +101,12 @@ page_modules:
         visible_fn: (data.type === 'VITRO')
       - field: for_program
         lookup: find_program
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 
 
 #############################################################
@@ -160,12 +160,12 @@ page_modules:
         display: Select Experiment
         target: view_experiment
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Experiment
-        target: new_experiment
-        mode: modal
-      - display: Done
-        target: back
+    buttons:
+    - display: New Experiment
+      target: new_experiment
+      mode: modal
+    - display: Done
+      target: back
 
   - name: view_experiment
     descr: View a record from table experiment
@@ -189,16 +189,16 @@ page_modules:
       - table_page: find_plate
         display: Plates
         params_fn: '({ experiment__id: data.record.id })'
-      buttons:
-      - display: Edit
-        target: edit_experiment
-        params_fn: '({ id: params.id })'
-      - display: Add Plate
-        target: edit_plate
-        params_fn: '({ experiment: data.record })'
-        mode: modal
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_experiment
+      params_fn: '({ id: params.id })'
+    - display: Add Plate
+      target: edit_plate
+      params_fn: '({ experiment: data.record })'
+      mode: modal
+    - display: Done
+      target: back
 
   - name: new_experiment
     descr: Create a new record in table experiment
@@ -209,13 +209,13 @@ page_modules:
       - field: assay
         lookup: find_assay
       - field: program
-      buttons:
-      - display: Done
-        pretarget_fn: '( context.save() )'
-        target: edit_experiment
-        params_fn: '( {id: data.id} )'
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Done
+      pretarget_fn: '( context.clients.record.save() )'
+      target: edit_experiment
+      params_fn: '( {id: data.id} )'
+    - display: Cancel
+      target: back
 
   - name: edit_experiment
     descr: Edit a record from table experiment
@@ -239,12 +239,12 @@ page_modules:
       - type
       - field: perturbations
         lookup: find_perturbation
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 
 #############################################################
 # Plates
@@ -276,11 +276,11 @@ page_modules:
         display: Select Plate
         target: view_plate
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Plate
-        target: edit_plate
-      - display: Done
-        target: back
+    buttons:
+    - display: New Plate
+      target: edit_plate
+    - display: Done
+      target: back
 
   - name: view_plate
     descr: View a record from table plate
@@ -296,15 +296,18 @@ page_modules:
       - table_page: find_plate_well
         display: Plate Well
         params_fn: '({ plate__id: data.record.id, rows: data.record.row_count, cols: data.record.column_count })'
-      buttons:
-      - display: Edit
-        target: edit_plate
-        params_fn: '({ id: params.id })'
-      - display: Edit Wells
-        target: find_plate_well
-        params_fn: '({ plate__id: data.record.id, rows: data.record.row_count, cols: data.record.column_count })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_plate
+      params_fn: '({ id: params.id })'
+    - display: Edit Wells
+      target: find_plate_well
+      params_fn: '({ plate__id: data.record.id, rows: data.record.row_count, cols: data.record.column_count })'
+    - display: View Plate Map
+      target: view_plate_map
+      params_fn: '({ plate__id: data.record.id })'
+    - display: Done
+      target: back
 
   - name: edit_plate
     descr: Edit a record from table plate
@@ -317,15 +320,16 @@ page_modules:
         lookup: find_experiment
       - row_count
       - column_count
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 
 - name: plate_well
   pages:
+
   - name: find_plate_well
     descr: Search page for table plate_well
     type: Table
@@ -354,9 +358,24 @@ page_modules:
   }
 }"
 
-      buttons:
-      - display: Done
-        target: back
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
+    buttons:
+    - display: Done
+      target: back
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+
+  - name: view_plate_map
+    descr: View the wells of a plate as a grid
+    type: Grid
+    config:
+      source: plate_well
+      row_field: row
+      column_field: column
+      display_field: purpose
+    buttons:
+    - display: Done
+      target: back
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.table.save() )
