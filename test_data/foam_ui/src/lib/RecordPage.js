@@ -10,7 +10,6 @@ export default class RecordPage extends Component {
         const context = this.props.context;
         const client = context.clients[config.dataKey]
 
-        if (!data) { return <div />}
         return (
             <div className='record-page-outer-div'>
             <div className='record-page-inner-div'>
@@ -41,7 +40,7 @@ export default class RecordPage extends Component {
                             config={context.pages[t.tablePage].config}
                             context={context}
                             params={{table: {}}}
-                            data={{table: this.props.data[t.tablePage]}}
+                            data={{[t.tablePage]: this.props.data[t.tablePage]}}
                             mode='reference'
                         />
                     </div>

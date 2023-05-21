@@ -167,7 +167,7 @@ def write_schema_docs(config):
 @dataclass
 class EnumOption:
     name: str = ''
-    display: str = ''
+    display: str = None
     descr: str = ''
 
     def __init__(self, description) -> None:
@@ -182,7 +182,7 @@ class EnumOption:
 class Enum:
     name: str
     options: list[EnumOption]
-    display: str = ''
+    display: str = None
     descr: str = ''
 
     def __post_init__(self):
@@ -194,7 +194,7 @@ class Enum:
 class Folder:
     name: str
     extensions: list[str]
-    display: str = ''
+    display: str = None
     descr: str = ''
 
     def __post_init__(self):
@@ -229,7 +229,7 @@ class Field:
     name: str
     type: str
     table: str
-    display: str = ''
+    display: str = None
     descr: str = ''
     direction: str = ''
     backref: str = ''
@@ -278,7 +278,7 @@ class Table:
     name: str
     fields: list[Field]
     module: str
-    display: str = ''
+    display: str = None
     class_name: str = ''
     descr: str = ''
     preprocess: str = ''

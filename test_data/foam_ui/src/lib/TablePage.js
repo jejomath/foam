@@ -9,8 +9,6 @@ export default class TablePage extends Component {
         const params = this.props.params[config.dataKey];
         const context = this.props.context;
         const client = context.clients[config.dataKey]
-
-        if (!data) { return <div />}
         if (this.props.mode === 'reference') {
             return <Table
                 config={{ 

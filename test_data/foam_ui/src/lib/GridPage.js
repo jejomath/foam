@@ -10,7 +10,7 @@ export default class GridPage extends Component {
         const context = this.props.context;
         const client = context.clients[config.dataKey]
 
-        if (!data || data.length === 0) { return <div />}
+        if (data.length === 0) { return <div />}
         return (
             <div>
                 <Grid

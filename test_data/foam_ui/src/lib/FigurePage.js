@@ -4,7 +4,6 @@ import Plot from 'react-plotly.js';
 
 export default class Figure extends Component {
     render() {
-        if (!this.props.data.table) { return <div />}
         const config = this.props.config.plots.map(plot => {
             Object.entries(plot.data).forEach(v => {
                 plot.config[v[0]] = this.props.data.table.map((d) => (d[v[1]]))

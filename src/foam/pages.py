@@ -50,6 +50,7 @@ def lower_camel(value):
     tokens = value.split('_')
     return tokens[0] + ''.join([w.capitalize() for w in tokens[1:]])
 
+
 def clean_table(table):
     return {
         'name': table.name,
@@ -61,6 +62,7 @@ def clean_table(table):
             'enumClass': (f.enum_class.name if f.enum_class else ''),
         } for f in table.fields},
     }
+
 
 def clean_enum(enum):
     return {
@@ -91,6 +93,7 @@ def get_js_dict(data):
             result += f'{k}: {get_js_dict(data[k])}, '
     return result + '}'
 
+
 def get_js_list(data):
     result = '['
     for v in data:
@@ -109,6 +112,7 @@ def get_js_list(data):
 class PageClass:
     name: str
     path: str
+
 
 @dataclass
 class ViewField:
@@ -264,7 +268,12 @@ class LinksBox:
 
 
 @dataclass
-class LinksPage:
+class ProtoPage:
+    data_key: str = ''
+
+
+@dataclass
+class LinksPage(ProtoPage):
     boxes: list[LinksBox] = None
 
     def __post_init__(self):
@@ -287,8 +296,8 @@ class LinksPage:
 
 
 @dataclass
-class DataPage:
-    source: str
+class DataPage(ProtoPage):
+    source: str = ''
     on_load_fn: str = ''
     params_fn: str = ''
     load_fn: str = ''
@@ -305,20 +314,20 @@ class DataPage:
 
 @dataclass
 class RecordPage(DataPage):
-    data_key: str = 'record'
     new_record: str = ''
     new_record_fn: str = ''
 
     def __post_init__(self):
+        self.data_key = self.data_key or 'record'
         self._data_reqs = [RecordData(self.data_key, self)]
 
 
 @dataclass
 class TableDataPage(DataPage):
-    data_key: str = 'table'
     new_records: str = ''
 
     def __post_init__(self):
+        self.data_key = self.data_key or 'table'
         self._data_reqs = [TableData(self.data_key, self)]
 
 
@@ -361,6 +370,7 @@ class FormPage(RecordPage):
             'editFields': [f.js_config for f in self.edit_fields],
             'referenceTables': [t.js_config for t in self.reference_tables],
         }
+
 
 @dataclass
 class TablePage(TableDataPage):
@@ -453,8 +463,8 @@ class FigurePage(TableDataPage):
 
 
 @dataclass
-class LayoutPage:
-    cells: list
+class LayoutPage(ProtoPage):
+    cells: list = None
     direction: str = 'vertical'
 
     def __post_init__(self):
@@ -462,12 +472,18 @@ class LayoutPage:
 
     def add_refs(self, config, page):
         next_pages = []
+        for c in self.cells:
+            next_pages += c.add_refs(config)
         ### Need to look at from_page configs to populate this list.
         ### Also verify that these pages exist.
         return next_pages
 
     def default_data(self, config):
-        return []
+        data = []
+        for c in self.cells:
+            data += c.data
+            c.data = []
+        return data
 
     @property
     def js_config(self):
@@ -477,7 +493,7 @@ class LayoutPage:
         }
 
 @dataclass
-class UnderConstruction:
+class UnderConstruction(ProtoPage):
 
     def add_refs(self, config, page):
         return []
@@ -566,7 +582,7 @@ class NextPage:
 class Page:
     name: str
     module: str = None
-    display: str = ''
+    display: str = None
     descr: str = ''
     next_pages: list[NextPage] = ''
     type: str = ''
@@ -580,7 +596,7 @@ class Page:
             self.type = self.type or 'UnderConstruction'
             self.config = page_configs['UnderConstruction']()
         elif self.type in page_configs:
-            self.config = page_configs[self.type](**self.config)
+            self.config = page_configs[self.type](**self.config, data_key=self.name)
         else:
             config_error(f'Unexpected page type "{self.type}" found in page config "{self.name}"')
 
@@ -593,6 +609,7 @@ class Page:
         for b in self.buttons:
             self.next_pages += b.add_refs(config, self.name)
         self.data = self.config.default_data(config)
+        return self.next_pages
 
     @property
     def js_config(self):
@@ -610,7 +627,7 @@ class Page:
 class PageModule:
     name: str
     pages: list[Page]
-    display: str = ''
+    display: str = None
     descr: str = ''
     svg_code: str = ''
 

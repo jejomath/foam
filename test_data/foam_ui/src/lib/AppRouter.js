@@ -59,6 +59,7 @@ class Page extends Component {
         this.state = {
             data: dataDict,
             params: paramsDict,
+            loaded: false,
         }
     }
 
@@ -66,6 +67,7 @@ class Page extends Component {
         for (const client of this.clientList) {
             await client.load(this.state.data);
         }
+        this.setState({loaded: true})
     }
 
     componentDidMount() {
@@ -85,6 +87,7 @@ class Page extends Component {
     }
 
     render() {
+        if (!this.state.loaded) { return <div /> }
         const page = this.props.context.pages[this.props.name]
         return (
             <div>

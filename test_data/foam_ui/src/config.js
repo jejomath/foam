@@ -1017,7 +1017,7 @@ export const pages = {
         display: 'Find Person',
         config: {
             source: 'person',
-            dataKey: 'table',
+            dataKey: 'find_person',
             rowAction: {
                 display: 'Select Person',
                 pretargetFn: '',
@@ -1043,7 +1043,7 @@ export const pages = {
             searchFields: ['name', 'given_name', 'family_name', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_person',
             type: TableData,
             source: 'person',
             new: '',
@@ -1074,7 +1074,7 @@ export const pages = {
         display: 'View Person',
         config: {
             source: 'person',
-            dataKey: 'record',
+            dataKey: 'view_person',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -1119,7 +1119,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_person',
             type: RecordData,
             source: 'person',
             new: '',
@@ -1188,7 +1188,7 @@ export const pages = {
         display: 'Edit Person',
         config: {
             source: 'person',
-            dataKey: 'record',
+            dataKey: 'edit_person',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -1209,7 +1209,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_person',
             type: RecordData,
             source: 'person',
             new: '',
@@ -1240,7 +1240,7 @@ export const pages = {
         display: 'Find Program',
         config: {
             source: 'program',
-            dataKey: 'table',
+            dataKey: 'find_program',
             rowAction: {
                 display: 'Select Program',
                 pretargetFn: '',
@@ -1284,7 +1284,7 @@ export const pages = {
             searchFields: ['name', 'target', 'indication', 'status', 'started_date', 'stage', 'bio_lead', 'chem_lead', 'program_manager', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_program',
             type: TableData,
             source: 'program',
             new: '',
@@ -1315,7 +1315,7 @@ export const pages = {
         display: 'View Program',
         config: {
             source: 'program',
-            dataKey: 'record',
+            dataKey: 'view_program',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -1367,24 +1367,24 @@ export const pages = {
                 tablePage: 'find_program_milestone',
                 display: 'Milestones',
                 paramsFn: (params, data) => ({
-                    program__id: data.record.id
+                    program__id: data.view_program.id
                 }),
             }, {
                 tablePage: 'find_assay',
                 display: 'Assays',
                 paramsFn: (params, data) => ({
-                    for_program__id: data.record.id
+                    for_program__id: data.view_program.id
                 }),
             }, {
                 tablePage: 'find_experiment',
                 display: 'Experiments',
                 paramsFn: (params, data) => ({
-                    program__id: data.record.id
+                    program__id: data.view_program.id
                 }),
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_program',
             type: RecordData,
             source: 'program',
             new: '',
@@ -1397,7 +1397,7 @@ export const pages = {
             new: '',
             onLoadFn: '',
             paramsFn: (params, data) => ({
-                program__id: data.record.id
+                program__id: data.view_program.id
             }),
         }, {
             name: 'find_assay',
@@ -1406,7 +1406,7 @@ export const pages = {
             new: '',
             onLoadFn: '',
             paramsFn: (params, data) => ({
-                for_program__id: data.record.id
+                for_program__id: data.view_program.id
             }),
         }, {
             name: 'find_experiment',
@@ -1415,7 +1415,7 @@ export const pages = {
             new: '',
             onLoadFn: '',
             paramsFn: (params, data) => ({
-                program__id: data.record.id
+                program__id: data.view_program.id
             }),
         }, ],
         type: Form,
@@ -1476,7 +1476,7 @@ export const pages = {
         display: 'Edit Program',
         config: {
             source: 'program',
-            dataKey: 'record',
+            dataKey: 'edit_program',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -1527,7 +1527,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_program',
             type: RecordData,
             source: 'program',
             new: '',
@@ -1558,7 +1558,7 @@ export const pages = {
         display: 'Find Program Milestone',
         config: {
             source: 'program_milestone',
-            dataKey: 'table',
+            dataKey: 'find_program_milestone',
             rowAction: {
                 display: 'Select Program Milestone',
                 pretargetFn: '',
@@ -1587,7 +1587,7 @@ export const pages = {
             searchFields: ['name', 'program', 'status', 'target_date', 'completed_date', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_program_milestone',
             type: TableData,
             source: 'program_milestone',
             new: '',
@@ -1618,7 +1618,7 @@ export const pages = {
         display: 'Edit Program Milestone Table',
         config: {
             source: 'program_milestone',
-            dataKey: 'table',
+            dataKey: 'edit_program_milestone_table',
             rowAction: null,
             viewColumns: [],
             editColumns: [{
@@ -1640,7 +1640,7 @@ export const pages = {
             searchFields: null,
         },
         data: [{
-            name: 'table',
+            name: 'edit_program_milestone_table',
             type: TableData,
             source: 'program_milestone',
             new: '',
@@ -1681,7 +1681,7 @@ export const pages = {
         display: 'New Program Milestone Table',
         config: {
             source: 'program_milestone',
-            dataKey: 'table',
+            dataKey: 'new_program_milestone_table',
             rowAction: null,
             viewColumns: [],
             editColumns: [{
@@ -1703,7 +1703,7 @@ export const pages = {
             searchFields: null,
         },
         data: [{
-            name: 'table',
+            name: 'new_program_milestone_table',
             type: TableData,
             source: 'program_milestone',
             new: '',
@@ -1750,7 +1750,7 @@ export const pages = {
         display: 'View Program Milestone',
         config: {
             source: 'program_milestone',
-            dataKey: 'record',
+            dataKey: 'view_program_milestone',
             viewFields: [{
                 field: 'program',
                 display: '',
@@ -1781,7 +1781,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'view_program_milestone',
             type: RecordData,
             source: 'program_milestone',
             new: '',
@@ -1814,7 +1814,7 @@ export const pages = {
         display: 'Edit Program Milestone',
         config: {
             source: 'program_milestone',
-            dataKey: 'record',
+            dataKey: 'edit_program_milestone',
             viewFields: [{
                 field: 'program',
                 display: '',
@@ -1845,7 +1845,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_program_milestone',
             type: RecordData,
             source: 'program_milestone',
             new: '',
@@ -1876,7 +1876,7 @@ export const pages = {
         display: 'Program Dashboard',
         config: {
             source: 'program_stats',
-            dataKey: 'table',
+            dataKey: 'program_dashboard',
             plots: [{
                 config: {
                     type: 'bar',
@@ -1894,7 +1894,7 @@ export const pages = {
             },
         },
         data: [{
-            name: 'table',
+            name: 'program_dashboard',
             type: TableData,
             source: 'program_stats',
             new: '',
@@ -1917,7 +1917,7 @@ export const pages = {
         display: 'Find Assay',
         config: {
             source: 'assay',
-            dataKey: 'table',
+            dataKey: 'find_assay',
             rowAction: {
                 display: 'Select Assay',
                 pretargetFn: '',
@@ -1949,7 +1949,7 @@ export const pages = {
             searchFields: ['name', 'type', 'descr', 'cell_line', 'for_program', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_assay',
             type: TableData,
             source: 'assay',
             new: '',
@@ -1980,7 +1980,7 @@ export const pages = {
         display: 'View Assay',
         config: {
             source: 'assay',
-            dataKey: 'record',
+            dataKey: 'view_assay',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2017,7 +2017,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_assay',
             type: RecordData,
             source: 'assay',
             new: '',
@@ -2069,7 +2069,7 @@ export const pages = {
         display: 'New Assay',
         config: {
             source: 'assay',
-            dataKey: 'record',
+            dataKey: 'new_assay',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -2090,7 +2090,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'new_assay',
             type: RecordData,
             source: 'assay',
             new: '',
@@ -2123,7 +2123,7 @@ export const pages = {
         display: 'Edit Assay',
         config: {
             source: 'assay',
-            dataKey: 'record',
+            dataKey: 'edit_assay',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2154,7 +2154,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_assay',
             type: RecordData,
             source: 'assay',
             new: '',
@@ -2185,7 +2185,7 @@ export const pages = {
         display: 'Find Experiment',
         config: {
             source: 'experiment',
-            dataKey: 'table',
+            dataKey: 'find_experiment',
             rowAction: {
                 display: 'Select Experiment',
                 pretargetFn: '',
@@ -2238,7 +2238,7 @@ export const pages = {
             searchFields: ['name', 'description', 'status', 'program', 'bio_lead', 'target_start_date', 'target_duration', 'start_date', 'end_date', 'assay', 'type', 'perturbations', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_experiment',
             type: TableData,
             source: 'experiment',
             new: '',
@@ -2269,7 +2269,7 @@ export const pages = {
         display: 'View Experiment',
         config: {
             source: 'experiment',
-            dataKey: 'record',
+            dataKey: 'view_experiment',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2341,7 +2341,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_experiment',
             type: RecordData,
             source: 'experiment',
             new: '',
@@ -2393,7 +2393,7 @@ export const pages = {
         display: 'New Experiment',
         config: {
             source: 'experiment',
-            dataKey: 'record',
+            dataKey: 'new_experiment',
             viewFields: [],
             editFields: [{
                 field: 'assay',
@@ -2409,7 +2409,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'new_experiment',
             type: RecordData,
             source: 'experiment',
             new: '',
@@ -2442,7 +2442,7 @@ export const pages = {
         display: 'Edit Experiment',
         config: {
             source: 'experiment',
-            dataKey: 'record',
+            dataKey: 'edit_experiment',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2508,7 +2508,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_experiment',
             type: RecordData,
             source: 'experiment',
             new: '',
@@ -2539,7 +2539,7 @@ export const pages = {
         display: 'Find Plate',
         config: {
             source: 'plate',
-            dataKey: 'table',
+            dataKey: 'find_plate',
             rowAction: {
                 display: 'Select Plate',
                 pretargetFn: '',
@@ -2568,7 +2568,7 @@ export const pages = {
             searchFields: ['name', 'experiment', 'row_count', 'column_count', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_plate',
             type: TableData,
             source: 'plate',
             new: '',
@@ -2599,7 +2599,7 @@ export const pages = {
         display: 'View Plate',
         config: {
             source: 'plate',
-            dataKey: 'record',
+            dataKey: 'view_plate',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2633,7 +2633,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_plate',
             type: RecordData,
             source: 'plate',
             new: '',
@@ -2717,7 +2717,7 @@ export const pages = {
         display: 'Edit Plate',
         config: {
             source: 'plate',
-            dataKey: 'record',
+            dataKey: 'edit_plate',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -2743,7 +2743,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_plate',
             type: RecordData,
             source: 'plate',
             new: '',
@@ -2774,7 +2774,7 @@ export const pages = {
         display: 'Find Plate Well',
         config: {
             source: 'plate_well',
-            dataKey: 'table',
+            dataKey: 'find_plate_well',
             rowAction: null,
             viewColumns: [],
             editColumns: [{
@@ -2793,7 +2793,7 @@ export const pages = {
             searchFields: null,
         },
         data: [{
-            name: 'table',
+            name: 'find_plate_well',
             type: TableData,
             source: 'plate_well',
             new: '',
@@ -2829,7 +2829,7 @@ export const pages = {
             visibleFn: '',
         }, {
             display: 'Save',
-            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretargetFn: (params, data, context) => (context.clients.find_plate_well.save()),
             pretarget: '',
             target: 'back',
             mode: '',
@@ -2842,13 +2842,13 @@ export const pages = {
         display: 'View Plate Map',
         config: {
             source: 'plate_well',
-            dataKey: 'table',
+            dataKey: 'view_plate_map',
             rowField: 'row',
             columnField: 'column',
             displayField: 'purpose',
         },
         data: [{
-            name: 'table',
+            name: 'view_plate_map',
             type: TableData,
             source: 'plate_well',
             new: '',
@@ -2866,7 +2866,78 @@ export const pages = {
             visibleFn: '',
         }, {
             display: 'Save',
-            pretargetFn: (params, data, context) => (context.clients.table.save()),
+            pretargetFn: (params, data, context) => (context.clients.view_plate_map.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
+    },
+    view_plate_grid: {
+        name: 'view_plate_grid',
+        display: 'View Plate Grid',
+        config: {
+            direction: 'vertical',
+            cells: [{
+                name: 'form_cell',
+                display: '',
+                config: {
+                    source: 'plate',
+                    dataKey: 'form_cell',
+                    viewFields: [{
+                        field: 'name',
+                        display: '',
+                        target: '',
+                        visibleFn: '',
+                    }, {
+                        field: 'experiment',
+                        display: '',
+                        target: '',
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                    referenceTables: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
+            }, {
+                name: 'grid_cell',
+                display: 'Plate Map',
+                config: {
+                    source: 'plate_well',
+                    dataKey: 'grid_cell',
+                    rowField: 'row',
+                    columnField: 'column',
+                    displayField: 'purpose',
+                },
+                data: [],
+                type: Grid,
+                buttons: [],
+            }, ],
+        },
+        data: [{
+            name: 'form_cell',
+            type: RecordData,
+            source: 'plate',
+            new: '',
+            newFn: '',
+            paramsFn: '',
+        }, {
+            name: 'grid_cell',
+            type: TableData,
+            source: 'plate_well',
+            new: '',
+            onLoadFn: '',
+            paramsFn: (params, data) => ({
+                plate__id: data.form_cell.id
+            }),
+        }, ],
+        type: Layout,
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
             pretarget: '',
             target: 'back',
             mode: '',
@@ -2879,7 +2950,7 @@ export const pages = {
         display: 'Find Perturbation',
         config: {
             source: 'perturbation',
-            dataKey: 'table',
+            dataKey: 'find_perturbation',
             rowAction: {
                 display: 'Select Perturbation',
                 pretargetFn: '',
@@ -2905,7 +2976,7 @@ export const pages = {
             searchFields: ['name', 'compound', 'concentration_nm', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_perturbation',
             type: TableData,
             source: 'perturbation',
             new: '',
@@ -2928,7 +2999,7 @@ export const pages = {
         display: 'View Perturbation',
         config: {
             source: 'perturbation',
-            dataKey: 'record',
+            dataKey: 'view_perturbation',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2955,7 +3026,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_perturbation',
             type: RecordData,
             source: 'perturbation',
             new: '',
@@ -2987,7 +3058,7 @@ export const pages = {
         display: 'Find Cell Line',
         config: {
             source: 'cell_line',
-            dataKey: 'table',
+            dataKey: 'find_cell_line',
             rowAction: {
                 display: 'Select Cell Line',
                 pretargetFn: '',
@@ -3019,7 +3090,7 @@ export const pages = {
             searchFields: ['name', 'species', 'organ', 'tissue', 'cell_type', 'donor_sex', 'donor_age', 'donor_ethnicity', 'donor_health_status', 'disease', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_cell_line',
             type: TableData,
             source: 'cell_line',
             new: '',
@@ -3050,7 +3121,7 @@ export const pages = {
         display: 'View Cell Line',
         config: {
             source: 'cell_line',
-            dataKey: 'record',
+            dataKey: 'view_cell_line',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3112,7 +3183,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_cell_line',
             type: RecordData,
             source: 'cell_line',
             new: '',
@@ -3154,7 +3225,7 @@ export const pages = {
         display: 'Edit Cell Line',
         config: {
             source: 'cell_line',
-            dataKey: 'record',
+            dataKey: 'edit_cell_line',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -3210,7 +3281,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_cell_line',
             type: RecordData,
             source: 'cell_line',
             new: '',
@@ -3241,7 +3312,7 @@ export const pages = {
         display: 'Find Indication',
         config: {
             source: 'indication',
-            dataKey: 'table',
+            dataKey: 'find_indication',
             rowAction: {
                 display: 'Select Indication',
                 pretargetFn: '',
@@ -3261,7 +3332,7 @@ export const pages = {
             searchFields: ['name', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_indication',
             type: TableData,
             source: 'indication',
             new: '',
@@ -3284,7 +3355,7 @@ export const pages = {
         display: 'View Indication',
         config: {
             source: 'indication',
-            dataKey: 'record',
+            dataKey: 'view_indication',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3307,7 +3378,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_indication',
             type: RecordData,
             source: 'indication',
             new: '',
@@ -3348,7 +3419,7 @@ export const pages = {
         display: 'Find Species',
         config: {
             source: 'species',
-            dataKey: 'table',
+            dataKey: 'find_species',
             rowAction: {
                 display: 'Select Species',
                 pretargetFn: '',
@@ -3368,7 +3439,7 @@ export const pages = {
             searchFields: ['name', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_species',
             type: TableData,
             source: 'species',
             new: '',
@@ -3391,7 +3462,7 @@ export const pages = {
         display: 'View Species',
         config: {
             source: 'species',
-            dataKey: 'record',
+            dataKey: 'view_species',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3438,7 +3509,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_species',
             type: RecordData,
             source: 'species',
             new: '',
@@ -3515,7 +3586,7 @@ export const pages = {
         display: 'Find Organ',
         config: {
             source: 'organ',
-            dataKey: 'table',
+            dataKey: 'find_organ',
             rowAction: {
                 display: 'Select Organ',
                 pretargetFn: '',
@@ -3538,7 +3609,7 @@ export const pages = {
             searchFields: ['name', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_organ',
             type: TableData,
             source: 'organ',
             new: '',
@@ -3561,7 +3632,7 @@ export const pages = {
         display: 'View Organ',
         config: {
             source: 'organ',
-            dataKey: 'record',
+            dataKey: 'view_organ',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3583,7 +3654,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_organ',
             type: RecordData,
             source: 'organ',
             new: '',
@@ -3615,7 +3686,7 @@ export const pages = {
         display: 'Find Tissue',
         config: {
             source: 'tissue',
-            dataKey: 'table',
+            dataKey: 'find_tissue',
             rowAction: {
                 display: 'Select Tissue',
                 pretargetFn: '',
@@ -3638,7 +3709,7 @@ export const pages = {
             searchFields: ['name', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_tissue',
             type: TableData,
             source: 'tissue',
             new: '',
@@ -3661,7 +3732,7 @@ export const pages = {
         display: 'View Tissue',
         config: {
             source: 'tissue',
-            dataKey: 'record',
+            dataKey: 'view_tissue',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3683,7 +3754,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_tissue',
             type: RecordData,
             source: 'tissue',
             new: '',
@@ -3715,7 +3786,7 @@ export const pages = {
         display: 'Find Cell Type',
         config: {
             source: 'cell_type',
-            dataKey: 'table',
+            dataKey: 'find_cell_type',
             rowAction: {
                 display: 'Select Cell Type',
                 pretargetFn: '',
@@ -3738,7 +3809,7 @@ export const pages = {
             searchFields: ['name', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_cell_type',
             type: TableData,
             source: 'cell_type',
             new: '',
@@ -3761,7 +3832,7 @@ export const pages = {
         display: 'View Cell Type',
         config: {
             source: 'cell_type',
-            dataKey: 'record',
+            dataKey: 'view_cell_type',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3783,7 +3854,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_cell_type',
             type: RecordData,
             source: 'cell_type',
             new: '',
@@ -3815,7 +3886,7 @@ export const pages = {
         display: 'Find Protein',
         config: {
             source: 'protein',
-            dataKey: 'table',
+            dataKey: 'find_protein',
             rowAction: {
                 display: 'Select Protein',
                 pretargetFn: '',
@@ -3841,7 +3912,7 @@ export const pages = {
             searchFields: ['name', 'gene', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_protein',
             type: TableData,
             source: 'protein',
             new: '',
@@ -3864,7 +3935,7 @@ export const pages = {
         display: 'View Protein',
         config: {
             source: 'protein',
-            dataKey: 'record',
+            dataKey: 'view_protein',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3891,7 +3962,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_protein',
             type: RecordData,
             source: 'protein',
             new: '',
@@ -3923,7 +3994,7 @@ export const pages = {
         display: 'Find Gene',
         config: {
             source: 'gene',
-            dataKey: 'table',
+            dataKey: 'find_gene',
             rowAction: {
                 display: 'Select Gene',
                 pretargetFn: '',
@@ -3946,7 +4017,7 @@ export const pages = {
             searchFields: ['name', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_gene',
             type: TableData,
             source: 'gene',
             new: '',
@@ -3969,7 +4040,7 @@ export const pages = {
         display: 'View Gene',
         config: {
             source: 'gene',
-            dataKey: 'record',
+            dataKey: 'view_gene',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3991,7 +4062,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_gene',
             type: RecordData,
             source: 'gene',
             new: '',
@@ -4023,7 +4094,7 @@ export const pages = {
         display: 'Find Compound',
         config: {
             source: 'compound',
-            dataKey: 'table',
+            dataKey: 'find_compound',
             rowAction: {
                 display: 'Select Compound',
                 pretargetFn: '',
@@ -4046,7 +4117,7 @@ export const pages = {
             searchFields: ['name', 'smiles', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_compound',
             type: TableData,
             source: 'compound',
             new: '',
@@ -4069,7 +4140,7 @@ export const pages = {
         display: 'View Compound',
         config: {
             source: 'compound',
-            dataKey: 'record',
+            dataKey: 'view_compound',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4091,7 +4162,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_compound',
             type: RecordData,
             source: 'compound',
             new: '',
@@ -4281,7 +4352,7 @@ export const pages = {
         display: 'Find Admin Person',
         config: {
             source: 'person',
-            dataKey: 'table',
+            dataKey: 'find_admin_person',
             rowAction: {
                 display: 'Select Person',
                 pretargetFn: '',
@@ -4307,7 +4378,7 @@ export const pages = {
             searchFields: ['name', 'given_name', 'family_name', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_person',
             type: TableData,
             source: 'person',
             new: '',
@@ -4338,7 +4409,7 @@ export const pages = {
         display: 'View Admin Person',
         config: {
             source: 'person',
-            dataKey: 'record',
+            dataKey: 'view_admin_person',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4383,7 +4454,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_person',
             type: RecordData,
             source: 'person',
             new: '',
@@ -4452,7 +4523,7 @@ export const pages = {
         display: 'Edit Admin Person',
         config: {
             source: 'person',
-            dataKey: 'record',
+            dataKey: 'edit_admin_person',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -4473,7 +4544,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_person',
             type: RecordData,
             source: 'person',
             new: '',
@@ -4504,7 +4575,7 @@ export const pages = {
         display: 'Find Admin Program',
         config: {
             source: 'program',
-            dataKey: 'table',
+            dataKey: 'find_admin_program',
             rowAction: {
                 display: 'Select Program',
                 pretargetFn: '',
@@ -4548,7 +4619,7 @@ export const pages = {
             searchFields: ['name', 'target', 'indication', 'status', 'started_date', 'stage', 'bio_lead', 'chem_lead', 'program_manager', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_program',
             type: TableData,
             source: 'program',
             new: '',
@@ -4579,7 +4650,7 @@ export const pages = {
         display: 'View Admin Program',
         config: {
             source: 'program',
-            dataKey: 'record',
+            dataKey: 'view_admin_program',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4648,7 +4719,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_program',
             type: RecordData,
             source: 'program',
             new: '',
@@ -4708,7 +4779,7 @@ export const pages = {
         display: 'Edit Admin Program',
         config: {
             source: 'program',
-            dataKey: 'record',
+            dataKey: 'edit_admin_program',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -4759,7 +4830,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_program',
             type: RecordData,
             source: 'program',
             new: '',
@@ -4790,7 +4861,7 @@ export const pages = {
         display: 'Find Admin Program Milestone',
         config: {
             source: 'program_milestone',
-            dataKey: 'table',
+            dataKey: 'find_admin_program_milestone',
             rowAction: {
                 display: 'Select Program Milestone',
                 pretargetFn: '',
@@ -4822,7 +4893,7 @@ export const pages = {
             searchFields: ['name', 'program', 'status', 'target_date', 'completed_date', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_program_milestone',
             type: TableData,
             source: 'program_milestone',
             new: '',
@@ -4853,7 +4924,7 @@ export const pages = {
         display: 'View Admin Program Milestone',
         config: {
             source: 'program_milestone',
-            dataKey: 'record',
+            dataKey: 'view_admin_program_milestone',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4884,7 +4955,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_program_milestone',
             type: RecordData,
             source: 'program_milestone',
             new: '',
@@ -4917,7 +4988,7 @@ export const pages = {
         display: 'Edit Admin Program Milestone',
         config: {
             source: 'program_milestone',
-            dataKey: 'record',
+            dataKey: 'edit_admin_program_milestone',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -4948,7 +5019,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_program_milestone',
             type: RecordData,
             source: 'program_milestone',
             new: '',
@@ -4979,7 +5050,7 @@ export const pages = {
         display: 'Find Admin Assay',
         config: {
             source: 'assay',
-            dataKey: 'table',
+            dataKey: 'find_admin_assay',
             rowAction: {
                 display: 'Select Assay',
                 pretargetFn: '',
@@ -5011,7 +5082,7 @@ export const pages = {
             searchFields: ['name', 'type', 'descr', 'cell_line', 'for_program', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_assay',
             type: TableData,
             source: 'assay',
             new: '',
@@ -5042,7 +5113,7 @@ export const pages = {
         display: 'View Admin Assay',
         config: {
             source: 'assay',
-            dataKey: 'record',
+            dataKey: 'view_admin_assay',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5079,7 +5150,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_assay',
             type: RecordData,
             source: 'assay',
             new: '',
@@ -5121,7 +5192,7 @@ export const pages = {
         display: 'Edit Admin Assay',
         config: {
             source: 'assay',
-            dataKey: 'record',
+            dataKey: 'edit_admin_assay',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5152,7 +5223,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_assay',
             type: RecordData,
             source: 'assay',
             new: '',
@@ -5183,7 +5254,7 @@ export const pages = {
         display: 'Find Admin Experiment',
         config: {
             source: 'experiment',
-            dataKey: 'table',
+            dataKey: 'find_admin_experiment',
             rowAction: {
                 display: 'Select Experiment',
                 pretargetFn: '',
@@ -5236,7 +5307,7 @@ export const pages = {
             searchFields: ['name', 'description', 'status', 'program', 'bio_lead', 'target_start_date', 'target_duration', 'start_date', 'end_date', 'assay', 'type', 'perturbations', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_experiment',
             type: TableData,
             source: 'experiment',
             new: '',
@@ -5267,7 +5338,7 @@ export const pages = {
         display: 'View Admin Experiment',
         config: {
             source: 'experiment',
-            dataKey: 'record',
+            dataKey: 'view_admin_experiment',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5339,7 +5410,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_experiment',
             type: RecordData,
             source: 'experiment',
             new: '',
@@ -5381,7 +5452,7 @@ export const pages = {
         display: 'Edit Admin Experiment',
         config: {
             source: 'experiment',
-            dataKey: 'record',
+            dataKey: 'edit_admin_experiment',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5447,7 +5518,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_experiment',
             type: RecordData,
             source: 'experiment',
             new: '',
@@ -5478,7 +5549,7 @@ export const pages = {
         display: 'Find Admin Perturbation',
         config: {
             source: 'perturbation',
-            dataKey: 'table',
+            dataKey: 'find_admin_perturbation',
             rowAction: {
                 display: 'Select Perturbation',
                 pretargetFn: '',
@@ -5504,7 +5575,7 @@ export const pages = {
             searchFields: ['name', 'compound', 'concentration_nm', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_perturbation',
             type: TableData,
             source: 'perturbation',
             new: '',
@@ -5535,7 +5606,7 @@ export const pages = {
         display: 'View Admin Perturbation',
         config: {
             source: 'perturbation',
-            dataKey: 'record',
+            dataKey: 'view_admin_perturbation',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5568,7 +5639,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_perturbation',
             type: RecordData,
             source: 'perturbation',
             new: '',
@@ -5619,7 +5690,7 @@ export const pages = {
         display: 'Edit Admin Perturbation',
         config: {
             source: 'perturbation',
-            dataKey: 'record',
+            dataKey: 'edit_admin_perturbation',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5640,7 +5711,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_perturbation',
             type: RecordData,
             source: 'perturbation',
             new: '',
@@ -5671,7 +5742,7 @@ export const pages = {
         display: 'Find Admin Plate',
         config: {
             source: 'plate',
-            dataKey: 'table',
+            dataKey: 'find_admin_plate',
             rowAction: {
                 display: 'Select Plate',
                 pretargetFn: '',
@@ -5700,7 +5771,7 @@ export const pages = {
             searchFields: ['name', 'experiment', 'row_count', 'column_count', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_plate',
             type: TableData,
             source: 'plate',
             new: '',
@@ -5731,7 +5802,7 @@ export const pages = {
         display: 'View Admin Plate',
         config: {
             source: 'plate',
-            dataKey: 'record',
+            dataKey: 'view_admin_plate',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5763,7 +5834,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_plate',
             type: RecordData,
             source: 'plate',
             new: '',
@@ -5805,7 +5876,7 @@ export const pages = {
         display: 'Edit Admin Plate',
         config: {
             source: 'plate',
-            dataKey: 'record',
+            dataKey: 'edit_admin_plate',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5831,7 +5902,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_plate',
             type: RecordData,
             source: 'plate',
             new: '',
@@ -5862,7 +5933,7 @@ export const pages = {
         display: 'Find Admin Plate Well',
         config: {
             source: 'plate_well',
-            dataKey: 'table',
+            dataKey: 'find_admin_plate_well',
             rowAction: {
                 display: 'Select Plate Well',
                 pretargetFn: '',
@@ -5897,7 +5968,7 @@ export const pages = {
             searchFields: ['name', 'plate', 'row', 'column', 'purpose', 'perturbation', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_plate_well',
             type: TableData,
             source: 'plate_well',
             new: '',
@@ -5928,7 +5999,7 @@ export const pages = {
         display: 'View Admin Plate Well',
         config: {
             source: 'plate_well',
-            dataKey: 'record',
+            dataKey: 'view_admin_plate_well',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5964,7 +6035,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_plate_well',
             type: RecordData,
             source: 'plate_well',
             new: '',
@@ -5997,7 +6068,7 @@ export const pages = {
         display: 'Edit Admin Plate Well',
         config: {
             source: 'plate_well',
-            dataKey: 'record',
+            dataKey: 'edit_admin_plate_well',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6033,7 +6104,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_plate_well',
             type: RecordData,
             source: 'plate_well',
             new: '',
@@ -6064,7 +6135,7 @@ export const pages = {
         display: 'Find Admin Cell Line',
         config: {
             source: 'cell_line',
-            dataKey: 'table',
+            dataKey: 'find_admin_cell_line',
             rowAction: {
                 display: 'Select Cell Line',
                 pretargetFn: '',
@@ -6111,7 +6182,7 @@ export const pages = {
             searchFields: ['name', 'species', 'organ', 'tissue', 'cell_type', 'donor_sex', 'donor_age', 'donor_ethnicity', 'donor_health_status', 'disease', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_cell_line',
             type: TableData,
             source: 'cell_line',
             new: '',
@@ -6142,7 +6213,7 @@ export const pages = {
         display: 'View Admin Cell Line',
         config: {
             source: 'cell_line',
-            dataKey: 'record',
+            dataKey: 'view_admin_cell_line',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6204,7 +6275,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_cell_line',
             type: RecordData,
             source: 'cell_line',
             new: '',
@@ -6246,7 +6317,7 @@ export const pages = {
         display: 'Edit Admin Cell Line',
         config: {
             source: 'cell_line',
-            dataKey: 'record',
+            dataKey: 'edit_admin_cell_line',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6302,7 +6373,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_cell_line',
             type: RecordData,
             source: 'cell_line',
             new: '',
@@ -6333,7 +6404,7 @@ export const pages = {
         display: 'Find Admin Indication',
         config: {
             source: 'indication',
-            dataKey: 'table',
+            dataKey: 'find_admin_indication',
             rowAction: {
                 display: 'Select Indication',
                 pretargetFn: '',
@@ -6353,7 +6424,7 @@ export const pages = {
             searchFields: ['name', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_indication',
             type: TableData,
             source: 'indication',
             new: '',
@@ -6384,7 +6455,7 @@ export const pages = {
         display: 'View Admin Indication',
         config: {
             source: 'indication',
-            dataKey: 'record',
+            dataKey: 'view_admin_indication',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6407,7 +6478,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_indication',
             type: RecordData,
             source: 'indication',
             new: '',
@@ -6458,7 +6529,7 @@ export const pages = {
         display: 'Edit Admin Indication',
         config: {
             source: 'indication',
-            dataKey: 'record',
+            dataKey: 'edit_admin_indication',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6469,7 +6540,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_indication',
             type: RecordData,
             source: 'indication',
             new: '',
@@ -6500,7 +6571,7 @@ export const pages = {
         display: 'Find Admin Species',
         config: {
             source: 'species',
-            dataKey: 'table',
+            dataKey: 'find_admin_species',
             rowAction: {
                 display: 'Select Species',
                 pretargetFn: '',
@@ -6520,7 +6591,7 @@ export const pages = {
             searchFields: ['name', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_species',
             type: TableData,
             source: 'species',
             new: '',
@@ -6551,7 +6622,7 @@ export const pages = {
         display: 'View Admin Species',
         config: {
             source: 'species',
-            dataKey: 'record',
+            dataKey: 'view_admin_species',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6598,7 +6669,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_species',
             type: RecordData,
             source: 'species',
             new: '',
@@ -6685,7 +6756,7 @@ export const pages = {
         display: 'Edit Admin Species',
         config: {
             source: 'species',
-            dataKey: 'record',
+            dataKey: 'edit_admin_species',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6696,7 +6767,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_species',
             type: RecordData,
             source: 'species',
             new: '',
@@ -6727,7 +6798,7 @@ export const pages = {
         display: 'Find Admin Organ',
         config: {
             source: 'organ',
-            dataKey: 'table',
+            dataKey: 'find_admin_organ',
             rowAction: {
                 display: 'Select Organ',
                 pretargetFn: '',
@@ -6750,7 +6821,7 @@ export const pages = {
             searchFields: ['name', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_organ',
             type: TableData,
             source: 'organ',
             new: '',
@@ -6781,7 +6852,7 @@ export const pages = {
         display: 'View Admin Organ',
         config: {
             source: 'organ',
-            dataKey: 'record',
+            dataKey: 'view_admin_organ',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6803,7 +6874,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_organ',
             type: RecordData,
             source: 'organ',
             new: '',
@@ -6845,7 +6916,7 @@ export const pages = {
         display: 'Edit Admin Organ',
         config: {
             source: 'organ',
-            dataKey: 'record',
+            dataKey: 'edit_admin_organ',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6861,7 +6932,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_organ',
             type: RecordData,
             source: 'organ',
             new: '',
@@ -6892,7 +6963,7 @@ export const pages = {
         display: 'Find Admin Tissue',
         config: {
             source: 'tissue',
-            dataKey: 'table',
+            dataKey: 'find_admin_tissue',
             rowAction: {
                 display: 'Select Tissue',
                 pretargetFn: '',
@@ -6915,7 +6986,7 @@ export const pages = {
             searchFields: ['name', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_tissue',
             type: TableData,
             source: 'tissue',
             new: '',
@@ -6946,7 +7017,7 @@ export const pages = {
         display: 'View Admin Tissue',
         config: {
             source: 'tissue',
-            dataKey: 'record',
+            dataKey: 'view_admin_tissue',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6968,7 +7039,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_tissue',
             type: RecordData,
             source: 'tissue',
             new: '',
@@ -7010,7 +7081,7 @@ export const pages = {
         display: 'Edit Admin Tissue',
         config: {
             source: 'tissue',
-            dataKey: 'record',
+            dataKey: 'edit_admin_tissue',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7026,7 +7097,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_tissue',
             type: RecordData,
             source: 'tissue',
             new: '',
@@ -7057,7 +7128,7 @@ export const pages = {
         display: 'Find Admin Cell Type',
         config: {
             source: 'cell_type',
-            dataKey: 'table',
+            dataKey: 'find_admin_cell_type',
             rowAction: {
                 display: 'Select Cell Type',
                 pretargetFn: '',
@@ -7080,7 +7151,7 @@ export const pages = {
             searchFields: ['name', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_cell_type',
             type: TableData,
             source: 'cell_type',
             new: '',
@@ -7111,7 +7182,7 @@ export const pages = {
         display: 'View Admin Cell Type',
         config: {
             source: 'cell_type',
-            dataKey: 'record',
+            dataKey: 'view_admin_cell_type',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7133,7 +7204,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_cell_type',
             type: RecordData,
             source: 'cell_type',
             new: '',
@@ -7175,7 +7246,7 @@ export const pages = {
         display: 'Edit Admin Cell Type',
         config: {
             source: 'cell_type',
-            dataKey: 'record',
+            dataKey: 'edit_admin_cell_type',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7191,7 +7262,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_cell_type',
             type: RecordData,
             source: 'cell_type',
             new: '',
@@ -7222,7 +7293,7 @@ export const pages = {
         display: 'Find Admin Protein',
         config: {
             source: 'protein',
-            dataKey: 'table',
+            dataKey: 'find_admin_protein',
             rowAction: {
                 display: 'Select Protein',
                 pretargetFn: '',
@@ -7248,7 +7319,7 @@ export const pages = {
             searchFields: ['name', 'gene', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_protein',
             type: TableData,
             source: 'protein',
             new: '',
@@ -7279,7 +7350,7 @@ export const pages = {
         display: 'View Admin Protein',
         config: {
             source: 'protein',
-            dataKey: 'record',
+            dataKey: 'view_admin_protein',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7306,7 +7377,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_protein',
             type: RecordData,
             source: 'protein',
             new: '',
@@ -7348,7 +7419,7 @@ export const pages = {
         display: 'Edit Admin Protein',
         config: {
             source: 'protein',
-            dataKey: 'record',
+            dataKey: 'edit_admin_protein',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7369,7 +7440,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_protein',
             type: RecordData,
             source: 'protein',
             new: '',
@@ -7400,7 +7471,7 @@ export const pages = {
         display: 'Find Admin Gene',
         config: {
             source: 'gene',
-            dataKey: 'table',
+            dataKey: 'find_admin_gene',
             rowAction: {
                 display: 'Select Gene',
                 pretargetFn: '',
@@ -7423,7 +7494,7 @@ export const pages = {
             searchFields: ['name', 'species', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_gene',
             type: TableData,
             source: 'gene',
             new: '',
@@ -7454,7 +7525,7 @@ export const pages = {
         display: 'View Admin Gene',
         config: {
             source: 'gene',
-            dataKey: 'record',
+            dataKey: 'view_admin_gene',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7476,7 +7547,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_gene',
             type: RecordData,
             source: 'gene',
             new: '',
@@ -7518,7 +7589,7 @@ export const pages = {
         display: 'Edit Admin Gene',
         config: {
             source: 'gene',
-            dataKey: 'record',
+            dataKey: 'edit_admin_gene',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7534,7 +7605,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_gene',
             type: RecordData,
             source: 'gene',
             new: '',
@@ -7565,7 +7636,7 @@ export const pages = {
         display: 'Find Admin Compound',
         config: {
             source: 'compound',
-            dataKey: 'table',
+            dataKey: 'find_admin_compound',
             rowAction: {
                 display: 'Select Compound',
                 pretargetFn: '',
@@ -7588,7 +7659,7 @@ export const pages = {
             searchFields: ['name', 'smiles', ],
         },
         data: [{
-            name: 'table',
+            name: 'find_admin_compound',
             type: TableData,
             source: 'compound',
             new: '',
@@ -7619,7 +7690,7 @@ export const pages = {
         display: 'View Admin Compound',
         config: {
             source: 'compound',
-            dataKey: 'record',
+            dataKey: 'view_admin_compound',
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7641,7 +7712,7 @@ export const pages = {
             }, ],
         },
         data: [{
-            name: 'record',
+            name: 'view_admin_compound',
             type: RecordData,
             source: 'compound',
             new: '',
@@ -7683,7 +7754,7 @@ export const pages = {
         display: 'Edit Admin Compound',
         config: {
             source: 'compound',
-            dataKey: 'record',
+            dataKey: 'edit_admin_compound',
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7699,7 +7770,7 @@ export const pages = {
             referenceTables: [],
         },
         data: [{
-            name: 'record',
+            name: 'edit_admin_compound',
             type: RecordData,
             source: 'compound',
             new: '',

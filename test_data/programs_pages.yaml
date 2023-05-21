@@ -135,13 +135,13 @@ page_modules:
       reference_tables:
       - table_page: find_program_milestone
         display: Milestones
-        params_fn: '({program__id: data.record.id})'
+        params_fn: '({program__id: data.view_program.id})'
       - table_page: find_assay
         display: Assays
-        params_fn: '({for_program__id: data.record.id})'
+        params_fn: '({for_program__id: data.view_program.id})'
       - table_page: find_experiment
         display: Experiments
-        params_fn: '({program__id: data.record.id})'
+        params_fn: '({program__id: data.view_program.id})'
     buttons:
     - display: Edit
       target: edit_program
