@@ -117,9 +117,9 @@ class PageClass:
 @dataclass
 class ViewField:
     field: str
-    display: str = ''
-    target: str = ''
-    visible_fn: str = ''
+    display: str = None
+    target: str = None
+    visible_fn: str = None
 
     def __init__(self, field_config):
         if type(field_config) == str:
@@ -148,9 +148,9 @@ class ViewField:
 @dataclass
 class EditField:
     field: str
-    display: str = ''
-    lookup: str = ''
-    visible_fn: str = ''
+    display: str = None
+    lookup: str = None
+    visible_fn: str = None
 
     def __init__(self, field_config):
         if type(field_config) == str:
@@ -198,7 +198,7 @@ class Column:
 class ReferenceTable:
     table_page: str
     display: str
-    params_fn: str = ''
+    params_fn: str = None
 
     def add_refs(self, config, page):
         if self.table_page not in config.pages_dict.keys():
@@ -220,12 +220,12 @@ class ReferenceTable:
 @dataclass
 class Action:
     display: str
-    pretarget_fn: str = ''
-    pretarget: str = ''
-    target: str = ''
-    mode: str = ''
-    params_fn: str = ''
-    visible_fn: str = ''
+    pretarget_fn: str = None
+    pretarget: str = None
+    target: str = None
+    mode: str = None
+    params_fn: str = None
+    visible_fn: str = None
 
     def add_refs(self, config, page):
         if self.target and self.target not in config.pages_dict.keys() and self.target not in RESERVED_TARGETS:
@@ -269,7 +269,25 @@ class LinksBox:
 
 @dataclass
 class ProtoPage:
-    data_key: str = ''
+    data_key: str = None
+
+    def __post_init__(self):
+        pass
+
+    def add_refs(self, config, page):
+        return []
+
+    def default_data(self, config):
+        return []
+
+    def use_template(self, template):
+        for k, v in self.__dict__.items():
+            if v is None:
+                self.__dict__[k] = template.__dict__[k]
+
+    @property
+    def js_config(self):
+        return {}
 
 
 @dataclass
@@ -277,36 +295,37 @@ class LinksPage(ProtoPage):
     boxes: list[LinksBox] = None
 
     def __post_init__(self):
+        super().__post_init__()
         self.boxes = [LinksBox(**b) for b in self.boxes] if self.boxes else []
 
     def add_refs(self, config, page):
-        next_pages = []
+        next_pages = super().add_refs(config, page)
         for b in self.boxes:
             next_pages += b.add_refs(config, page)
         return next_pages
 
-    def default_data(self, config):
-        return []
-
     @property
     def js_config(self):
         return {
+            **super().js_config,
             'boxes': [b.js_config for b in self.boxes],
         }
 
 
 @dataclass
 class DataPage(ProtoPage):
-    source: str = ''
-    on_load_fn: str = ''
-    params_fn: str = ''
-    load_fn: str = ''
+    source: str = None
+    on_load_fn: str = None
+    params_fn: str = None
+    load_fn: str = None
 
     def default_data(self, config):
         return self._data_reqs
 
+    @property
     def js_config(self):
         return {
+            **super().js_config,
             'source': self.source,
             'dataKey': self.data_key,
         }
@@ -314,22 +333,30 @@ class DataPage(ProtoPage):
 
 @dataclass
 class RecordPage(DataPage):
-    new_record: str = ''
-    new_record_fn: str = ''
+    new_record: str = None
+    new_record_fn: str = None
 
     def __post_init__(self):
+        super().__post_init__()
         self.data_key = self.data_key or 'record'
-        self._data_reqs = [RecordData(self.data_key, self)]
 
+    def add_refs(self, config, page):
+        next_pages = super().add_refs(config, page)
+        self._data_reqs = [RecordData(self.data_key, self)]
+        return next_pages
 
 @dataclass
 class TableDataPage(DataPage):
-    new_records: str = ''
+    new_records: str = None
 
     def __post_init__(self):
+        super().__post_init__()
         self.data_key = self.data_key or 'table'
-        self._data_reqs = [TableData(self.data_key, self)]
 
+    def add_refs(self, config, page):
+        next_pages = super().add_refs(config, page)
+        self._data_reqs = [TableData(self.data_key, self)]
+        return next_pages
 
 @dataclass
 class FormPage(RecordPage):
@@ -345,12 +372,12 @@ class FormPage(RecordPage):
 
 
     def add_refs(self, config, page):
+        next_pages = super().add_refs(config, page)
         for t in self.reference_tables:
             ref = config.pages_dict[t.table_page].config.default_data(config, t.table_page)[0]
             ref.params_fn = t.params_fn
             self._data_reqs.append(ref)
 
-        next_pages = []
         if self.source not in config.tables_dict.keys():
             config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
         else:
@@ -365,7 +392,7 @@ class FormPage(RecordPage):
     @property
     def js_config(self):
         return {
-            **super().js_config(),
+            **super().js_config,
             'viewFields': [f.js_config for f in self.view_fields],
             'editFields': [f.js_config for f in self.edit_fields],
             'referenceTables': [t.js_config for t in self.reference_tables],
@@ -386,7 +413,7 @@ class TablePage(TableDataPage):
         self.row_action = Action(**self.row_action) if self.row_action else None
 
     def add_refs(self, config, page):
-        next_pages = []
+        next_pages = super().add_refs(config, page)
         if self.source not in config.tables_dict.keys():
             config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
         else:
@@ -411,7 +438,7 @@ class TablePage(TableDataPage):
     @property
     def js_config(self):
         return {
-            **super().js_config(),
+            **super().js_config,
             'rowAction': self.row_action.js_config if self.row_action else None,
             'viewColumns': [c.js_config for c in self.view_columns],
             'editColumns': [c.js_config for c in self.edit_columns],
@@ -421,12 +448,12 @@ class TablePage(TableDataPage):
 
 @dataclass
 class GridPage(TableDataPage):
-    row_field: str = ''
-    column_field: str = ''
-    display_field: str = ''
+    row_field: str = None
+    column_field: str = None
+    display_field: str = None
 
     def add_refs(self, config, page):
-        next_pages = []
+        next_pages = super().add_refs(config, page)
         if self.source not in config.tables_dict.keys():
             config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
         return next_pages
@@ -434,7 +461,7 @@ class GridPage(TableDataPage):
     @property
     def js_config(self):
         return {
-            **super().js_config(),
+            **super().js_config,
             'rowField': self.row_field,
             'columnField': self.column_field,
             'displayField': self.display_field,
@@ -447,7 +474,7 @@ class FigurePage(TableDataPage):
     layout: dict = None
  
     def add_refs(self, config, page):
-        next_pages = []
+        next_pages = super().add_refs(config, page)
         source = self.source[:-6] if self.source.endswith('_stats') else self.source
         if source not in config.tables_dict.keys():
             config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
@@ -456,7 +483,7 @@ class FigurePage(TableDataPage):
     @property
     def js_config(self):
         return {
-            **super().js_config(),
+            **super().js_config,
             'plots': self.plots,
             'layout': self.layout,
         }
@@ -488,9 +515,11 @@ class LayoutPage(ProtoPage):
     @property
     def js_config(self):
         return {
+            **super().js_config,
             'direction': self.direction,
             'cells': [c.js_config for c in self.cells],
         }
+
 
 @dataclass
 class UnderConstruction(ProtoPage):
@@ -501,18 +530,14 @@ class UnderConstruction(ProtoPage):
     def default_data(self, config):
         return []
 
-    @property
-    def js_config(self):
-        return {}
-
 
 @dataclass
 class TableData:
     name: str
     source: str
-    new: str = ''
-    on_load_fn: str = ''
-    parameters_fn: str = ''
+    new: str = None
+    on_load_fn: str = None
+    parameters_fn: str = None
 
     def __init__(self, name, page_config):
         self.name = name
@@ -537,9 +562,9 @@ class TableData:
 class RecordData:
     name: str
     source: str
-    new: str = ''
-    new_fn: str = ''
-    parameters_fn: str = ''
+    new: str = None
+    new_fn: str = None
+    parameters_fn: str = None
 
     def __init__(self, name, page_config):
         self.name = name
@@ -583,20 +608,18 @@ class Page:
     name: str
     module: str = None
     display: str = None
-    descr: str = ''
-    next_pages: list[NextPage] = ''
-    type: str = ''
+    descr: str = None
+    template: str = None
+    next_pages: list[NextPage] = None
+    type: str = None
     config: str = None
     buttons: list[Action] = None
     data: str = None
 
     def __post_init__(self):
         add_display(self)
-        if not self.config:
-            self.type = self.type or 'UnderConstruction'
-            self.config = page_configs['UnderConstruction']()
-        elif self.type in page_configs:
-            self.config = page_configs[self.type](**self.config, data_key=self.name)
+        if self.type in page_configs:
+            self.config = page_configs[self.type](**self.config or {}, data_key=self.name)
         else:
             config_error(f'Unexpected page type "{self.type}" found in page config "{self.name}"')
 
@@ -605,6 +628,8 @@ class Page:
         self.next_pages = [NextPage(**n) for n in self.next_pages] if self.next_pages else []
 
     def add_refs(self, config):
+        if self.template:
+            self.config.use_template(config.pages_dict[self.template].config)
         self.next_pages = self.next_pages + self.config.add_refs(config, self.name)
         for b in self.buttons:
             self.next_pages += b.add_refs(config, self.name)
@@ -628,8 +653,8 @@ class PageModule:
     name: str
     pages: list[Page]
     display: str = None
-    descr: str = ''
-    svg_code: str = ''
+    descr: str = None
+    svg_code: str = None
 
     def __post_init__(self):
         add_display(self)

@@ -397,12 +397,13 @@ page_modules:
         display: Plate Map
         descr: View the wells of a plate as a grid
         type: Grid
-        config:
-          source: plate_well
-          row_field: row
-          column_field: column
-          display_field: purpose
-          params_fn: '({ plate__id: data.form_cell.id })'
+        template: view_plate_map
+        config: {}
+        #   source: plate_well
+        #   row_field: row
+        #   column_field: column
+        #   display_field: purpose
+        #   params_fn: '({ plate__id: data.form_cell.id })'
     buttons:
     - display: Done
       target: back
