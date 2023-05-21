@@ -309,6 +309,33 @@ page_modules:
     - display: Done
       target: back
 
+  # - name: view_plate_grid
+  #   descr: View a record from table plate
+  #   type: Layout
+  #   config:
+  #     cells:
+  #     - name: form_cell
+  #       type: Form
+  #       config:
+  #         source: plate
+  #         view_fields:
+  #         - name
+  #         - experiment
+  #     - name: grid_cell
+  #       descr: View the wells of a plate as a grid
+  #       type: Grid
+  #       config:
+  #         source: plate_map
+  #         data: plate_well
+  #         row_field: row
+  #         column_field: column
+  #         display_field: purpose
+  #         params_fn: '({ plate__id: data.form_cell.id })'
+  #   buttons:
+  #   - display: Done
+  #     target: back
+
+
   - name: edit_plate
     descr: Edit a record from table plate
     type: Form

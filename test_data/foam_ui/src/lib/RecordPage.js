@@ -4,11 +4,13 @@ import TablePage from './TablePage.js';
 
 export default class RecordPage extends Component {
     render() {
-        if (!this.props.data.record) { return <div />}
-        const data = this.props.data.record;
         const config = this.props.config;
-        const params = this.props.params.record;
+        const data = this.props.data[config.dataKey];
+        const params = this.props.params[config.dataKey];
         const context = this.props.context;
+        const client = context.clients[config.dataKey]
+
+        if (!data) { return <div />}
         return (
             <div className='record-page-outer-div'>
             <div className='record-page-inner-div'>
@@ -30,7 +32,7 @@ export default class RecordPage extends Component {
                     }}
                     params={params}
                     data={data}
-                    context={{ ...context, update: context.clients.record.update }}
+                    context={{ ...context, update: client.update }}
                 />
                 {config.referenceTables.map((t, i) => (
                     <div className='reference-table-div' key={i}>
@@ -50,7 +52,7 @@ export default class RecordPage extends Component {
                     }}
                     params={params}
                     data={this.props.data}
-                    context={{ ...context, save: context.clients.record.save }}
+                    context={{ ...context, save: client.save }}
                 />
             </div>
             </div>

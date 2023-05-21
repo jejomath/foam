@@ -1017,6 +1017,24 @@ export const pages = {
         display: 'Find Person',
         config: {
             source: 'person',
+            dataKey: 'table',
+            buttons: [{
+                display: 'New Person',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_person',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Person',
                 pretargetFn: '',
@@ -1040,23 +1058,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'given_name', 'family_name', ],
-            buttons: [{
-                display: 'New Person',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_person',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -1074,6 +1075,26 @@ export const pages = {
         display: 'View Person',
         config: {
             source: 'person',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_person',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -1115,25 +1136,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     bio_lead__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_person',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -1188,6 +1190,24 @@ export const pages = {
         display: 'Edit Person',
         config: {
             source: 'person',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -1206,23 +1226,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -1240,6 +1243,24 @@ export const pages = {
         display: 'Find Program',
         config: {
             source: 'program',
+            dataKey: 'table',
+            buttons: [{
+                display: 'New Program',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_program',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Program',
                 pretargetFn: '',
@@ -1281,23 +1302,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'target', 'indication', 'status', 'started_date', 'stage', 'bio_lead', 'chem_lead', 'program_manager', ],
-            buttons: [{
-                display: 'New Program',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -1315,6 +1319,58 @@ export const pages = {
         display: 'View Program',
         config: {
             source: 'program',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_program',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Edit Milestones',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_program_milestone_table',
+                mode: 'modal',
+                paramsFn: (params, data) => ({
+                    program__id: data.id,
+                    _program: data.record
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Create Milestones',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'new_program_milestone_table',
+                mode: 'modal',
+                paramsFn: (params, data) => ({
+                    program__id: data.id,
+                    _program: data.record
+                }),
+                visibleFn: (params, data) => (data.find_program_milestone.length === 0),
+            }, {
+                display: 'New Experiment',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'new_experiment',
+                mode: 'modal',
+                paramsFn: (params, data) => ({
+                    program: data.record
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -1381,57 +1437,6 @@ export const pages = {
                     program__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Edit Milestones',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program_milestone_table',
-                mode: 'modal',
-                paramsFn: (params, data) => ({
-                    program__id: data.id,
-                    _program: data.record
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Create Milestones',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'new_program_milestone_table',
-                mode: 'modal',
-                paramsFn: (params, data) => ({
-                    program__id: data.id,
-                    _program: data.record
-                }),
-                visibleFn: (params, data) => (data.find_program_milestone.length === 0),
-            }, {
-                display: 'New Experiment',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'new_experiment',
-                mode: 'modal',
-                paramsFn: (params, data) => ({
-                    program: data.record
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -1476,6 +1481,24 @@ export const pages = {
         display: 'Edit Program',
         config: {
             source: 'program',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -1524,23 +1547,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -1558,6 +1564,24 @@ export const pages = {
         display: 'Find Program Milestone',
         config: {
             source: 'program_milestone',
+            dataKey: 'table',
+            buttons: [{
+                display: 'New Program Milestone',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_program_milestone',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Program Milestone',
                 pretargetFn: '',
@@ -1584,23 +1608,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'program', 'status', 'target_date', 'completed_date', ],
-            buttons: [{
-                display: 'New Program Milestone',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program_milestone',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -1618,25 +1625,7 @@ export const pages = {
         display: 'Edit Program Milestone Table',
         config: {
             source: 'program_milestone',
-            rowAction: null,
-            viewColumns: [],
-            editColumns: [{
-                field: 'program',
-                width: '200',
-            }, {
-                field: 'name',
-                width: '200',
-            }, {
-                field: 'status',
-                width: '200',
-            }, {
-                field: 'target_date',
-                width: '200',
-            }, {
-                field: 'completed_date',
-                width: '200',
-            }, ],
-            searchFields: null,
+            dataKey: 'table',
             buttons: [{
                 display: 'New Milestone',
                 pretargetFn: (params, data, context) => (context.addNew({
@@ -1664,23 +1653,6 @@ export const pages = {
                 paramsFn: '',
                 visibleFn: '',
             }, ],
-        },
-        data: [{
-            name: 'table',
-            type: TableData,
-            source: 'program_milestone',
-            new: '',
-            onLoadFn: '',
-            paramsFn: '',
-        }, ],
-        type: Table,
-        buttons: [],
-    },
-    new_program_milestone_table: {
-        name: 'new_program_milestone_table',
-        display: 'New Program Milestone Table',
-        config: {
-            source: 'program_milestone',
             rowAction: null,
             viewColumns: [],
             editColumns: [{
@@ -1700,6 +1672,24 @@ export const pages = {
                 width: '200',
             }, ],
             searchFields: null,
+        },
+        data: [{
+            name: 'table',
+            type: TableData,
+            source: 'program_milestone',
+            new: '',
+            onLoadFn: '',
+            paramsFn: '',
+        }, ],
+        type: Table,
+        buttons: [],
+    },
+    new_program_milestone_table: {
+        name: 'new_program_milestone_table',
+        display: 'New Program Milestone Table',
+        config: {
+            source: 'program_milestone',
+            dataKey: 'table',
             buttons: [{
                 display: 'Done',
                 pretargetFn: '',
@@ -1727,6 +1717,25 @@ export const pages = {
                 paramsFn: '',
                 visibleFn: '',
             }, ],
+            rowAction: null,
+            viewColumns: [],
+            editColumns: [{
+                field: 'program',
+                width: '200',
+            }, {
+                field: 'name',
+                width: '200',
+            }, {
+                field: 'status',
+                width: '200',
+            }, {
+                field: 'target_date',
+                width: '200',
+            }, {
+                field: 'completed_date',
+                width: '200',
+            }, ],
+            searchFields: null,
         },
         data: [{
             name: 'table',
@@ -1750,6 +1759,26 @@ export const pages = {
         display: 'View Program Milestone',
         config: {
             source: 'program_milestone',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_program_milestone',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'program',
                 display: '',
@@ -1778,25 +1807,6 @@ export const pages = {
             }, ],
             editFields: [],
             referenceTables: [],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program_milestone',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -1814,6 +1824,24 @@ export const pages = {
         display: 'Edit Program Milestone',
         config: {
             source: 'program_milestone',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'program',
                 display: '',
@@ -1842,23 +1870,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -1876,6 +1887,16 @@ export const pages = {
         display: 'Program Dashboard',
         config: {
             source: 'program_stats',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             plots: [{
                 config: {
                     type: 'bar',
@@ -1891,51 +1912,16 @@ export const pages = {
                 width: '700',
                 height: '400',
             },
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
             type: TableData,
             source: 'program_stats',
-            new: 'False',
+            new: '',
             onLoadFn: '',
             paramsFn: '',
         }, ],
         type: Figure,
-        buttons: [],
-    },
-    fancy_dashboard: {
-        name: 'fancy_dashboard',
-        display: 'Fancy Dashboard',
-        config: {
-            direction: 'vertical',
-            pages: [{
-                direction: null,
-                pages: [],
-                name: null,
-                from_page: 'find_program',
-                params_from: null,
-            }, {
-                direction: null,
-                pages: [],
-                name: null,
-                from_page: 'program_dashboard',
-                params_from: null,
-            }, ],
-            name: null,
-            from_page: null,
-            params_from: null,
-        },
-        data: [],
-        type: Layout,
         buttons: [],
     },
     find_assay: {
@@ -1943,6 +1929,8 @@ export const pages = {
         display: 'Find Assay',
         config: {
             source: 'assay',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Assay',
                 pretargetFn: '',
@@ -1972,7 +1960,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'type', 'descr', 'cell_line', 'for_program', ],
-            buttons: [],
         },
         data: [{
             name: 'table',
@@ -2006,6 +1993,8 @@ export const pages = {
         display: 'View Assay',
         config: {
             source: 'assay',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2040,7 +2029,6 @@ export const pages = {
                     assay__id: data.record.id
                 }),
             }, ],
-            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2095,6 +2083,8 @@ export const pages = {
         display: 'New Assay',
         config: {
             source: 'assay',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -2113,7 +2103,6 @@ export const pages = {
                 visibleFn: (params, data) => (data.type === 'VITRO'),
             }, ],
             referenceTables: [],
-            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2149,6 +2138,8 @@ export const pages = {
         display: 'Edit Assay',
         config: {
             source: 'assay',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2177,7 +2168,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2211,6 +2201,8 @@ export const pages = {
         display: 'Find Experiment',
         config: {
             source: 'experiment',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Experiment',
                 pretargetFn: '',
@@ -2261,7 +2253,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'description', 'status', 'program', 'bio_lead', 'target_start_date', 'target_duration', 'start_date', 'end_date', 'assay', 'type', 'perturbations', ],
-            buttons: [],
         },
         data: [{
             name: 'table',
@@ -2295,6 +2286,8 @@ export const pages = {
         display: 'View Experiment',
         config: {
             source: 'experiment',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2364,7 +2357,6 @@ export const pages = {
                     experiment__id: data.record.id
                 }),
             }, ],
-            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2419,6 +2411,8 @@ export const pages = {
         display: 'New Experiment',
         config: {
             source: 'experiment',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'assay',
@@ -2432,7 +2426,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2468,6 +2461,8 @@ export const pages = {
         display: 'Edit Experiment',
         config: {
             source: 'experiment',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2531,7 +2526,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2565,6 +2559,8 @@ export const pages = {
         display: 'Find Plate',
         config: {
             source: 'plate',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Plate',
                 pretargetFn: '',
@@ -2591,7 +2587,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'experiment', 'row_count', 'column_count', ],
-            buttons: [],
         },
         data: [{
             name: 'table',
@@ -2625,6 +2620,8 @@ export const pages = {
         display: 'View Plate',
         config: {
             source: 'plate',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2656,7 +2653,6 @@ export const pages = {
                     cols: data.record.column_count
                 }),
             }, ],
-            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2743,6 +2739,8 @@ export const pages = {
         display: 'Edit Plate',
         config: {
             source: 'plate',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -2766,7 +2764,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [],
         },
         data: [{
             name: 'record',
@@ -2800,6 +2797,8 @@ export const pages = {
         display: 'Find Plate Well',
         config: {
             source: 'plate_well',
+            dataKey: 'table',
+            buttons: [],
             rowAction: null,
             viewColumns: [],
             editColumns: [{
@@ -2816,7 +2815,6 @@ export const pages = {
                 width: '200',
             }, ],
             searchFields: null,
-            buttons: [],
         },
         data: [{
             name: 'table',
@@ -2868,10 +2866,11 @@ export const pages = {
         display: 'View Plate Map',
         config: {
             source: 'plate_well',
+            dataKey: 'table',
+            buttons: [],
             rowField: 'row',
             columnField: 'column',
             displayField: 'purpose',
-            buttons: [],
         },
         data: [{
             name: 'table',
@@ -2905,6 +2904,16 @@ export const pages = {
         display: 'Find Perturbation',
         config: {
             source: 'perturbation',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Perturbation',
                 pretargetFn: '',
@@ -2928,15 +2937,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'compound', 'concentration_nm', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -2954,6 +2954,16 @@ export const pages = {
         display: 'View Perturbation',
         config: {
             source: 'perturbation',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2977,15 +2987,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     perturbations__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -3013,6 +3014,24 @@ export const pages = {
         display: 'Find Cell Line',
         config: {
             source: 'cell_line',
+            dataKey: 'table',
+            buttons: [{
+                display: 'New Cell Line',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_cell_line',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Cell Line',
                 pretargetFn: '',
@@ -3042,23 +3061,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', 'organ', 'tissue', 'cell_type', 'donor_sex', 'donor_age', 'donor_ethnicity', 'donor_health_status', 'disease', ],
-            buttons: [{
-                display: 'New Cell Line',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_cell_line',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -3076,6 +3078,26 @@ export const pages = {
         display: 'View Cell Line',
         config: {
             source: 'cell_line',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Edit',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'edit_cell_line',
+                mode: '',
+                paramsFn: (params, data) => ({
+                    id: params.id
+                }),
+                visibleFn: '',
+            }, {
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3135,25 +3157,6 @@ export const pages = {
                     cell_line__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_cell_line',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -3180,6 +3183,24 @@ export const pages = {
         display: 'Edit Cell Line',
         config: {
             source: 'cell_line',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Save',
+                pretargetFn: (params, data, context) => (context.save()),
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, {
+                display: 'Cancel',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -3233,23 +3254,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -3267,6 +3271,16 @@ export const pages = {
         display: 'Find Indication',
         config: {
             source: 'indication',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Indication',
                 pretargetFn: '',
@@ -3284,15 +3298,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -3310,6 +3315,16 @@ export const pages = {
         display: 'View Indication',
         config: {
             source: 'indication',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3329,15 +3344,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     disease__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -3374,6 +3380,16 @@ export const pages = {
         display: 'Find Species',
         config: {
             source: 'species',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Species',
                 pretargetFn: '',
@@ -3391,15 +3407,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -3417,6 +3424,16 @@ export const pages = {
         display: 'View Species',
         config: {
             source: 'species',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3460,15 +3477,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     species__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -3541,6 +3549,16 @@ export const pages = {
         display: 'Find Organ',
         config: {
             source: 'organ',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Organ',
                 pretargetFn: '',
@@ -3561,15 +3579,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -3587,6 +3596,16 @@ export const pages = {
         display: 'View Organ',
         config: {
             source: 'organ',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3605,15 +3624,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     organ__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -3641,6 +3651,16 @@ export const pages = {
         display: 'Find Tissue',
         config: {
             source: 'tissue',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Tissue',
                 pretargetFn: '',
@@ -3661,15 +3681,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -3687,6 +3698,16 @@ export const pages = {
         display: 'View Tissue',
         config: {
             source: 'tissue',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3705,15 +3726,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     tissue__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -3741,6 +3753,16 @@ export const pages = {
         display: 'Find Cell Type',
         config: {
             source: 'cell_type',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Cell Type',
                 pretargetFn: '',
@@ -3761,15 +3783,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -3787,6 +3800,16 @@ export const pages = {
         display: 'View Cell Type',
         config: {
             source: 'cell_type',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3805,15 +3828,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     cell_type__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -3841,6 +3855,16 @@ export const pages = {
         display: 'Find Protein',
         config: {
             source: 'protein',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Protein',
                 pretargetFn: '',
@@ -3864,15 +3888,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'gene', 'species', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -3890,6 +3905,16 @@ export const pages = {
         display: 'View Protein',
         config: {
             source: 'protein',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3913,15 +3938,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     target__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -3949,6 +3965,16 @@ export const pages = {
         display: 'Find Gene',
         config: {
             source: 'gene',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Gene',
                 pretargetFn: '',
@@ -3969,15 +3995,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -3995,6 +4012,16 @@ export const pages = {
         display: 'View Gene',
         config: {
             source: 'gene',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4013,15 +4040,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     gene__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -4049,6 +4067,16 @@ export const pages = {
         display: 'Find Compound',
         config: {
             source: 'compound',
+            dataKey: 'table',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             rowAction: {
                 display: 'Select Compound',
                 pretargetFn: '',
@@ -4069,15 +4097,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'smiles', ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -4095,6 +4114,16 @@ export const pages = {
         display: 'View Compound',
         config: {
             source: 'compound',
+            dataKey: 'record',
+            buttons: [{
+                display: 'Done',
+                pretargetFn: '',
+                pretarget: '',
+                target: 'back',
+                mode: '',
+                paramsFn: '',
+                visibleFn: '',
+            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4113,15 +4142,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     compound__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -4307,6 +4327,8 @@ export const pages = {
         display: 'Find Admin Person',
         config: {
             source: 'person',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Person',
                 pretargetFn: '',
@@ -4330,23 +4352,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'given_name', 'family_name', ],
-            buttons: [{
-                display: 'New Person',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_person',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -4357,13 +4362,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Person',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_person',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_person: {
         name: 'view_admin_person',
         display: 'View Admin Person',
         config: {
             source: 'person',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4405,25 +4428,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     bio_lead__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_person',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -4471,13 +4475,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_person',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_person: {
         name: 'edit_admin_person',
         display: 'Edit Admin Person',
         config: {
             source: 'person',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -4496,23 +4520,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -4523,13 +4530,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_program: {
         name: 'find_admin_program',
         display: 'Find Admin Program',
         config: {
             source: 'program',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Program',
                 pretargetFn: '',
@@ -4571,23 +4596,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'target', 'indication', 'status', 'started_date', 'stage', 'bio_lead', 'chem_lead', 'program_manager', ],
-            buttons: [{
-                display: 'New Program',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_program',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -4598,13 +4606,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Program',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_program',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_program: {
         name: 'view_admin_program',
         display: 'View Admin Program',
         config: {
             source: 'program',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4671,25 +4697,6 @@ export const pages = {
                     program__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_program',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -4727,13 +4734,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_program',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_program: {
         name: 'edit_admin_program',
         display: 'Edit Admin Program',
         config: {
             source: 'program',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -4782,23 +4809,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -4809,13 +4819,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_program_milestone: {
         name: 'find_admin_program_milestone',
         display: 'Find Admin Program Milestone',
         config: {
             source: 'program_milestone',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Program Milestone',
                 pretargetFn: '',
@@ -4845,23 +4873,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'program', 'status', 'target_date', 'completed_date', ],
-            buttons: [{
-                display: 'New Program Milestone',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_program_milestone',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -4872,13 +4883,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Program Milestone',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_program_milestone',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_program_milestone: {
         name: 'view_admin_program_milestone',
         display: 'View Admin Program Milestone',
         config: {
             source: 'program_milestone',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4907,25 +4936,6 @@ export const pages = {
             }, ],
             editFields: [],
             referenceTables: [],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_program_milestone',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -4936,13 +4946,33 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_program_milestone',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_program_milestone: {
         name: 'edit_admin_program_milestone',
         display: 'Edit Admin Program Milestone',
         config: {
             source: 'program_milestone',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -4971,23 +5001,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -4998,13 +5011,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_assay: {
         name: 'find_admin_assay',
         display: 'Find Admin Assay',
         config: {
             source: 'assay',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Assay',
                 pretargetFn: '',
@@ -5034,23 +5065,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'type', 'descr', 'cell_line', 'for_program', ],
-            buttons: [{
-                display: 'New Assay',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_assay',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -5061,13 +5075,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Assay',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_assay',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_assay: {
         name: 'view_admin_assay',
         display: 'View Admin Assay',
         config: {
             source: 'assay',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5102,25 +5134,6 @@ export const pages = {
                     assay__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_assay',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -5140,13 +5153,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_assay',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_assay: {
         name: 'edit_admin_assay',
         display: 'Edit Admin Assay',
         config: {
             source: 'assay',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5175,23 +5208,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -5202,13 +5218,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_experiment: {
         name: 'find_admin_experiment',
         display: 'Find Admin Experiment',
         config: {
             source: 'experiment',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Experiment',
                 pretargetFn: '',
@@ -5259,23 +5293,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'description', 'status', 'program', 'bio_lead', 'target_start_date', 'target_duration', 'start_date', 'end_date', 'assay', 'type', 'perturbations', ],
-            buttons: [{
-                display: 'New Experiment',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_experiment',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -5286,13 +5303,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Experiment',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_experiment',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_experiment: {
         name: 'view_admin_experiment',
         display: 'View Admin Experiment',
         config: {
             source: 'experiment',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5362,25 +5397,6 @@ export const pages = {
                     experiment__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_experiment',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -5400,13 +5416,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_experiment',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_experiment: {
         name: 'edit_admin_experiment',
         display: 'Edit Admin Experiment',
         config: {
             source: 'experiment',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5470,23 +5506,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -5497,13 +5516,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_perturbation: {
         name: 'find_admin_perturbation',
         display: 'Find Admin Perturbation',
         config: {
             source: 'perturbation',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Perturbation',
                 pretargetFn: '',
@@ -5527,23 +5564,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'compound', 'concentration_nm', ],
-            buttons: [{
-                display: 'New Perturbation',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_perturbation',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -5554,13 +5574,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Perturbation',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_perturbation',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_perturbation: {
         name: 'view_admin_perturbation',
         display: 'View Admin Perturbation',
         config: {
             source: 'perturbation',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5591,25 +5629,6 @@ export const pages = {
                     perturbation__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_perturbation',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -5638,13 +5657,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_perturbation',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_perturbation: {
         name: 'edit_admin_perturbation',
         display: 'Edit Admin Perturbation',
         config: {
             source: 'perturbation',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5663,23 +5702,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -5690,13 +5712,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_plate: {
         name: 'find_admin_plate',
         display: 'Find Admin Plate',
         config: {
             source: 'plate',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Plate',
                 pretargetFn: '',
@@ -5723,23 +5763,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'experiment', 'row_count', 'column_count', ],
-            buttons: [{
-                display: 'New Plate',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_plate',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -5750,13 +5773,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Plate',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_plate',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_plate: {
         name: 'view_admin_plate',
         display: 'View Admin Plate',
         config: {
             source: 'plate',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5786,25 +5827,6 @@ export const pages = {
                     plate__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_plate',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -5824,13 +5846,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_plate',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_plate: {
         name: 'edit_admin_plate',
         display: 'Edit Admin Plate',
         config: {
             source: 'plate',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5854,23 +5896,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -5881,13 +5906,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_plate_well: {
         name: 'find_admin_plate_well',
         display: 'Find Admin Plate Well',
         config: {
             source: 'plate_well',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Plate Well',
                 pretargetFn: '',
@@ -5920,23 +5963,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'plate', 'row', 'column', 'purpose', 'perturbation', ],
-            buttons: [{
-                display: 'New Plate Well',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_plate_well',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -5947,13 +5973,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Plate Well',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_plate_well',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_plate_well: {
         name: 'view_admin_plate_well',
         display: 'View Admin Plate Well',
         config: {
             source: 'plate_well',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5987,25 +6031,6 @@ export const pages = {
             }, ],
             editFields: [],
             referenceTables: [],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_plate_well',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -6016,13 +6041,33 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_plate_well',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_plate_well: {
         name: 'edit_admin_plate_well',
         display: 'Edit Admin Plate Well',
         config: {
             source: 'plate_well',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6056,23 +6101,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -6083,13 +6111,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_cell_line: {
         name: 'find_admin_cell_line',
         display: 'Find Admin Cell Line',
         config: {
             source: 'cell_line',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Cell Line',
                 pretargetFn: '',
@@ -6134,23 +6180,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', 'organ', 'tissue', 'cell_type', 'donor_sex', 'donor_age', 'donor_ethnicity', 'donor_health_status', 'disease', ],
-            buttons: [{
-                display: 'New Cell Line',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_cell_line',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -6161,13 +6190,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Cell Line',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_cell_line',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_cell_line: {
         name: 'view_admin_cell_line',
         display: 'View Admin Cell Line',
         config: {
             source: 'cell_line',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6227,25 +6274,6 @@ export const pages = {
                     cell_line__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_cell_line',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -6265,13 +6293,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_cell_line',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_cell_line: {
         name: 'edit_admin_cell_line',
         display: 'Edit Admin Cell Line',
         config: {
             source: 'cell_line',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6325,23 +6373,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -6352,13 +6383,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_indication: {
         name: 'find_admin_indication',
         display: 'Find Admin Indication',
         config: {
             source: 'indication',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Indication',
                 pretargetFn: '',
@@ -6376,23 +6425,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', ],
-            buttons: [{
-                display: 'New Indication',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_indication',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -6403,13 +6435,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Indication',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_indication',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_indication: {
         name: 'view_admin_indication',
         display: 'View Admin Indication',
         config: {
             source: 'indication',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6429,25 +6479,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     disease__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_indication',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -6477,13 +6508,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_indication',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_indication: {
         name: 'edit_admin_indication',
         display: 'Edit Admin Indication',
         config: {
             source: 'indication',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6492,23 +6543,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -6519,13 +6553,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_species: {
         name: 'find_admin_species',
         display: 'Find Admin Species',
         config: {
             source: 'species',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Species',
                 pretargetFn: '',
@@ -6543,23 +6595,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', ],
-            buttons: [{
-                display: 'New Species',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_species',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -6570,13 +6605,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Species',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_species',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_species: {
         name: 'view_admin_species',
         display: 'View Admin Species',
         config: {
             source: 'species',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6620,25 +6673,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     species__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_species',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -6704,13 +6738,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_species',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_species: {
         name: 'edit_admin_species',
         display: 'Edit Admin Species',
         config: {
             source: 'species',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6719,23 +6773,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -6746,13 +6783,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_organ: {
         name: 'find_admin_organ',
         display: 'Find Admin Organ',
         config: {
             source: 'organ',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Organ',
                 pretargetFn: '',
@@ -6773,23 +6828,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', ],
-            buttons: [{
-                display: 'New Organ',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_organ',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -6800,13 +6838,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Organ',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_organ',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_organ: {
         name: 'view_admin_organ',
         display: 'View Admin Organ',
         config: {
             source: 'organ',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6825,25 +6881,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     organ__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_organ',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -6864,13 +6901,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_organ',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_organ: {
         name: 'edit_admin_organ',
         display: 'Edit Admin Organ',
         config: {
             source: 'organ',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6884,23 +6941,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -6911,13 +6951,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_tissue: {
         name: 'find_admin_tissue',
         display: 'Find Admin Tissue',
         config: {
             source: 'tissue',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Tissue',
                 pretargetFn: '',
@@ -6938,23 +6996,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', ],
-            buttons: [{
-                display: 'New Tissue',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_tissue',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -6965,13 +7006,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Tissue',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_tissue',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_tissue: {
         name: 'view_admin_tissue',
         display: 'View Admin Tissue',
         config: {
             source: 'tissue',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6990,25 +7049,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     tissue__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_tissue',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -7029,13 +7069,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_tissue',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_tissue: {
         name: 'edit_admin_tissue',
         display: 'Edit Admin Tissue',
         config: {
             source: 'tissue',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7049,23 +7109,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -7076,13 +7119,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_cell_type: {
         name: 'find_admin_cell_type',
         display: 'Find Admin Cell Type',
         config: {
             source: 'cell_type',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Cell Type',
                 pretargetFn: '',
@@ -7103,23 +7164,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', ],
-            buttons: [{
-                display: 'New Cell Type',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_cell_type',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -7130,13 +7174,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Cell Type',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_cell_type',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_cell_type: {
         name: 'view_admin_cell_type',
         display: 'View Admin Cell Type',
         config: {
             source: 'cell_type',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7155,25 +7217,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     cell_type__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_cell_type',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -7194,13 +7237,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_cell_type',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_cell_type: {
         name: 'edit_admin_cell_type',
         display: 'Edit Admin Cell Type',
         config: {
             source: 'cell_type',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7214,23 +7277,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -7241,13 +7287,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_protein: {
         name: 'find_admin_protein',
         display: 'Find Admin Protein',
         config: {
             source: 'protein',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Protein',
                 pretargetFn: '',
@@ -7271,23 +7335,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'gene', 'species', ],
-            buttons: [{
-                display: 'New Protein',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_protein',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -7298,13 +7345,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Protein',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_protein',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_protein: {
         name: 'view_admin_protein',
         display: 'View Admin Protein',
         config: {
             source: 'protein',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7329,25 +7394,6 @@ export const pages = {
                     target__id: data.record.id
                 }),
             }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_protein',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -7367,13 +7413,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_protein',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_protein: {
         name: 'edit_admin_protein',
         display: 'Edit Admin Protein',
         config: {
             source: 'protein',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7392,23 +7458,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -7419,13 +7468,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_gene: {
         name: 'find_admin_gene',
         display: 'Find Admin Gene',
         config: {
             source: 'gene',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Gene',
                 pretargetFn: '',
@@ -7446,23 +7513,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'species', ],
-            buttons: [{
-                display: 'New Gene',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_gene',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -7473,13 +7523,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Gene',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_gene',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_gene: {
         name: 'view_admin_gene',
         display: 'View Admin Gene',
         config: {
             source: 'gene',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7498,25 +7566,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     gene__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_gene',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -7537,13 +7586,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_gene',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_gene: {
         name: 'edit_admin_gene',
         display: 'Edit Admin Gene',
         config: {
             source: 'gene',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7557,23 +7626,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -7584,13 +7636,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_admin_compound: {
         name: 'find_admin_compound',
         display: 'Find Admin Compound',
         config: {
             source: 'compound',
+            dataKey: 'table',
+            buttons: [],
             rowAction: {
                 display: 'Select Compound',
                 pretargetFn: '',
@@ -7611,23 +7681,6 @@ export const pages = {
             }, ],
             editColumns: [],
             searchFields: ['name', 'smiles', ],
-            buttons: [{
-                display: 'New Compound',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_compound',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'table',
@@ -7638,13 +7691,31 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Compound',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_compound',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_admin_compound: {
         name: 'view_admin_compound',
         display: 'View Admin Compound',
         config: {
             source: 'compound',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7663,25 +7734,6 @@ export const pages = {
                 paramsFn: (params, data) => ({
                     compound__id: data.record.id
                 }),
-            }, ],
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_admin_compound',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
             }, ],
         },
         data: [{
@@ -7702,13 +7754,33 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_admin_compound',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_admin_compound: {
         name: 'edit_admin_compound',
         display: 'Edit Admin Compound',
         config: {
             source: 'compound',
+            dataKey: 'record',
+            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7722,23 +7794,6 @@ export const pages = {
                 visibleFn: '',
             }, ],
             referenceTables: [],
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
         },
         data: [{
             name: 'record',
@@ -7749,6 +7804,22 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
 }
