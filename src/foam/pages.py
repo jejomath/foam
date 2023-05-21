@@ -242,57 +242,6 @@ class Action:
 
 
 @dataclass
-class FormPage:
-    source: str
-    new_record: str = ''
-    new_record_fn: str = ''
-    params_fn: str = ''
-    view_fields: list[ViewField] = None
-    edit_fields: list[EditField] = None
-    reference_tables: list[ReferenceTable] = None
-    buttons: list[Action] = None
-
-    def __post_init__(self):
-        self.view_fields = [ViewField(f) for f in self.view_fields] if self.view_fields else []
-        self.edit_fields = [EditField(f) for f in self.edit_fields] if self.edit_fields else []
-        self.reference_tables = [ReferenceTable(**t) for t in self.reference_tables] if self.reference_tables else []
-        self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
-
-    def add_refs(self, config, page):
-        next_pages = []
-        if self.source:
-            if self.source not in config.tables_dict.keys():
-                config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
-            else:
-                for f in self.view_fields:
-                    next_pages += f.add_refs(config.tables_dict[self.source], page)
-                for f in self.edit_fields:
-                    next_pages += f.add_refs(config.tables_dict[self.source], page)
-                for t in self.reference_tables:
-                    next_pages += t.add_refs(config, page)
-                for b in self.buttons:
-                    next_pages += b.add_refs(config, page)
-        return next_pages
-
-    def default_data(self, config):
-        result = [RecordData('record', self)]
-        for t in self.reference_tables:
-            ref = config.pages_dict[t.table_page].config.default_data(config, t.table_page)[0]
-            ref.params_fn = t.params_fn
-            result.append(ref)
-        return result
-
-    @property
-    def js_config(self):
-        return {
-            'source': self.source,
-            'viewFields': [f.js_config for f in self.view_fields],
-            'editFields': [f.js_config for f in self.edit_fields],
-            'referenceTables': [t.js_config for t in self.reference_tables],
-            'buttons': [b.js_config for b in self.buttons],
-        }
-
-@dataclass
 class LinksBox:
     name: str
     links: list[Action]
@@ -338,144 +287,195 @@ class LinksPage:
 
 
 @dataclass
-class TablePage:
+class DataPage:
     source: str
-    new_records: str = ''
     on_load_fn: str = ''
     params_fn: str = ''
+    buttons: list[Action] = None
+    load_fn: str = ''
+
+    def __post_init__(self):
+        self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
+
+    def default_data(self, config):
+        return self._data_reqs
+
+    def js_config(self):
+        return {
+            'source': self.source,
+            'dataKey': self.data_key,
+            'buttons': [b.js_config for b in self.buttons],
+        }
+
+
+@dataclass
+class RecordPage(DataPage):
+    data_key: str = 'record'
+    new_record: str = ''
+    new_record_fn: str = ''
+
+    def __post_init__(self):
+        super().__post_init__()
+        self._data_reqs = [RecordData(self.data_key, self)]
+
+
+@dataclass
+class TableDataPage(DataPage):
+    data_key: str = 'table'
+    new_records: str = ''
+
+    def __post_init__(self):
+        super().__post_init__()
+        self._data_reqs = [TableData(self.data_key, self)]
+
+
+@dataclass
+class FormPage(RecordPage):
+    view_fields: list[ViewField] = None
+    edit_fields: list[EditField] = None
+    reference_tables: list[ReferenceTable] = None
+
+    def __post_init__(self):
+        super().__post_init__()
+        self.view_fields = [ViewField(f) for f in self.view_fields] if self.view_fields else []
+        self.edit_fields = [EditField(f) for f in self.edit_fields] if self.edit_fields else []
+        self.reference_tables = [ReferenceTable(**t) for t in self.reference_tables] if self.reference_tables else []
+
+
+    def add_refs(self, config, page):
+        for t in self.reference_tables:
+            ref = config.pages_dict[t.table_page].config.default_data(config, t.table_page)[0]
+            ref.params_fn = t.params_fn
+            self._data_reqs.append(ref)
+
+        next_pages = []
+        if self.source not in config.tables_dict.keys():
+            config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
+        else:
+            for f in self.view_fields:
+                next_pages += f.add_refs(config.tables_dict[self.source], page)
+            for f in self.edit_fields:
+                next_pages += f.add_refs(config.tables_dict[self.source], page)
+            for t in self.reference_tables:
+                next_pages += t.add_refs(config, page)
+            for b in self.buttons:
+                next_pages += b.add_refs(config, page)
+        return next_pages
+
+    @property
+    def js_config(self):
+        return {
+            **super().js_config(),
+            'viewFields': [f.js_config for f in self.view_fields],
+            'editFields': [f.js_config for f in self.edit_fields],
+            'referenceTables': [t.js_config for t in self.reference_tables],
+        }
+
+@dataclass
+class TablePage(TableDataPage):
     view_columns: list[Column] = None
     edit_columns: list[Column] = None
     search_fields: list[ReferenceTable] = None
     row_action: Action = None
-    buttons: list[Action] = None
 
     def __post_init__(self):
+        super().__post_init__()
         self.view_columns = [Column(**c) for c in self.view_columns] if self.view_columns else []
         self.edit_columns = [Column(**c) for c in self.edit_columns] if self.edit_columns else []
-        self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
         self.row_action = Action(**self.row_action) if self.row_action else None
 
     def add_refs(self, config, page):
         next_pages = []
-        if self.source:
-            if self.source not in config.tables_dict.keys():
-                config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
-            else:
-                table_config = config.tables_dict[self.source]
-                for c in self.view_columns:
-                    next_pages += c.add_refs(table_config, page)
-                for c in self.edit_columns:
-                    next_pages += c.add_refs(table_config, page)
-                for b in self.buttons:
-                    next_pages += b.add_refs(config, page)
-                for s in self.search_fields or []:
-                    if s not in [f.name for f in table_config.fields]:
-                        config_error(f'Unexpected field {table_config.name}.{s} found in config for page "{page}".')
-                if self.row_action:
-                    next_pages += self.row_action.add_refs(config, page)
+        if self.source not in config.tables_dict.keys():
+            config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
+        else:
+            table_config = config.tables_dict[self.source]
+            for c in self.view_columns:
+                next_pages += c.add_refs(table_config, page)
+            for c in self.edit_columns:
+                next_pages += c.add_refs(table_config, page)
+            for b in self.buttons:
+                next_pages += b.add_refs(config, page)
+            for s in self.search_fields or []:
+                if s not in [f.name for f in table_config.fields]:
+                    config_error(f'Unexpected field {table_config.name}.{s} found in config for page "{page}".')
+            if self.row_action:
+                next_pages += self.row_action.add_refs(config, page)
         return next_pages
 
-    def default_data(self, config, name=None):
-        return [TableData(name or 'table', self)]
+    def default_data(self, config, name='table'):
+        if name == 'table':
+            return self._data_reqs
+        else:
+            return [TableData(name, self)]
 
     @property
     def js_config(self):
         return {
-            'source': self.source,
+            **super().js_config(),
             'rowAction': self.row_action.js_config if self.row_action else None,
             'viewColumns': [c.js_config for c in self.view_columns],
             'editColumns': [c.js_config for c in self.edit_columns],
             'searchFields': self.search_fields,
-            'buttons': [b.js_config for b in self.buttons],
         }
 
 
 @dataclass
-class GridPage:
-    source: str
-    row_field: str
-    column_field: str
-    display_field: str
-    new_records: str = ''
-    on_load_fn: str = ''
-    params_fn: str = ''
-    buttons: list[Action] = None
-
-    def __post_init__(self):
-        self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
+class GridPage(TableDataPage):
+    row_field: str = ''
+    column_field: str = ''
+    display_field: str = ''
 
     def add_refs(self, config, page):
         next_pages = []
-        if self.source:
-            if self.source not in config.tables_dict.keys():
-                config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
-            else:
-                for b in self.buttons:
-                    next_pages += b.add_refs(config, page)
+        if self.source not in config.tables_dict.keys():
+            config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
+        else:
+            for b in self.buttons:
+                next_pages += b.add_refs(config, page)
         return next_pages
-
-    def default_data(self, config, name=None):
-        return [TableData(name or 'table', self)]
 
     @property
     def js_config(self):
         return {
-            'source': self.source,
+            **super().js_config(),
             'rowField': self.row_field,
             'columnField': self.column_field,
             'displayField': self.display_field,
-            'buttons': [b.js_config for b in self.buttons],
         }
 
 
-
 @dataclass
-class FigurePage:
-    source: str
-    plots: dict
-    layout: dict
-    buttons: list[Action] = None
-    new_records: str = False
-    on_load_fn: str = ''
-    params_fn: str = ''
+class FigurePage(TableDataPage):
+    plots: dict = None
+    layout: dict = None
  
-    def __post_init__(self):
-        self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
-
     def add_refs(self, config, page):
         next_pages = []
-        if self.source:
-            source = self.source[:-6] if self.source.endswith('_stats') else self.source
-            if source not in config.tables_dict.keys():
-                config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
-            else:
-                for b in self.buttons:
-                    next_pages += b.add_refs(config, page)
+        source = self.source[:-6] if self.source.endswith('_stats') else self.source
+        if source not in config.tables_dict.keys():
+            config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
+        else:
+            for b in self.buttons:
+                next_pages += b.add_refs(config, page)
         return next_pages
-
-    def default_data(self, config, name=None):
-        return [TableData(name or 'table', self)]
 
     @property
     def js_config(self):
         return {
-            'source': self.source,
+            **super().js_config(),
             'plots': self.plots,
             'layout': self.layout,
-            'buttons': [b.js_config for b in self.buttons],
         }
 
 
 @dataclass
 class LayoutPage:
-    direction: str = None
-    pages: list = None
-    name: str = None
-    from_page: str = None
-    params_from: list = None
+    cells: list
+    direction: str = 'vertical'
 
     def __post_init__(self):
-        self.pages = [LayoutPage(**p) for p in self.pages] if self.pages else []
+        self.cells = [Page(**p) for p in self.cells]
 
     def add_refs(self, config, page):
         next_pages = []
@@ -490,10 +490,7 @@ class LayoutPage:
     def js_config(self):
         return {
             'direction': self.direction,
-            'pages': [p.js_config for p in self.pages],
-            'name': self.name,
-            'from_page': self.from_page,
-            'params_from': self.params_from,
+            'cells': [c.js_config for c in self.cells],
         }
 
 @dataclass
@@ -585,7 +582,7 @@ class NextPage:
 @dataclass
 class Page:
     name: str
-    module: str
+    module: str = None
     display: str = ''
     descr: str = ''
     next_pages: list[NextPage] = ''
