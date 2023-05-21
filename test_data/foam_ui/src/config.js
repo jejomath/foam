@@ -1018,23 +1018,6 @@ export const pages = {
         config: {
             source: 'person',
             dataKey: 'table',
-            buttons: [{
-                display: 'New Person',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_person',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Person',
                 pretargetFn: '',
@@ -1068,7 +1051,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Person',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_person',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_person: {
         name: 'view_person',
@@ -1076,25 +1075,6 @@ export const pages = {
         config: {
             source: 'person',
             dataKey: 'record',
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_person',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -1183,7 +1163,25 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_person',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_person: {
         name: 'edit_person',
@@ -1191,23 +1189,6 @@ export const pages = {
         config: {
             source: 'person',
             dataKey: 'record',
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -1236,7 +1217,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_program: {
         name: 'find_program',
@@ -1244,23 +1241,6 @@ export const pages = {
         config: {
             source: 'program',
             dataKey: 'table',
-            buttons: [{
-                display: 'New Program',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Program',
                 pretargetFn: '',
@@ -1312,7 +1292,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Program',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_program',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_program: {
         name: 'view_program',
@@ -1320,57 +1316,6 @@ export const pages = {
         config: {
             source: 'program',
             dataKey: 'record',
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Edit Milestones',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program_milestone_table',
-                mode: 'modal',
-                paramsFn: (params, data) => ({
-                    program__id: data.id,
-                    _program: data.record
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Create Milestones',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'new_program_milestone_table',
-                mode: 'modal',
-                paramsFn: (params, data) => ({
-                    program__id: data.id,
-                    _program: data.record
-                }),
-                visibleFn: (params, data) => (data.find_program_milestone.length === 0),
-            }, {
-                display: 'New Experiment',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'new_experiment',
-                mode: 'modal',
-                paramsFn: (params, data) => ({
-                    program: data.record
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -1474,7 +1419,57 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_program',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Edit Milestones',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_program_milestone_table',
+            mode: 'modal',
+            paramsFn: (params, data) => ({
+                program__id: data.id,
+                _program: data.record
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Create Milestones',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'new_program_milestone_table',
+            mode: 'modal',
+            paramsFn: (params, data) => ({
+                program__id: data.id,
+                _program: data.record
+            }),
+            visibleFn: (params, data) => (data.find_program_milestone.length === 0),
+        }, {
+            display: 'New Experiment',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'new_experiment',
+            mode: 'modal',
+            paramsFn: (params, data) => ({
+                program: data.record
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_program: {
         name: 'edit_program',
@@ -1482,23 +1477,6 @@ export const pages = {
         config: {
             source: 'program',
             dataKey: 'record',
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -1557,7 +1535,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_program_milestone: {
         name: 'find_program_milestone',
@@ -1565,23 +1559,6 @@ export const pages = {
         config: {
             source: 'program_milestone',
             dataKey: 'table',
-            buttons: [{
-                display: 'New Program Milestone',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program_milestone',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Program Milestone',
                 pretargetFn: '',
@@ -1618,7 +1595,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Program Milestone',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_program_milestone',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_program_milestone_table: {
         name: 'edit_program_milestone_table',
@@ -1626,33 +1619,6 @@ export const pages = {
         config: {
             source: 'program_milestone',
             dataKey: 'table',
-            buttons: [{
-                display: 'New Milestone',
-                pretargetFn: (params, data, context) => (context.addNew({
-                    program: params._program
-                })),
-                pretarget: '',
-                target: '',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Save & Close',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: null,
             viewColumns: [],
             editColumns: [{
@@ -1682,7 +1648,33 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Milestone',
+            pretargetFn: (params, data, context) => (context.addNew({
+                program: params._program
+            })),
+            pretarget: '',
+            target: '',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Save & Close',
+            pretargetFn: (params, data, context) => (context.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     new_program_milestone_table: {
         name: 'new_program_milestone_table',
@@ -1690,33 +1682,6 @@ export const pages = {
         config: {
             source: 'program_milestone',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'New Milestone',
-                pretargetFn: (params, data, context) => (context.addNew({
-                    program: params._program
-                })),
-                pretarget: '',
-                target: '',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: '',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: null,
             viewColumns: [],
             editColumns: [{
@@ -1752,7 +1717,33 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'New Milestone',
+            pretargetFn: (params, data, context) => (context.addNew({
+                program: params._program
+            })),
+            pretarget: '',
+            target: '',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.save()),
+            pretarget: '',
+            target: '',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_program_milestone: {
         name: 'view_program_milestone',
@@ -1760,25 +1751,6 @@ export const pages = {
         config: {
             source: 'program_milestone',
             dataKey: 'record',
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_program_milestone',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'program',
                 display: '',
@@ -1817,7 +1789,25 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_program_milestone',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_program_milestone: {
         name: 'edit_program_milestone',
@@ -1825,23 +1815,6 @@ export const pages = {
         config: {
             source: 'program_milestone',
             dataKey: 'record',
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'program',
                 display: '',
@@ -1880,7 +1853,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     program_dashboard: {
         name: 'program_dashboard',
@@ -1888,15 +1877,6 @@ export const pages = {
         config: {
             source: 'program_stats',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             plots: [{
                 config: {
                     type: 'bar',
@@ -1922,7 +1902,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Figure,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_assay: {
         name: 'find_assay',
@@ -1930,7 +1918,6 @@ export const pages = {
         config: {
             source: 'assay',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Assay',
                 pretargetFn: '',
@@ -1994,7 +1981,6 @@ export const pages = {
         config: {
             source: 'assay',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2084,7 +2070,6 @@ export const pages = {
         config: {
             source: 'assay',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -2139,7 +2124,6 @@ export const pages = {
         config: {
             source: 'assay',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2202,7 +2186,6 @@ export const pages = {
         config: {
             source: 'experiment',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Experiment',
                 pretargetFn: '',
@@ -2287,7 +2270,6 @@ export const pages = {
         config: {
             source: 'experiment',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2412,7 +2394,6 @@ export const pages = {
         config: {
             source: 'experiment',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'assay',
@@ -2462,7 +2443,6 @@ export const pages = {
         config: {
             source: 'experiment',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2560,7 +2540,6 @@ export const pages = {
         config: {
             source: 'plate',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Plate',
                 pretargetFn: '',
@@ -2621,7 +2600,6 @@ export const pages = {
         config: {
             source: 'plate',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -2740,7 +2718,6 @@ export const pages = {
         config: {
             source: 'plate',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -2798,7 +2775,6 @@ export const pages = {
         config: {
             source: 'plate_well',
             dataKey: 'table',
-            buttons: [],
             rowAction: null,
             viewColumns: [],
             editColumns: [{
@@ -2867,7 +2843,6 @@ export const pages = {
         config: {
             source: 'plate_well',
             dataKey: 'table',
-            buttons: [],
             rowField: 'row',
             columnField: 'column',
             displayField: 'purpose',
@@ -2905,15 +2880,6 @@ export const pages = {
         config: {
             source: 'perturbation',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Perturbation',
                 pretargetFn: '',
@@ -2947,7 +2913,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_perturbation: {
         name: 'view_perturbation',
@@ -2955,15 +2929,6 @@ export const pages = {
         config: {
             source: 'perturbation',
             dataKey: 'record',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3007,7 +2972,15 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_cell_line: {
         name: 'find_cell_line',
@@ -3015,23 +2988,6 @@ export const pages = {
         config: {
             source: 'cell_line',
             dataKey: 'table',
-            buttons: [{
-                display: 'New Cell Line',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_cell_line',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Cell Line',
                 pretargetFn: '',
@@ -3071,7 +3027,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'New Cell Line',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_cell_line',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_cell_line: {
         name: 'view_cell_line',
@@ -3079,25 +3051,6 @@ export const pages = {
         config: {
             source: 'cell_line',
             dataKey: 'record',
-            buttons: [{
-                display: 'Edit',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'edit_cell_line',
-                mode: '',
-                paramsFn: (params, data) => ({
-                    id: params.id
-                }),
-                visibleFn: '',
-            }, {
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3176,7 +3129,25 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Edit',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'edit_cell_line',
+            mode: '',
+            paramsFn: (params, data) => ({
+                id: params.id
+            }),
+            visibleFn: '',
+        }, {
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     edit_cell_line: {
         name: 'edit_cell_line',
@@ -3184,23 +3155,6 @@ export const pages = {
         config: {
             source: 'cell_line',
             dataKey: 'record',
-            buttons: [{
-                display: 'Save',
-                pretargetFn: (params, data, context) => (context.save()),
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, {
-                display: 'Cancel',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -3264,7 +3218,23 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Save',
+            pretargetFn: (params, data, context) => (context.save()),
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, {
+            display: 'Cancel',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_indication: {
         name: 'find_indication',
@@ -3272,15 +3242,6 @@ export const pages = {
         config: {
             source: 'indication',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Indication',
                 pretargetFn: '',
@@ -3308,7 +3269,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_indication: {
         name: 'view_indication',
@@ -3316,15 +3285,6 @@ export const pages = {
         config: {
             source: 'indication',
             dataKey: 'record',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3373,7 +3333,15 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_species: {
         name: 'find_species',
@@ -3381,15 +3349,6 @@ export const pages = {
         config: {
             source: 'species',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Species',
                 pretargetFn: '',
@@ -3417,7 +3376,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_species: {
         name: 'view_species',
@@ -3425,15 +3392,6 @@ export const pages = {
         config: {
             source: 'species',
             dataKey: 'record',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3542,7 +3500,15 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_organ: {
         name: 'find_organ',
@@ -3550,15 +3516,6 @@ export const pages = {
         config: {
             source: 'organ',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Organ',
                 pretargetFn: '',
@@ -3589,7 +3546,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_organ: {
         name: 'view_organ',
@@ -3597,15 +3562,6 @@ export const pages = {
         config: {
             source: 'organ',
             dataKey: 'record',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3644,7 +3600,15 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_tissue: {
         name: 'find_tissue',
@@ -3652,15 +3616,6 @@ export const pages = {
         config: {
             source: 'tissue',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Tissue',
                 pretargetFn: '',
@@ -3691,7 +3646,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_tissue: {
         name: 'view_tissue',
@@ -3699,15 +3662,6 @@ export const pages = {
         config: {
             source: 'tissue',
             dataKey: 'record',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3746,7 +3700,15 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_cell_type: {
         name: 'find_cell_type',
@@ -3754,15 +3716,6 @@ export const pages = {
         config: {
             source: 'cell_type',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Cell Type',
                 pretargetFn: '',
@@ -3793,7 +3746,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_cell_type: {
         name: 'view_cell_type',
@@ -3801,15 +3762,6 @@ export const pages = {
         config: {
             source: 'cell_type',
             dataKey: 'record',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3848,7 +3800,15 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_protein: {
         name: 'find_protein',
@@ -3856,15 +3816,6 @@ export const pages = {
         config: {
             source: 'protein',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Protein',
                 pretargetFn: '',
@@ -3898,7 +3849,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_protein: {
         name: 'view_protein',
@@ -3906,15 +3865,6 @@ export const pages = {
         config: {
             source: 'protein',
             dataKey: 'record',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -3958,7 +3908,15 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_gene: {
         name: 'find_gene',
@@ -3966,15 +3924,6 @@ export const pages = {
         config: {
             source: 'gene',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Gene',
                 pretargetFn: '',
@@ -4005,7 +3954,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_gene: {
         name: 'view_gene',
@@ -4013,15 +3970,6 @@ export const pages = {
         config: {
             source: 'gene',
             dataKey: 'record',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4060,7 +4008,15 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     find_compound: {
         name: 'find_compound',
@@ -4068,15 +4024,6 @@ export const pages = {
         config: {
             source: 'compound',
             dataKey: 'table',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             rowAction: {
                 display: 'Select Compound',
                 pretargetFn: '',
@@ -4107,7 +4054,15 @@ export const pages = {
             paramsFn: '',
         }, ],
         type: Table,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     view_compound: {
         name: 'view_compound',
@@ -4115,15 +4070,6 @@ export const pages = {
         config: {
             source: 'compound',
             dataKey: 'record',
-            buttons: [{
-                display: 'Done',
-                pretargetFn: '',
-                pretarget: '',
-                target: 'back',
-                mode: '',
-                paramsFn: '',
-                visibleFn: '',
-            }, ],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4162,7 +4108,15 @@ export const pages = {
             }),
         }, ],
         type: Form,
-        buttons: [],
+        buttons: [{
+            display: 'Done',
+            pretargetFn: '',
+            pretarget: '',
+            target: 'back',
+            mode: '',
+            paramsFn: '',
+            visibleFn: '',
+        }, ],
     },
     admin_home: {
         name: 'admin_home',
@@ -4328,7 +4282,6 @@ export const pages = {
         config: {
             source: 'person',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Person',
                 pretargetFn: '',
@@ -4386,7 +4339,6 @@ export const pages = {
         config: {
             source: 'person',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4501,7 +4453,6 @@ export const pages = {
         config: {
             source: 'person',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -4554,7 +4505,6 @@ export const pages = {
         config: {
             source: 'program',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Program',
                 pretargetFn: '',
@@ -4630,7 +4580,6 @@ export const pages = {
         config: {
             source: 'program',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4760,7 +4709,6 @@ export const pages = {
         config: {
             source: 'program',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -4843,7 +4791,6 @@ export const pages = {
         config: {
             source: 'program_milestone',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Program Milestone',
                 pretargetFn: '',
@@ -4907,7 +4854,6 @@ export const pages = {
         config: {
             source: 'program_milestone',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -4972,7 +4918,6 @@ export const pages = {
         config: {
             source: 'program_milestone',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5035,7 +4980,6 @@ export const pages = {
         config: {
             source: 'assay',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Assay',
                 pretargetFn: '',
@@ -5099,7 +5043,6 @@ export const pages = {
         config: {
             source: 'assay',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5179,7 +5122,6 @@ export const pages = {
         config: {
             source: 'assay',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5242,7 +5184,6 @@ export const pages = {
         config: {
             source: 'experiment',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Experiment',
                 pretargetFn: '',
@@ -5327,7 +5268,6 @@ export const pages = {
         config: {
             source: 'experiment',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5442,7 +5382,6 @@ export const pages = {
         config: {
             source: 'experiment',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5540,7 +5479,6 @@ export const pages = {
         config: {
             source: 'perturbation',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Perturbation',
                 pretargetFn: '',
@@ -5598,7 +5536,6 @@ export const pages = {
         config: {
             source: 'perturbation',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5683,7 +5620,6 @@ export const pages = {
         config: {
             source: 'perturbation',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5736,7 +5672,6 @@ export const pages = {
         config: {
             source: 'plate',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Plate',
                 pretargetFn: '',
@@ -5797,7 +5732,6 @@ export const pages = {
         config: {
             source: 'plate',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -5872,7 +5806,6 @@ export const pages = {
         config: {
             source: 'plate',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -5930,7 +5863,6 @@ export const pages = {
         config: {
             source: 'plate_well',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Plate Well',
                 pretargetFn: '',
@@ -5997,7 +5929,6 @@ export const pages = {
         config: {
             source: 'plate_well',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6067,7 +5998,6 @@ export const pages = {
         config: {
             source: 'plate_well',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6135,7 +6065,6 @@ export const pages = {
         config: {
             source: 'cell_line',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Cell Line',
                 pretargetFn: '',
@@ -6214,7 +6143,6 @@ export const pages = {
         config: {
             source: 'cell_line',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6319,7 +6247,6 @@ export const pages = {
         config: {
             source: 'cell_line',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6407,7 +6334,6 @@ export const pages = {
         config: {
             source: 'indication',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Indication',
                 pretargetFn: '',
@@ -6459,7 +6385,6 @@ export const pages = {
         config: {
             source: 'indication',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6534,7 +6459,6 @@ export const pages = {
         config: {
             source: 'indication',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6577,7 +6501,6 @@ export const pages = {
         config: {
             source: 'species',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Species',
                 pretargetFn: '',
@@ -6629,7 +6552,6 @@ export const pages = {
         config: {
             source: 'species',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6764,7 +6686,6 @@ export const pages = {
         config: {
             source: 'species',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6807,7 +6728,6 @@ export const pages = {
         config: {
             source: 'organ',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Organ',
                 pretargetFn: '',
@@ -6862,7 +6782,6 @@ export const pages = {
         config: {
             source: 'organ',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -6927,7 +6846,6 @@ export const pages = {
         config: {
             source: 'organ',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -6975,7 +6893,6 @@ export const pages = {
         config: {
             source: 'tissue',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Tissue',
                 pretargetFn: '',
@@ -7030,7 +6947,6 @@ export const pages = {
         config: {
             source: 'tissue',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7095,7 +7011,6 @@ export const pages = {
         config: {
             source: 'tissue',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7143,7 +7058,6 @@ export const pages = {
         config: {
             source: 'cell_type',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Cell Type',
                 pretargetFn: '',
@@ -7198,7 +7112,6 @@ export const pages = {
         config: {
             source: 'cell_type',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7263,7 +7176,6 @@ export const pages = {
         config: {
             source: 'cell_type',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7311,7 +7223,6 @@ export const pages = {
         config: {
             source: 'protein',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Protein',
                 pretargetFn: '',
@@ -7369,7 +7280,6 @@ export const pages = {
         config: {
             source: 'protein',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7439,7 +7349,6 @@ export const pages = {
         config: {
             source: 'protein',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7492,7 +7401,6 @@ export const pages = {
         config: {
             source: 'gene',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Gene',
                 pretargetFn: '',
@@ -7547,7 +7455,6 @@ export const pages = {
         config: {
             source: 'gene',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7612,7 +7519,6 @@ export const pages = {
         config: {
             source: 'gene',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',
@@ -7660,7 +7566,6 @@ export const pages = {
         config: {
             source: 'compound',
             dataKey: 'table',
-            buttons: [],
             rowAction: {
                 display: 'Select Compound',
                 pretargetFn: '',
@@ -7715,7 +7620,6 @@ export const pages = {
         config: {
             source: 'compound',
             dataKey: 'record',
-            buttons: [],
             viewFields: [{
                 field: 'name',
                 display: '',
@@ -7780,7 +7684,6 @@ export const pages = {
         config: {
             source: 'compound',
             dataKey: 'record',
-            buttons: [],
             viewFields: [],
             editFields: [{
                 field: 'name',

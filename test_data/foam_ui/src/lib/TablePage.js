@@ -44,15 +44,6 @@ export default class TablePage extends Component {
                 />
                 <ButtonList
                     config={{
-                        buttons: config.buttons,
-                    }}
-                    params = {params}
-                    data = {data}
-                    context = {{...context, save: client.save, addNew: client.addNew }}
-                    hide={params._mode === 'select'}
-                />
-                <ButtonList
-                    config={{
                         buttons: [
                             {display: 'Cancel', target: 'back'},
                             {...params.rowAction, display: 'None'}

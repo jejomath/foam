@@ -22,11 +22,11 @@ page_modules:
         display: Select Person
         target: view_person
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Person
-        target: edit_person
-      - display: Done
-        target: back
+    buttons:
+    - display: New Person
+      target: edit_person
+    - display: Done
+      target: back
 
   - name: view_person
     descr: View a record from table person
@@ -50,12 +50,12 @@ page_modules:
       - table_page: find_experiment
         display: Experiments
         params_fn: '({bio_lead__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_person
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_person
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
 
   - name: edit_person
     descr: Edit a record from table person
@@ -66,12 +66,12 @@ page_modules:
       - name
       - given_name
       - family_name
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.save() )
+    - display: Cancel
+      target: back
 
   - name: find_program
     descr: Search page for table program
@@ -111,11 +111,11 @@ page_modules:
         display: Select Program
         target: view_program
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Program
-        target: edit_program
-      - display: Done
-        target: back
+    buttons:
+    - display: New Program
+      target: edit_program
+    - display: Done
+      target: back
 
   - name: view_program
     descr: View a record from table program
@@ -142,25 +142,25 @@ page_modules:
       - table_page: find_experiment
         display: Experiments
         params_fn: '({program__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_program
-        params_fn: '({ id: params.id })'
-      - display: Edit Milestones
-        target: edit_program_milestone_table
-        params_fn: '({ program__id: data.id, _program: data.record })'
-        mode: modal
-      - display: Create Milestones
-        target: new_program_milestone_table
-        params_fn: '({ program__id: data.id, _program: data.record })'
-        mode: modal
-        visible_fn: ( data.find_program_milestone.length === 0 )
-      - display: New Experiment
-        target: new_experiment
-        mode: modal
-        params_fn: '({ program: data.record })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_program
+      params_fn: '({ id: params.id })'
+    - display: Edit Milestones
+      target: edit_program_milestone_table
+      params_fn: '({ program__id: data.id, _program: data.record })'
+      mode: modal
+    - display: Create Milestones
+      target: new_program_milestone_table
+      params_fn: '({ program__id: data.id, _program: data.record })'
+      mode: modal
+      visible_fn: ( data.find_program_milestone.length === 0 )
+    - display: New Experiment
+      target: new_experiment
+      mode: modal
+      params_fn: '({ program: data.record })'
+    - display: Done
+      target: back
 
   - name: edit_program
     descr: Edit a record from table program
@@ -182,12 +182,12 @@ page_modules:
         lookup: find_person
       - field: program_manager
         lookup: find_person
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.save() )
+    - display: Cancel
+      target: back
 
 
   - name: find_program_milestone
@@ -214,11 +214,11 @@ page_modules:
         display: Select Program Milestone
         target: view_program_milestone
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Program Milestone
-        target: edit_program_milestone
-      - display: Done
-        target: back
+    buttons:
+    - display: New Program Milestone
+      target: edit_program_milestone
+    - display: Done
+      target: back
 
   - name: edit_program_milestone_table
     descr: Search page for table program_milestone
@@ -237,14 +237,14 @@ page_modules:
         width: 200
       - field: completed_date
         width: 200
-      buttons:
-      - display: New Milestone
-        pretarget_fn: "( context.addNew({program: params._program}) )"
-      - display: Save & Close
-        pretarget_fn: ( context.save() )
-        target: back
-      - display: Cancel
-        target: back
+    buttons:
+    - display: New Milestone
+      pretarget_fn: "( context.addNew({program: params._program}) )"
+    - display: Save & Close
+      pretarget_fn: ( context.save() )
+      target: back
+    - display: Cancel
+      target: back
 
   - name: new_program_milestone_table
     descr: Search page for table program_milestone
@@ -269,13 +269,13 @@ page_modules:
         width: 200
       - field: completed_date
         width: 200
-      buttons:
-      - display: Done
-        target: back
-      - display: New Milestone
-        pretarget_fn: "( context.addNew({program: params._program}) )"
-      - display: Save
-        pretarget_fn: ( context.save() )
+    buttons:
+    - display: Done
+      target: back
+    - display: New Milestone
+      pretarget_fn: "( context.addNew({program: params._program}) )"
+    - display: Save
+      pretarget_fn: ( context.save() )
 
   - name: view_program_milestone
     descr: View a record from table program_milestone
@@ -289,12 +289,12 @@ page_modules:
       - target_date
       - completed_date
       reference_tables: []
-      buttons:
-      - display: Edit
-        target: edit_program_milestone
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_program_milestone
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
 
   - name: edit_program_milestone
     descr: Edit a record from table program_milestone
@@ -308,12 +308,12 @@ page_modules:
       - status
       - target_date
       - completed_date
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.save() )
+    - display: Cancel
+      target: back
 
   - name: program_dashboard
     descr: Dashboard of program stats
@@ -331,9 +331,9 @@ page_modules:
         title: Experiments per Program
         width: 700
         height: 400
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   # - name: fancy_dashboard
   #   descr: Dashboard with multiple panes

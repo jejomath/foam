@@ -20,9 +20,9 @@ page_modules:
         display: Select Indication
         target: view_indication
         params_fn: '({id: data.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   - name: view_indication
     descr: View a record from table indication
@@ -38,9 +38,9 @@ page_modules:
       - table_page: find_cell_line
         display: Cell Line
         params_fn: '({disease__id: data.record.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
 #############################################################
 # Species
@@ -60,9 +60,9 @@ page_modules:
         display: Select Species
         target: view_species
         params_fn: '({id: data.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   - name: view_species
     descr: View a record from table species
@@ -90,9 +90,9 @@ page_modules:
       - table_page: find_gene
         display: Gene
         params_fn: '({species__id: data.record.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
 
 #############################################################
@@ -116,9 +116,9 @@ page_modules:
         display: Select Organ
         target: view_organ
         params_fn: '({id: data.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   - name: view_organ
     descr: View a record from table organ
@@ -132,9 +132,9 @@ page_modules:
       - table_page: find_cell_line
         display: Cell Line
         params_fn: '({organ__id: data.record.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
 
 #############################################################
@@ -158,9 +158,9 @@ page_modules:
         display: Select Tissue
         target: view_tissue
         params_fn: '({id: data.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   - name: view_tissue
     descr: View a record from table tissue
@@ -174,9 +174,9 @@ page_modules:
       - table_page: find_cell_line
         display: Cell Line
         params_fn: '({tissue__id: data.record.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
 
 #############################################################
@@ -200,9 +200,9 @@ page_modules:
         display: Select Cell Type
         target: view_cell_type
         params_fn: '({id: data.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   - name: view_cell_type
     descr: View a record from table cell_type
@@ -216,9 +216,9 @@ page_modules:
       - table_page: find_cell_line
         display: Cell Line
         params_fn: '({cell_type__id: data.record.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
 
 #############################################################
@@ -245,9 +245,9 @@ page_modules:
         display: Select Protein
         target: view_protein
         params_fn: '({id: data.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   - name: view_protein
     descr: View a record from table protein
@@ -262,9 +262,9 @@ page_modules:
       - table_page: find_program
         display: Program
         params_fn: '({target__id: data.record.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
 
 #############################################################
@@ -288,9 +288,9 @@ page_modules:
         display: Select Gene
         target: view_gene
         params_fn: '({id: data.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   - name: view_gene
     descr: View a record from table gene
@@ -304,9 +304,9 @@ page_modules:
       - table_page: find_protein
         display: Protein
         params_fn: '({gene__id: data.record.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
 
 #############################################################
@@ -330,9 +330,9 @@ page_modules:
         display: Select Compound
         target: view_compound
         params_fn: '({id: data.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   - name: view_compound
     descr: View a record from table compound
@@ -346,6 +346,6 @@ page_modules:
       - table_page: find_perturbation
         display: Perturbation
         params_fn: '({compound__id: data.record.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back

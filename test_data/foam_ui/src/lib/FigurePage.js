@@ -18,15 +18,6 @@ export default class Figure extends Component {
                     data={config}
                     layout={this.props.config.layout}
                 />
-                <ButtonList
-                    config={{
-                        buttons: this.props.config.buttons,
-                    }}
-                    params = {this.props.params}
-                    data = {this.props.data.table}
-                    context = {this.props.context}
-                    hide={this.props.params.mode === 'select'}
-                />
             </div>
             </div>
         )

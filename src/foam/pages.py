@@ -291,11 +291,7 @@ class DataPage:
     source: str
     on_load_fn: str = ''
     params_fn: str = ''
-    buttons: list[Action] = None
     load_fn: str = ''
-
-    def __post_init__(self):
-        self.buttons = [Action(**b) for b in self.buttons] if self.buttons else []
 
     def default_data(self, config):
         return self._data_reqs
@@ -304,7 +300,6 @@ class DataPage:
         return {
             'source': self.source,
             'dataKey': self.data_key,
-            'buttons': [b.js_config for b in self.buttons],
         }
 
 
@@ -315,7 +310,6 @@ class RecordPage(DataPage):
     new_record_fn: str = ''
 
     def __post_init__(self):
-        super().__post_init__()
         self._data_reqs = [RecordData(self.data_key, self)]
 
 
@@ -325,7 +319,6 @@ class TableDataPage(DataPage):
     new_records: str = ''
 
     def __post_init__(self):
-        super().__post_init__()
         self._data_reqs = [TableData(self.data_key, self)]
 
 
@@ -358,8 +351,6 @@ class FormPage(RecordPage):
                 next_pages += f.add_refs(config.tables_dict[self.source], page)
             for t in self.reference_tables:
                 next_pages += t.add_refs(config, page)
-            for b in self.buttons:
-                next_pages += b.add_refs(config, page)
         return next_pages
 
     @property
@@ -394,8 +385,6 @@ class TablePage(TableDataPage):
                 next_pages += c.add_refs(table_config, page)
             for c in self.edit_columns:
                 next_pages += c.add_refs(table_config, page)
-            for b in self.buttons:
-                next_pages += b.add_refs(config, page)
             for s in self.search_fields or []:
                 if s not in [f.name for f in table_config.fields]:
                     config_error(f'Unexpected field {table_config.name}.{s} found in config for page "{page}".')
@@ -430,9 +419,6 @@ class GridPage(TableDataPage):
         next_pages = []
         if self.source not in config.tables_dict.keys():
             config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
-        else:
-            for b in self.buttons:
-                next_pages += b.add_refs(config, page)
         return next_pages
 
     @property
@@ -455,9 +441,6 @@ class FigurePage(TableDataPage):
         source = self.source[:-6] if self.source.endswith('_stats') else self.source
         if source not in config.tables_dict.keys():
             config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
-        else:
-            for b in self.buttons:
-                next_pages += b.add_refs(config, page)
         return next_pages
 
     @property

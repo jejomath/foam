@@ -26,9 +26,9 @@ page_modules:
         display: Select Perturbation
         target: view_perturbation
         params_fn: '({id: data.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
   - name: view_perturbation
     descr: View a record from table perturbation
@@ -43,9 +43,9 @@ page_modules:
       - table_page: find_experiment
         display: Experiment
         params_fn: '({perturbations__id: data.record.id})'
-      buttons:
-      - display: Done
-        target: back
+    buttons:
+    - display: Done
+      target: back
 
 
 #############################################################
@@ -83,11 +83,11 @@ page_modules:
         display: Select Cell Line
         target: view_cell_line
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Cell Line
-        target: edit_cell_line
-      - display: Done
-        target: back
+    buttons:
+    - display: New Cell Line
+      target: edit_cell_line
+    - display: Done
+      target: back
 
   - name: view_cell_line
     descr: View a record from table cell_line
@@ -109,12 +109,12 @@ page_modules:
       - table_page: find_assay
         display: Assay
         params_fn: '({cell_line__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_cell_line
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+    buttons:
+    - display: Edit
+      target: edit_cell_line
+      params_fn: '({ id: params.id })'
+    - display: Done
+      target: back
 
   - name: edit_cell_line
     descr: Edit a record from table cell_line
@@ -137,9 +137,9 @@ page_modules:
       - donor_health_status
       - field: disease
         lookup: find_indication
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.save() )
+    - display: Cancel
+      target: back

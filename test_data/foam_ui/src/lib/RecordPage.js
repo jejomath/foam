@@ -46,14 +46,6 @@ export default class RecordPage extends Component {
                         />
                     </div>
                 ))}
-                <ButtonList
-                    config={{
-                        buttons: config.buttons,
-                    }}
-                    params={params}
-                    data={this.props.data}
-                    context={{ ...context, save: client.save }}
-                />
             </div>
             </div>
         )
