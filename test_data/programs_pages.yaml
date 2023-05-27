@@ -30,26 +30,43 @@ page_modules:
 
   - name: view_person
     descr: View a record from table person
-    type: Form
+    descr: View a record from table person
+    type: Layout
     config:
-      source: person
-      view_fields:
-      - name
-      - given_name
-      - family_name
-      reference_tables:
-      - table_page: find_program
-        display: Bio Lead
-        params_fn: '({bio_lead__id: data.record.id})'
-      - table_page: find_program
-        display: Chem Lead
-        params_fn: '({chem_lead__id: data.record.id})'
-      - table_page: find_program
-        display: Program Manager
-        params_fn: '({program_manager__id: data.record.id})'
-      - table_page: find_experiment
-        display: Experiments
-        params_fn: '({bio_lead__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: person
+          view_fields:
+          - name
+          - given_name
+          - family_name
+      - name: bio_lead
+        type: Table
+        template: find_program
+        config:
+          search_fields: []
+          params_fn: '({bio_lead__id: data.record.id})'
+      - name: chem_lead
+        type: Table
+        template: find_program
+        config:
+          search_fields: []
+          params_fn: '({chem_lead__id: data.record.id})'
+      - name: program_manager
+        type: Table
+        template: find_program
+        config:
+          search_fields: []
+          params_fn: '({program_manager__id: data.record.id})'
+      - name: experiment_bio_lead
+        type: Table
+        template: find_experiment
+        config:
+          search_fields: []
+          params_fn: '({bio_lead__id: data.record.id})'
     buttons:
     - display: Edit
       target: edit_person
@@ -119,46 +136,62 @@ page_modules:
 
   - name: view_program
     descr: View a record from table program
-    type: Form
+    type: Layout
     config:
-      source: program
-      view_fields:
-      - name
-      - target
-      - indication
-      - status
-      - started_date
-      - stage
-      - bio_lead
-      - chem_lead
-      - program_manager
-      reference_tables:
-      - table_page: find_program_milestone
+      cells:
+      - name: program
+        display: ''
+        type: Form
+        config:
+          source: program
+          view_fields:
+          - name
+          - target
+          - indication
+          - status
+          - started_date
+          - stage
+          - bio_lead
+          - chem_lead
+          - program_manager
+      - name: milestone
+        type: Table
+        template: find_program_milestone
         display: Milestones
-        params_fn: '({program__id: data.view_program.id})'
-      - table_page: find_assay
+        config:
+          search_fields: []
+          params_fn: '({program__id: data.program.id})'
+      - name: assay
+        type: Table
+        template: find_assay
         display: Assays
-        params_fn: '({for_program__id: data.view_program.id})'
-      - table_page: find_experiment
+        config:
+          search_fields: []
+          params_fn: '({for_program__id: data.program.id})'
+      - name: experiment
+        type: Table
+        template: find_experiment
         display: Experiments
-        params_fn: '({program__id: data.view_program.id})'
+        config:
+          search_fields: []
+          params_fn: '({program__id: data.program.id})'
     buttons:
     - display: Edit
       target: edit_program
       params_fn: '({ id: params.id })'
     - display: Edit Milestones
       target: edit_program_milestone_table
-      params_fn: '({ program__id: data.id, _program: data.record })'
+      params_fn: '({ program__id: data.program.id, _program: data.program })'
       mode: modal
     - display: Create Milestones
       target: new_program_milestone_table
-      params_fn: '({ program__id: data.id, _program: data.record })'
+      params_fn: '({ program__id: data.program.id, _program: data.program })'
       mode: modal
-      visible_fn: ( data.find_program_milestone.length === 0 )
+      visible_fn: ( data.milestone.length === 0 )
     - display: New Experiment
       target: new_experiment
       mode: modal
-      params_fn: '({ program: data.record })'
+      params_fn: '({ program: data.program })'
     - display: Done
       target: back
 
@@ -288,7 +321,6 @@ page_modules:
       - status
       - target_date
       - completed_date
-      reference_tables: []
     buttons:
     - display: Edit
       target: edit_program_milestone

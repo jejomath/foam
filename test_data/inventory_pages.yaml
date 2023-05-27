@@ -32,17 +32,30 @@ page_modules:
 
   - name: view_perturbation
     descr: View a record from table perturbation
-    type: Form
+    type: Layout
     config:
-      source: perturbation
-      view_fields:
-      - name
-      - compound
-      - concentration_nm
-      reference_tables:
-      - table_page: find_experiment
-        display: Experiment
-        params_fn: '({perturbations__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: perturbation
+          view_fields:
+          - name
+          - compound
+          - concentration_nm
+      - name: experiment_perturbations
+        type: Table
+        template: find_experiment
+        config:
+          search_fields: []
+          params_fn: '({perturbations__id: data.record.id})'
+      - name: plate_well_perturbation
+        type: Table
+        template: find_plate_well
+        config:
+          search_fields: []
+          params_fn: '({perturbation__id: data.record.id})'
     buttons:
     - display: Done
       target: back
@@ -91,24 +104,31 @@ page_modules:
 
   - name: view_cell_line
     descr: View a record from table cell_line
-    type: Form
+    type: Layout
     config:
-      source: cell_line
-      view_fields:
-      - name
-      - species
-      - organ
-      - tissue
-      - cell_type
-      - donor_sex
-      - donor_age
-      - donor_ethnicity
-      - donor_health_status
-      - disease
-      reference_tables:
-      - table_page: find_assay
-        display: Assay
-        params_fn: '({cell_line__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: cell_line
+          view_fields:
+          - name
+          - species
+          - organ
+          - tissue
+          - cell_type
+          - donor_sex
+          - donor_age
+          - donor_ethnicity
+          - donor_health_status
+          - disease
+      - name: assay_cell_line
+        type: Table
+        template: find_assay
+        config:
+          search_fields: []
+          params_fn: '({cell_line__id: data.record.id})'
     buttons:
     - display: Edit
       target: edit_cell_line

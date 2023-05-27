@@ -1,14 +1,13 @@
-import React, { Children, Component } from 'react';
-import { SearchBar, Grid, ButtonList } from './Components.js'
+import React, { Component } from 'react';
+import { Grid } from './Components.js'
 
 export default class GridPage extends Component {
 
     render() {
         const config = this.props.config;
-        const data = this.props.data[config.dataKey];
-        const params = this.props.params[config.dataKey];
+        const params = this.props.params;
+        const data = this.props.data;
         const context = this.props.context;
-        const client = context.clients[config.dataKey]
 
         if (data.length === 0) { return <div />}
         return (
@@ -17,7 +16,7 @@ export default class GridPage extends Component {
                     config={config}
                     params={params}
                     data={data}
-                    context={{...context, update: client.update}}
+                    context={context}
                 />
             </div>
         )

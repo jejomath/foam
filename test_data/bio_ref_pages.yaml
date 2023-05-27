@@ -26,18 +26,28 @@ page_modules:
 
   - name: view_indication
     descr: View a record from table indication
-    type: Form
+    type: Layout
     config:
-      source: indication
-      view_fields:
-      - name
-      reference_tables:
-      - table_page: find_program
-        display: Program
-        params_fn: '({indication__id: data.record.id})'
-      - table_page: find_cell_line
-        display: Cell Line
-        params_fn: '({disease__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: indication
+          view_fields:
+          - name
+      - name: program_indication
+        type: Table
+        template: find_program
+        config:
+          search_fields: []
+          params_fn: '({indication__id: data.record.id})'
+      - name: cell_line_disease
+        type: Table
+        template: find_cell_line
+        config:
+          search_fields: []
+          params_fn: '({disease__id: data.record.id})'
     buttons:
     - display: Done
       target: back
@@ -66,30 +76,52 @@ page_modules:
 
   - name: view_species
     descr: View a record from table species
-    type: Form
+    type: Layout
     config:
-      source: species
-      view_fields:
-      - name
-      reference_tables:
-      - table_page: find_cell_line
-        display: Cell Line
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_organ
-        display: Organ
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_tissue
-        display: Tissue
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_cell_type
-        display: Cell Type
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_protein
-        display: Protein
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_gene
-        display: Gene
-        params_fn: '({species__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: species
+          view_fields:
+          - name
+      - name: cell_line_species
+        type: Table
+        template: find_cell_line
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: organ_species
+        type: Table
+        template: find_organ
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: tissue_species
+        type: Table
+        template: find_tissue
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: cell_type_species
+        type: Table
+        template: find_cell_type
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: protein_species
+        type: Table
+        template: find_protein
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: gene_species
+        type: Table
+        template: find_gene
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
     buttons:
     - display: Done
       target: back
@@ -122,16 +154,23 @@ page_modules:
 
   - name: view_organ
     descr: View a record from table organ
-    type: Form
+    type: Layout
     config:
-      source: organ
-      view_fields:
-      - name
-      - species
-      reference_tables:
-      - table_page: find_cell_line
-        display: Cell Line
-        params_fn: '({organ__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: organ
+          view_fields:
+          - name
+          - species
+      - name: cell_line_organ
+        type: Table
+        template: find_cell_line
+        config:
+          search_fields: []
+          params_fn: '({organ__id: data.record.id})'
     buttons:
     - display: Done
       target: back
@@ -164,16 +203,23 @@ page_modules:
 
   - name: view_tissue
     descr: View a record from table tissue
-    type: Form
+    type: Layout
     config:
-      source: tissue
-      view_fields:
-      - name
-      - species
-      reference_tables:
-      - table_page: find_cell_line
-        display: Cell Line
-        params_fn: '({tissue__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: tissue
+          view_fields:
+          - name
+          - species
+      - name: cell_line_tissue
+        type: Table
+        template: find_cell_line
+        config:
+          search_fields: []
+          params_fn: '({tissue__id: data.record.id})'
     buttons:
     - display: Done
       target: back
@@ -206,16 +252,31 @@ page_modules:
 
   - name: view_cell_type
     descr: View a record from table cell_type
-    type: Form
+    type: Layout
     config:
-      source: cell_type
-      view_fields:
-      - name
-      - species
-      reference_tables:
-      - table_page: find_cell_line
-        display: Cell Line
-        params_fn: '({cell_type__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: cell_line
+          view_fields:
+          - name
+          - species
+          - organ
+          - tissue
+          - cell_type
+          - donor_sex
+          - donor_age
+          - donor_ethnicity
+          - donor_health_status
+          - disease
+      - name: assay_cell_line
+        type: Table
+        template: find_assay
+        config:
+          search_fields: []
+          params_fn: '({cell_line__id: data.record.id})'
     buttons:
     - display: Done
       target: back
@@ -251,17 +312,24 @@ page_modules:
 
   - name: view_protein
     descr: View a record from table protein
-    type: Form
+    type: Layout
     config:
-      source: protein
-      view_fields:
-      - name
-      - gene
-      - species
-      reference_tables:
-      - table_page: find_program
-        display: Program
-        params_fn: '({target__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: protein
+          view_fields:
+          - name
+          - gene
+          - species
+      - name: program_target
+        type: Table
+        template: find_program
+        config:
+          search_fields: []
+          params_fn: '({target__id: data.record.id})'
     buttons:
     - display: Done
       target: back
@@ -294,16 +362,23 @@ page_modules:
 
   - name: view_gene
     descr: View a record from table gene
-    type: Form
+    type: Layout
     config:
-      source: gene
-      view_fields:
-      - name
-      - species
-      reference_tables:
-      - table_page: find_protein
-        display: Protein
-        params_fn: '({gene__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: gene
+          view_fields:
+          - name
+          - species
+      - name: protein_gene
+        type: Table
+        template: find_protein
+        config:
+          search_fields: []
+          params_fn: '({gene__id: data.record.id})'
     buttons:
     - display: Done
       target: back
@@ -336,16 +411,23 @@ page_modules:
 
   - name: view_compound
     descr: View a record from table compound
-    type: Form
+    type: Layout
     config:
-      source: compound
-      view_fields:
-      - name
-      - smiles
-      reference_tables:
-      - table_page: find_perturbation
-        display: Perturbation
-        params_fn: '({compound__id: data.record.id})'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: compound
+          view_fields:
+          - name
+          - smiles
+      - name: perturbation_compound
+        type: Table
+        template: find_perturbation
+        config:
+          search_fields: []
+          params_fn: '({compound__id: data.record.id})'
     buttons:
     - display: Done
       target: back

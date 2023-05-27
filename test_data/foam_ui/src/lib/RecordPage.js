@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
-import { ButtonList, ViewField, EditField, FieldList } from './Components.js'
-import TablePage from './TablePage.js';
+import { ViewField, EditField, FieldList } from './Components.js'
 
 export default class RecordPage extends Component {
     render() {
         const config = this.props.config;
-        const data = this.props.data[config.dataKey];
-        const params = this.props.params[config.dataKey];
+        const params = this.props.params;
+        const data = this.props.data;
         const context = this.props.context;
-        const client = context.clients[config.dataKey]
 
         return (
             <div className='record-page-outer-div'>
@@ -31,22 +29,23 @@ export default class RecordPage extends Component {
                     }}
                     params={params}
                     data={data}
-                    context={{ ...context, update: client.update }}
+                    context={context}
                 />
-                {config.referenceTables.map((t, i) => (
-                    <div className='reference-table-div' key={i}>
-                        {t.display}
-                        <TablePage
-                            config={context.pages[t.tablePage].config}
-                            context={context}
-                            params={{table: {}}}
-                            data={{[t.tablePage]: this.props.data[t.tablePage]}}
-                            mode='reference'
-                        />
-                    </div>
-                ))}
             </div>
             </div>
         )
     }
 }
+
+// {config.referenceTables.map((t, i) => (
+//     <div className='reference-table-div' key={i}>
+//         {t.display}
+//         <TablePage
+//             config={context.pages[t.tablePage].config}
+//             context={context}
+//             params={{table: {}}}
+//             data={{[t.tablePage]: this.props.data[t.tablePage]}}
+//             mode='reference'
+//         />
+//     </div>
+// ))}

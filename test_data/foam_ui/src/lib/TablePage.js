@@ -5,10 +5,10 @@ export default class TablePage extends Component {
 
     render() {
         const config = this.props.config;
-        const data = this.props.data[config.dataKey];
-        const params = this.props.params[config.dataKey];
+        const params = this.props.params;
+        const data = this.props.data;
         const context = this.props.context;
-        const client = context.clients[config.dataKey]
+
         if (this.props.mode === 'reference') {
             return <Table
                 config={{ 
@@ -22,6 +22,7 @@ export default class TablePage extends Component {
                 context={context}
             />
         }
+
         return (
             <div className='table-page-outer-div'>
             <div className='table-page-inner-div'>
@@ -31,14 +32,14 @@ export default class TablePage extends Component {
                         fields: config.searchFields
                     }}
                     params = {params}
-                    context = {{...context, client: client }}
-                    hide={config.searchFields == null}
+                    context = {context}
+                    hide={!config.searchFields || config.searchFields.length === 0}
                 />
                 <Table
                     config={config}
                     params={params}
                     data={data}
-                    context={{...context, update: client.update}}
+                    context={context}
                 />
                 <ButtonList
                     config={{

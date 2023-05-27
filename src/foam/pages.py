@@ -141,7 +141,7 @@ class ViewField:
             'field': self.field,
             'display': self.display,
             'target': self.target,
-            'visibleFn': f'(params, data) => {self.visible_fn}' if self.visible_fn else '',
+            'visibleFn': f'(params, data, context) => {self.visible_fn}' if self.visible_fn else '',
         }
 
 
@@ -172,7 +172,7 @@ class EditField:
             'field': self.field,
             'display': self.display,
             'lookup': self.lookup,
-            'visibleFn': f'(params, data) => {self.visible_fn}' if self.visible_fn else '',
+            'visibleFn': f'(params, data, context) => {self.visible_fn}' if self.visible_fn else '',
         }
 
 
@@ -193,29 +193,6 @@ class Column:
             'width': self.width,
         }
 
-
-@dataclass
-class ReferenceTable:
-    table_page: str
-    display: str
-    params_fn: str = None
-
-    def add_refs(self, config, page):
-        if self.table_page not in config.pages_dict.keys():
-            config_error(f'Unexpected page {self.table_page} found in config for page "{page}".')
-        else:
-            table_page = config.pages_dict[self.table_page]
-            if table_page.type and table_page.type != 'Table':
-                config_error(f'The table_page for a reference page must be a Table, but "{table_page.name}" is a {table_page.type} in "{page}".')
-        return []
-
-    @property
-    def js_config(self):
-        return {
-            'tablePage': self.table_page,
-            'display': self.display,
-            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
-        }
 
 @dataclass
 class Action:
@@ -240,8 +217,8 @@ class Action:
             'pretarget': self.pretarget,
             'target': self.target,
             'mode': self.mode,
-            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
-            'visibleFn': f'(params, data) => {self.visible_fn}' if self.visible_fn else '',
+            'paramsFn': f'(params, data, context) => {self.params_fn}' if self.params_fn else '',
+            'visibleFn': f'(params, data, context) => {self.visible_fn}' if self.visible_fn else '',
         }
 
 
@@ -362,21 +339,19 @@ class TableDataPage(DataPage):
 class FormPage(RecordPage):
     view_fields: list[ViewField] = None
     edit_fields: list[EditField] = None
-    reference_tables: list[ReferenceTable] = None
 
     def __post_init__(self):
         super().__post_init__()
-        self.view_fields = [ViewField(f) for f in self.view_fields] if self.view_fields else []
-        self.edit_fields = [EditField(f) for f in self.edit_fields] if self.edit_fields else []
-        self.reference_tables = [ReferenceTable(**t) for t in self.reference_tables] if self.reference_tables else []
+        if self.view_fields:
+            self.view_fields = [ViewField(f) for f in self.view_fields]
+        if self.edit_fields:
+            self.edit_fields = [EditField(f) for f in self.edit_fields]
 
 
     def add_refs(self, config, page):
         next_pages = super().add_refs(config, page)
-        for t in self.reference_tables:
-            ref = config.pages_dict[t.table_page].config.default_data(config, t.table_page)[0]
-            ref.params_fn = t.params_fn
-            self._data_reqs.append(ref)
+        self.view_fields = self.view_fields or []
+        self.edit_fields = self.edit_fields or []
 
         if self.source not in config.tables_dict.keys():
             config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
@@ -385,8 +360,6 @@ class FormPage(RecordPage):
                 next_pages += f.add_refs(config.tables_dict[self.source], page)
             for f in self.edit_fields:
                 next_pages += f.add_refs(config.tables_dict[self.source], page)
-            for t in self.reference_tables:
-                next_pages += t.add_refs(config, page)
         return next_pages
 
     @property
@@ -395,7 +368,6 @@ class FormPage(RecordPage):
             **super().js_config,
             'viewFields': [f.js_config for f in self.view_fields],
             'editFields': [f.js_config for f in self.edit_fields],
-            'referenceTables': [t.js_config for t in self.reference_tables],
         }
 
 
@@ -403,17 +375,23 @@ class FormPage(RecordPage):
 class TablePage(TableDataPage):
     view_columns: list[Column] = None
     edit_columns: list[Column] = None
-    search_fields: list[ReferenceTable] = None
+    search_fields: list = None
     row_action: Action = None
 
     def __post_init__(self):
         super().__post_init__()
-        self.view_columns = [Column(**c) for c in self.view_columns] if self.view_columns else []
-        self.edit_columns = [Column(**c) for c in self.edit_columns] if self.edit_columns else []
+        if self.view_columns:
+            self.view_columns = [Column(**c) for c in self.view_columns]
+        if self.edit_columns:
+            self.edit_columns = [Column(**c) for c in self.edit_columns]
         self.row_action = Action(**self.row_action) if self.row_action else None
 
     def add_refs(self, config, page):
         next_pages = super().add_refs(config, page)
+        self.view_columns = self.view_columns or []
+        self.edit_columns = self.edit_columns or []
+        self.search_fields = self.search_fields or []
+
         if self.source not in config.tables_dict.keys():
             config_error(f'Unexpected source table "{self.source}" found in page config "{page}"')
         else:
@@ -554,7 +532,7 @@ class TableData:
             'source': self.source,
             'new': self.new,
             'onLoadFn': f'async (params, data, context) => {self.on_load_fn}' if self.on_load_fn else '',
-            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
+            'paramsFn': f'(params, data, context) => {self.params_fn}' if self.params_fn else '',
         }
 
 
@@ -562,8 +540,7 @@ class TableData:
 class RecordData:
     name: str
     source: str
-    new: str = None
-    new_fn: str = None
+    load_fn: str = None
     parameters_fn: str = None
 
     def __init__(self, name, page_config):
@@ -581,8 +558,8 @@ class RecordData:
             'noquotes_type': 'RecordData',
             'source': self.source,
             'new': self.new,
-            'newFn': f'(params, data) => {self.new_fn}' if self.new_fn else '',
-            'paramsFn': f'(params, data) => {self.params_fn}' if self.params_fn else '',
+            'loadFn': f'(params, data, context) => {self.load_fn}' if self.load_fn else '',
+            'paramsFn': f'(params, data, context) => {self.params_fn}' if self.params_fn else '',
         }
 
 

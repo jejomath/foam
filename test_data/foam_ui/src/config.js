@@ -1024,7 +1024,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_person',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -1073,103 +1073,301 @@ export const pages = {
         name: 'view_person',
         display: 'View Person',
         config: {
-            source: 'person',
-            dataKey: 'view_person',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'person',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'given_name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'family_name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'given_name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'family_name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_program',
+                name: 'bio_lead',
                 display: 'Bio Lead',
-                paramsFn: (params, data) => ({
-                    bio_lead__id: data.record.id
-                }),
+                config: {
+                    source: 'program',
+                    dataKey: 'bio_lead',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_program',
+                name: 'chem_lead',
                 display: 'Chem Lead',
-                paramsFn: (params, data) => ({
-                    chem_lead__id: data.record.id
-                }),
+                config: {
+                    source: 'program',
+                    dataKey: 'chem_lead',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_program',
+                name: 'program_manager',
                 display: 'Program Manager',
-                paramsFn: (params, data) => ({
-                    program_manager__id: data.record.id
-                }),
+                config: {
+                    source: 'program',
+                    dataKey: 'program_manager',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_experiment',
-                display: 'Experiments',
-                paramsFn: (params, data) => ({
-                    bio_lead__id: data.record.id
-                }),
+                name: 'experiment_bio_lead',
+                display: 'Experiment Bio Lead',
+                config: {
+                    source: 'experiment',
+                    dataKey: 'experiment_bio_lead',
+                    rowAction: {
+                        display: 'Select Experiment',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_experiment',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'description',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'program',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'target_start_date',
+                        width: '200',
+                    }, {
+                        field: 'target_duration',
+                        width: '200',
+                    }, {
+                        field: 'start_date',
+                        width: '200',
+                    }, {
+                        field: 'end_date',
+                        width: '200',
+                    }, {
+                        field: 'assay',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'perturbations',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_person',
+            name: 'record',
             type: RecordData,
             source: 'person',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_program',
+            name: 'bio_lead',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 bio_lead__id: data.record.id
             }),
         }, {
-            name: 'find_program',
+            name: 'chem_lead',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 chem_lead__id: data.record.id
             }),
         }, {
-            name: 'find_program',
+            name: 'program_manager',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 program_manager__id: data.record.id
             }),
         }, {
-            name: 'find_experiment',
+            name: 'experiment_bio_lead',
             type: TableData,
             source: 'experiment',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 bio_lead__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_person',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 id: params.id
             }),
             visibleFn: '',
@@ -1206,14 +1404,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_person',
             type: RecordData,
             source: 'person',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -1247,7 +1444,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_program',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -1314,118 +1511,244 @@ export const pages = {
         name: 'view_program',
         display: 'View Program',
         config: {
-            source: 'program',
-            dataKey: 'view_program',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'program',
+                display: '',
+                config: {
+                    source: 'program',
+                    dataKey: 'program',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'target',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'indication',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'status',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'started_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'stage',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'bio_lead',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'chem_lead',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'program_manager',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'target',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'indication',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'status',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'started_date',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'stage',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'bio_lead',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'chem_lead',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'program_manager',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_program_milestone',
+                name: 'milestone',
                 display: 'Milestones',
-                paramsFn: (params, data) => ({
-                    program__id: data.view_program.id
-                }),
+                config: {
+                    source: 'program_milestone',
+                    dataKey: 'milestone',
+                    rowAction: {
+                        display: 'Select Program Milestone',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_program_milestone',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'target_date',
+                        width: '200',
+                    }, {
+                        field: 'completed_date',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_assay',
+                name: 'assay',
                 display: 'Assays',
-                paramsFn: (params, data) => ({
-                    for_program__id: data.view_program.id
-                }),
+                config: {
+                    source: 'assay',
+                    dataKey: 'assay',
+                    rowAction: {
+                        display: 'Select Assay',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_assay',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'descr',
+                        width: '200',
+                    }, {
+                        field: 'cell_line',
+                        width: '200',
+                    }, {
+                        field: 'for_program',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_experiment',
+                name: 'experiment',
                 display: 'Experiments',
-                paramsFn: (params, data) => ({
-                    program__id: data.view_program.id
-                }),
+                config: {
+                    source: 'experiment',
+                    dataKey: 'experiment',
+                    rowAction: {
+                        display: 'Select Experiment',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_experiment',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'description',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'program',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'target_start_date',
+                        width: '200',
+                    }, {
+                        field: 'target_duration',
+                        width: '200',
+                    }, {
+                        field: 'start_date',
+                        width: '200',
+                    }, {
+                        field: 'end_date',
+                        width: '200',
+                    }, {
+                        field: 'assay',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'perturbations',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_program',
+            name: 'program',
             type: RecordData,
             source: 'program',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_program_milestone',
+            name: 'milestone',
             type: TableData,
             source: 'program_milestone',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
-                program__id: data.view_program.id
+            paramsFn: (params, data, context) => ({
+                program__id: data.program.id
             }),
         }, {
-            name: 'find_assay',
+            name: 'assay',
             type: TableData,
             source: 'assay',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
-                for_program__id: data.view_program.id
+            paramsFn: (params, data, context) => ({
+                for_program__id: data.program.id
             }),
         }, {
-            name: 'find_experiment',
+            name: 'experiment',
             type: TableData,
             source: 'experiment',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
-                program__id: data.view_program.id
+            paramsFn: (params, data, context) => ({
+                program__id: data.program.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_program',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 id: params.id
             }),
             visibleFn: '',
@@ -1435,9 +1758,9 @@ export const pages = {
             pretarget: null,
             target: 'edit_program_milestone_table',
             mode: 'modal',
-            paramsFn: (params, data) => ({
-                program__id: data.id,
-                _program: data.record
+            paramsFn: (params, data, context) => ({
+                program__id: data.program.id,
+                _program: data.program
             }),
             visibleFn: '',
         }, {
@@ -1446,19 +1769,19 @@ export const pages = {
             pretarget: null,
             target: 'new_program_milestone_table',
             mode: 'modal',
-            paramsFn: (params, data) => ({
-                program__id: data.id,
-                _program: data.record
+            paramsFn: (params, data, context) => ({
+                program__id: data.program.id,
+                _program: data.program
             }),
-            visibleFn: (params, data) => (data.find_program_milestone.length === 0),
+            visibleFn: (params, data, context) => (data.milestone.length === 0),
         }, {
             display: 'New Experiment',
             pretargetFn: '',
             pretarget: null,
             target: 'new_experiment',
             mode: 'modal',
-            paramsFn: (params, data) => ({
-                program: data.record
+            paramsFn: (params, data, context) => ({
+                program: data.program
             }),
             visibleFn: '',
         }, {
@@ -1524,14 +1847,13 @@ export const pages = {
                 lookup: 'find_person',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_program',
             type: RecordData,
             source: 'program',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -1565,7 +1887,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_program_milestone',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -1637,7 +1959,7 @@ export const pages = {
                 field: 'completed_date',
                 width: '200',
             }, ],
-            searchFields: null,
+            searchFields: [],
         },
         data: [{
             name: 'edit_program_milestone_table',
@@ -1700,7 +2022,7 @@ export const pages = {
                 field: 'completed_date',
                 width: '200',
             }, ],
-            searchFields: null,
+            searchFields: [],
         },
         data: [{
             name: 'new_program_milestone_table',
@@ -1778,14 +2100,13 @@ export const pages = {
                 visibleFn: '',
             }, ],
             editFields: [],
-            referenceTables: [],
         },
         data: [{
             name: 'view_program_milestone',
             type: RecordData,
             source: 'program_milestone',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -1795,7 +2116,7 @@ export const pages = {
             pretarget: null,
             target: 'edit_program_milestone',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 id: params.id
             }),
             visibleFn: '',
@@ -1842,14 +2163,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_program_milestone',
             type: RecordData,
             source: 'program_milestone',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -1924,7 +2244,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_assay',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -1979,49 +2299,112 @@ export const pages = {
         name: 'view_assay',
         display: 'View Assay',
         config: {
-            source: 'assay',
-            dataKey: 'view_assay',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'type',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'descr',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'cell_line',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
                 display: '',
-                target: '',
-                visibleFn: (params, data) => (data.type === 'VITRO'),
+                config: {
+                    source: 'assay',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'type',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'descr',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'cell_line',
+                        display: '',
+                        target: '',
+                        visibleFn: (params, data, context) => (data.type === 'VITRO'),
+                    }, {
+                        field: 'for_program',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'for_program',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_experiment',
-                display: 'Experiment',
-                paramsFn: (params, data) => ({
-                    assay__id: data.record.id
-                }),
+                name: 'find_experiment',
+                display: 'Experiments',
+                config: {
+                    source: 'experiment',
+                    dataKey: 'find_experiment',
+                    rowAction: {
+                        display: 'Select Experiment',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_experiment',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'description',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'program',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'target_start_date',
+                        width: '200',
+                    }, {
+                        field: 'target_duration',
+                        width: '200',
+                    }, {
+                        field: 'start_date',
+                        width: '200',
+                    }, {
+                        field: 'end_date',
+                        width: '200',
+                    }, {
+                        field: 'assay',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'perturbations',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_assay',
+            name: 'record',
             type: RecordData,
             source: 'assay',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
             name: 'find_experiment',
@@ -2029,18 +2412,18 @@ export const pages = {
             source: 'experiment',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
-                assay__id: data.record.id
+            paramsFn: (params, data, context) => ({
+                assay__id: data.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_assay',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 id: params.id
             }),
             visibleFn: '',
@@ -2050,8 +2433,8 @@ export const pages = {
             pretarget: null,
             target: 'new_experiment',
             mode: 'modal',
-            paramsFn: (params, data) => ({
-                assay: data.record
+            paramsFn: (params, data, context) => ({
+                assay: data
             }),
             visibleFn: '',
         }, {
@@ -2085,16 +2468,15 @@ export const pages = {
                 field: 'cell_line',
                 display: '',
                 lookup: 'find_cell_line',
-                visibleFn: (params, data) => (data.type === 'VITRO'),
+                visibleFn: (params, data, context) => (data.type === 'VITRO'),
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'new_assay',
             type: RecordData,
             source: 'assay',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -2104,7 +2486,7 @@ export const pages = {
             pretarget: null,
             target: 'edit_assay',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 id: data.id
             }),
             visibleFn: '',
@@ -2144,21 +2526,20 @@ export const pages = {
                 field: 'cell_line',
                 display: '',
                 lookup: 'find_cell_line',
-                visibleFn: (params, data) => (data.type === 'VITRO'),
+                visibleFn: (params, data, context) => (data.type === 'VITRO'),
             }, {
                 field: 'for_program',
                 display: '',
                 lookup: 'find_program',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_assay',
             type: RecordData,
             source: 'assay',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -2192,7 +2573,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_experiment',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -2268,104 +2649,143 @@ export const pages = {
         name: 'view_experiment',
         display: 'View Experiment',
         config: {
-            source: 'experiment',
-            dataKey: 'view_experiment',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'experiment',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'description',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'status',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'program',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'bio_lead',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'target_start_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'target_duration',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'start_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'end_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'assay',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'type',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'perturbations',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'description',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'status',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'program',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'bio_lead',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'target_start_date',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'target_duration',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'start_date',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'end_date',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'assay',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'type',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'perturbations',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_plate',
-                display: 'Plates',
-                paramsFn: (params, data) => ({
-                    experiment__id: data.record.id
-                }),
+                name: 'plate',
+                display: 'Plate',
+                config: {
+                    source: 'plate',
+                    dataKey: 'plate',
+                    rowAction: {
+                        display: 'Select Plate',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_plate',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'experiment',
+                        width: '200',
+                    }, {
+                        field: 'row_count',
+                        width: '200',
+                    }, {
+                        field: 'column_count',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_experiment',
+            name: 'record',
             type: RecordData,
             source: 'experiment',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_plate',
+            name: 'plate',
             type: TableData,
             source: 'plate',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 experiment__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_experiment',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: params.record.id
             }),
             visibleFn: '',
         }, {
@@ -2374,8 +2794,8 @@ export const pages = {
             pretarget: null,
             target: 'edit_plate',
             mode: 'modal',
-            paramsFn: (params, data) => ({
-                experiment: data.record
+            paramsFn: (params, data, context) => ({
+                experiment: data
             }),
             visibleFn: '',
         }, {
@@ -2406,14 +2826,13 @@ export const pages = {
                 lookup: '',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'new_experiment',
             type: RecordData,
             source: 'experiment',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -2423,7 +2842,7 @@ export const pages = {
             pretarget: null,
             target: 'edit_experiment',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 id: data.id
             }),
             visibleFn: '',
@@ -2505,20 +2924,19 @@ export const pages = {
                 lookup: 'find_perturbation',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_experiment',
             type: RecordData,
             source: 'experiment',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
         buttons: [{
             display: 'Save',
-            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretargetFn: (params, data, context) => (context.save()),
             pretarget: null,
             target: 'back',
             mode: null,
@@ -2546,7 +2964,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_plate',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -2598,85 +3016,77 @@ export const pages = {
         name: 'view_plate',
         display: 'View Plate',
         config: {
-            source: 'plate',
-            dataKey: 'view_plate',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'plate',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'experiment',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'row_count',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'column_count',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'experiment',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'row_count',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'column_count',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_plate_well',
-                display: 'Plate Well',
-                paramsFn: (params, data) => ({
-                    plate__id: data.record.id,
-                    rows: data.record.row_count,
-                    cols: data.record.column_count
-                }),
+                name: 'plate_well',
+                display: 'Plate Map',
+                config: {
+                    source: 'plate_well',
+                    dataKey: 'plate_well',
+                    rowField: 'row',
+                    columnField: 'column',
+                    displayField: 'purpose',
+                },
+                data: [],
+                type: Grid,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_plate',
+            name: 'record',
             type: RecordData,
             source: 'plate',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_plate_well',
+            name: 'plate_well',
             type: TableData,
             source: 'plate_well',
             new: null,
-            onLoadFn: async (params, data, context) => {
-                const existing = await context.getRecords('plate_well', {
-                    plate__id: params.plate__id
-                });
-                if (existing.length > 0) {
-                    context.setState(existing)
-                } else {
-                    Array(parseInt(params.rows)).fill().forEach((_, r) => {
-                        Array(parseInt(params.cols)).fill().forEach((_, c) => {
-                            context.addNew({
-                                name: `p${params.plate__id}r${r}c${c}`,
-                                plate: params.plate__id,
-                                row: r,
-                                column: c
-                            })
-                        })
-                    })
-                }
-            },
-            paramsFn: (params, data) => ({
-                plate__id: data.record.id,
-                rows: data.record.row_count,
-                cols: data.record.column_count
-            }),
+            onLoadFn: '',
+            paramsFn: '',
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_plate',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 id: params.id
             }),
             visibleFn: '',
@@ -2686,7 +3096,7 @@ export const pages = {
             pretarget: null,
             target: 'find_plate_well',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 plate__id: data.record.id,
                 rows: data.record.row_count,
                 cols: data.record.column_count
@@ -2698,7 +3108,7 @@ export const pages = {
             pretarget: null,
             target: 'view_plate_map',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 plate__id: data.record.id
             }),
             visibleFn: '',
@@ -2740,14 +3150,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_plate',
             type: RecordData,
             source: 'plate',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -2790,7 +3199,7 @@ export const pages = {
                 field: 'perturbation',
                 width: '200',
             }, ],
-            searchFields: null,
+            searchFields: [],
         },
         data: [{
             name: 'find_plate_well',
@@ -2866,76 +3275,7 @@ export const pages = {
             visibleFn: '',
         }, {
             display: 'Save',
-            pretargetFn: (params, data, context) => (context.clients.view_plate_map.save()),
-            pretarget: null,
-            target: 'back',
-            mode: null,
-            paramsFn: '',
-            visibleFn: '',
-        }, ],
-    },
-    view_plate_grid: {
-        name: 'view_plate_grid',
-        display: 'View Plate Grid',
-        config: {
-            direction: 'vertical',
-            cells: [{
-                name: 'form_cell',
-                display: '',
-                config: {
-                    source: 'plate',
-                    dataKey: 'form_cell',
-                    viewFields: [{
-                        field: 'name',
-                        display: null,
-                        target: null,
-                        visibleFn: '',
-                    }, {
-                        field: 'experiment',
-                        display: null,
-                        target: null,
-                        visibleFn: '',
-                    }, ],
-                    editFields: [],
-                    referenceTables: [],
-                },
-                data: [],
-                type: Form,
-                buttons: [],
-            }, {
-                name: 'grid_cell',
-                display: 'Plate Map',
-                config: {
-                    source: 'plate_well',
-                    dataKey: 'grid_cell',
-                    rowField: 'row',
-                    columnField: 'column',
-                    displayField: 'purpose',
-                },
-                data: [],
-                type: Grid,
-                buttons: [],
-            }, ],
-        },
-        data: [{
-            name: 'form_cell',
-            type: RecordData,
-            source: 'plate',
-            new: null,
-            newFn: '',
-            paramsFn: '',
-        }, {
-            name: 'grid_cell',
-            type: TableData,
-            source: 'plate_well',
-            new: null,
-            onLoadFn: '',
-            paramsFn: '',
-        }, ],
-        type: Layout,
-        buttons: [{
-            display: 'Done',
-            pretargetFn: '',
+            pretargetFn: (params, data, context) => (context.save()),
             pretarget: null,
             target: 'back',
             mode: null,
@@ -2955,7 +3295,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_perturbation',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -2996,51 +3336,167 @@ export const pages = {
         name: 'view_perturbation',
         display: 'View Perturbation',
         config: {
-            source: 'perturbation',
-            dataKey: 'view_perturbation',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'perturbation',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'compound',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'concentration_nm',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'compound',
-                display: null,
-                target: null,
-                visibleFn: '',
+                name: 'experiment_perturbations',
+                display: 'Experiment Perturbations',
+                config: {
+                    source: 'experiment',
+                    dataKey: 'experiment_perturbations',
+                    rowAction: {
+                        display: 'Select Experiment',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_experiment',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'description',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'program',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'target_start_date',
+                        width: '200',
+                    }, {
+                        field: 'target_duration',
+                        width: '200',
+                    }, {
+                        field: 'start_date',
+                        width: '200',
+                    }, {
+                        field: 'end_date',
+                        width: '200',
+                    }, {
+                        field: 'assay',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'perturbations',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                field: 'concentration_nm',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_experiment',
-                display: 'Experiment',
-                paramsFn: (params, data) => ({
-                    perturbations__id: data.record.id
-                }),
+                name: 'plate_well_perturbation',
+                display: 'Plate Well Perturbation',
+                config: {
+                    source: 'plate_well',
+                    dataKey: 'plate_well_perturbation',
+                    rowAction: null,
+                    viewColumns: [],
+                    editColumns: [{
+                        field: 'row',
+                        width: '20',
+                    }, {
+                        field: 'column',
+                        width: '20',
+                    }, {
+                        field: 'purpose',
+                        width: '200',
+                    }, {
+                        field: 'perturbation',
+                        width: '200',
+                    }, ],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_perturbation',
+            name: 'record',
             type: RecordData,
             source: 'perturbation',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_experiment',
+            name: 'experiment_perturbations',
             type: TableData,
             source: 'experiment',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 perturbations__id: data.record.id
             }),
+        }, {
+            name: 'plate_well_perturbation',
+            type: TableData,
+            source: 'plate_well',
+            new: null,
+            onLoadFn: async (params, data, context) => {
+                const existing = await context.getRecords('plate_well', {
+                    plate__id: params.plate__id
+                });
+                if (existing.length > 0) {
+                    context.setState(existing)
+                } else {
+                    Array(parseInt(params.rows)).fill().forEach((_, r) => {
+                        Array(parseInt(params.cols)).fill().forEach((_, c) => {
+                            context.addNew({
+                                name: `p${params.plate__id}r${r}c${c}`,
+                                plate: params.plate__id,
+                                row: r,
+                                column: c
+                            })
+                        })
+                    })
+                }
+            },
+            paramsFn: (params, data, context) => ({
+                perturbation__id: data.record.id
+            }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Done',
             pretargetFn: '',
@@ -3063,7 +3519,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_cell_line',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -3118,93 +3574,135 @@ export const pages = {
         name: 'view_cell_line',
         display: 'View Cell Line',
         config: {
-            source: 'cell_line',
-            dataKey: 'view_cell_line',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'organ',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'tissue',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'cell_type',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_sex',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_age',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_ethnicity',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_health_status',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'disease',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'organ',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'tissue',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'cell_type',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'donor_sex',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'donor_age',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'donor_ethnicity',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'donor_health_status',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'disease',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_assay',
-                display: 'Assay',
-                paramsFn: (params, data) => ({
-                    cell_line__id: data.record.id
-                }),
+                name: 'assay_cell_line',
+                display: 'Assay Cell Line',
+                config: {
+                    source: 'assay',
+                    dataKey: 'assay_cell_line',
+                    rowAction: {
+                        display: 'Select Assay',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_assay',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'descr',
+                        width: '200',
+                    }, {
+                        field: 'cell_line',
+                        width: '200',
+                    }, {
+                        field: 'for_program',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_cell_line',
+            name: 'record',
             type: RecordData,
             source: 'cell_line',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_assay',
+            name: 'assay_cell_line',
             type: TableData,
             source: 'assay',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 cell_line__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_cell_line',
             mode: null,
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 id: params.id
             }),
             visibleFn: '',
@@ -3276,14 +3774,13 @@ export const pages = {
                 lookup: 'find_indication',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_cell_line',
             type: RecordData,
             source: 'cell_line',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -3317,7 +3814,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_indication',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -3352,56 +3849,143 @@ export const pages = {
         name: 'view_indication',
         display: 'View Indication',
         config: {
-            source: 'indication',
-            dataKey: 'view_indication',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_program',
-                display: 'Program',
-                paramsFn: (params, data) => ({
-                    indication__id: data.record.id
-                }),
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'indication',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                tablePage: 'find_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    disease__id: data.record.id
-                }),
+                name: 'program_indication',
+                display: 'Program Indication',
+                config: {
+                    source: 'program',
+                    dataKey: 'program_indication',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
+            }, {
+                name: 'cell_line_disease',
+                display: 'Cell Line Disease',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'cell_line_disease',
+                    rowAction: {
+                        display: 'Select Cell Line',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_cell_line',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, {
+                        field: 'organ',
+                        width: '200',
+                    }, {
+                        field: 'tissue',
+                        width: '200',
+                    }, {
+                        field: 'cell_type',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_indication',
+            name: 'record',
             type: RecordData,
             source: 'indication',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_program',
+            name: 'program_indication',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 indication__id: data.record.id
             }),
         }, {
-            name: 'find_cell_line',
+            name: 'cell_line_disease',
             type: TableData,
             source: 'cell_line',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 disease__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Done',
             pretargetFn: '',
@@ -3424,7 +4008,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_species',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -3459,116 +4043,281 @@ export const pages = {
         name: 'view_species',
         display: 'View Species',
         config: {
-            source: 'species',
-            dataKey: 'view_species',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'species',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                tablePage: 'find_organ',
-                display: 'Organ',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'cell_line_species',
+                display: 'Cell Line Species',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'cell_line_species',
+                    rowAction: {
+                        display: 'Select Cell Line',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_cell_line',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, {
+                        field: 'organ',
+                        width: '200',
+                    }, {
+                        field: 'tissue',
+                        width: '200',
+                    }, {
+                        field: 'cell_type',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_tissue',
-                display: 'Tissue',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'organ_species',
+                display: 'Organ Species',
+                config: {
+                    source: 'organ',
+                    dataKey: 'organ_species',
+                    rowAction: {
+                        display: 'Select Organ',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_organ',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_cell_type',
-                display: 'Cell Type',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'tissue_species',
+                display: 'Tissue Species',
+                config: {
+                    source: 'tissue',
+                    dataKey: 'tissue_species',
+                    rowAction: {
+                        display: 'Select Tissue',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_tissue',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_protein',
-                display: 'Protein',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'cell_type_species',
+                display: 'Cell Type Species',
+                config: {
+                    source: 'cell_type',
+                    dataKey: 'cell_type_species',
+                    rowAction: {
+                        display: 'Select Cell Type',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_cell_type',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_gene',
-                display: 'Gene',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'protein_species',
+                display: 'Protein Species',
+                config: {
+                    source: 'protein',
+                    dataKey: 'protein_species',
+                    rowAction: {
+                        display: 'Select Protein',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_protein',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'gene',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
+            }, {
+                name: 'gene_species',
+                display: 'Gene Species',
+                config: {
+                    source: 'gene',
+                    dataKey: 'gene_species',
+                    rowAction: {
+                        display: 'Select Gene',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_gene',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_species',
+            name: 'record',
             type: RecordData,
             source: 'species',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_cell_line',
+            name: 'cell_line_species',
             type: TableData,
             source: 'cell_line',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_organ',
+            name: 'organ_species',
             type: TableData,
             source: 'organ',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_tissue',
+            name: 'tissue_species',
             type: TableData,
             source: 'tissue',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_cell_type',
+            name: 'cell_type_species',
             type: TableData,
             source: 'cell_type',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_protein',
+            name: 'protein_species',
             type: TableData,
             source: 'protein',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_gene',
+            name: 'gene_species',
             type: TableData,
             source: 'gene',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Done',
             pretargetFn: '',
@@ -3591,7 +4340,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_organ',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -3629,46 +4378,88 @@ export const pages = {
         name: 'view_organ',
         display: 'View Organ',
         config: {
-            source: 'organ',
-            dataKey: 'view_organ',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'organ',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    organ__id: data.record.id
-                }),
+                name: 'cell_line_organ',
+                display: 'Cell Line Organ',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'cell_line_organ',
+                    rowAction: {
+                        display: 'Select Cell Line',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_cell_line',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, {
+                        field: 'organ',
+                        width: '200',
+                    }, {
+                        field: 'tissue',
+                        width: '200',
+                    }, {
+                        field: 'cell_type',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_organ',
+            name: 'record',
             type: RecordData,
             source: 'organ',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_cell_line',
+            name: 'cell_line_organ',
             type: TableData,
             source: 'cell_line',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 organ__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Done',
             pretargetFn: '',
@@ -3691,7 +4482,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_tissue',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -3729,46 +4520,88 @@ export const pages = {
         name: 'view_tissue',
         display: 'View Tissue',
         config: {
-            source: 'tissue',
-            dataKey: 'view_tissue',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'tissue',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    tissue__id: data.record.id
-                }),
+                name: 'cell_line_tissue',
+                display: 'Cell Line Tissue',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'cell_line_tissue',
+                    rowAction: {
+                        display: 'Select Cell Line',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_cell_line',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, {
+                        field: 'organ',
+                        width: '200',
+                    }, {
+                        field: 'tissue',
+                        width: '200',
+                    }, {
+                        field: 'cell_type',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_tissue',
+            name: 'record',
             type: RecordData,
             source: 'tissue',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_cell_line',
+            name: 'cell_line_tissue',
             type: TableData,
             source: 'cell_line',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 tissue__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Done',
             pretargetFn: '',
@@ -3791,7 +4624,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_cell_type',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -3829,46 +4662,128 @@ export const pages = {
         name: 'view_cell_type',
         display: 'View Cell Type',
         config: {
-            source: 'cell_type',
-            dataKey: 'view_cell_type',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'organ',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'tissue',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'cell_type',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_sex',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_age',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_ethnicity',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_health_status',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'disease',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    cell_type__id: data.record.id
-                }),
+                name: 'assay_cell_line',
+                display: 'Assay Cell Line',
+                config: {
+                    source: 'assay',
+                    dataKey: 'assay_cell_line',
+                    rowAction: {
+                        display: 'Select Assay',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_assay',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'descr',
+                        width: '200',
+                    }, {
+                        field: 'cell_line',
+                        width: '200',
+                    }, {
+                        field: 'for_program',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_cell_type',
+            name: 'record',
             type: RecordData,
-            source: 'cell_type',
-            new: null,
-            newFn: '',
-            paramsFn: '',
-        }, {
-            name: 'find_cell_line',
-            type: TableData,
             source: 'cell_line',
             new: null,
+            loadFn: '',
+            paramsFn: '',
+        }, {
+            name: 'assay_cell_line',
+            type: TableData,
+            source: 'assay',
+            new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
-                cell_type__id: data.record.id
+            paramsFn: (params, data, context) => ({
+                cell_line__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Done',
             pretargetFn: '',
@@ -3891,7 +4806,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_protein',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -3932,51 +4847,105 @@ export const pages = {
         name: 'view_protein',
         display: 'View Protein',
         config: {
-            source: 'protein',
-            dataKey: 'view_protein',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'protein',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'gene',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'gene',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_program',
-                display: 'Program',
-                paramsFn: (params, data) => ({
-                    target__id: data.record.id
-                }),
+                name: 'program_target',
+                display: 'Program Target',
+                config: {
+                    source: 'program',
+                    dataKey: 'program_target',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_protein',
+            name: 'record',
             type: RecordData,
             source: 'protein',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_program',
+            name: 'program_target',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 target__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Done',
             pretargetFn: '',
@@ -3999,7 +4968,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_gene',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -4037,46 +5006,82 @@ export const pages = {
         name: 'view_gene',
         display: 'View Gene',
         config: {
-            source: 'gene',
-            dataKey: 'view_gene',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'gene',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_protein',
-                display: 'Protein',
-                paramsFn: (params, data) => ({
-                    gene__id: data.record.id
-                }),
+                name: 'protein_gene',
+                display: 'Protein Gene',
+                config: {
+                    source: 'protein',
+                    dataKey: 'protein_gene',
+                    rowAction: {
+                        display: 'Select Protein',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_protein',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'gene',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_gene',
+            name: 'record',
             type: RecordData,
             source: 'gene',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_protein',
+            name: 'protein_gene',
             type: TableData,
             source: 'protein',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 gene__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Done',
             pretargetFn: '',
@@ -4099,7 +5104,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_compound',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -4137,46 +5142,82 @@ export const pages = {
         name: 'view_compound',
         display: 'View Compound',
         config: {
-            source: 'compound',
-            dataKey: 'view_compound',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'compound',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'smiles',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'smiles',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_perturbation',
-                display: 'Perturbation',
-                paramsFn: (params, data) => ({
-                    compound__id: data.record.id
-                }),
+                name: 'perturbation_compound',
+                display: 'Perturbation Compound',
+                config: {
+                    source: 'perturbation',
+                    dataKey: 'perturbation_compound',
+                    rowAction: {
+                        display: 'Select Perturbation',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_perturbation',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'compound',
+                        width: '200',
+                    }, {
+                        field: 'concentration_nm',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_compound',
+            name: 'record',
             type: RecordData,
             source: 'compound',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_perturbation',
+            name: 'perturbation_compound',
             type: TableData,
             source: 'perturbation',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 compound__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Done',
             pretargetFn: '',
@@ -4192,7 +5233,7 @@ export const pages = {
         display: 'Admin Home',
         config: {
             boxes: [{
-                name: 'Programs',
+                name: '',
                 links: [{
                     display: 'Person',
                     pretargetFn: '',
@@ -4219,7 +5260,7 @@ export const pages = {
                     visibleFn: '',
                 }, ],
             }, {
-                name: 'Experiments',
+                name: '',
                 links: [{
                     display: 'Assay',
                     pretargetFn: '',
@@ -4262,7 +5303,7 @@ export const pages = {
                     visibleFn: '',
                 }, ],
             }, {
-                name: 'Inventory',
+                name: '',
                 links: [{
                     display: 'Cell Line',
                     pretargetFn: '',
@@ -4357,7 +5398,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_person',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -4406,104 +5447,302 @@ export const pages = {
         name: 'view_admin_person',
         display: 'View Admin Person',
         config: {
-            source: 'person',
-            dataKey: 'view_admin_person',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'person',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'given_name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'family_name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'given_name',
-                display: null,
-                target: null,
-                visibleFn: '',
+                name: 'program_bio_lead',
+                display: 'Program Bio Lead',
+                config: {
+                    source: 'program',
+                    dataKey: 'program_bio_lead',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                field: 'family_name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_program',
-                display: 'Program',
-                paramsFn: (params, data) => ({
-                    bio_lead__id: data.record.id
-                }),
+                name: 'program_chem_lead',
+                display: 'Program Chem Lead',
+                config: {
+                    source: 'program',
+                    dataKey: 'program_chem_lead',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_admin_program',
-                display: 'Program',
-                paramsFn: (params, data) => ({
-                    chem_lead__id: data.record.id
-                }),
+                name: 'program_program_manager',
+                display: 'Program Program Manager',
+                config: {
+                    source: 'program',
+                    dataKey: 'program_program_manager',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_admin_program',
-                display: 'Program',
-                paramsFn: (params, data) => ({
-                    program_manager__id: data.record.id
-                }),
-            }, {
-                tablePage: 'find_admin_experiment',
-                display: 'Experiment',
-                paramsFn: (params, data) => ({
-                    bio_lead__id: data.record.id
-                }),
+                name: 'experiment_bio_lead',
+                display: 'Experiment Bio Lead',
+                config: {
+                    source: 'experiment',
+                    dataKey: 'experiment_bio_lead',
+                    rowAction: {
+                        display: 'Select Experiment',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_experiment',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'description',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'program',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'target_start_date',
+                        width: '200',
+                    }, {
+                        field: 'target_duration',
+                        width: '200',
+                    }, {
+                        field: 'start_date',
+                        width: '200',
+                    }, {
+                        field: 'end_date',
+                        width: '200',
+                    }, {
+                        field: 'assay',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'perturbations',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_person',
+            name: 'record',
             type: RecordData,
             source: 'person',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_program',
+            name: 'program_bio_lead',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 bio_lead__id: data.record.id
             }),
         }, {
-            name: 'find_admin_program',
+            name: 'program_chem_lead',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 chem_lead__id: data.record.id
             }),
         }, {
-            name: 'find_admin_program',
+            name: 'program_program_manager',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 program_manager__id: data.record.id
             }),
         }, {
-            name: 'find_admin_experiment',
+            name: 'experiment_bio_lead',
             type: TableData,
             source: 'experiment',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 bio_lead__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_person',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -4539,14 +5778,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_person',
             type: RecordData,
             source: 'person',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -4580,7 +5818,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_program',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -4647,119 +5885,248 @@ export const pages = {
         name: 'view_admin_program',
         display: 'View Admin Program',
         config: {
-            source: 'program',
-            dataKey: 'view_admin_program',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'program',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'target',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'indication',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'status',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'started_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'stage',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'bio_lead',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'chem_lead',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'program_manager',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'target',
-                display: null,
-                target: null,
-                visibleFn: '',
+                name: 'program_milestone_program',
+                display: 'Program Milestone Program',
+                config: {
+                    source: 'program_milestone',
+                    dataKey: 'program_milestone_program',
+                    rowAction: {
+                        display: 'Select Program Milestone',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_program_milestone',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'program',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'target_date',
+                        width: '200',
+                    }, {
+                        field: 'completed_date',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                field: 'indication',
-                display: null,
-                target: null,
-                visibleFn: '',
+                name: 'assay_for_program',
+                display: 'Assay For Program',
+                config: {
+                    source: 'assay',
+                    dataKey: 'assay_for_program',
+                    rowAction: {
+                        display: 'Select Assay',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_assay',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'descr',
+                        width: '200',
+                    }, {
+                        field: 'cell_line',
+                        width: '200',
+                    }, {
+                        field: 'for_program',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                field: 'status',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'started_date',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'stage',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'bio_lead',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'chem_lead',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'program_manager',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_program_milestone',
-                display: 'Program Milestone',
-                paramsFn: (params, data) => ({
-                    program__id: data.record.id
-                }),
-            }, {
-                tablePage: 'find_admin_assay',
-                display: 'Assay',
-                paramsFn: (params, data) => ({
-                    for_program__id: data.record.id
-                }),
-            }, {
-                tablePage: 'find_admin_experiment',
-                display: 'Experiment',
-                paramsFn: (params, data) => ({
-                    program__id: data.record.id
-                }),
+                name: 'experiment_program',
+                display: 'Experiment Program',
+                config: {
+                    source: 'experiment',
+                    dataKey: 'experiment_program',
+                    rowAction: {
+                        display: 'Select Experiment',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_experiment',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'description',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'program',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'target_start_date',
+                        width: '200',
+                    }, {
+                        field: 'target_duration',
+                        width: '200',
+                    }, {
+                        field: 'start_date',
+                        width: '200',
+                    }, {
+                        field: 'end_date',
+                        width: '200',
+                    }, {
+                        field: 'assay',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'perturbations',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_program',
+            name: 'record',
             type: RecordData,
             source: 'program',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_program_milestone',
+            name: 'program_milestone_program',
             type: TableData,
             source: 'program_milestone',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 program__id: data.record.id
             }),
         }, {
-            name: 'find_admin_assay',
+            name: 'assay_for_program',
             type: TableData,
             source: 'assay',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 for_program__id: data.record.id
             }),
         }, {
-            name: 'find_admin_experiment',
+            name: 'experiment_program',
             type: TableData,
             source: 'experiment',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 program__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_program',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -4825,14 +6192,13 @@ export const pages = {
                 lookup: 'find_admin_person',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_program',
             type: RecordData,
             source: 'program',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -4866,7 +6232,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_program_milestone',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -4921,54 +6287,63 @@ export const pages = {
         name: 'view_admin_program_milestone',
         display: 'View Admin Program Milestone',
         config: {
-            source: 'program_milestone',
-            dataKey: 'view_admin_program_milestone',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'program',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'status',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'target_date',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'completed_date',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'program_milestone',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'program',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'status',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'target_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'completed_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, ],
-            editFields: [],
-            referenceTables: [],
         },
         data: [{
-            name: 'view_admin_program_milestone',
+            name: 'record',
             type: RecordData,
             source: 'program_milestone',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_program_milestone',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -5014,14 +6389,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_program_milestone',
             type: RecordData,
             source: 'program_milestone',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -5055,7 +6429,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_assay',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -5110,69 +6484,132 @@ export const pages = {
         name: 'view_admin_assay',
         display: 'View Admin Assay',
         config: {
-            source: 'assay',
-            dataKey: 'view_admin_assay',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'assay',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'type',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'descr',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'cell_line',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'for_program',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'type',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'descr',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'cell_line',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'for_program',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_experiment',
-                display: 'Experiment',
-                paramsFn: (params, data) => ({
-                    assay__id: data.record.id
-                }),
+                name: 'experiment_assay',
+                display: 'Experiment Assay',
+                config: {
+                    source: 'experiment',
+                    dataKey: 'experiment_assay',
+                    rowAction: {
+                        display: 'Select Experiment',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_experiment',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'description',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'program',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'target_start_date',
+                        width: '200',
+                    }, {
+                        field: 'target_duration',
+                        width: '200',
+                    }, {
+                        field: 'start_date',
+                        width: '200',
+                    }, {
+                        field: 'end_date',
+                        width: '200',
+                    }, {
+                        field: 'assay',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'perturbations',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_assay',
+            name: 'record',
             type: RecordData,
             source: 'assay',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_experiment',
+            name: 'experiment_assay',
             type: TableData,
             source: 'experiment',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 assay__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_assay',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -5218,14 +6655,13 @@ export const pages = {
                 lookup: 'find_admin_program',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_assay',
             type: RecordData,
             source: 'assay',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -5259,7 +6695,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_experiment',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -5335,104 +6771,143 @@ export const pages = {
         name: 'view_admin_experiment',
         display: 'View Admin Experiment',
         config: {
-            source: 'experiment',
-            dataKey: 'view_admin_experiment',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'experiment',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'description',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'status',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'program',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'bio_lead',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'target_start_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'target_duration',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'start_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'end_date',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'assay',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'type',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'perturbations',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'description',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'status',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'program',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'bio_lead',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'target_start_date',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'target_duration',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'start_date',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'end_date',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'assay',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'type',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'perturbations',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_plate',
-                display: 'Plate',
-                paramsFn: (params, data) => ({
-                    experiment__id: data.record.id
-                }),
+                name: 'plate_experiment',
+                display: 'Plate Experiment',
+                config: {
+                    source: 'plate',
+                    dataKey: 'plate_experiment',
+                    rowAction: {
+                        display: 'Select Plate',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_plate',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'experiment',
+                        width: '200',
+                    }, {
+                        field: 'row_count',
+                        width: '200',
+                    }, {
+                        field: 'column_count',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_experiment',
+            name: 'record',
             type: RecordData,
             source: 'experiment',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_plate',
+            name: 'plate_experiment',
             type: TableData,
             source: 'plate',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 experiment__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_experiment',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -5513,14 +6988,13 @@ export const pages = {
                 lookup: 'find_admin_perturbation',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_experiment',
             type: RecordData,
             source: 'experiment',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -5554,7 +7028,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_perturbation',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -5603,74 +7077,173 @@ export const pages = {
         name: 'view_admin_perturbation',
         display: 'View Admin Perturbation',
         config: {
-            source: 'perturbation',
-            dataKey: 'view_admin_perturbation',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'perturbation',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'compound',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'concentration_nm',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'compound',
-                display: null,
-                target: null,
-                visibleFn: '',
+                name: 'experiment_perturbations',
+                display: 'Experiment Perturbations',
+                config: {
+                    source: 'experiment',
+                    dataKey: 'experiment_perturbations',
+                    rowAction: {
+                        display: 'Select Experiment',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_experiment',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'description',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'program',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'target_start_date',
+                        width: '200',
+                    }, {
+                        field: 'target_duration',
+                        width: '200',
+                    }, {
+                        field: 'start_date',
+                        width: '200',
+                    }, {
+                        field: 'end_date',
+                        width: '200',
+                    }, {
+                        field: 'assay',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'perturbations',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                field: 'concentration_nm',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_experiment',
-                display: 'Experiment',
-                paramsFn: (params, data) => ({
-                    perturbations__id: data.record.id
-                }),
-            }, {
-                tablePage: 'find_admin_plate_well',
-                display: 'Plate Well',
-                paramsFn: (params, data) => ({
-                    perturbation__id: data.record.id
-                }),
+                name: 'plate_well_perturbation',
+                display: 'Plate Well Perturbation',
+                config: {
+                    source: 'plate_well',
+                    dataKey: 'plate_well_perturbation',
+                    rowAction: {
+                        display: 'Select Plate Well',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_plate_well',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'plate',
+                        width: '200',
+                    }, {
+                        field: 'row',
+                        width: '200',
+                    }, {
+                        field: 'column',
+                        width: '200',
+                    }, {
+                        field: 'purpose',
+                        width: '200',
+                    }, {
+                        field: 'perturbation',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_perturbation',
+            name: 'record',
             type: RecordData,
             source: 'perturbation',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_experiment',
+            name: 'experiment_perturbations',
             type: TableData,
             source: 'experiment',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 perturbations__id: data.record.id
             }),
         }, {
-            name: 'find_admin_plate_well',
+            name: 'plate_well_perturbation',
             type: TableData,
             source: 'plate_well',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 perturbation__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_perturbation',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -5706,14 +7279,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_perturbation',
             type: RecordData,
             source: 'perturbation',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -5747,7 +7319,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_plate',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -5799,64 +7371,109 @@ export const pages = {
         name: 'view_admin_plate',
         display: 'View Admin Plate',
         config: {
-            source: 'plate',
-            dataKey: 'view_admin_plate',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'plate',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'experiment',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'row_count',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'column_count',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'experiment',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'row_count',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'column_count',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_plate_well',
-                display: 'Plate Well',
-                paramsFn: (params, data) => ({
-                    plate__id: data.record.id
-                }),
+                name: 'plate_well_plate',
+                display: 'Plate Well Plate',
+                config: {
+                    source: 'plate_well',
+                    dataKey: 'plate_well_plate',
+                    rowAction: {
+                        display: 'Select Plate Well',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_plate_well',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'plate',
+                        width: '200',
+                    }, {
+                        field: 'row',
+                        width: '200',
+                    }, {
+                        field: 'column',
+                        width: '200',
+                    }, {
+                        field: 'purpose',
+                        width: '200',
+                    }, {
+                        field: 'perturbation',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_plate',
+            name: 'record',
             type: RecordData,
             source: 'plate',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_plate_well',
+            name: 'plate_well_plate',
             type: TableData,
             source: 'plate_well',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 plate__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_plate',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -5897,14 +7514,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_plate',
             type: RecordData,
             source: 'plate',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -5938,7 +7554,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_plate_well',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -5996,59 +7612,68 @@ export const pages = {
         name: 'view_admin_plate_well',
         display: 'View Admin Plate Well',
         config: {
-            source: 'plate_well',
-            dataKey: 'view_admin_plate_well',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'plate',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'row',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'column',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'purpose',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'perturbation',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'plate_well',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'plate',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'row',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'column',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'purpose',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'perturbation',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, ],
-            editFields: [],
-            referenceTables: [],
         },
         data: [{
-            name: 'view_admin_plate_well',
+            name: 'record',
             type: RecordData,
             source: 'plate_well',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_plate_well',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -6099,14 +7724,13 @@ export const pages = {
                 lookup: 'find_admin_perturbation',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_plate_well',
             type: RecordData,
             source: 'plate_well',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -6140,7 +7764,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_cell_line',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -6210,94 +7834,136 @@ export const pages = {
         name: 'view_admin_cell_line',
         display: 'View Admin Cell Line',
         config: {
-            source: 'cell_line',
-            dataKey: 'view_admin_cell_line',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'organ',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'tissue',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'cell_type',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_sex',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_age',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_ethnicity',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'donor_health_status',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'disease',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'organ',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'tissue',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'cell_type',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'donor_sex',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'donor_age',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'donor_ethnicity',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'donor_health_status',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'disease',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_assay',
-                display: 'Assay',
-                paramsFn: (params, data) => ({
-                    cell_line__id: data.record.id
-                }),
+                name: 'assay_cell_line',
+                display: 'Assay Cell Line',
+                config: {
+                    source: 'assay',
+                    dataKey: 'assay_cell_line',
+                    rowAction: {
+                        display: 'Select Assay',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_assay',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'type',
+                        width: '200',
+                    }, {
+                        field: 'descr',
+                        width: '200',
+                    }, {
+                        field: 'cell_line',
+                        width: '200',
+                    }, {
+                        field: 'for_program',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_cell_line',
+            name: 'record',
             type: RecordData,
             source: 'cell_line',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_assay',
+            name: 'assay_cell_line',
             type: TableData,
             source: 'assay',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 cell_line__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_cell_line',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -6368,14 +8034,13 @@ export const pages = {
                 lookup: 'find_admin_indication',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_cell_line',
             type: RecordData,
             source: 'cell_line',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -6409,7 +8074,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_indication',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -6452,64 +8117,166 @@ export const pages = {
         name: 'view_admin_indication',
         display: 'View Admin Indication',
         config: {
-            source: 'indication',
-            dataKey: 'view_admin_indication',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_program',
-                display: 'Program',
-                paramsFn: (params, data) => ({
-                    indication__id: data.record.id
-                }),
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'indication',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                tablePage: 'find_admin_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    disease__id: data.record.id
-                }),
+                name: 'program_indication',
+                display: 'Program Indication',
+                config: {
+                    source: 'program',
+                    dataKey: 'program_indication',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
+            }, {
+                name: 'cell_line_disease',
+                display: 'Cell Line Disease',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'cell_line_disease',
+                    rowAction: {
+                        display: 'Select Cell Line',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_cell_line',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, {
+                        field: 'organ',
+                        width: '200',
+                    }, {
+                        field: 'tissue',
+                        width: '200',
+                    }, {
+                        field: 'cell_type',
+                        width: '200',
+                    }, {
+                        field: 'donor_sex',
+                        width: '200',
+                    }, {
+                        field: 'donor_age',
+                        width: '200',
+                    }, {
+                        field: 'donor_ethnicity',
+                        width: '200',
+                    }, {
+                        field: 'donor_health_status',
+                        width: '200',
+                    }, {
+                        field: 'disease',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_indication',
+            name: 'record',
             type: RecordData,
             source: 'indication',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_program',
+            name: 'program_indication',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 indication__id: data.record.id
             }),
         }, {
-            name: 'find_admin_cell_line',
+            name: 'cell_line_disease',
             type: TableData,
             source: 'cell_line',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 disease__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_indication',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -6535,14 +8302,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_indication',
             type: RecordData,
             source: 'indication',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -6576,7 +8342,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_species',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -6619,124 +8385,304 @@ export const pages = {
         name: 'view_admin_species',
         display: 'View Admin Species',
         config: {
-            source: 'species',
-            dataKey: 'view_admin_species',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'species',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                tablePage: 'find_admin_organ',
-                display: 'Organ',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'cell_line_species',
+                display: 'Cell Line Species',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'cell_line_species',
+                    rowAction: {
+                        display: 'Select Cell Line',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_cell_line',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, {
+                        field: 'organ',
+                        width: '200',
+                    }, {
+                        field: 'tissue',
+                        width: '200',
+                    }, {
+                        field: 'cell_type',
+                        width: '200',
+                    }, {
+                        field: 'donor_sex',
+                        width: '200',
+                    }, {
+                        field: 'donor_age',
+                        width: '200',
+                    }, {
+                        field: 'donor_ethnicity',
+                        width: '200',
+                    }, {
+                        field: 'donor_health_status',
+                        width: '200',
+                    }, {
+                        field: 'disease',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_admin_tissue',
-                display: 'Tissue',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'organ_species',
+                display: 'Organ Species',
+                config: {
+                    source: 'organ',
+                    dataKey: 'organ_species',
+                    rowAction: {
+                        display: 'Select Organ',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_organ',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_admin_cell_type',
-                display: 'Cell Type',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'tissue_species',
+                display: 'Tissue Species',
+                config: {
+                    source: 'tissue',
+                    dataKey: 'tissue_species',
+                    rowAction: {
+                        display: 'Select Tissue',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_tissue',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_admin_protein',
-                display: 'Protein',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'cell_type_species',
+                display: 'Cell Type Species',
+                config: {
+                    source: 'cell_type',
+                    dataKey: 'cell_type_species',
+                    rowAction: {
+                        display: 'Select Cell Type',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_cell_type',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, {
-                tablePage: 'find_admin_gene',
-                display: 'Gene',
-                paramsFn: (params, data) => ({
-                    species__id: data.record.id
-                }),
+                name: 'protein_species',
+                display: 'Protein Species',
+                config: {
+                    source: 'protein',
+                    dataKey: 'protein_species',
+                    rowAction: {
+                        display: 'Select Protein',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_protein',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'gene',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
+            }, {
+                name: 'gene_species',
+                display: 'Gene Species',
+                config: {
+                    source: 'gene',
+                    dataKey: 'gene_species',
+                    rowAction: {
+                        display: 'Select Gene',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_gene',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_species',
+            name: 'record',
             type: RecordData,
             source: 'species',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_cell_line',
+            name: 'cell_line_species',
             type: TableData,
             source: 'cell_line',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_admin_organ',
+            name: 'organ_species',
             type: TableData,
             source: 'organ',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_admin_tissue',
+            name: 'tissue_species',
             type: TableData,
             source: 'tissue',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_admin_cell_type',
+            name: 'cell_type_species',
             type: TableData,
             source: 'cell_type',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_admin_protein',
+            name: 'protein_species',
             type: TableData,
             source: 'protein',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, {
-            name: 'find_admin_gene',
+            name: 'gene_species',
             type: TableData,
             source: 'gene',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 species__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_species',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -6762,14 +8708,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_species',
             type: RecordData,
             source: 'species',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -6803,7 +8748,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_organ',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -6849,54 +8794,111 @@ export const pages = {
         name: 'view_admin_organ',
         display: 'View Admin Organ',
         config: {
-            source: 'organ',
-            dataKey: 'view_admin_organ',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'organ',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    organ__id: data.record.id
-                }),
+                name: 'cell_line_organ',
+                display: 'Cell Line Organ',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'cell_line_organ',
+                    rowAction: {
+                        display: 'Select Cell Line',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_cell_line',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, {
+                        field: 'organ',
+                        width: '200',
+                    }, {
+                        field: 'tissue',
+                        width: '200',
+                    }, {
+                        field: 'cell_type',
+                        width: '200',
+                    }, {
+                        field: 'donor_sex',
+                        width: '200',
+                    }, {
+                        field: 'donor_age',
+                        width: '200',
+                    }, {
+                        field: 'donor_ethnicity',
+                        width: '200',
+                    }, {
+                        field: 'donor_health_status',
+                        width: '200',
+                    }, {
+                        field: 'disease',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_organ',
+            name: 'record',
             type: RecordData,
             source: 'organ',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_cell_line',
+            name: 'cell_line_organ',
             type: TableData,
             source: 'cell_line',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 organ__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_organ',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -6927,14 +8929,13 @@ export const pages = {
                 lookup: 'find_admin_species',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_organ',
             type: RecordData,
             source: 'organ',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -6968,7 +8969,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_tissue',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -7014,54 +9015,111 @@ export const pages = {
         name: 'view_admin_tissue',
         display: 'View Admin Tissue',
         config: {
-            source: 'tissue',
-            dataKey: 'view_admin_tissue',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'tissue',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    tissue__id: data.record.id
-                }),
+                name: 'cell_line_tissue',
+                display: 'Cell Line Tissue',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'cell_line_tissue',
+                    rowAction: {
+                        display: 'Select Cell Line',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_cell_line',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, {
+                        field: 'organ',
+                        width: '200',
+                    }, {
+                        field: 'tissue',
+                        width: '200',
+                    }, {
+                        field: 'cell_type',
+                        width: '200',
+                    }, {
+                        field: 'donor_sex',
+                        width: '200',
+                    }, {
+                        field: 'donor_age',
+                        width: '200',
+                    }, {
+                        field: 'donor_ethnicity',
+                        width: '200',
+                    }, {
+                        field: 'donor_health_status',
+                        width: '200',
+                    }, {
+                        field: 'disease',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_tissue',
+            name: 'record',
             type: RecordData,
             source: 'tissue',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_cell_line',
+            name: 'cell_line_tissue',
             type: TableData,
             source: 'cell_line',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 tissue__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_tissue',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -7092,14 +9150,13 @@ export const pages = {
                 lookup: 'find_admin_species',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_tissue',
             type: RecordData,
             source: 'tissue',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -7133,7 +9190,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_cell_type',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -7179,54 +9236,111 @@ export const pages = {
         name: 'view_admin_cell_type',
         display: 'View Admin Cell Type',
         config: {
-            source: 'cell_type',
-            dataKey: 'view_admin_cell_type',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'cell_type',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_cell_line',
-                display: 'Cell Line',
-                paramsFn: (params, data) => ({
-                    cell_type__id: data.record.id
-                }),
+                name: 'cell_line_cell_type',
+                display: 'Cell Line Cell Type',
+                config: {
+                    source: 'cell_line',
+                    dataKey: 'cell_line_cell_type',
+                    rowAction: {
+                        display: 'Select Cell Line',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_cell_line',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, {
+                        field: 'organ',
+                        width: '200',
+                    }, {
+                        field: 'tissue',
+                        width: '200',
+                    }, {
+                        field: 'cell_type',
+                        width: '200',
+                    }, {
+                        field: 'donor_sex',
+                        width: '200',
+                    }, {
+                        field: 'donor_age',
+                        width: '200',
+                    }, {
+                        field: 'donor_ethnicity',
+                        width: '200',
+                    }, {
+                        field: 'donor_health_status',
+                        width: '200',
+                    }, {
+                        field: 'disease',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_cell_type',
+            name: 'record',
             type: RecordData,
             source: 'cell_type',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_cell_line',
+            name: 'cell_line_cell_type',
             type: TableData,
             source: 'cell_line',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 cell_type__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_cell_type',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -7257,14 +9371,13 @@ export const pages = {
                 lookup: 'find_admin_species',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_cell_type',
             type: RecordData,
             source: 'cell_type',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -7298,7 +9411,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_protein',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -7347,59 +9460,113 @@ export const pages = {
         name: 'view_admin_protein',
         display: 'View Admin Protein',
         config: {
-            source: 'protein',
-            dataKey: 'view_admin_protein',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'protein',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'gene',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'gene',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_program',
-                display: 'Program',
-                paramsFn: (params, data) => ({
-                    target__id: data.record.id
-                }),
+                name: 'program_target',
+                display: 'Program Target',
+                config: {
+                    source: 'program',
+                    dataKey: 'program_target',
+                    rowAction: {
+                        display: 'Select Program',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_program',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'target',
+                        width: '200',
+                    }, {
+                        field: 'indication',
+                        width: '200',
+                    }, {
+                        field: 'status',
+                        width: '200',
+                    }, {
+                        field: 'started_date',
+                        width: '200',
+                    }, {
+                        field: 'stage',
+                        width: '200',
+                    }, {
+                        field: 'bio_lead',
+                        width: '200',
+                    }, {
+                        field: 'chem_lead',
+                        width: '200',
+                    }, {
+                        field: 'program_manager',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_protein',
+            name: 'record',
             type: RecordData,
             source: 'protein',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_program',
+            name: 'program_target',
             type: TableData,
             source: 'program',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 target__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_protein',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -7435,14 +9602,13 @@ export const pages = {
                 lookup: 'find_admin_species',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_protein',
             type: RecordData,
             source: 'protein',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -7476,7 +9642,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_gene',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -7522,54 +9688,90 @@ export const pages = {
         name: 'view_admin_gene',
         display: 'View Admin Gene',
         config: {
-            source: 'gene',
-            dataKey: 'view_admin_gene',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'gene',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'species',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'species',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_protein',
-                display: 'Protein',
-                paramsFn: (params, data) => ({
-                    gene__id: data.record.id
-                }),
+                name: 'protein_gene',
+                display: 'Protein Gene',
+                config: {
+                    source: 'protein',
+                    dataKey: 'protein_gene',
+                    rowAction: {
+                        display: 'Select Protein',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_protein',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'gene',
+                        width: '200',
+                    }, {
+                        field: 'species',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_gene',
+            name: 'record',
             type: RecordData,
             source: 'gene',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_protein',
+            name: 'protein_gene',
             type: TableData,
             source: 'protein',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 gene__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_gene',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -7600,14 +9802,13 @@ export const pages = {
                 lookup: 'find_admin_species',
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_gene',
             type: RecordData,
             source: 'gene',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,
@@ -7641,7 +9842,7 @@ export const pages = {
                 pretarget: null,
                 target: 'view_admin_compound',
                 mode: null,
-                paramsFn: (params, data) => ({
+                paramsFn: (params, data, context) => ({
                     id: data.id
                 }),
                 visibleFn: '',
@@ -7687,54 +9888,90 @@ export const pages = {
         name: 'view_admin_compound',
         display: 'View Admin Compound',
         config: {
-            source: 'compound',
-            dataKey: 'view_admin_compound',
-            viewFields: [{
-                field: 'name',
-                display: null,
-                target: null,
-                visibleFn: '',
+            direction: 'vertical',
+            cells: [{
+                name: 'record',
+                display: '',
+                config: {
+                    source: 'compound',
+                    dataKey: 'record',
+                    viewFields: [{
+                        field: 'name',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, {
+                        field: 'smiles',
+                        display: null,
+                        target: null,
+                        visibleFn: '',
+                    }, ],
+                    editFields: [],
+                },
+                data: [],
+                type: Form,
+                buttons: [],
             }, {
-                field: 'smiles',
-                display: null,
-                target: null,
-                visibleFn: '',
-            }, ],
-            editFields: [],
-            referenceTables: [{
-                tablePage: 'find_admin_perturbation',
-                display: 'Perturbation',
-                paramsFn: (params, data) => ({
-                    compound__id: data.record.id
-                }),
+                name: 'perturbation_compound',
+                display: 'Perturbation Compound',
+                config: {
+                    source: 'perturbation',
+                    dataKey: 'perturbation_compound',
+                    rowAction: {
+                        display: 'Select Perturbation',
+                        pretargetFn: '',
+                        pretarget: null,
+                        target: 'view_admin_perturbation',
+                        mode: null,
+                        paramsFn: (params, data, context) => ({
+                            id: data.id
+                        }),
+                        visibleFn: '',
+                    },
+                    viewColumns: [{
+                        field: 'name',
+                        width: '200',
+                    }, {
+                        field: 'compound',
+                        width: '200',
+                    }, {
+                        field: 'concentration_nm',
+                        width: '200',
+                    }, ],
+                    editColumns: [],
+                    searchFields: [],
+                },
+                data: [],
+                type: Table,
+                buttons: [],
             }, ],
         },
         data: [{
-            name: 'view_admin_compound',
+            name: 'record',
             type: RecordData,
             source: 'compound',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, {
-            name: 'find_admin_perturbation',
+            name: 'perturbation_compound',
             type: TableData,
             source: 'perturbation',
             new: null,
             onLoadFn: '',
-            paramsFn: (params, data) => ({
+            paramsFn: (params, data, context) => ({
                 compound__id: data.record.id
             }),
         }, ],
-        type: Form,
+        type: Layout,
         buttons: [{
             display: 'Edit',
             pretargetFn: '',
             pretarget: null,
             target: 'edit_admin_compound',
             mode: null,
-            paramsFn: (params, data) => ({
-                id: params.id
+            paramsFn: (params, data, context) => ({
+                id: data.record.id
             }),
             visibleFn: '',
         }, {
@@ -7765,14 +10002,13 @@ export const pages = {
                 lookup: null,
                 visibleFn: '',
             }, ],
-            referenceTables: [],
         },
         data: [{
             name: 'edit_admin_compound',
             type: RecordData,
             source: 'compound',
             new: null,
-            newFn: '',
+            loadFn: '',
             paramsFn: '',
         }, ],
         type: Form,

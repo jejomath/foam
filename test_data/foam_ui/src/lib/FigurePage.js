@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import { ButtonList } from './Components.js'
 import Plot from 'react-plotly.js';
 
 export default class Figure extends Component {
     render() {
         const config = this.props.config.plots.map(plot => {
             Object.entries(plot.data).forEach(v => {
-                plot.config[v[0]] = this.props.data.table.map((d) => (d[v[1]]))
+                plot.config[v[0]] = this.props.data.map((d) => (d[v[1]]))
             });
             return plot.config;
         })
