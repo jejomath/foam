@@ -14,7 +14,7 @@ def jinja_from_string(template):
 
 
 def add_display(obj):
-    if not obj.display:
+    if obj.display is None:
         obj.display = ' '.join(w.capitalize() for w in obj.name.split('_'))
 
 

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import LoginPage from './LoginPage.js';
-import { ButtonList } from './Components.js'
+import { PageCell } from './Components.js'
 
 import { 
     getRecord,
@@ -25,12 +25,12 @@ import {
 class Page extends Component {
     constructor(props) {
         super(props);
-        const page = this.props.context.pages[this.props.name]
+        this.page = this.props.context.pages[this.props.name]
         this.clientDict = {}
         this.clientList = []
         var dataDict = {}
         var paramsDict = {}
-        for (const config of page.data) {
+        for (const config of this.page.data) {
             const name = config.name;
             const client = new config.type(
                 config,
@@ -59,6 +59,7 @@ class Page extends Component {
         this.state = {
             data: dataDict,
             params: paramsDict,
+            loaded: false,
         }
     }
 
@@ -66,42 +67,27 @@ class Page extends Component {
         for (const client of this.clientList) {
             await client.load(this.state.data);
         }
+        this.setState({loaded: true})
     }
 
     componentDidMount() {
         this.loadData()
     }
 
-    getPage(page) {
-        return React.createElement(page.type, {
-            data: this.state.data,
-            config: page.config,
-            params: this.state.params,
-            context: {
-                ...this.props.context,
-                clients: this.clientDict,
-            }
-        })
-    }
-
     render() {
-        const page = this.props.context.pages[this.props.name]
+        if (!this.state.loaded) { return <div /> }
         return (
             <div>
-                <div className='page-title-div'>{page.display}</div>
-                {this.getPage(page)}
-                <ButtonList
-                    config={{
-                        buttons: page.buttons,
-                    }}
-                    params = {this.state.params}
-                    data = {this.state.data}
-                    context = {{...this.props.context, clients: this.clientDict }}
+                <div className='page-title-div'>{this.page.display}</div>
+                <PageCell
+                    page={this.page}
+                    params={this.state.params}
+                    data={this.state.data}
+                    context={{ ...this.props.context, data: this.clientDict }}
                 />
             </div>
         )
     }
-
 }
 
 /* Controls the stack of modals above the current page. */
@@ -226,7 +212,7 @@ export default class AppRouter extends Component {
             enums: this.props.enums,
             pages: this.props.pages,
         }
-        
+
         return (
         <BrowserRouter>
             <Routes>

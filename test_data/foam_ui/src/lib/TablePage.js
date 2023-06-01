@@ -4,11 +4,11 @@ import { SearchBar, Table, ButtonList } from './Components.js'
 export default class TablePage extends Component {
 
     render() {
-        if (!this.props.data.table) { return <div />}
-        const data = this.props.data.table;
         const config = this.props.config;
-        const params = this.props.params.table;
+        const params = this.props.params;
+        const data = this.props.data;
         const context = this.props.context;
+
         if (this.props.mode === 'reference') {
             return <Table
                 config={{ 
@@ -22,6 +22,7 @@ export default class TablePage extends Component {
                 context={context}
             />
         }
+
         return (
             <div className='table-page-outer-div'>
             <div className='table-page-inner-div'>
@@ -31,23 +32,14 @@ export default class TablePage extends Component {
                         fields: config.searchFields
                     }}
                     params = {params}
-                    context = {{...context, client: context.clients.table }}
-                    hide={config.searchFields == null}
+                    context = {context}
+                    hide={!config.searchFields || config.searchFields.length === 0}
                 />
                 <Table
                     config={config}
                     params={params}
                     data={data}
-                    context={{...context, update: context.clients.table.update}}
-                />
-                <ButtonList
-                    config={{
-                        buttons: config.buttons,
-                    }}
-                    params = {params}
-                    data = {data}
-                    context = {{...context, save: context.clients.table.save, addNew: context.clients.table.addNew }}
-                    hide={params._mode === 'select'}
+                    context={context}
                 />
                 <ButtonList
                     config={{

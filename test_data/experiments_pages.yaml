@@ -42,20 +42,28 @@ page_modules:
 
   - name: view_assay
     descr: View a record from table assay
-    type: Form
+    type: Layout
     config:
-      source: assay
-      view_fields:
-      - name
-      - type
-      - descr
-      - field: cell_line
-        visible_fn: (data.type === 'VITRO')
-      - for_program
-      reference_tables:
-      - table_page: find_experiment
-        display: Experiment
-        params_fn: '({assay__id: data.record.id})'
+      cells:
+      - name: record
+        display: ''
+        type: Form
+        config:
+          source: assay
+          view_fields:
+          - name
+          - type
+          - descr
+          - field: cell_line
+            visible_fn: (data.type === 'VITRO')
+          - for_program
+      - name: find_experiment
+        display: Experiments
+        type: Table
+        template: find_experiment
+        config:
+          search_fields: []
+          params_fn: '({assay__id: data.id})'
     buttons:
     - display: Edit
       target: edit_assay
@@ -63,7 +71,7 @@ page_modules:
     - display: New Experiment
       target: new_experiment
       mode: modal
-      params_fn: '({ assay: data.record })'
+      params_fn: '({ assay: data })'
     - display: Done
       target: back
 
@@ -169,33 +177,41 @@ page_modules:
 
   - name: view_experiment
     descr: View a record from table experiment
-    type: Form
+    type: Layout
     config:
-      source: experiment
-      view_fields:
-      - name
-      - description
-      - status
-      - program
-      - bio_lead
-      - target_start_date
-      - target_duration
-      - start_date
-      - end_date
-      - assay
-      - type
-      - perturbations
-      reference_tables:
-      - table_page: find_plate
-        display: Plates
-        params_fn: '({ experiment__id: data.record.id })'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: experiment
+          view_fields:
+          - name
+          - description
+          - status
+          - program
+          - bio_lead
+          - target_start_date
+          - target_duration
+          - start_date
+          - end_date
+          - assay
+          - type
+          - perturbations
+      - name: plate
+        display: Plate
+        type: Table
+        template: find_plate
+        config:
+          search_fields: []
+          params_fn: '({experiment__id: data.record.id})'
     buttons:
     - display: Edit
       target: edit_experiment
-      params_fn: '({ id: params.id })'
+      params_fn: '({ id: params.record.id })'
     - display: Add Plate
       target: edit_plate
-      params_fn: '({ experiment: data.record })'
+      params_fn: '({ experiment: data })'
       mode: modal
     - display: Done
       target: back
@@ -242,7 +258,7 @@ page_modules:
     buttons:
     - display: Save
       target: back
-      pretarget_fn: ( context.clients.record.save() )
+      pretarget_fn: ( context.save() )
     - display: Cancel
       target: back
 
@@ -284,18 +300,24 @@ page_modules:
 
   - name: view_plate
     descr: View a record from table plate
-    type: Form
+    type: Layout
     config:
-      source: plate
-      view_fields:
-      - name
-      - experiment
-      - row_count
-      - column_count
-      reference_tables:
-      - table_page: find_plate_well
-        display: Plate Well
-        params_fn: '({ plate__id: data.record.id, rows: data.record.row_count, cols: data.record.column_count })'
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: plate
+          view_fields:
+          - name
+          - experiment
+          - row_count
+          - column_count
+      - name: plate_well
+        display: Plate Map
+        descr: View the wells of a plate as a grid
+        type: Grid
+        template: view_plate_map
     buttons:
     - display: Edit
       target: edit_plate
@@ -363,7 +385,7 @@ page_modules:
       target: back
     - display: Save
       target: back
-      pretarget_fn: ( context.clients.record.save() )
+      pretarget_fn: ( context.clients.find_plate_well.save() )
 
   - name: view_plate_map
     descr: View the wells of a plate as a grid
@@ -378,4 +400,4 @@ page_modules:
       target: back
     - display: Save
       target: back
-      pretarget_fn: ( context.clients.table.save() )
+      pretarget_fn: ( context.save() )

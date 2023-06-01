@@ -396,15 +396,15 @@ class SearchField extends Component {
     }
 
     changeField = (event) => {
-        this.props.context.client.changeParamField(this.props.index, event.target.value);
+        this.props.context.changeParamField(this.props.index, event.target.value);
     }
 
     changeFilter = (event) => {
-        this.props.context.client.changeParamFilter(this.props.index, event.target.value);
+        this.props.context.changeParamFilter(this.props.index, event.target.value);
     }
 
     changeValue = (value) => {
-        this.props.context.client.changeParamValue(this.props.index, value);
+        this.props.context.changeParamValue(this.props.index, value);
     }
 
     render() {
@@ -438,7 +438,7 @@ class SearchField extends Component {
 
 export class SearchBar extends Component {
     componentDidMount() {
-        if (this.props.params.length === 0) { this.props.context.client.addParam() }
+        if (this.props.params.length === 0) { this.props.context.addParam() }
     }
 
     render() {
@@ -451,10 +451,10 @@ export class SearchBar extends Component {
                     data={data}
                     index={index}
                     key={index}/>))}
-                <div className='search-bar-add-term-div' onClick={this.props.context.client.addParam}>Add Term</div>
+                <div className='search-bar-add-term-div' onClick={this.props.context.addParam}>Add Term</div>
             </div>
             <div className='search-bar-button-div'>
-                <button onClick={this.props.context.client.load}>Search</button>
+                <button onClick={this.props.context.load}>Search</button>
             </div>
         </div>
     }
@@ -475,5 +475,51 @@ export class UnderConstruction extends Component {
                     context={this.props.context}
                 />
         </div>
+    }
+}
+
+
+export class PageCell extends Component {
+    constructor(props) {
+        super(props);
+        this.page = this.props.page;
+    }
+
+    localParams() {
+        return this.page.config.dataKey ? this.props.params[this.page.config.dataKey] : this.props.params;
+    }
+
+    localData() {
+        return this.page.config.dataKey ? this.props.data[this.page.config.dataKey] : this.props.data;
+    }
+
+    localContext() {
+        const localClient = this.page.config.dataKey ? this.props.context.data[this.page.config.dataKey] : {}
+        return { ...localClient, ...this.props.context }
+    }
+
+    getPage() {
+        return React.createElement(this.page.type, {
+            config: this.page.config,
+            params: this.localParams(),
+            data: this.localData(),
+            context: this.localContext(),
+        })
+    }
+
+    render() {
+        return (
+            <div>
+                {this.getPage()}
+                <ButtonList
+                    config={{
+                        buttons: this.page.buttons,
+                    }}
+                    params = {this.localParams()}
+                    data = {this.localData()}
+                    context = {this.localContext()}
+                />
+            </div>
+        )
     }
 }
