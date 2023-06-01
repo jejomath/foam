@@ -366,13 +366,3 @@ page_modules:
     buttons:
     - display: Done
       target: back
-
-  # - name: fancy_dashboard
-  #   descr: Dashboard with multiple panes
-  #   type: Layout
-  #   config:
-  #     direction: vertical
-  #     pages:
-  #     - from_page: find_program
-  #     - from_page: program_dashboard
-
