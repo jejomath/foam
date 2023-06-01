@@ -435,28 +435,6 @@ Then reload:
 python3 -m manage loaddata ../test_dump.json 
 ```
 
-# Functions
-
-Every function takes three parameters:
-* params - The parameters passed to the page or to the cell.
-* data - The canonical data object associated with the page or cell.
-* context - Contains other helper functions, and other data objects for cases such as a layout page.
-
-## Actions
-
-### pretargetFn
-
-This function is called before an action takes place. The function should return a pair `(newData, newOtherData)` where
-`data` is updated copy of the canonical data object and `newOtherData` is a dictionary, with keys for any other data objects
-to update.
-
-### paramsFn
-
-This function returns the parameters that should be passed to the new target. It takes the updated `data` and `allData`
-objects defined by the `pretargetFn` if it's defined.
-
-
-
 # Tests
 
 CLI Tests: Run `python3 -m pytest` from the `/tests/` directory.
