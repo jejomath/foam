@@ -70,35 +70,45 @@ def get_gen_pages(config, prefix=''):
                         'target': f'view_{prefix}{t.name}',
                         'params_fn': '({id: data.id})' 
                     },
-                    'buttons': [{
-                        'display': f'New {t.display}',
-                        'target': f'edit_{prefix}{t.name}'
-                    }, {
-                        'display': 'Done',
-                        'target': 'back'
-                    }]
-                }
+                },
+                'buttons': [{
+                    'display': f'New {t.display}',
+                    'target': f'edit_{prefix}{t.name}'
+                }, {
+                    'display': 'Done',
+                    'target': 'back'
+                }]
             }, {
                 'name': f'view_{prefix}{t.name}',
                 'descr': f'View a record from table {t.name}',
-                'type': 'Form',
+                'type': 'Layout',
                 'config': {
-                    'source': t.name,
-                    'view_fields': [f.name for f in t.fields],
-                    'reference_tables': [{
-                        'table_page': f'find_{prefix}{r.table.name}',
-                        'display': r.table.display,
-                        'params_fn': f'({{{r.name}__id: data.record.id}})'
+                    'cells': [{
+                        'name': 'record',
+                        'type': 'Form',
+                        'display': '',
+                        'config': {
+                            'source': t.name,
+                            'view_fields': [f.name for f in t.fields],
+                        }
+                    }] + [{
+                        'name': f'{r.table.name}_{r.name}',
+                        'type': 'Table',
+                        'template': f'find_{prefix}{r.table.name}',
+                        'config': {
+                            'search_fields': [],
+                            'params_fn': f'({{{r.name}__id: data.record.id}})'
+                        }
                     } for r in t.backref_fields],
-                    'buttons': [{
-                        'display': 'Edit',
-                        'target': f'edit_{prefix}{t.name}',
-                        'params_fn': '({ id: params.id })'
-                    }, {
-                        'display': 'Done',
-                        'target': 'back'
-                    }]
                 },
+                'buttons': [{
+                    'display': 'Edit',
+                    'target': f'edit_{prefix}{t.name}',
+                    'params_fn': '({ id: data.record.id })'
+                }, {
+                    'display': 'Done',
+                    'target': 'back'
+                }]
             }, {
                 'name': f'edit_{prefix}{t.name}',
                 'descr': f'Edit a record from table {t.name}',
@@ -108,15 +118,15 @@ def get_gen_pages(config, prefix=''):
                     'edit_fields': [
                         {'field': f.name, 'lookup': f'find_{prefix}{f.ref_table.name}'} if f.ref_table else f.name
                         for f in t.fields],
-                    'buttons': [{
-                        'display': 'Save',
-                        'target': 'back',
-                        'pretarget_fn': '( context.save() )'
-                    }, {
-                        'display': 'Cancel',
-                        'target': 'back'
-                    }]
                 },
+                'buttons': [{
+                    'display': 'Save',
+                    'target': 'back',
+                    'pretarget_fn': '( context.clients.record.save() )'
+                }, {
+                    'display': 'Cancel',
+                    'target': 'back'
+                }]
             }]
         } for t in sum([m.tables for m in config.table_modules], [])]
     }
@@ -167,7 +177,7 @@ def write_schema_docs(config):
 @dataclass
 class EnumOption:
     name: str = ''
-    display: str = ''
+    display: str = None
     descr: str = ''
 
     def __init__(self, description) -> None:
@@ -182,7 +192,7 @@ class EnumOption:
 class Enum:
     name: str
     options: list[EnumOption]
-    display: str = ''
+    display: str = None
     descr: str = ''
 
     def __post_init__(self):
@@ -194,7 +204,7 @@ class Enum:
 class Folder:
     name: str
     extensions: list[str]
-    display: str = ''
+    display: str = None
     descr: str = ''
 
     def __post_init__(self):
@@ -229,7 +239,7 @@ class Field:
     name: str
     type: str
     table: str
-    display: str = ''
+    display: str = None
     descr: str = ''
     direction: str = ''
     backref: str = ''
@@ -278,7 +288,7 @@ class Table:
     name: str
     fields: list[Field]
     module: str
-    display: str = ''
+    display: str = None
     class_name: str = ''
     descr: str = ''
     preprocess: str = ''

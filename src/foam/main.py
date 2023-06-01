@@ -18,6 +18,7 @@ commands = {
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('command')
+    parser.add_argument('safe', default='yes')
     args = parser.parse_args()
 
     if args.command not in commands.keys():
@@ -27,7 +28,7 @@ def main():
         return
 
     config = load_config()
-    if get_errors():
+    if get_errors() and args.safe != 'no':
         for e in get_errors():
             print(e)
     else:

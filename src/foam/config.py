@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 import yaml
 from pathlib import Path
+from .utils import get_errors
 
 from .schema import Enum, Folder, TableModule, SchemaTest, make_schema_refs
 from .pages import PageClass, PageModule, validate_page_refs
@@ -46,7 +47,8 @@ class Config:
         self.page_modules = [PageModule(**m) for m in self.page_modules]
         self.schema_tests = [SchemaTest(**t) for t in self.schema_tests]
         make_schema_refs(self)
-        validate_page_refs(self)
+        if not get_errors():
+            validate_page_refs(self)
 
 
 def load_config():

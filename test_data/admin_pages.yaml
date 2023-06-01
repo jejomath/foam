@@ -6,7 +6,7 @@ page_modules:
     type: Links
     config:
       boxes:
-      - name: Programs
+      - name: ''
         links:
         - target: find_admin_person
           display: Person
@@ -14,7 +14,7 @@ page_modules:
           display: Program
         - target: find_admin_program_milestone
           display: Program Milestone
-      - name: Experiments
+      - name: ''
         links:
         - target: find_admin_assay
           display: Assay
@@ -26,7 +26,7 @@ page_modules:
           display: Plate
         - target: find_admin_plate_well
           display: Plate Well
-      - name: Inventory
+      - name: ''
         links:
         - target: find_admin_cell_line
           display: Cell Line
@@ -70,39 +70,55 @@ page_modules:
         display: Select Person
         target: view_admin_person
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Person
-        target: edit_admin_person
-      - display: Done
-        target: back
+    buttons:
+    - display: New Person
+      target: edit_admin_person
+    - display: Done
+      target: back
   - name: view_admin_person
     descr: View a record from table person
-    type: Form
+    type: Layout
     config:
-      source: person
-      view_fields:
-      - name
-      - given_name
-      - family_name
-      reference_tables:
-      - table_page: find_admin_program
-        display: Program
-        params_fn: '({bio_lead__id: data.record.id})'
-      - table_page: find_admin_program
-        display: Program
-        params_fn: '({chem_lead__id: data.record.id})'
-      - table_page: find_admin_program
-        display: Program
-        params_fn: '({program_manager__id: data.record.id})'
-      - table_page: find_admin_experiment
-        display: Experiment
-        params_fn: '({bio_lead__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_person
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: person
+          view_fields:
+          - name
+          - given_name
+          - family_name
+      - name: program_bio_lead
+        type: Table
+        template: find_admin_program
+        config:
+          search_fields: []
+          params_fn: '({bio_lead__id: data.record.id})'
+      - name: program_chem_lead
+        type: Table
+        template: find_admin_program
+        config:
+          search_fields: []
+          params_fn: '({chem_lead__id: data.record.id})'
+      - name: program_program_manager
+        type: Table
+        template: find_admin_program
+        config:
+          search_fields: []
+          params_fn: '({program_manager__id: data.record.id})'
+      - name: experiment_bio_lead
+        type: Table
+        template: find_admin_experiment
+        config:
+          search_fields: []
+          params_fn: '({bio_lead__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_person
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_person
     descr: Edit a record from table person
     type: Form
@@ -112,12 +128,12 @@ page_modules:
       - name
       - given_name
       - family_name
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_program
   pages:
   - name: find_admin_program
@@ -158,42 +174,55 @@ page_modules:
         display: Select Program
         target: view_admin_program
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Program
-        target: edit_admin_program
-      - display: Done
-        target: back
+    buttons:
+    - display: New Program
+      target: edit_admin_program
+    - display: Done
+      target: back
   - name: view_admin_program
     descr: View a record from table program
-    type: Form
+    type: Layout
     config:
-      source: program
-      view_fields:
-      - name
-      - target
-      - indication
-      - status
-      - started_date
-      - stage
-      - bio_lead
-      - chem_lead
-      - program_manager
-      reference_tables:
-      - table_page: find_admin_program_milestone
-        display: Program Milestone
-        params_fn: '({program__id: data.record.id})'
-      - table_page: find_admin_assay
-        display: Assay
-        params_fn: '({for_program__id: data.record.id})'
-      - table_page: find_admin_experiment
-        display: Experiment
-        params_fn: '({program__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_program
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: program
+          view_fields:
+          - name
+          - target
+          - indication
+          - status
+          - started_date
+          - stage
+          - bio_lead
+          - chem_lead
+          - program_manager
+      - name: program_milestone_program
+        type: Table
+        template: find_admin_program_milestone
+        config:
+          search_fields: []
+          params_fn: '({program__id: data.record.id})'
+      - name: assay_for_program
+        type: Table
+        template: find_admin_assay
+        config:
+          search_fields: []
+          params_fn: '({for_program__id: data.record.id})'
+      - name: experiment_program
+        type: Table
+        template: find_admin_experiment
+        config:
+          search_fields: []
+          params_fn: '({program__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_program
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_program
     descr: Edit a record from table program
     type: Form
@@ -214,12 +243,12 @@ page_modules:
         lookup: find_admin_person
       - field: program_manager
         lookup: find_admin_person
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_program_milestone
   pages:
   - name: find_admin_program_milestone
@@ -248,29 +277,33 @@ page_modules:
         display: Select Program Milestone
         target: view_admin_program_milestone
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Program Milestone
-        target: edit_admin_program_milestone
-      - display: Done
-        target: back
+    buttons:
+    - display: New Program Milestone
+      target: edit_admin_program_milestone
+    - display: Done
+      target: back
   - name: view_admin_program_milestone
     descr: View a record from table program_milestone
-    type: Form
+    type: Layout
     config:
-      source: program_milestone
-      view_fields:
-      - name
-      - program
-      - status
-      - target_date
-      - completed_date
-      reference_tables: []
-      buttons:
-      - display: Edit
-        target: edit_admin_program_milestone
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: program_milestone
+          view_fields:
+          - name
+          - program
+          - status
+          - target_date
+          - completed_date
+    buttons:
+    - display: Edit
+      target: edit_admin_program_milestone
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_program_milestone
     descr: Edit a record from table program_milestone
     type: Form
@@ -283,12 +316,12 @@ page_modules:
       - status
       - target_date
       - completed_date
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_assay
   pages:
   - name: find_admin_assay
@@ -317,32 +350,39 @@ page_modules:
         display: Select Assay
         target: view_admin_assay
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Assay
-        target: edit_admin_assay
-      - display: Done
-        target: back
+    buttons:
+    - display: New Assay
+      target: edit_admin_assay
+    - display: Done
+      target: back
   - name: view_admin_assay
     descr: View a record from table assay
-    type: Form
+    type: Layout
     config:
-      source: assay
-      view_fields:
-      - name
-      - type
-      - descr
-      - cell_line
-      - for_program
-      reference_tables:
-      - table_page: find_admin_experiment
-        display: Experiment
-        params_fn: '({assay__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_assay
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: assay
+          view_fields:
+          - name
+          - type
+          - descr
+          - cell_line
+          - for_program
+      - name: experiment_assay
+        type: Table
+        template: find_admin_experiment
+        config:
+          search_fields: []
+          params_fn: '({assay__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_assay
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_assay
     descr: Edit a record from table assay
     type: Form
@@ -356,12 +396,12 @@ page_modules:
         lookup: find_admin_cell_line
       - field: for_program
         lookup: find_admin_program
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_experiment
   pages:
   - name: find_admin_experiment
@@ -411,39 +451,46 @@ page_modules:
         display: Select Experiment
         target: view_admin_experiment
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Experiment
-        target: edit_admin_experiment
-      - display: Done
-        target: back
+    buttons:
+    - display: New Experiment
+      target: edit_admin_experiment
+    - display: Done
+      target: back
   - name: view_admin_experiment
     descr: View a record from table experiment
-    type: Form
+    type: Layout
     config:
-      source: experiment
-      view_fields:
-      - name
-      - description
-      - status
-      - program
-      - bio_lead
-      - target_start_date
-      - target_duration
-      - start_date
-      - end_date
-      - assay
-      - type
-      - perturbations
-      reference_tables:
-      - table_page: find_admin_plate
-        display: Plate
-        params_fn: '({experiment__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_experiment
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: experiment
+          view_fields:
+          - name
+          - description
+          - status
+          - program
+          - bio_lead
+          - target_start_date
+          - target_duration
+          - start_date
+          - end_date
+          - assay
+          - type
+          - perturbations
+      - name: plate_experiment
+        type: Table
+        template: find_admin_plate
+        config:
+          search_fields: []
+          params_fn: '({experiment__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_experiment
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_experiment
     descr: Edit a record from table experiment
     type: Form
@@ -466,12 +513,12 @@ page_modules:
       - type
       - field: perturbations
         lookup: find_admin_perturbation
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_perturbation
   pages:
   - name: find_admin_perturbation
@@ -494,33 +541,43 @@ page_modules:
         display: Select Perturbation
         target: view_admin_perturbation
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Perturbation
-        target: edit_admin_perturbation
-      - display: Done
-        target: back
+    buttons:
+    - display: New Perturbation
+      target: edit_admin_perturbation
+    - display: Done
+      target: back
   - name: view_admin_perturbation
     descr: View a record from table perturbation
-    type: Form
+    type: Layout
     config:
-      source: perturbation
-      view_fields:
-      - name
-      - compound
-      - concentration_nm
-      reference_tables:
-      - table_page: find_admin_experiment
-        display: Experiment
-        params_fn: '({perturbations__id: data.record.id})'
-      - table_page: find_admin_plate_well
-        display: Plate Well
-        params_fn: '({perturbation__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_perturbation
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: perturbation
+          view_fields:
+          - name
+          - compound
+          - concentration_nm
+      - name: experiment_perturbations
+        type: Table
+        template: find_admin_experiment
+        config:
+          search_fields: []
+          params_fn: '({perturbations__id: data.record.id})'
+      - name: plate_well_perturbation
+        type: Table
+        template: find_admin_plate_well
+        config:
+          search_fields: []
+          params_fn: '({perturbation__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_perturbation
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_perturbation
     descr: Edit a record from table perturbation
     type: Form
@@ -531,12 +588,12 @@ page_modules:
       - field: compound
         lookup: find_admin_compound
       - concentration_nm
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_plate
   pages:
   - name: find_admin_plate
@@ -562,31 +619,38 @@ page_modules:
         display: Select Plate
         target: view_admin_plate
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Plate
-        target: edit_admin_plate
-      - display: Done
-        target: back
+    buttons:
+    - display: New Plate
+      target: edit_admin_plate
+    - display: Done
+      target: back
   - name: view_admin_plate
     descr: View a record from table plate
-    type: Form
+    type: Layout
     config:
-      source: plate
-      view_fields:
-      - name
-      - experiment
-      - row_count
-      - column_count
-      reference_tables:
-      - table_page: find_admin_plate_well
-        display: Plate Well
-        params_fn: '({plate__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_plate
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: plate
+          view_fields:
+          - name
+          - experiment
+          - row_count
+          - column_count
+      - name: plate_well_plate
+        type: Table
+        template: find_admin_plate_well
+        config:
+          search_fields: []
+          params_fn: '({plate__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_plate
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_plate
     descr: Edit a record from table plate
     type: Form
@@ -598,12 +662,12 @@ page_modules:
         lookup: find_admin_experiment
       - row_count
       - column_count
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_plate_well
   pages:
   - name: find_admin_plate_well
@@ -635,30 +699,34 @@ page_modules:
         display: Select Plate Well
         target: view_admin_plate_well
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Plate Well
-        target: edit_admin_plate_well
-      - display: Done
-        target: back
+    buttons:
+    - display: New Plate Well
+      target: edit_admin_plate_well
+    - display: Done
+      target: back
   - name: view_admin_plate_well
     descr: View a record from table plate_well
-    type: Form
+    type: Layout
     config:
-      source: plate_well
-      view_fields:
-      - name
-      - plate
-      - row
-      - column
-      - purpose
-      - perturbation
-      reference_tables: []
-      buttons:
-      - display: Edit
-        target: edit_admin_plate_well
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: plate_well
+          view_fields:
+          - name
+          - plate
+          - row
+          - column
+          - purpose
+          - perturbation
+    buttons:
+    - display: Edit
+      target: edit_admin_plate_well
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_plate_well
     descr: Edit a record from table plate_well
     type: Form
@@ -673,12 +741,12 @@ page_modules:
       - purpose
       - field: perturbation
         lookup: find_admin_perturbation
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_cell_line
   pages:
   - name: find_admin_cell_line
@@ -722,37 +790,44 @@ page_modules:
         display: Select Cell Line
         target: view_admin_cell_line
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Cell Line
-        target: edit_admin_cell_line
-      - display: Done
-        target: back
+    buttons:
+    - display: New Cell Line
+      target: edit_admin_cell_line
+    - display: Done
+      target: back
   - name: view_admin_cell_line
     descr: View a record from table cell_line
-    type: Form
+    type: Layout
     config:
-      source: cell_line
-      view_fields:
-      - name
-      - species
-      - organ
-      - tissue
-      - cell_type
-      - donor_sex
-      - donor_age
-      - donor_ethnicity
-      - donor_health_status
-      - disease
-      reference_tables:
-      - table_page: find_admin_assay
-        display: Assay
-        params_fn: '({cell_line__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_cell_line
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: cell_line
+          view_fields:
+          - name
+          - species
+          - organ
+          - tissue
+          - cell_type
+          - donor_sex
+          - donor_age
+          - donor_ethnicity
+          - donor_health_status
+          - disease
+      - name: assay_cell_line
+        type: Table
+        template: find_admin_assay
+        config:
+          search_fields: []
+          params_fn: '({cell_line__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_cell_line
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_cell_line
     descr: Edit a record from table cell_line
     type: Form
@@ -774,12 +849,12 @@ page_modules:
       - donor_health_status
       - field: disease
         lookup: find_admin_indication
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_indication
   pages:
   - name: find_admin_indication
@@ -796,31 +871,41 @@ page_modules:
         display: Select Indication
         target: view_admin_indication
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Indication
-        target: edit_admin_indication
-      - display: Done
-        target: back
+    buttons:
+    - display: New Indication
+      target: edit_admin_indication
+    - display: Done
+      target: back
   - name: view_admin_indication
     descr: View a record from table indication
-    type: Form
+    type: Layout
     config:
-      source: indication
-      view_fields:
-      - name
-      reference_tables:
-      - table_page: find_admin_program
-        display: Program
-        params_fn: '({indication__id: data.record.id})'
-      - table_page: find_admin_cell_line
-        display: Cell Line
-        params_fn: '({disease__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_indication
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: indication
+          view_fields:
+          - name
+      - name: program_indication
+        type: Table
+        template: find_admin_program
+        config:
+          search_fields: []
+          params_fn: '({indication__id: data.record.id})'
+      - name: cell_line_disease
+        type: Table
+        template: find_admin_cell_line
+        config:
+          search_fields: []
+          params_fn: '({disease__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_indication
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_indication
     descr: Edit a record from table indication
     type: Form
@@ -828,12 +913,12 @@ page_modules:
       source: indication
       edit_fields:
       - name
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_species
   pages:
   - name: find_admin_species
@@ -850,43 +935,65 @@ page_modules:
         display: Select Species
         target: view_admin_species
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Species
-        target: edit_admin_species
-      - display: Done
-        target: back
+    buttons:
+    - display: New Species
+      target: edit_admin_species
+    - display: Done
+      target: back
   - name: view_admin_species
     descr: View a record from table species
-    type: Form
+    type: Layout
     config:
-      source: species
-      view_fields:
-      - name
-      reference_tables:
-      - table_page: find_admin_cell_line
-        display: Cell Line
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_admin_organ
-        display: Organ
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_admin_tissue
-        display: Tissue
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_admin_cell_type
-        display: Cell Type
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_admin_protein
-        display: Protein
-        params_fn: '({species__id: data.record.id})'
-      - table_page: find_admin_gene
-        display: Gene
-        params_fn: '({species__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_species
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: species
+          view_fields:
+          - name
+      - name: cell_line_species
+        type: Table
+        template: find_admin_cell_line
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: organ_species
+        type: Table
+        template: find_admin_organ
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: tissue_species
+        type: Table
+        template: find_admin_tissue
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: cell_type_species
+        type: Table
+        template: find_admin_cell_type
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: protein_species
+        type: Table
+        template: find_admin_protein
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+      - name: gene_species
+        type: Table
+        template: find_admin_gene
+        config:
+          search_fields: []
+          params_fn: '({species__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_species
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_species
     descr: Edit a record from table species
     type: Form
@@ -894,12 +1001,12 @@ page_modules:
       source: species
       edit_fields:
       - name
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_organ
   pages:
   - name: find_admin_organ
@@ -919,29 +1026,36 @@ page_modules:
         display: Select Organ
         target: view_admin_organ
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Organ
-        target: edit_admin_organ
-      - display: Done
-        target: back
+    buttons:
+    - display: New Organ
+      target: edit_admin_organ
+    - display: Done
+      target: back
   - name: view_admin_organ
     descr: View a record from table organ
-    type: Form
+    type: Layout
     config:
-      source: organ
-      view_fields:
-      - name
-      - species
-      reference_tables:
-      - table_page: find_admin_cell_line
-        display: Cell Line
-        params_fn: '({organ__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_organ
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: organ
+          view_fields:
+          - name
+          - species
+      - name: cell_line_organ
+        type: Table
+        template: find_admin_cell_line
+        config:
+          search_fields: []
+          params_fn: '({organ__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_organ
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_organ
     descr: Edit a record from table organ
     type: Form
@@ -951,12 +1065,12 @@ page_modules:
       - name
       - field: species
         lookup: find_admin_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_tissue
   pages:
   - name: find_admin_tissue
@@ -976,29 +1090,36 @@ page_modules:
         display: Select Tissue
         target: view_admin_tissue
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Tissue
-        target: edit_admin_tissue
-      - display: Done
-        target: back
+    buttons:
+    - display: New Tissue
+      target: edit_admin_tissue
+    - display: Done
+      target: back
   - name: view_admin_tissue
     descr: View a record from table tissue
-    type: Form
+    type: Layout
     config:
-      source: tissue
-      view_fields:
-      - name
-      - species
-      reference_tables:
-      - table_page: find_admin_cell_line
-        display: Cell Line
-        params_fn: '({tissue__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_tissue
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: tissue
+          view_fields:
+          - name
+          - species
+      - name: cell_line_tissue
+        type: Table
+        template: find_admin_cell_line
+        config:
+          search_fields: []
+          params_fn: '({tissue__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_tissue
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_tissue
     descr: Edit a record from table tissue
     type: Form
@@ -1008,12 +1129,12 @@ page_modules:
       - name
       - field: species
         lookup: find_admin_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_cell_type
   pages:
   - name: find_admin_cell_type
@@ -1033,29 +1154,36 @@ page_modules:
         display: Select Cell Type
         target: view_admin_cell_type
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Cell Type
-        target: edit_admin_cell_type
-      - display: Done
-        target: back
+    buttons:
+    - display: New Cell Type
+      target: edit_admin_cell_type
+    - display: Done
+      target: back
   - name: view_admin_cell_type
     descr: View a record from table cell_type
-    type: Form
+    type: Layout
     config:
-      source: cell_type
-      view_fields:
-      - name
-      - species
-      reference_tables:
-      - table_page: find_admin_cell_line
-        display: Cell Line
-        params_fn: '({cell_type__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_cell_type
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: cell_type
+          view_fields:
+          - name
+          - species
+      - name: cell_line_cell_type
+        type: Table
+        template: find_admin_cell_line
+        config:
+          search_fields: []
+          params_fn: '({cell_type__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_cell_type
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_cell_type
     descr: Edit a record from table cell_type
     type: Form
@@ -1065,12 +1193,12 @@ page_modules:
       - name
       - field: species
         lookup: find_admin_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_protein
   pages:
   - name: find_admin_protein
@@ -1093,30 +1221,37 @@ page_modules:
         display: Select Protein
         target: view_admin_protein
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Protein
-        target: edit_admin_protein
-      - display: Done
-        target: back
+    buttons:
+    - display: New Protein
+      target: edit_admin_protein
+    - display: Done
+      target: back
   - name: view_admin_protein
     descr: View a record from table protein
-    type: Form
+    type: Layout
     config:
-      source: protein
-      view_fields:
-      - name
-      - gene
-      - species
-      reference_tables:
-      - table_page: find_admin_program
-        display: Program
-        params_fn: '({target__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_protein
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: protein
+          view_fields:
+          - name
+          - gene
+          - species
+      - name: program_target
+        type: Table
+        template: find_admin_program
+        config:
+          search_fields: []
+          params_fn: '({target__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_protein
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_protein
     descr: Edit a record from table protein
     type: Form
@@ -1128,12 +1263,12 @@ page_modules:
         lookup: find_admin_gene
       - field: species
         lookup: find_admin_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_gene
   pages:
   - name: find_admin_gene
@@ -1153,29 +1288,36 @@ page_modules:
         display: Select Gene
         target: view_admin_gene
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Gene
-        target: edit_admin_gene
-      - display: Done
-        target: back
+    buttons:
+    - display: New Gene
+      target: edit_admin_gene
+    - display: Done
+      target: back
   - name: view_admin_gene
     descr: View a record from table gene
-    type: Form
+    type: Layout
     config:
-      source: gene
-      view_fields:
-      - name
-      - species
-      reference_tables:
-      - table_page: find_admin_protein
-        display: Protein
-        params_fn: '({gene__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_gene
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: gene
+          view_fields:
+          - name
+          - species
+      - name: protein_gene
+        type: Table
+        template: find_admin_protein
+        config:
+          search_fields: []
+          params_fn: '({gene__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_gene
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_gene
     descr: Edit a record from table gene
     type: Form
@@ -1185,12 +1327,12 @@ page_modules:
       - name
       - field: species
         lookup: find_admin_species
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back
 - name: admin_compound
   pages:
   - name: find_admin_compound
@@ -1210,29 +1352,36 @@ page_modules:
         display: Select Compound
         target: view_admin_compound
         params_fn: '({id: data.id})'
-      buttons:
-      - display: New Compound
-        target: edit_admin_compound
-      - display: Done
-        target: back
+    buttons:
+    - display: New Compound
+      target: edit_admin_compound
+    - display: Done
+      target: back
   - name: view_admin_compound
     descr: View a record from table compound
-    type: Form
+    type: Layout
     config:
-      source: compound
-      view_fields:
-      - name
-      - smiles
-      reference_tables:
-      - table_page: find_admin_perturbation
-        display: Perturbation
-        params_fn: '({compound__id: data.record.id})'
-      buttons:
-      - display: Edit
-        target: edit_admin_compound
-        params_fn: '({ id: params.id })'
-      - display: Done
-        target: back
+      cells:
+      - name: record
+        type: Form
+        display: ''
+        config:
+          source: compound
+          view_fields:
+          - name
+          - smiles
+      - name: perturbation_compound
+        type: Table
+        template: find_admin_perturbation
+        config:
+          search_fields: []
+          params_fn: '({compound__id: data.record.id})'
+    buttons:
+    - display: Edit
+      target: edit_admin_compound
+      params_fn: '({ id: data.record.id })'
+    - display: Done
+      target: back
   - name: edit_admin_compound
     descr: Edit a record from table compound
     type: Form
@@ -1241,9 +1390,9 @@ page_modules:
       edit_fields:
       - name
       - smiles
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: ( context.save() )
-      - display: Cancel
-        target: back
+    buttons:
+    - display: Save
+      target: back
+      pretarget_fn: ( context.clients.record.save() )
+    - display: Cancel
+      target: back

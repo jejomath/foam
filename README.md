@@ -127,41 +127,46 @@ custom React classes from within the config file.
 Each page in the config will look something like this:
 
 ```yaml
-  - name: edit_experiment
-    descr: Edit a record from table experiment
-    type: Form
+  - name: find_experiment
+    descr: Search page for table experiment
+    type: Table
     config:
       source: experiment
-      edit_fields:
+      view_columns:
+      - field: name
+        width: 200
+      - field: description
+        width: 200
+      - field: status
+        width: 200
+      ...
+      search_fields:
       - name
       - description
-      - start_date
-      - field: assay
-        lookup: find_assay
-      - plate_map_file
-      - type
-      buttons:
-      - display: Save
-        target: back
-        pretarget_fn: { context.save() }
-      - display: Cancel
-        target: back
-      - display: Add Platemap
-        target: new_platemap
-        params_fn: "{{ experiment: data.record.experiment }}"
+      - status
+      - program
+      ...
+      row_action:
+        display: Select Experiment
+        target: view_experiment
+        params_fn: '({id: data.id})'
+    buttons:
+    - display: New Experiment
+      target: new_experiment
+      mode: modal
+    - display: Done
+      target: back
 ```
 
-This config defines a page based on one of the built-in templates (`RecordPage`) that allows the user to edit then
-save a single record from a table. The `config` portion is turned into a Javascript object and passed to the `RecordPage`
-React component, which interprets it to read the record from the `source_table`, display the editable fields and
-add buttons at the bottom. Note that the names in `edit_fields` reference fields in the table config, so they don't need
-to re-define the type of each field. The `RecordPage` will automatically use a text input for the name, a date picker
-for `start_date`, etc.
+This config defines a page based on one of the built-in templates (`Table`) that displays a list of records and allows
+the user to select one. The `config` portion is turned into a Javascript object and passed to the `Table`
+React component, which interprets it to read the records from the `source_table`, display the table and
+add buttons at the bottom. Note that the names in `view_columns` reference fields in the table config, so they don't need
+to re-define the type of each field.
 
-The first two buttons in this example both return to the previous page, but the "Save" button first performs custom
-Javascript that saves the record. The third button sends the user to a new page to create a platemap for the experiment,
-on a page named `new_platemap` that would be defined elsewhere in the overall config. These links open the pages as new URLs, but there's also an option to open the new page in a modal on top of an unchanged original page. Again, note the custom Javascript
-that defines the search parameters that will go in the URL when navigating to the page.
+The first button sends the user to a page where they can create a new experiment, while the second sends them back to
+whatever page they came from. Button definitions also allow developers to insert custom Javascript that runs when the
+button is clicked to do things like save changes or automatically fill in parameters that will be sent to the next page.
 
 When the frontend is running, this page will be available at the endpoint that matches its `name`, as defined in the config.
 
@@ -439,8 +444,7 @@ Then reload:
 python3 -m manage loaddata ../test_dump.json 
 ```
 
-
-## Tests
+# Tests
 
 CLI Tests: Run `python3 -m pytest` from the `/tests/` directory.
 Django API tests: Run `python3 -m manage test` from `/test_data/foam_backend/`

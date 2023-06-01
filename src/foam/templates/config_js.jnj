@@ -1,4 +1,4 @@
-import { RecordData, TableData, Form, Table, Links, Figure, Layout, UnderConstruction} from './lib/index.js';
+import { RecordData, TableData, Form, Table, Grid, Links, Figure, Layout, UnderConstruction} from './lib/index.js';
 
 export const schema = {{ schema }}
 
