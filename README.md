@@ -418,7 +418,12 @@ urlpatterns = [
 The example in `test_data` is written to have both the API and UI running on localhost be default. But if
 you want to run it on a remote instance, you can do so by setting the environment variables `REACT_APP_API` and
 `REACT_APP_UI` on the instance where each is running. Each should be set to a URL starting with `http://` or
-`https://`, but without the trailing slash.
+`https://`, but without the trailing slash. You'll start the UI as usual, but use the following command to start
+the backend:
+
+```bash
+python3 -m manage runserver 0.0.0.0:8000
+```
 
 # Scratch notes for the package author. Stop reading here.
 
