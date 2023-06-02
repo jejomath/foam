@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.headers['Content-Type'] = 'application/json'
 
-const basePath = 'http://localhost:8000'
+const basePath = process.env.REACT_APP_API ? process.env.REACT_APP_API : 'http://localhost:8000'
 const tokenKey = 'token'
 
 export function getRecord(table, params) {

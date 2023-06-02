@@ -72,12 +72,11 @@ API. Here's an example of what this might look like for an Experiments table:
 ```yaml
   - name: experiment
     descr: A table with one record for each experiment.
-    preprocess_new: add_experiment_name
+    preprocess: add_experiment_name
     fields:
     - name: name
       type: STRING
       descr: Name of the experiment
-      preprocess_new: name_new_experiment
     - name: description
       type: TEXT
       descr: A long-form description of the experiment
@@ -394,7 +393,8 @@ REST_FRAMEWORK = {
 # The following lines are only if you want to enable authentication.
 DJOSER = {
     "USER_ID_FIELD": "username"
-}```
+}
+```
 
 Then update `urls.py` to look like this:
 
@@ -413,7 +413,21 @@ urlpatterns = [
 ]
 ```
 
-# Node packages
+# Deploying to remote hosts
+
+The example in `test_data` is written to have both the API and UI running on localhost be default. But if
+you want to run it on a remote instance, you can do so by setting the environment variables `REACT_APP_API` and
+`REACT_APP_UI` on the instance where each is running. Each should be set to a URL starting with `http://` or
+`https://`, but without the trailing slash. You'll start the UI as usual, but use the following command to start
+the backend:
+
+```bash
+python3 -m manage runserver 0.0.0.0:8000
+```
+
+# Scratch notes for the package author. Stop reading here.
+
+## Node packages
 
 axios
 react-datepicker
@@ -423,7 +437,7 @@ react-router-dom
 react-plotly.js
 plotly.js
 
-# Dump database
+## Dump database
 
 ```bash
 python3 -m manage dumpdata |jq > ../test_dump.json
