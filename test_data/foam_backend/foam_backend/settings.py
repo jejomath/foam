@@ -16,7 +16,6 @@ from urllib.parse import urlparse
 
 UI_URL = environ['REACT_APP_UI'] if 'REACT_APP_UI' in environ else None
 API_URL = environ['REACT_APP_API'] if 'REACT_APP_API' in environ else None
-print(API_URL)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
