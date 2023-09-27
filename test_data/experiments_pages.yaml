@@ -67,7 +67,7 @@ page_modules:
     buttons:
     - display: Edit
       target: edit_assay
-      params_fn: '({ id: params.id })'
+      params_fn: '({ id: params.record.id })'
     - display: New Experiment
       target: new_experiment
       mode: modal
@@ -90,7 +90,7 @@ page_modules:
     - display: Done
       target: edit_assay
       params_fn: '( {id: data.id })'
-      pretarget_fn: ( context.clients.record.save() )
+      pretarget_fn: ( context.save() )
     - display: Cancel
       target: back
 
@@ -112,7 +112,7 @@ page_modules:
     buttons:
     - display: Save
       target: back
-      pretarget_fn: ( context.clients.record.save() )
+      pretarget_fn: ( context.save() )
     - display: Cancel
       target: back
 
@@ -227,7 +227,7 @@ page_modules:
       - field: program
     buttons:
     - display: Done
-      pretarget_fn: '( context.clients.record.save() )'
+      pretarget_fn: '( context.save() )'
       target: edit_experiment
       params_fn: '( {id: data.id} )'
     - display: Cancel
@@ -345,7 +345,7 @@ page_modules:
     buttons:
     - display: Save
       target: back
-      pretarget_fn: ( context.clients.record.save() )
+      pretarget_fn: ( context.save() )
     - display: Cancel
       target: back
 
@@ -385,7 +385,7 @@ page_modules:
       target: back
     - display: Save
       target: back
-      pretarget_fn: ( context.clients.find_plate_well.save() )
+      pretarget_fn: ( context.save() )
 
   - name: view_plate_map
     descr: View the wells of a plate as a grid

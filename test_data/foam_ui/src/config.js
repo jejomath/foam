@@ -2424,7 +2424,7 @@ export const pages = {
             target: 'edit_assay',
             mode: null,
             paramsFn: (params, data, context) => ({
-                id: params.id
+                id: params.record.id
             }),
             visibleFn: '',
         }, {
@@ -2482,7 +2482,7 @@ export const pages = {
         type: Form,
         buttons: [{
             display: 'Done',
-            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretargetFn: (params, data, context) => (context.save()),
             pretarget: null,
             target: 'edit_assay',
             mode: null,
@@ -2545,7 +2545,7 @@ export const pages = {
         type: Form,
         buttons: [{
             display: 'Save',
-            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretargetFn: (params, data, context) => (context.save()),
             pretarget: null,
             target: 'back',
             mode: null,
@@ -2838,7 +2838,7 @@ export const pages = {
         type: Form,
         buttons: [{
             display: 'Done',
-            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretargetFn: (params, data, context) => (context.save()),
             pretarget: null,
             target: 'edit_experiment',
             mode: null,
@@ -3162,7 +3162,7 @@ export const pages = {
         type: Form,
         buttons: [{
             display: 'Save',
-            pretargetFn: (params, data, context) => (context.clients.record.save()),
+            pretargetFn: (params, data, context) => (context.save()),
             pretarget: null,
             target: 'back',
             mode: null,
@@ -3238,7 +3238,7 @@ export const pages = {
             visibleFn: '',
         }, {
             display: 'Save',
-            pretargetFn: (params, data, context) => (context.clients.find_plate_well.save()),
+            pretargetFn: (params, data, context) => (context.save()),
             pretarget: null,
             target: 'back',
             mode: null,
@@ -3703,7 +3703,7 @@ export const pages = {
             target: 'edit_cell_line',
             mode: null,
             paramsFn: (params, data, context) => ({
-                id: params.id
+                id: params.record.id
             }),
             visibleFn: '',
         }, {

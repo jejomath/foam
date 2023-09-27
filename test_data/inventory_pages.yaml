@@ -132,7 +132,7 @@ page_modules:
     buttons:
     - display: Edit
       target: edit_cell_line
-      params_fn: '({ id: params.id })'
+      params_fn: '({ id: params.record.id })'
     - display: Done
       target: back
 
