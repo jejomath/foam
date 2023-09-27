@@ -18,7 +18,7 @@ commands = {
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('command')
-    parser.add_argument('safe', default='yes')
+    parser.add_argument('safe', nargs='?', default='yes')
     args = parser.parse_args()
 
     if args.command not in commands.keys():
