@@ -1,7 +1,14 @@
-A better ELN won't solve your problems, but a better data platform couldn't hurt.
-
 The FOAM low-code data platform framework allows you to design, validate and build a data management system that fits
 your organization's needs better than an out-of-the box solution without the cost of building it from scratch.
+
+Note: If you cloned the repo before September 27, 2023, you'll need to rename your local `master` branch to `main` by running the following commands:
+
+```bash
+git branch -m master main
+git fetch origin
+git branch -u origin/main main
+git remote set-head origin -a
+```
 
 # Goals
 

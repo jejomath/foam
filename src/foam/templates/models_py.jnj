@@ -7,6 +7,8 @@ class {{ table.class_name }}(models.Model):
     {%- for field in table.fields %}
     {{ field.name }} = {{ field.model_def }}
     {%- endfor %}
+    def __str__(self):
+        return self.{{ table.fields[0].name }}
     {% if table.preprocess %}
     def save(self, *args, **kwargs):
         {{ table.preprocess }}(self, {{ table.class_name }})
