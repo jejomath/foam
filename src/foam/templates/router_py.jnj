@@ -6,8 +6,8 @@ from example import views
 router = routers.DefaultRouter()
 {% for m in config.table_modules %}{% for t in m.tables %}
 router.register(r'{{ t.name }}', views.{{ t.class_name }}View)
-router.register(r'write_{{ t.name }}', views.{{ t.class_name }}WriteView)
-router.register(r'{{ t.name }}_stats', views.{{ t.class_name }}StatsView)
+router.register(r'write_{{ t.name }}', views.{{ t.class_name }}WriteView, basename=r'write_{{ t.name }}')
+router.register(r'{{ t.name }}_stats', views.{{ t.class_name }}StatsView, basename=r'{{ t.name }}_stats')
 {%- endfor %}{% endfor %}
 
 urlpatterns = [
